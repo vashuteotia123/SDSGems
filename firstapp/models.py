@@ -25,6 +25,7 @@ class loc(models.Model):
         return self.place
 
 
+
 class currencies(models.Model):
      curr = models.CharField(max_length=10)
 
@@ -144,6 +145,7 @@ class Inventory(models.Model):
     center_stone=models.ForeignKey('centerstone',on_delete=models.PROTECT)
     shape=models.ForeignKey('shape1',on_delete=models.PROTECT)
   
+class Jibndnhndf
 
 
 # purchase of diamonds
