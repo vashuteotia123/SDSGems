@@ -397,109 +397,113 @@ class Inventory(models.Model):
 #     rate_d = models.FloatField()
       
 
-# # purchase of Colour Stones
-# class Origin_cs(models.Model):
-#     org = models.CharField(max_length=30)
+# purchase of Colour Stones
+class Origin_cs(models.Model):
+    org = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         return self.org
-
-
-# class Lab_cs(models.Model):
-#     lab = models.CharField(max_length=20)
-
-#     def __str__(self):
-#         return self.lab
+    def __str__(self):
+        return self.org
 
 
-# class Treatment_cs(models.Model):
-#     treat = models.CharField(max_length=20)
+class Lab_cs(models.Model):
+    lab = models.CharField(max_length=20)
 
-#     def __str__(self):
-#         self.treat
-
-
-# class shape_cs(models.Model):
-#     shape = models.CharField(max_length=30)
-
-#     def __str__(self):
-#         self.shape
+    def __str__(self):
+        return self.lab
 
 
-# class PurchaseOfColorStones(models.Model):
-#     date = models.DateField(auto_now_add=True)
-#     stockid_cs = models.CharField(max_length=30)
-#     company_name = models.ForeignKey('CompanyInfo', on_delete=PROTECT)
-#     location = models.ForeignKey('loc', on_delete=models.PROTECT, null=True)
-#     shape = models.ForeignKey('shape_cs', on_delete=models.PROTECT)
-#     gem_type = models.ForeignKey('gemtype', on_delete=models.PROTECT)
-#     origin = models.ForeignKey('Origin_cs', on_delete=models.PROTECT)
-#     Treatment = models.ForeignKey('Treatment_cs', on_delete=models.PROTECT)
-#     Clarity = models.CharField(max_length=30)
-#     certificate_no_cs = models.CharField(max_length=30)
-#     colour = models.CharField(max_length=30)
-#     measurements = models.IntegerField()
-#     lab = models.ForeignKey('Lab_cs', on_delete=models.PROTECT)
-#     PCS = models.IntegerField()
-#     Weight_cs = models.FloatField()
-#     Price = models.FloatField()
-#     units = models.IntegerField()
-#     amount = models.FloatField()
-#     DIS = models.FloatField()
-#     DIS_amount = models.FloatField()
-#     Total_value_c_s = models.FloatField()
-#     currency = models.ForeignKey('Currency', on_delete=models.PROTECT)
-#     tag_price_cs = models.FloatField()
-#     rate = models.FloatField()
+class Treatment_cs(models.Model):
+    treat = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.treat
 
 
-# class certificate_no_cs(models.Model):
-#     cert = models.CharField(max_length=30)
+class shape_cs(models.Model):
+    shape = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         self.cert
+    def __str__(self):
+        return self.shape
 
-# class color_cs(models.Model):
-#     col = models.CharField(max_length=30)
+class certificate_no_cs(models.Model):
+    cert = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         self.col
+    def __str__(self):
+        return self.cert
+
+class color_cs(models.Model):
+    col = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.col
 
 
 
-#         class weight_cs(models.Model):
-#      weight= models.CharField(max_length=30)
+class weight_cs(models.Model):
+    weight= models.CharField(max_length=30)
 
-#     def __str__(self):
-#         self.weight
+    def __str__(self):
+        return self.weight
 
-# class measurements_cs(models.Model):
-#     measurement = models.CharField(max_length=30)
+class measurements_cs(models.Model):
+    measurement = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         self.measurement
+    def __str__(self):
+        return self.measurement
 
-# class tag_price_cs(models.Model):
-#     tag = models.CharField(max_length=30)
+class PurchaseOfColorStones(models.Model):
+    date = models.DateField(auto_now_add=True)
+    stockid_cs = models.CharField(max_length=30,blank=True)
+    company_name = models.ForeignKey('CompanyInfo', on_delete=PROTECT)
+    location = models.ForeignKey('loc', on_delete=models.PROTECT, null=True)
+    shape_cs = models.ForeignKey('shape_cs', on_delete=models.PROTECT,blank=True)
+    gem_type = models.ForeignKey('gemtype', on_delete=models.PROTECT,blank=True)
+    origin = models.ForeignKey('Origin_cs', on_delete=models.PROTECT,blank=True)
+    Treatment = models.ForeignKey('Treatment_cs', on_delete=models.PROTECT,blank=True)
+    Clarity = models.CharField(max_length=30)
+    certificate_no_cs = models.ForeignKey('certificate_no_cs', on_delete=models.PROTECT,blank=True)
+    colour = models.CharField(max_length=30)
+    measurements = models.IntegerField()
+    lab = models.ForeignKey('Lab_cs', on_delete=models.PROTECT,blank=True)
+    PCS = models.IntegerField()
+    Weight_cs = models.FloatField()
+    Price = models.FloatField()
+    units = models.IntegerField()
+    amount = models.DecimalField(decimal_places=2, max_digits=9)
+    discount_amount = models.DecimalField(decimal_places=2, max_digits=9, blank=True, null=True)
+    discount = models.PositiveSmallIntegerField(blank=True, null=True)
+    total_val_cs=models.DecimalField(decimal_places=2, max_digits=9,blank=True,null=True)
+    def save(self, *args, **kwargs):
 
-#     def __str__(self):
-#         self.tag_price
+        self.discount_amount = (self.amount * self.discount) // 100
+        self.stockid_cs=str(str('C-')+str(self.id))
+        self.total_value_c_s=self.amount-self.discount_amount
+        super(PurchaseOfColorStones, self).save(*args, **kwargs)
+    currency = models.ForeignKey('currencies', on_delete=models.PROTECT)
+    tag_price_cs = models.FloatField()
+    rate = models.FloatField()
+    def __str__(self):
+        return str(self.stockid_cs)
+   
 
-# class Inventoryofcolorstones(models.Model):
-#     stockid = models.ForeignKey('stockid_cs', on_delete=models.PROTECT)
-#     location = models.ForeignKey('loc', on_delete=models.PROTECT)
-#     shape = models.ForeignKey('shape_cs', on_delete=models.PROTECT)
-#     gem_type = models.ForeignKey('gem_type', on_delete=models.PROTECT)
-#     weight = models.ForeignKey('Weight_cs', on_delete=models.PROTECT)
-#     origin = models.ForeignKey('Origin_cs', on_delete=models.PROTECT)
-#     treatment = models.ForeignKey('treatment_cs', on_delete=models.PROTECT)
-#     certificate_no_cs = models.ForeignKey('certificate_no_cs', on_delete=models.PROTECT)
-#     color = models.ForeignKey('color_cs', on_delete=models.PROTECT)
-#     measurements = models.ForeignKey('measurements_cs', on_delete=models.PROTECT)
-#     lab = models.ForeignKey('Lab_cs', on_delete=models.PROTECT)
-#     tag_price_cs = models.ForeignKey('tag_price_cs', on_delete=models.PROTECT)
-#     status = models.BooleanField()
+#inventoryofcolorstones
 
+class Inventoryofcolorstones(models.Model):
+    stockid = models.CharField(max_length=30)
+    location = models.CharField(max_length=30)
+    shape = models.CharField(max_length=30)
+    gem_type = models.CharField(max_length=30)
+    weight = models.IntegerField()
+    origin = models.CharField(max_length=30)
+    treatment = models.CharField(max_length=30)
+    certificate_no_cs = models.CharField(max_length=30)
+    color = models.CharField(max_length=30)
+    measurements = models.FloatField()
+    lab = models.CharField(max_length=30)
+    tag_price_cs = models.FloatField()
+    status = models.BooleanField()
+
+#inventory of diamonds
 # class fancy_colour_grade(models.Model):
 #     fancy_color_grade = models.CharField(max_length=30)
 
@@ -532,7 +536,7 @@ class Inventory(models.Model):
 
 
 
-
+ 
 
 # class Inventoryofdiamond(models.Model):
 #     stockid = models.CharField()
@@ -550,17 +554,16 @@ class Inventory(models.Model):
 #     depth = models.F()
 #     table = models.()
 #     fluorescence_intensity = models.ForeignKey('fluorescence_intensity',on_delete=models.PROJECT)
-#     fluorescence_color = models.('fluorescence_color',on_delete=models.PROJECT)
+#     fluorescence_color = models.ForeignKey('fluorescence_color',on_delete=models.PROJECT)
 #     certicate_number = models.
-#     certificate = models.ForeignKey(
-#         'certificate_d', on_delete=models.PROTECT)
+#     certificate = models.ForeignKey('certificate_d', on_delete=models.PROTECT)
 #     laser_inscription = models.
 #     pcs = models.IntegerField()
-#     tag_price = models.
+#     tag_price = models.FloatField()
 #     status = models.
 
 
-## class tag_price_cs(models.Model):
+# # class tag_price_d(models.Model):
 #     tag = models.CharField(max_length=30)
 
 #     def __str__(self):
@@ -572,16 +575,34 @@ class Inventory(models.Model):
 #      jewellery_type = models.ForeignKey()
 #      centre_stone = models.ForeignKey()
 #      color_centre_stone = models.ForeignKey()
-#      shape = models.ForeignKey()
-#      metal = models.ForeignKey()
+#      shape = models.ForeignKey("shape_j", on_delete=models.PROTECT)
+#      metal = models.ForeignKey("metal_j", on_delete=models.PROTECT)
 #      gross_weight = models.ForeignKey()
-#      certificate=models.ForeignKey()
-#      pcs=models.ForeignKey()
-#      tag_price = models.ForeignKey()
+#      certificate=models.ForeignKey("certificate_j", on_delete=models.PROTECT)
+#      pcs=models.IntegerField()
+#      tag_price = models.FloatField()
 #      status = models.BooleanField()
 
+#class tag_price_j(models.Model):
+#     tag = models.CharField(max_length=30)
 
+#     def __str__(self):
+#         self.tag_price
      
-     
-     
+ # class certificate_j(models.Model):
+#     certificate = models.CharField(max_length=30)
 
+#     def __str__(self):
+#         self.certificate    
+     
+# class shape_j(models.Model):
+#     shape = models.CharField(max_length=30)
+
+#     def __str__(self):
+#         self.shape
+
+# class metal_j(models.Model):
+#     metal = models.CharField(max_length=30)
+
+#     def __str__(self):
+#         self.metal

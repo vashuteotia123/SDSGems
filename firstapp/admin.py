@@ -40,13 +40,27 @@ class certadmin(admin.ModelAdmin):
 @admin.register(currencies)
 class curradm(admin.ModelAdmin):
     pass
-# @admin.register(PurchaseOfColorStones)
-# class pocsadmin(admin.ModelAdmin):
-#     pass
-
-
-@admin.register(Inventory)
-class inventoryadm(admin.ModelAdmin):
+@admin.register(PurchaseOfColorStones)
+class pocsadmin(admin.ModelAdmin):
+    pass
+    
+@admin.register(Treatment_cs)
+class treatcsadmin(admin.ModelAdmin):
+    pass
+@admin.register(Origin_cs)
+class originadmin(admin.ModelAdmin):
+    pass
+@admin.register(certificate_no_cs)
+class certadmin(admin.ModelAdmin):
+    pass
+@admin.register(Lab_cs)
+class labadmin(admin.ModelAdmin):
+    pass
+@admin.register(shape_cs)
+class shapeadmin(admin.ModelAdmin):
+    pass
+@admin.register(Inventoryofcolorstones)
+class inventoryofcsadm(admin.ModelAdmin):
     pass
 @admin.register(shape1)
 class shapeadm(admin.ModelAdmin):

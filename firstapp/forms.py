@@ -9,6 +9,10 @@ class POJForm(forms.ModelForm):
     class Meta:
         model = POJ
         fields = "__all__"
+class POCSForm(forms.ModelForm):
+    class Meta:
+        model = PurchaseOfColorStones
+        fields = "__all__"
 
 # class PODForm(forms.ModelForm):
 #     class Meta:
