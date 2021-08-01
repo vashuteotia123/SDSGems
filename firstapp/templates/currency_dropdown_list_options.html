@@ -1,0 +1,4 @@
+<option value="">---------</option>
+{% for Currency in currency %}
+<option value="{{ Currency.pk }}">{{ Currency.name }}</option>
+{% endfor %}

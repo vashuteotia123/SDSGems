@@ -1,0 +1,25 @@
+{% load static %}
+<html>
+  <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"> -->
+  <form method="POST" id="companyform" curr-url="(% url 'ajax/load-currency/' %)">
+    {% csrf_token %} {{formshow}}
+    <button type="submit">Submit</button>
+  </form>
+</html>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<!-- <script>
+  $("#id_country").change(function(){
+    const url = $("#companyform").attr("ajax/load-currency/");
+    const countryId = $(this).val();
+
+    $.ajax({
+      url: url,
+      data: {
+           'country_id' : countryId
+      },
+      sucess: function(data){
+        $("#id_currency").html(data);
+      }
+    })
+  }
+</script> -->
