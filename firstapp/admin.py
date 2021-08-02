@@ -18,7 +18,9 @@ class gemtype(admin.ModelAdmin):
 @admin.register(POJ)
 class PurchaseOFJewell(admin.ModelAdmin):
     pass
-
+@admin.register(Inventoryofjewellery)
+class iojadmin(admin.ModelAdmin):
+    pass
 @admin.register(loc)
 class LocAdmin(admin.ModelAdmin):
     pass

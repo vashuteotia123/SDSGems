@@ -30,7 +30,11 @@ def showform(request):
         #     get_object.pieces += curr_pieces
         # else:
         #     new_object = invrt(jeweltype=form.cleaned_data['jeweltpye'], pieces=form.cleaned_data['pieces'])
-        obj=Inventory.objects.create(center_stone=form.cleaned_data['center_stone'],shape=form.cleaned_data['shape'])
+        obj=Inventoryofjewellery.objects.create(location=form.cleaned_data['location'],jewellery_type=form.cleaned_data['jewellery']
+            ,center_stone=form.cleaned_data['center_stone']
+            ,color_of_center_stone=form.cleaned_data['color_of_center_stone'],shape=form.cleaned_data['shape']
+            ,metal=form.cleaned_data['metal'],grosswt=form.cleaned_data['grosswt'],cert=form.cleaned_data['cert']
+            ,pcs=form.cleaned_data['pcs'],tag_price=form.cleaned_data['tag_price'])
         
         form.save()  #data extract
         return render(request,"index.html")
@@ -41,6 +45,26 @@ def showform(request):
 
 def formsubmit(request):
     return render(request,"index.html")
+
+# def showform(request):
+#     form=POCSForm(request.POST)
+#     if(form.is_valid()):
+#         # jeweltype = form.cleaned_data["jeweltype"]
+#         # invt_data = invrt.objects.all()
+#         # if jeweltype in invt_data.jeweltype:
+#         #     get_object = invt.objects.get(jeweltype=jeweltype))
+#         #     curr_pieces = form.cleaned_data['pieces']
+#         #     get_object.pieces += curr_pieces
+#         # else:
+#         #     new_object = invrt(jeweltype=form.cleaned_data['jeweltpye'], pieces=form.cleaned_data['pieces'])
+#         # obj=Inventory.objects.create(center_stone=form.cleaned_data['center_stone'],shape=form.cleaned_data['shape'])
+        
+#         form.save()  #data extract
+#         return render(request,"index.html")
+#     context={
+#         "formshow":form,
+#     }
+#     return render(request,"form.html",context=context)
 
 
 # def showform2(request):
