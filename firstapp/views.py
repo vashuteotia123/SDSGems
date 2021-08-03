@@ -1,3 +1,4 @@
+from django.http.response import HttpResponse
 from django.shortcuts import render
 from .models import *
 from .forms import *
@@ -85,3 +86,21 @@ def formsubmit(request):
 #     currency = currencies.objects.filter(country_id=country_id).all()
 #     return render(request, 'templates/currency_dropdown_list_options.html', {'currency' : currency})
 
+
+
+def deleteid(request,idno):
+    current=Inventoryofjewellery.objects.get(id=idno)
+    current.delete()
+    return render(request,"delete.html")
+
+def showjewell(request):
+    objjewell=Inventoryofjewellery.objects.all()
+    context={
+        "showjewellery":objjewell,
+    }
+    return render(request,"showj.html",context=context)
+    
+# def delete(request, idno):
+#     query = Inventoryofjewellery.objects.get(pk=idno)
+#     query.delete()
+#     return HttpResponse("Deleted!")

@@ -10,7 +10,9 @@ class CountryAdmin(admin.ModelAdmin):
 
 @admin.register(companyinfo)
 class CompanyAdmin(admin.ModelAdmin):
-    pass
+    actions=['return']
+    search_fields = ['company_name']
+    list_display=[f.name for f in companyinfo._meta.fields]
 
 @admin.register(gemtype)
 class gemtype(admin.ModelAdmin):

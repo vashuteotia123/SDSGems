@@ -159,254 +159,314 @@ class Inventoryofjewellery(models.Model):
 
 # purchase of diamonds
 
-# class certificate_d(models.Model):
-#     certd = models.CharField(max_length=30)
+class certificate_d(models.Model):
+    certd = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         return self.certd
+    def __str__(self):
+        return self.certd
 
 
-# class clarity(models.Model):
-#     clarity = models.CharField(max_length=30)
+class clarity(models.Model):
+    clarity = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         return self.clarity
+    def __str__(self):
+        return self.clarity
 
 
-# class color_origin(models.Model):
-#     c_o = models.CharField(max_length=30)
+class color_origin(models.Model):
+    c_o = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         return self.c_o
+    def __str__(self):
+        return self.c_o
 
 
-# class white_color_grade(models.Model):
-#     w_c_g = models.CharField(max_length=30)
+class white_color_grade(models.Model):
+    w_c_g = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         return self.w_c_g
+    def __str__(self):
+        return self.w_c_g
 
 
-# class fancy_color_intensity(models.Model):
-#     f_c_i = models.CharField(max_length=30)
+class fancy_color_intensity(models.Model):
+    f_c_i = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         return self.f_c_i
+    def __str__(self):
+        return self.f_c_i
 
 
-# class overtone(models.Model):
-#     over_t = models.CharField(max_length=30)
+class overtone(models.Model):
+    over_t = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         return self.over_t
+    def __str__(self):
+        return self.over_t
 
 
-# class fancycolor1(models.Model):
-#     f_color1 = models.CharField(max_length=30)
+class fancycolor1(models.Model):
+    f_color1 = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         return self.f_color1
+    def __str__(self):
+        return self.f_color1
 
 
-# class fancycolor2(models.Model):
-#     f_color2 = models.CharField(max_length=30)
+class fancycolor2(models.Model):
+    f_color2 = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         return self.f_color2
+    def __str__(self):
+        return self.f_color2
 
 
-# class fancycolor_grade(models.Model):
-#     f_c_grade = models.CharField(max_length=30)
+class fancycolor_grade(models.Model):
+    f_c_grade = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         return self.f_c_grade
+    def __str__(self):
+        return self.f_c_grade
 
 
-# class cut(models.Model):
-#     cut = models.CharField(max_length=30)
+class cut(models.Model):
+    cut = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         return self.cut
+    def __str__(self):
+        return self.cut
 
 
-# class polish(models.Model):
-#     polish = models.CharField(max_length=30)
+class polish(models.Model):
+    polish = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         return self.polish
+    def __str__(self):
+        return self.polish
 
 
-# class symmetry(models.Model):
-#     symmetry = models.CharField(max_length=30)
+class symmetry(models.Model):
+    symmetry = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         return self.symmetry
+    def __str__(self):
+        return self.symmetry
 
 
-# class measurements(models.Model):
-#     measurements = models.CharField(max_length=30)
+class measurements_d(models.Model):
+    measurements = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         return self.measurements
+    def __str__(self):
+        return self.measurements
 
 
-# class depths(models.Model):
-#     depth = models.CharField(max_length=30)
+class depths(models.Model):
+    depth = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         return self.depth
+    def __str__(self):
+        return self.depth
 
 
-# class table(models.Model):
-#     table = models.CharField(max_length=30)
+class table(models.Model):
+    table = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         return self.table
+    def __str__(self):
+        return self.table
 
 
-# class fluorescence_intensity(models.Model):
-#     f_intensity = models.CharField(max_length=30)
+class fluorescence_intensity(models.Model):
+    f_intensity = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         return self.f_intensity
+    def __str__(self):
+        return self.f_intensity
 
 
-# class fluorescence_color(models.Model):
-#     f_color = models.CharField(max_length=30)
+class fluorescence_color(models.Model):
+    f_color = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         return self.f_color
+    def __str__(self):
+        return self.f_color
 
 
-# class certificate_no(models.Model):
-#     certificate_no = models.IntegerField()
+class certificate_no(models.Model):
+    certificate_no = models.IntegerField()
 
-#     def __str__(self):
-#         return self.certificate_no
+    def __str__(self):
+        return self.certificate_no
 
 
-# class laser_inscription(models.Model):
-#     laser_inscription = models.CharField(max_length=30)
+class laser_inscription(models.Model):
+    laser_inscription = models.CharField(max_length=30)
 
-#     def __str__(self):
-#         return self.laser_inscription
+    def __str__(self):
+        return self.laser_inscription
 
 
-# class PCS_d(models.Model):
-#     PCS = models.IntegerField()
+class PCS_d(models.Model):
+    PCS = models.IntegerField()
 
-#     def __str__(self):
-#         return self.PCS
+    def __str__(self):
+        return self.PCS
 
 
-# class weight_d(models.Model):
-#     w = models.FloatField()
+class weight_d(models.Model):
+    w = models.FloatField()
 
-#     def __str__(self):
-#         return self.w
+    def __str__(self):
+        return self.w
 
 
-# class price(models.Model):
-#     price = models.FloatField()
+class price(models.Model):
+    price = models.FloatField()
 
-#     def __str__(self):
-#         return self.price
+    def __str__(self):
+        return self.price
 
 
-# class units(models.Model):
-#     unit = models.FloatField()
+class units(models.Model):
+    unit = models.FloatField()
 
-#     def __str__(self):
-#         return self.unit
+    def __str__(self):
+        return self.unit
 
 
-# class amount(models.Model):
-#     amount = models.FloatField()
+class amount(models.Model):
+    amount = models.FloatField()
 
-#     def __str__(self):
-#         return self.amount
+    def __str__(self):
+        return self.amount
 
 
-# class DIS(models.Model):
-#     dis = models.FloatField()
+class DIS(models.Model):
+    dis = models.FloatField()
 
-#     def __str__(self):
-#         return self.dis
+    def __str__(self):
+        return self.dis
 
 
-# class DIS_amount(models.Model):
-#     amount = models.FloatField()
+class DIS_amount(models.Model):
+    amount = models.FloatField()
 
-#     def __str__(self):
-#         return self.DIS_amount
+    def __str__(self):
+        return self.DIS_amount
 
 
-# class total_value_d(models.Model):
-#     total_value = models.FloatField()
+class total_value_d(models.Model):
+    total_value = models.FloatField()
 
-#     def __str__(self):
-#         return self.total_value
+    def __str__(self):
+        return self.total_value
 
 
-# class tag_price_d(models.Model):
-#     tag_price = models.FloatField()
+class tag_price_d(models.Model):
+    tag_price = models.FloatField()
 
-#     def __str__(self):
-#         return self.tag_price
+    def __str__(self):
+        return self.tag_price
 
 
-# class rate_d(models.Model):
-#     rate_d = models.FloatField()
+class rate_d(models.Model):
+    rate_d = models.FloatField()
 
-#     def __str__(self):
-#         return self.rate_d
+    def __str__(self):
+        return self.rate_d
 
 
-# class shape_d(models.Model):
-#     shape = models.CharField(max_length=30)
-#     def __str__(self):
-#         return self.shape
+class shape_d(models.Model):
+    shape = models.CharField(max_length=30)
+    def __str__(self):
+        return self.shape
 
 
-# class POD(models.Model):
-#     date = models.DateField(auto_now_add=True)
-#     stockid_d = models.CharField(max_length=30)
-#     company_name = models.ForeignKey('CompanyInfo', on_delete=PROTECT)
-#     location = models.ForeignKey('loc', on_delete=models.PROTECT, null=True)
-#     shape = models.ForeignKey('shape_d', on_delete=models.PROTECT, null=True)
-#     clarity = models.ForeignKey('clarity', on_delete=models.PROTECT)
-#     color_origin1 = models.ForeignKey('color_origin', on_delete=models.PROTECT)
-#     white_color_grade1 = models.ForeignKey('white_color_grade', on_delete=models.PROTECT)
-#     fancy_color_intensity1 = models.ForeignKey('fancy_color_intensity', on_delete=models.PROTECT)
-#     overtone = models.ForeignKey('overtone', on_delete=models.PROTECT)
-#     fancycolor1 = models.ForeignKey('fancycolor1', on_delete=models.PROTECT)
-#     fancycolor2 = models.ForeignKey('fancycolor2', on_delete=models.PROTECT)
-#     fancycolor_grade = models.IntegerField()
-#     cut = models.ForeignKey('cut', on_delete=models.PROTECT)
-#     polish = models.ForeignKey('polish', on_delete=models.PROTECT)
-#     symmetry = models.ForeignKey('symmetry', on_delete=models.PROTECT)
-#     measurements = models.IntegerField()
-#     depth = models.IntegerField()
-#     table_perc = models.IntegerField()
-#     fluorescence_intensity = models.ForeignKey('fluorescence_intensity', on_delete=models.PROTECT)
-#     fluorescence_color = models.ForeignKey(
-#         'fluorescence_color', on_delete=models.PROTECT)
-#     certificate_no = models.CharField(max_length=30)
-#     certificate_d = models.ForeignKey(
-#         'certificate_d', on_delete=models.PROTECT)
-#     laser_inscription = models.BooleanField()
-#     PCS_d = models.IntegerField()
-#     weight_d = models.FloatField()
-#     price = models.FloatField()
-#     units = models.IntegerField()
-#     amount = models.FloatField()
-#     DIS = models.FloatField()
-#     DIS_Amount = models.FloatField()
-#     total_val_d = models.FloatField()
-#     currency = models.ForeignKey('Currency', on_delete=models.PROTECT)
-#     tag_price_d = models.FloatField()
-#     rate_d = models.FloatField()
-      
+class POD(models.Model):
+    date = models.DateField(auto_now_add=True)
+    stockid_d = models.CharField(max_length=30)
+    company_name = models.ForeignKey('CompanyInfo', on_delete=PROTECT)
+    location = models.ForeignKey('loc', on_delete=models.PROTECT, null=True)
+    shape = models.ForeignKey('shape_d', on_delete=models.PROTECT, null=True)
+    clarity = models.ForeignKey('clarity', on_delete=models.PROTECT)
+    color_origin1 = models.ForeignKey('color_origin', on_delete=models.PROTECT)
+    white_color_grade1 = models.ForeignKey('white_color_grade', on_delete=models.PROTECT)
+    fancy_color_intensity1 = models.ForeignKey('fancy_color_intensity', on_delete=models.PROTECT)
+    overtone = models.ForeignKey('overtone', on_delete=models.PROTECT)
+    fancycolor1 = models.ForeignKey('fancycolor1', on_delete=models.PROTECT)
+    fancycolor2 = models.ForeignKey('fancycolor2', on_delete=models.PROTECT)
+    fancycolor_grade = models.ForeignKey('fancycolor_grade', on_delete=models.PROTECT)
+    cut = models.ForeignKey('cut', on_delete=models.PROTECT)
+    polish = models.ForeignKey('polish', on_delete=models.PROTECT)
+    symmetry = models.ForeignKey('symmetry', on_delete=models.PROTECT)
+    measurements = models.IntegerField()
+    depth = models.IntegerField()
+    table_perc = models.IntegerField()
+    fluorescence_intensity = models.ForeignKey('fluorescence_intensity', on_delete=models.PROTECT)
+    fluorescence_color = models.ForeignKey('fluorescence_color', on_delete=models.PROTECT)
+    certificate_no = models.CharField(max_length=30)
+    certificate_d = models.ForeignKey('certificate_d', on_delete=models.PROTECT)
+    laser_inscription = models.BooleanField()
+    PCS_d = models.IntegerField()
+    weight_d = models.FloatField()
+    price = models.FloatField()
+    units = models.IntegerField()
+    amount_d = models.DecimalField(decimal_places=2, max_digits=9)
+    DIS_d = models.PositiveSmallIntegerField(blank=True, null=True)
+    DIS_Amount = models.DecimalField(decimal_places=2, max_digits=9, blank=True, null=True)
+    total_val_d = models.FloatField()
+    def save(self, *args, **kwargs):
+            self.discount_amount = (self.amount_d * self.DIS_d) // 100
+            self.stockid_d=str(str('D-')+str(self.id))
+            self.total_value_d=self.amount_d-self.DIS_amount
+            super(POD, self).save(*args, **kwargs)
+    currency = models.ForeignKey('currencies', on_delete=models.PROTECT)
+    tag_price_d = models.FloatField()
+    rate_d = models.FloatField()
+    def __str__(self):
+       return str(self.stockid_d) 
+       
+# inventory of diamonds
+class fancy_colour_grade(models.Model):
+    fancy_color_grade = models.CharField(max_length=30)
+
+    def __str__(self):
+        self.fancy_color_grade
+
+class weight_d(models.Model):
+    weight_d = models.CharField(max_length=30)
+
+    def __str__(self):
+        self.weight_d
+
+class measurement_d(models.Model):
+    measurement_d = models.CharField(max_length=30)
+
+    def __str__(self):
+        self.measurement_d
+
+class certificate_no_d(models.Model):
+    certificate_no_d = models.CharField(max_length=30)
+
+    def __str__(self):
+        self.certificate_no_d
+
+class laser_inscription_d(models.Model):
+    laser_inscription_d = models.CharField(max_length=30)
+
+    def __str__(self):
+        self.laser_inscription_d
+ 
+# Inventory of Diamond
+class Inventoryofdiamond(models.Model):
+    stockid = models.CharField(max_length=30)
+    location = models.CharField(max_length=30)
+    shape = models.CharField(max_length=30)
+    clarity = models.CharField(max_length=30)
+    white_color_grade = models.CharField(max_length=30)
+    fancy_color_intensity = models.CharField(max_length=30)
+    fancy_color_grade = models.CharField(max_length=30)
+    weight = models.IntegerField()
+    cut = models.CharField(max_length=30)
+    polish = models.CharField(max_length=30)
+    symmetry = models.CharField(max_length=30)
+    measurements = models.FloatField()
+    depth = models.CharField(max_length=30)
+    table = models.CharField(max_length=30)
+    fluorescence_intensity = models.CharField(max_length=30)
+    fluorescence_color = models.CharField(max_length=30)
+    certicate_number = models.CharField(max_length=30)
+    certificate = models.CharField(max_length=30)
+    laser_inscription = models.CharField(max_length=30)
+    pcs = models.IntegerField()
+    tag_price = models.FloatField()
+    status = models.BooleanField()
 
 # purchase of Colour Stones
 class Origin_cs(models.Model):
@@ -513,70 +573,3 @@ class Inventoryofcolorstones(models.Model):
     lab = models.CharField(max_length=30)
     tag_price_cs = models.FloatField()
     status = models.BooleanField()
-
-#inventory of diamonds
-# class fancy_colour_grade(models.Model):
-#     fancy_color_grade = models.CharField(max_length=30)
-
-#     def __str__(self):
-#         self.fancy_color_grade
-
-# class weight_d(models.Model):
-#     weight_d = models.CharField(max_length=30)
-
-#     def __str__(self):
-#         self.weight_d
-
-# class measurement_d(models.Model):
-#     measurement_d = models.CharField(max_length=30)
-
-#     def __str__(self):
-#         self.measurement_d
-
-# class certificate_no_d(models.Model):
-#     certificate_no_d = models.CharField(max_length=30)
-
-#     def __str__(self):
-#         self.certificate_no_d
-
-# class laser_inscription_d(models.Model):
-#     laser_inscription_d = models.CharField(max_length=30)
-
-#     def __str__(self):
-#         self.laser_inscription_d
-
-
-
- 
-
-# class Inventoryofdiamond(models.Model):
-#     stockid = models.CharField()
-#     location = models.ForeignKey('loc', on_delete=models.PROTECT)
-#     shape = models.ForeignKey('shape_d', on_delete=models.PROTECT)
-#     clarity = models.ForeignKey('clarity', on_delete=models.PROTECT)
-#     white_color_grade = models.ForeignKey('white_colour_grade',on_delete=models.PROJECT)
-#     fancy_color_intensity = models.ForeignKey('fancy_colour_intensity',on_delete=models.PROJECT)
-#     fancy_color_grade = models.
-#     weight = models.ForeignKey('weight_d', on_delete=models.PROTECT)
-#     cut = models.ForeignKey('cut', on_delete=models.PROTECT)
-#     polish = models.ForeignKey('polish', on_delete=models.PROTECT)
-#     symmetry = models.ForeignKey('symmetry', on_delete=models.PROTECT)
-#     measurements = models.
-#     depth = models.F()
-#     table = models.()
-#     fluorescence_intensity = models.ForeignKey('fluorescence_intensity',on_delete=models.PROJECT)
-#     fluorescence_color = models.ForeignKey('fluorescence_color',on_delete=models.PROJECT)
-#     certicate_number = models.
-#     certificate = models.ForeignKey('certificate_d', on_delete=models.PROTECT)
-#     laser_inscription = models.
-#     pcs = models.IntegerField()
-#     tag_price = models.FloatField()
-#     status = models.BooleanField()
-
-
-# # class tag_price_d(models.Model):
-#     tag = models.CharField(max_length=30)
-
-#     def __str__(self):
-#         self.tag_price
-

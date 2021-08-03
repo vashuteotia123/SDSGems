@@ -10,4 +10,7 @@ urlpatterns = [
     path('showform',views.showform,name="showdform"),
     path('formsubmit',views.formsubmit,name="formsubmit"),
     # path('ajax/load-currency/',views.load_currency,name="ajax/load-currency/")
+    path('showj',views.showjewell,name="showjewell"),
+    path('deleteid<int:idno>',views.deleteid,name="deleteid"),
+    # path(r'^delete/(?P<idno>\d+)/$',views.deleteid, name='deleteid')
 ]
