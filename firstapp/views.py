@@ -36,8 +36,8 @@ def showform(request):
             ,color_of_center_stone=form.cleaned_data['color_of_center_stone'],shape=form.cleaned_data['shape']
             ,metal=form.cleaned_data['metal'],grosswt=form.cleaned_data['grosswt'],cert=form.cleaned_data['cert']
             ,pcs=form.cleaned_data['pcs'],tag_price=form.cleaned_data['tag_price'])
-        
-        form.save()  #data extract
+        #call inventory save method here for stockid?
+        form.save() 
         return render(request,"index.html")
     context={
         "formshow":form,
