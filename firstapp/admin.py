@@ -69,3 +69,56 @@ class inventoryofcsadm(admin.ModelAdmin):
 @admin.register(shape1)
 class shapeadm(admin.ModelAdmin):
     pass 
+@admin.register(POD)
+class PODadmin(admin.ModelAdmin):
+    pass
+@admin.register(Inventoryofdiamond)
+class inventoryofdiamondadm(admin.ModelAdmin):
+    pass
+@admin.register(shape_d)
+class shapedadmin(admin.ModelAdmin):
+    pass
+
+@admin.register(clarity)
+class clarityadmin(admin.ModelAdmin):
+    pass
+
+@admin.register(color_origin)
+class color_originadmin(admin.ModelAdmin):
+    pass
+
+@admin.register(white_color_grade)
+class white_color_gradeadmin(admin.ModelAdmin):
+    pass
+
+@admin.register(fancy_color_intensity)
+class fancy_color_intensityadmin(admin.ModelAdmin):
+    pass
+
+@admin.register(fancycolor_grade)
+class fancycolor_gradeadmin(admin.ModelAdmin):
+    pass
+
+@admin.register(cut)
+class cutadmin(admin.ModelAdmin):
+    pass
+
+@admin.register(polish)
+class polishadmin(admin.ModelAdmin):
+    pass
+
+@admin.register(symmetry)
+class symmetryadmin(admin.ModelAdmin):
+    pass
+
+@admin.register(fluorescence_intensity)
+class fluoroscence_intensityadmin(admin.ModelAdmin):
+    pass
+
+@admin.register(fluorescence_color)
+class fluorescence_intensityadmin(admin.ModelAdmin):
+    pass
+
+@admin.register(certificate_d)
+class certificate_dadmin(admin.ModelAdmin):
+    pass

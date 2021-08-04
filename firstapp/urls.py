@@ -12,5 +12,6 @@ urlpatterns = [
     # path('ajax/load-currency/',views.load_currency,name="ajax/load-currency/")
     path('showj',views.showjewell,name="showjewell"),
     path('deleteid<int:idno>',views.deleteid,name="deleteid"),
+    path('showform2',views.showform2,name="showform2"),
     # path(r'^delete/(?P<idno>\d+)/$',views.deleteid, name='deleteid')
 ]

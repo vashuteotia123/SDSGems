@@ -47,32 +47,43 @@ def showform(request):
 def formsubmit(request):
     return render(request,"index.html")
 
-# def showform(request):
+# def showform1(request):
 #     form=POCSForm(request.POST)
 #     if(form.is_valid()):
-#         # jeweltype = form.cleaned_data["jeweltype"]
-#         # invt_data = invrt.objects.all()
-#         # if jeweltype in invt_data.jeweltype:
-#         #     get_object = invt.objects.get(jeweltype=jeweltype))
-#         #     curr_pieces = form.cleaned_data['pieces']
-#         #     get_object.pieces += curr_pieces
-#         # else:
-#         #     new_object = invrt(jeweltype=form.cleaned_data['jeweltpye'], pieces=form.cleaned_data['pieces'])
-#         # obj=Inventory.objects.create(center_stone=form.cleaned_data['center_stone'],shape=form.cleaned_data['shape'])
+        # jeweltype = form.cleaned_data["jeweltype"]
+        # invt_data = invrt.objects.all()
+        # if jeweltype in invt_data.jeweltype:
+        #     get_object = invt.objects.get(jeweltype=jeweltype))
+        #     curr_pieces = form.cleaned_data['pieces']
+        #     get_object.pieces += curr_pieces
+        # else:
+        #     new_object = invrt(jeweltype=form.cleaned_data['jeweltpye'], pieces=form.cleaned_data['pieces'])
+    #     obj1=Inventoryofcolorstones.objects.create(location=form.cleaned_data['location'],shape=form.cleaned_data['shape'],gem_type=form.cleaned_data['gem_type']
+    #     ,weight=form.cleaned_data['weight'],origin=form.cleaned_data['origin'],treatment=form.cleaned_data['treatment']
+    #     ,certificate_no_cs=form.cleaned_data['certificate_no_cs'],color=form.cleaned_data['color'],measurements=form.cleaned_data['measurements']
+    #     ,lab=form.cleaned_data['lab'],tag_price_cs=form.cleaned_data['tag_price_cs'])
         
-#         form.save()  #data extract
-#         return render(request,"index.html")
-#     context={
-#         "formshow":form,
-#     }
-#     return render(request,"form.html",context=context)
+    #     form.save()  #data extract
+    #     return render(request,"index.html")
+    # context={
+    #     "formshow":form,
+    # }
+    # return render(request,"form.html",context=context)
 
 
-# def showform2(request):
-#     form2=PODForm(request.POST)
-#     if(form2.is_valid()):
-        
+def showform2(request):
+    form2=PODForm(request.POST)
+    if(form2.is_valid()):
 
+        form2.save()
+        return render(request,"index.html")
+    context={
+        "formshow2":form2,
+    }
+    return render(request,"form2.html",context=context)
+
+    
+    
 
 
 
