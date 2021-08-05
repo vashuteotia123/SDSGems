@@ -109,7 +109,7 @@ class currencies(models.Model):
 class POJ(models.Model):
 
     date = models.DateField(auto_now_add=True)
-    stockid = models.CharField(max_length=30,blank=True)
+    # stockid = models.CharField(max_length=30,blank=True)
     company_name = models.ForeignKey('companyinfo', on_delete=PROTECT,blank=True)
     location = models.ForeignKey('loc', on_delete=models.PROTECT, null=True, blank=True)
     jewellery = models.ForeignKey('jewell', on_delete=models.PROTECT, null=True,blank=True)
@@ -129,13 +129,18 @@ class POJ(models.Model):
     def save(self, *args, **kwargs):
 
         self.discount_amount = (self.amount * self.discount) // 100
-        self.stockid=str(str('J-')+str(self.id))
+        # self.stockid=str(str('J-')+str(self.id))
         self.total_val_j=self.amount-self.discount_amount
         super(POJ, self).save(*args, **kwargs)
-   
+        obj=Inventoryofjewellery.objects.create(stockid=str('J-')+str(self.id),location=self.location,jewellery_type=self.jewellery
+            ,center_stone=self.center_stone
+            ,color_of_center_stone=self.color_of_center_stone,shape=self.shape
+            ,metal=self.metal,grosswt=self.grosswt,cert=self.cert
+            ,pcs=self.pcs,tag_price=self.tag_price)
     currencyid = models.ForeignKey('currencies', on_delete=models.PROTECT,null=True,blank=True)
     tag_price = models.FloatField() 
     rate = models.FloatField() 
+    #salesapproval
     def __str__(self):
         return str(self.id)
 class Inventoryofjewellery(models.Model):
@@ -149,11 +154,12 @@ class Inventoryofjewellery(models.Model):
      grosswt = models.FloatField()
      cert=models.CharField(max_length=30)
      pcs=models.IntegerField()
-     def save(self, *args, **kwargs):
+    #  def save(self, *args, **kwargs):
 
-        self.stockid=str('J-')+str(self.id)
-        super(Inventoryofjewellery, self).save(*args, **kwargs)
-
+    #     # self.stockid=str('J-')+str(self.id)
+    #     currobj=super(Inventoryofjewellery, self).save(*args, **kwargs)
+    #     self.stockid=str('J-')+str(currobj.id)
+    #     self.save()
      tag_price = models.FloatField()
      def __str__(self):
         return str(self.id)
@@ -554,8 +560,34 @@ class Inventoryofcolorstones(models.Model):
     lab = models.CharField(max_length=30)
     tag_price_cs = models.FloatField()
     status = models.BooleanField()
-    def save(self, *args, **kwargs):
-        self.stockid=str(str('C-')+str(self.id))
-        super(Inventoryofcolorstones, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     self.stockid=str(str('C-')+str(self.id))
+    #     super(Inventoryofcolorstones, self).save(*args, **kwargs)
     def ___str__(self):
         return self.id
+
+# class Salesofcolorstones(models.Model):
+#     date=models.DateField(auto_now_add=True)
+#     stockid = models.CharField(max_length=30)
+#     company_name = models.CharField(max_length=30)
+#     location=models.CharField(max_length=30)
+#     shape = models.CharField(max_length=30)
+#     gem_type = models.CharField(max_length=30)
+#     origin=models.CharField(max_length=30)
+#     treatment=models.CharField(max_length=30)
+#     clarity=models.CharField(max_length=30)
+#     certificate_no=models.CharField(max_length=30)
+#     color=models.CharField(max_length=30)
+#     measurements = models.FloatField()
+#     lab=models.CharField(max_length=30)
+#     PCS=models.IntegerField()
+#     weight=models.FloatField()
+#     price=models.FloatField()
+#     units=models.IntegerField()
+#     amount = models.FloatField()
+#     DIS=models.FloatField()
+#     DIS_amount=models.FloatField()
+#     total_value=models.FloatField()
+#     currency=models.CharField(max_length=30)
+#     tag_price=models.FloatField()
+#     rate=models.FloatField()

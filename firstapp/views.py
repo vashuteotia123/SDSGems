@@ -22,6 +22,8 @@ def show_data(request):
     return render(request,"show_data.html",context=context)
 def showform(request):
     form=POJForm(request.POST)
+    # countone=POJ.objects.all().count()
+    # print(countone)
     if(form.is_valid()):
         # jeweltype = form.cleaned_data["jeweltype"]
         # invt_data = invrt.objects.all()
@@ -31,13 +33,12 @@ def showform(request):
         #     get_object.pieces += curr_pieces
         # else:
         #     new_object = invrt(jeweltype=form.cleaned_data['jeweltpye'], pieces=form.cleaned_data['pieces'])
-        obj=Inventoryofjewellery.objects.create(location=form.cleaned_data['location'],jewellery_type=form.cleaned_data['jewellery']
-            ,center_stone=form.cleaned_data['center_stone']
-            ,color_of_center_stone=form.cleaned_data['color_of_center_stone'],shape=form.cleaned_data['shape']
-            ,metal=form.cleaned_data['metal'],grosswt=form.cleaned_data['grosswt'],cert=form.cleaned_data['cert']
-            ,pcs=form.cleaned_data['pcs'],tag_price=form.cleaned_data['tag_price'])
+        
         #call inventory save method here for stockid?
-        form.save() 
+        # Inventoryofjewellery.obj.save()
+        form.save()
+       
+            
         return render(request,"index.html")
     context={
         "formshow":form,

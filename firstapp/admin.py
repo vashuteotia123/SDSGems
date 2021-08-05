@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import *
+from import_export.admin import ImportExportModelAdmin
 # Register your models here.
 @admin.register(Database)
 class DataAdmin(admin.ModelAdmin):
@@ -9,11 +10,14 @@ class CountryAdmin(admin.ModelAdmin):
     pass
 
 @admin.register(companyinfo)
-class CompanyAdmin(admin.ModelAdmin):
-    actions=['return']
+class CompanyAdmin(ImportExportModelAdmin):
+    actions=['change_name']
     search_fields = ['company_name']
     list_display=[f.name for f in companyinfo._meta.fields]
-
+    def change_name(self,request,queryset):
+        queryset.update(company_name="tanishq")
+    
+        
 @admin.register(gemtype)
 class gemtype(admin.ModelAdmin):
     pass 
