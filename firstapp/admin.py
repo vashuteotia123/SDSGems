@@ -16,7 +16,7 @@ class CompanyAdmin(ImportExportModelAdmin):
     list_display=[f.name for f in companyinfo._meta.fields]
     def change_name(self,request,queryset):
         queryset.update(company_name="tanishq")
-    
+   
         
 @admin.register(gemtype)
 class gemtype(admin.ModelAdmin):

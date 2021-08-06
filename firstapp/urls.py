@@ -13,5 +13,6 @@ urlpatterns = [
     path('showj',views.showjewell,name="showjewell"),
     path('deleteid<int:idno>',views.deleteid,name="deleteid"),
     path('showform2',views.showform2,name="showform2"),
+    path('updateJ/<str:pk>/', views.updateJ, name="updateJ"),
     # path(r'^delete/(?P<idno>\d+)/$',views.deleteid, name='deleteid')
 ]

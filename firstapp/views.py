@@ -1,27 +1,37 @@
 from django.http.response import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import *
 from .forms import *
 
 # Create your views here.
+
+
 def index(request):
-    return render(request,'index.html')
+    return render(request, 'index.html')
+
+
 def index2(request):
-    return render(request,'second.html')
+    return render(request, 'second.html')
+
+
 def take_input(request):
-    user_name=request.POST.get("user_name")
-    email_id=request.POST.get("email_id")
-    newinput=Database(username=user_name,email=email_id)
+    user_name = request.POST.get("user_name")
+    email_id = request.POST.get("email_id")
+    newinput = Database(username=user_name, email=email_id)
     newinput.save()
-    return render(request,'second.html')
+    return render(request, 'second.html')
+
+
 def show_data(request):
-    context={
-        "all_data":Database.objects.all(),
-        "countone":Database.objects.all().count(),
+    context = {
+        "all_data": Database.objects.all(),
+        "countone": Database.objects.all().count(),
     }
-    return render(request,"show_data.html",context=context)
+    return render(request, "show_data.html", context=context)
+
+
 def showform(request):
-    form=POJForm(request.POST)
+    form = POJForm(request.POST)
     # countone=POJ.objects.all().count()
     # print(countone)
     if(form.is_valid()):
@@ -33,20 +43,20 @@ def showform(request):
         #     get_object.pieces += curr_pieces
         # else:
         #     new_object = invrt(jeweltype=form.cleaned_data['jeweltpye'], pieces=form.cleaned_data['pieces'])
-        
-        #call inventory save method here for stockid?
+
+        # call inventory save method here for stockid?
         # Inventoryofjewellery.obj.save()
         form.save()
-       
-            
-        return render(request,"index.html")
-    context={
-        "formshow":form,
+
+        return render(request, "index.html")
+    context = {
+        "formshow": form,
     }
-    return render(request,"form.html",context=context)
+    return render(request, "form.html", context=context)
+
 
 def formsubmit(request):
-    return render(request,"index.html")
+    return render(request, "index.html")
 
 # def showform1(request):
 #     form=POCSForm(request.POST)
@@ -63,7 +73,7 @@ def formsubmit(request):
     #     ,weight=form.cleaned_data['weight'],origin=form.cleaned_data['origin'],treatment=form.cleaned_data['treatment']
     #     ,certificate_no_cs=form.cleaned_data['certificate_no_cs'],color=form.cleaned_data['color'],measurements=form.cleaned_data['measurements']
     #     ,lab=form.cleaned_data['lab'],tag_price_cs=form.cleaned_data['tag_price_cs'])
-        
+
     #     form.save()  #data extract
     #     return render(request,"index.html")
     # context={
@@ -73,25 +83,15 @@ def formsubmit(request):
 
 
 def showform2(request):
-    form2=PODForm(request.POST)
+    form2 = PODForm(request.POST)
     if(form2.is_valid()):
 
         form2.save()
-        return render(request,"index.html")
-    context={
-        "formshow2":form2,
+        return render(request, "index.html")
+    context = {
+        "formshow2": form2,
     }
-    return render(request,"form2.html",context=context)
-
-    
-    
-
-
-
-    
-
-
-
+    return render(request, "form2.html", context=context)
 
 # def load_currency(request):
 #     country_id = request.POST.get("country_id")
@@ -99,14 +99,29 @@ def showform2(request):
 #     return render(request, 'templates/currency_dropdown_list_options.html', {'currency' : currency})
 
 
-
-def deleteid(request,idno):
-    current=Inventoryofjewellery.objects.get(id=idno)
+def deleteid(request, idno):
+    current = POJ.objects.get(id=idno)
     current.delete()
-    return render(request,"delete.html")
+    return render(request, "delete.html")
+
+
+def updateJ(request, pk):
+
+    jewel_obj = POJ.objects.get(id=pk)
+    form3 = POJForm(instance=jewel_obj)
+    print("7")
+    if request.method == 'POST':
+        print("2")
+        form3 = POJForm(request.POST, instance=jewel_obj)
+        print("3")
+        form3.save()
+        return redirect('/showj')
+
+    context = {'form3':form3}
+    return render(request, 'update_jewellery.html', context)
 
 def showjewell(request):
-    objjewell=Inventoryofjewellery.objects.all()
+    objjewell=POJ.objects.all()
     context={
         "showjewellery":objjewell,
     }

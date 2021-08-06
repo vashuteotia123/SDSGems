@@ -5,14 +5,10 @@ from .models import *
 #     class Meta:
 #         model = companyinfo
 #         fields = "__all__"
-class POJForminit(forms.ModelForm):
+class POJForm(forms.ModelForm):
     class Meta:
         model = POJ
-        fields = "__all__"
-class POJForm(POJForminit):
-    def __init__(self, *args, **kwargs):
-        super(POJForm, self).__init__(*args, **kwargs)
-        self.fields.pop('stockid')        
+        fields = "__all__"      
 class POCSForm(forms.ModelForm):
     class Meta:
         model = PurchaseOfColorStones
