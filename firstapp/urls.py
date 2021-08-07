@@ -11,8 +11,15 @@ urlpatterns = [
     path('formsubmit',views.formsubmit,name="formsubmit"),
     # path('ajax/load-currency/',views.load_currency,name="ajax/load-currency/")
     path('showj',views.showjewell,name="showjewell"),
+    path('showd',views.showdiamond,name="showdiamond"),
     path('deleteid<int:idno>',views.deleteid,name="deleteid"),
     path('showform2',views.showform2,name="showform2"),
     path('updateJ/<str:pk>/', views.updateJ, name="updateJ"),
+    path('deleteid_d<int:idno>',views.deleteid_d,name="deleteid_d"),
+    path('update_d/<str:dk>/', views.update_d, name="update_d"),
+    #path('showj',views.showcs,name="showcs"),
+    # path('update_cs/<str:ck>/', views.update_cs, name="update_cs"),
+    #path('deleteid_cs<int:idno>',views.deleteid_cs,name="deleteid_cs"),
+    path('cform',views.cform,name="cform"),
     # path(r'^delete/(?P<idno>\d+)/$',views.deleteid, name='deleteid')
 ]

@@ -35,17 +35,6 @@ def showform(request):
     # countone=POJ.objects.all().count()
     # print(countone)
     if(form.is_valid()):
-        # jeweltype = form.cleaned_data["jeweltype"]
-        # invt_data = invrt.objects.all()
-        # if jeweltype in invt_data.jeweltype:
-        #     get_object = invt.objects.get(jeweltype=jeweltype))
-        #     curr_pieces = form.cleaned_data['pieces']
-        #     get_object.pieces += curr_pieces
-        # else:
-        #     new_object = invrt(jeweltype=form.cleaned_data['jeweltpye'], pieces=form.cleaned_data['pieces'])
-
-        # call inventory save method here for stockid?
-        # Inventoryofjewellery.obj.save()
         form.save()
 
         return render(request, "index.html")
@@ -58,28 +47,21 @@ def showform(request):
 def formsubmit(request):
     return render(request, "index.html")
 
-# def showform1(request):
-#     form=POCSForm(request.POST)
-#     if(form.is_valid()):
-        # jeweltype = form.cleaned_data["jeweltype"]
-        # invt_data = invrt.objects.all()
-        # if jeweltype in invt_data.jeweltype:
-        #     get_object = invt.objects.get(jeweltype=jeweltype))
-        #     curr_pieces = form.cleaned_data['pieces']
-        #     get_object.pieces += curr_pieces
-        # else:
-        #     new_object = invrt(jeweltype=form.cleaned_data['jeweltpye'], pieces=form.cleaned_data['pieces'])
+def showform1(request):
+    form1=POCSForm(request.POST)
+    if(form1.is_valid()):
+        #   new_object = invrt(jeweltype=form.cleaned_data['jeweltpye'], pieces=form.cleaned_data['pieces'])
     #     obj1=Inventoryofcolorstones.objects.create(location=form.cleaned_data['location'],shape=form.cleaned_data['shape'],gem_type=form.cleaned_data['gem_type']
     #     ,weight=form.cleaned_data['weight'],origin=form.cleaned_data['origin'],treatment=form.cleaned_data['treatment']
     #     ,certificate_no_cs=form.cleaned_data['certificate_no_cs'],color=form.cleaned_data['color'],measurements=form.cleaned_data['measurements']
     #     ,lab=form.cleaned_data['lab'],tag_price_cs=form.cleaned_data['tag_price_cs'])
 
-    #     form.save()  #data extract
-    #     return render(request,"index.html")
-    # context={
-    #     "formshow":form,
-    # }
-    # return render(request,"form.html",context=context)
+        form1.save() 
+        return render(request,"index.html")
+    context={
+        "formshow":form1,
+    }
+    return render(request,"form.html",context=context)
 
 
 def showform2(request):
@@ -109,11 +91,11 @@ def updateJ(request, pk):
 
     jewel_obj = POJ.objects.get(id=pk)
     form3 = POJForm(instance=jewel_obj)
-    print("7")
+    # print("7")
     if request.method == 'POST':
-        print("2")
+        # print("2")
         form3 = POJForm(request.POST, instance=jewel_obj)
-        print("3")
+        # print("3")
         form3.save()
         return redirect('/showj')
 
@@ -131,3 +113,69 @@ def showjewell(request):
 #     query = Inventoryofjewellery.objects.get(pk=idno)
 #     query.delete()
 #     return HttpResponse("Deleted!")
+
+def showdiamond(request):
+    diamondobj=POD.objects.all()
+    context={
+        "showdia":diamondobj,
+    }
+    return render(request,"showd.html",context=context)
+
+def update_d(request, dk):
+
+    diamond_obj = POD.objects.get(id=dk)
+    form4 = PODForm(instance=diamond_obj)
+    # print("7")
+    if request.method == 'POST':
+        # print("2")
+        form4 = PODForm(request.POST, instance=diamond_obj)
+        # print("3")
+        form4.save()
+        return redirect('/showd')
+
+    context = {'form4':form4}
+    return render(request, 'update_diamond.html', context)
+
+def deleteid_d(request, idno):
+    current = POD.objects.get(id=idno)
+    current.delete()
+    return render(request, "delete.html")
+
+def cform(request):
+    comform= CompanyForm(request.POST)
+    if(comform.is_valid()):
+
+        comform.save()
+        return render(request, "index.html")
+    context = {
+        "comform": comform,
+    }
+    return render(request, "cform.html",context=context)
+
+###
+#def showcs(request):
+#    cs_obj=PurchaseOfColorStones.objects.all()
+#    context={
+#        "show_cs":cs_obj,
+#    }
+#   return render(request,"showcs.html",context=context)
+
+# def update_cs(request, ck):
+
+#     cs_obj = PurchaseOfColorStones.objects.get(id=ck)
+#     form5 = POCSForm(instance=cs_obj)
+#     # print("7")
+#     if request.method == 'POST':
+#         # print("2")
+#         form5 = PODForm(request.POST, instance=cs_obj)
+#         # print("3")
+#         form5.save()
+#         return redirect('/showcs')
+
+#     context = {'form5':form5}
+#     return render(request, 'update_cd.html', context)
+
+# def deleteid_cs(request, idno):
+#     current = PurchaseOfColorStones.objects.get(id=idno)
+#     current.delete()
+#     return render(request, "delete.html")

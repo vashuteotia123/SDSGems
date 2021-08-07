@@ -1,7 +1,7 @@
 {% load static %}
 <html>
+  <form method="POST">
   <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"> -->
-  <form method="POST" id="companyform" curr-url="(% url 'ajax/load-currency/' %)">
     {% csrf_token %} {{formshow2}}
     <button type="submit">Submit</button>
   </form>

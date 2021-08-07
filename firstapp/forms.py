@@ -1,10 +1,10 @@
 from django import forms
 from .models import *
 
-# class CompanyForm(forms.ModelForm):
-#     class Meta:
-#         model = companyinfo
-#         fields = "__all__"
+class CompanyForm(forms.ModelForm):
+    class Meta:
+        model = companyinfo
+        fields = "__all__"
 class POJForm(forms.ModelForm):
     class Meta:
         model = POJ

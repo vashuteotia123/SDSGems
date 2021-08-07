@@ -1,13 +1,39 @@
 {% load static %}
 <html>
-  <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"> -->
-  <form method="POST" id="companyform" curr-url="(% url 'ajax/load-currency/' %)">
-    {% csrf_token %} {{formshow}}
-    <button type="submit">Submit</button>
-  </form>
-</html>
+  <head>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  </head>
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"> -->
+<form method="POST" id="companyform" curr-url="(% url 'ajax/load-currency/' %)">
+  {% csrf_token %} {{formshow}}
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+  if (!$) {
+    $ = django.jQuery;
+  }
+  $(document).on("change keyup blur", "#id_discount", function() {
+  var amd = $('#id_amount').val();
+  var disc = $('#id_discount').val();
+  var z=(parseFloat(amd))* (parseFloat(disc))/100
+  if (disc != '' && amd != '') {
+    $('#id_discount_amount').val(z.toFixed(2));
+    $('#id_total').val((amd-z).toFixed(2))
+  }else{
+    $('#id_discount_amount').val('');
+    $('#id_total').val('')
+
+  }
+});
+
+</script>
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+</html>
+
 
 <!-- <script>
   $("#id_country").change(function(){

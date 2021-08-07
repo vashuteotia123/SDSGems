@@ -23,7 +23,7 @@ class gemtype(admin.ModelAdmin):
     pass 
 @admin.register(POJ)
 class PurchaseOFJewell(admin.ModelAdmin):
-    pass
+    readonly_fields=['total','discount_amount']
 @admin.register(Inventoryofjewellery)
 class iojadmin(admin.ModelAdmin):
     pass
