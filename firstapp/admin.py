@@ -19,7 +19,7 @@ class CompanyAdmin(ImportExportModelAdmin):
    
         
 @admin.register(gemtype)
-class gemtype(admin.ModelAdmin):
+class gemtypeadmin(admin.ModelAdmin):
     pass 
 @admin.register(POJ)
 class PurchaseOFJewell(admin.ModelAdmin):
@@ -46,7 +46,7 @@ class jewelladmin(admin.ModelAdmin):
 class certadmin(admin.ModelAdmin):
     pass
 @admin.register(currencies)
-class curradm(admin.ModelAdmin):
+class curradmin(admin.ModelAdmin):
     pass
 @admin.register(PurchaseOfColorStones)
 class pocsadmin(admin.ModelAdmin):
@@ -68,16 +68,16 @@ class labadmin(admin.ModelAdmin):
 class shapeadmin(admin.ModelAdmin):
     pass
 @admin.register(Inventoryofcolorstones)
-class inventoryofcsadm(admin.ModelAdmin):
+class inventoryofcsadmin(admin.ModelAdmin):
     pass
 @admin.register(shape1)
-class shapeadm(admin.ModelAdmin):
+class shapeadmin(admin.ModelAdmin):
     pass 
 @admin.register(POD)
 class PODadmin(admin.ModelAdmin):
     pass
 @admin.register(Inventoryofdiamond)
-class inventoryofdiamondadm(admin.ModelAdmin):
+class inventoryofdiamondadmin(admin.ModelAdmin):
     pass
 @admin.register(shape_d)
 class shapedadmin(admin.ModelAdmin):

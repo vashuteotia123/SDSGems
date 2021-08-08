@@ -59,9 +59,9 @@ def showform1(request):
         form1.save() 
         return render(request,"index.html")
     context={
-        "formshow":form1,
+        "formshow1":form1,
     }
-    return render(request,"form.html",context=context)
+    return render(request,"form1.html",context=context)
 
 
 def showform2(request):
@@ -153,32 +153,32 @@ def cform(request):
     return render(request, "cform.html",context=context)
 
 ###
-#def showcs(request):
-#    cs_obj=PurchaseOfColorStones.objects.all()
-#    context={
-#        "show_cs":cs_obj,
-#    }
-#   return render(request,"showcs.html",context=context)
+def showcs(request):
+   cs_obj=PurchaseOfColorStones.objects.all()
+   context={
+       "show_cs":cs_obj,
+   }
+   return render(request,"showcs.html",context=context)
 
-# def update_cs(request, ck):
+def update_cs(request, ck):
 
-#     cs_obj = PurchaseOfColorStones.objects.get(id=ck)
-#     form5 = POCSForm(instance=cs_obj)
-#     # print("7")
-#     if request.method == 'POST':
-#         # print("2")
-#         form5 = PODForm(request.POST, instance=cs_obj)
-#         # print("3")
-#         form5.save()
-#         return redirect('/showcs')
+    cs_obj = PurchaseOfColorStones.objects.get(id=ck)
+    form5 = POCSForm(instance=cs_obj)
+    # print("7")
+    if request.method == 'POST':
+        # print("2")
+        form5 = POCSForm(request.POST, instance=cs_obj)
+        # print("3")
+        form5.save()
+        return redirect('/showcs')
 
-#     context = {'form5':form5}
-#     return render(request, 'update_cd.html', context)
+    context = {'form5':form5}
+    return render(request, 'update_cs.html', context)
 
-# def deleteid_cs(request, idno):
-#     current = PurchaseOfColorStones.objects.get(id=idno)
-#     current.delete()
-#     return render(request, "delete.html")
+def deleteid_cs(request, idno):
+    current = PurchaseOfColorStones.objects.get(id=idno)
+    current.delete()
+    return render(request, "delete.html")
 
 def showinvj(request):
     invjobj=Inventoryofjewellery.objects.all()
@@ -190,7 +190,4 @@ def showinvj(request):
 def returninvj(request, id1):
     now = Inventoryofjewellery.objects.get(id=id1)
     now.delete()
-    context={
-        "showinvj":Inventoryofjewellery.objects.all(),
-    }
-    return render(request, "showinvj.html",context=context)
+    return render(request, "showinvj.html")

@@ -1,0 +1,28 @@
+{% load static %}
+<html>
+  <form method="POST">
+  <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"> -->
+    {% csrf_token %} {{formshow1}}
+    <button type="submit">Submit</button>
+  </form>
+</html>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+   if (!$) {
+    $ = django.jQuery;
+  }
+  $(document).on("change keyup blur", "#id_discount", function() {
+  var amd = $('#id_amount').val();
+  var disc = $('#id_discount').val();
+  var z=(parseFloat(amd))* (parseFloat(disc))/100
+  if (disc != '' && amd != '') {
+    $('#id_discount_amount').val(z.toFixed(2));
+    $('#id_total_val_cs').val((amd-z).toFixed(2))
+  }else{
+    $('#id_discount_amount').val('');
+    $('#id_total_val_cs').val('')
+
+  }
+});
+</script>

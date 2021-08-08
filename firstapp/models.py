@@ -1,3 +1,4 @@
+
 from typing import Sequence
 from django.db import models
 from django.db.models.deletion import PROTECT
@@ -181,7 +182,7 @@ class Inventoryofjewellery(models.Model):
     #     self.save()
     tag_price = models.FloatField()
     purchaseapv=models.BooleanField(blank=True)
-
+    status=models.BooleanField(default=False)
     def __str__(self):
         return str(self.id)
 
@@ -251,27 +252,6 @@ class symmetry(models.Model):
         return self.symmetry
 
 
-class measurements_d(models.Model):
-    measurements = models.CharField(max_length=30)
-
-    def __str__(self):
-        return self.measurements
-
-
-class depths(models.Model):
-    depth = models.CharField(max_length=30)
-
-    def __str__(self):
-        return self.depth
-
-
-class table(models.Model):
-    table = models.CharField(max_length=30)
-
-    def __str__(self):
-        return self.table
-
-
 class fluorescence_intensity(models.Model):
     f_intensity = models.CharField(max_length=30)
 
@@ -284,92 +264,6 @@ class fluorescence_color(models.Model):
 
     def __str__(self):
         return self.f_color
-
-
-class certificate_no(models.Model):
-    certificate_no = models.IntegerField()
-
-    def __str__(self):
-        return self.certificate_no
-
-
-class laser_inscription(models.Model):
-    laser_inscription = models.CharField(max_length=30)
-
-    def __str__(self):
-        return self.laser_inscription
-
-
-class PCS_d(models.Model):
-    PCS = models.IntegerField()
-
-    def __str__(self):
-        return self.PCS
-
-
-class weight_d(models.Model):
-    w = models.FloatField()
-
-    def __str__(self):
-        return self.w
-
-
-class price(models.Model):
-    price = models.FloatField()
-
-    def __str__(self):
-        return self.price
-
-
-class units(models.Model):
-    unit = models.FloatField()
-
-    def __str__(self):
-        return self.unit
-
-
-class amount(models.Model):
-    amount = models.FloatField()
-
-    def __str__(self):
-        return self.amount
-
-
-class DIS(models.Model):
-    dis = models.PositiveSmallIntegerField(blank=True, null=True)
-
-    def __str__(self):
-        return self.dis
-
-
-class DIS_amount(models.Model):
-    disamount = models.DecimalField(
-        decimal_places=2, max_digits=9, blank=True, null=True)
-
-    def __str__(self):
-        return self.disamount
-
-
-class total_value_d(models.Model):
-    total_value = models.DecimalField(
-        decimal_places=2, max_digits=9, blank=True)
-
-    def __str__(self):
-        return self.total_value
-
-
-class tag_price_d(models.Model):
-    tag_price = models.FloatField()
-
-    def __str__(self):
-        return self.tag_price
-
-
-class rate_d(models.Model):
-    rate_d = models.FloatField()
-
-    def __str__(self):
-        return self.rate_d
 
 
 class shape_d(models.Model):
@@ -403,7 +297,7 @@ class POD(models.Model):
         'fluorescence_intensity', on_delete=models.PROTECT)
     fluorescence_color = models.ForeignKey(
         'fluorescence_color', on_delete=models.PROTECT)
-    certificate_no = models.CharField(max_length=30)
+    certificate_no_d = models.CharField(max_length=30)
     certificate_d = models.ForeignKey(
         'certificate_d', on_delete=models.PROTECT)
     laser_inscription = models.BooleanField()
@@ -418,11 +312,16 @@ class POD(models.Model):
 
     total_val_d = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True)
-
+    purchaseapvd= models.BooleanField(default=False)
     def save(self, *args, **kwargs):
         self.DIS_Amount = (self.amount_d * self.DIS_d) // 100
         self.total_val_d = self.amount_d - self.DIS_Amount
         super(POD, self).save(*args, **kwargs)
+        obj2=Inventoryofdiamond.objects.create(stockid=str('D-')+str(self.id),location=self.location,shape=self.shape,
+        clarity=self.clarity, white_color_grade= self.white_color_grade1,fancy_color_intensity=self.fancy_color_intensity1,
+        fancy_color_grade=self.fancycolor_grade,cut=self.cut,weight=self.weight_d,polish=self.polish,symmetry=self.symmetry,measurements=self.measurements,
+        depth=self.depth,table=self.table_perc,fluorescence_intensity=self.fluorescence_intensity,fluorescence_color=self.fluorescence_color,certificate_no=self.certificate_no_d,
+        certificate=self.certificate_d,laser_inscription=self.laser_inscription ,PCS=self.PCS_d,tag_price=self.tag_price_d,purchase_approval_d=self.purchaseapvd)
     currency = models.ForeignKey('currencies', on_delete=models.PROTECT)
     tag_price_d = models.FloatField()
     rate_d = models.FloatField()
@@ -430,48 +329,11 @@ class POD(models.Model):
     def __str__(self):
         return str(self.id)
 
-# inventory of diamonds
-
-
-class fancy_colour_grade(models.Model):
-    fancy_color_grade = models.CharField(max_length=30)
-
-    def __str__(self):
-        self.fancy_color_grade
-
-
-class weight_d(models.Model):
-    weight_d = models.CharField(max_length=30)
-
-    def __str__(self):
-        self.weight_d
-
-
-class measurement_d(models.Model):
-    measurement_d = models.CharField(max_length=30)
-
-    def __str__(self):
-        self.measurement_d
-
-
-class certificate_no_d(models.Model):
-    certificate_no_d = models.CharField(max_length=30)
-
-    def __str__(self):
-        self.certificate_no_d
-
-
-class laser_inscription_d(models.Model):
-    laser_inscription_d = models.CharField(max_length=30)
-
-    def __str__(self):
-        self.laser_inscription_d
-
 # Inventory of Diamond
 
 
 class Inventoryofdiamond(models.Model):
-    # stockid = models.CharField(max_length=30)
+    stockid = models.CharField(max_length=30)
     location = models.CharField(max_length=30)
     shape = models.CharField(max_length=30)
     clarity = models.CharField(max_length=30)
@@ -483,7 +345,7 @@ class Inventoryofdiamond(models.Model):
     polish = models.CharField(max_length=30)
     symmetry = models.CharField(max_length=30)
     measurements = models.FloatField()
-    eepth = models.FloatField()
+    depth = models.FloatField()
     table = models.FloatField()
     fluorescence_intensity = models.CharField(max_length=30)
     fluorescence_color = models.CharField(max_length=30)
@@ -492,10 +354,10 @@ class Inventoryofdiamond(models.Model):
     laser_inscription = models.CharField(max_length=30)
     PCS = models.IntegerField()
     tag_price = models.FloatField()
-    status = models.FloatField()
+    status = models.BooleanField(default=False)
+    purchase_approval_d=models.BooleanField(blank=True)
 
 # purchase of Colour Stones
-
 
 class Origin_cs(models.Model):
     org = models.CharField(max_length=30)
@@ -532,27 +394,6 @@ class certificate_no_cs(models.Model):
         return self.cert
 
 
-class color_cs(models.Model):
-    col = models.CharField(max_length=30)
-
-    def __str__(self):
-        return self.col
-
-
-class weight_cs(models.Model):
-    weight = models.CharField(max_length=30)
-
-    def __str__(self):
-        return self.weight
-
-
-class measurements_cs(models.Model):
-    measurement = models.CharField(max_length=30)
-
-    def __str__(self):
-        return self.measurement
-
-
 class PurchaseOfColorStones(models.Model):
     date = models.DateField(auto_now_add=True)
     stockid = models.CharField(max_length=30, blank=True)
@@ -582,20 +423,26 @@ class PurchaseOfColorStones(models.Model):
     discount = models.PositiveSmallIntegerField(blank=True, null=True)
     total_val_cs = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True, null=True)
-
+    purchaseapvcs= models.BooleanField(default=False)
     def save(self, *args, **kwargs):
 
         self.discount_amount = (self.amount * self.discount) // 100
         self.stockid = str(str('C-')+str(self.id))
         self.total_value_c_s = self.amount-self.discount_amount
         super(PurchaseOfColorStones, self).save(*args, **kwargs)
+        obj1=Inventoryofcolorstones.objects.create(stockid=str('C-')+str(self.id),location=self.location,shape=self.shape_cs,
+        gem_type=self.gem_type
+        ,weight=self.Weight_cs,origin=self.origin,treatment=self.Treatment
+        ,certificate_no_cs=self.certificate_no_cs,color=self.colour,measurements=self.measurements
+        ,lab=self.lab,tag_price_cs=self.tag_price_cs,purchaseapproval_cs=self.purchaseapvcs)
     currency = models.ForeignKey('currencies', on_delete=models.PROTECT)
     tag_price_cs = models.FloatField()
     rate = models.FloatField()
 
     def ___str__(self):
         return str(self.id)
-
+    
+    
 
 # inventoryofcolorstones
 
@@ -612,11 +459,11 @@ class Inventoryofcolorstones(models.Model):
     measurements = models.FloatField()
     lab = models.CharField(max_length=30)
     tag_price_cs = models.FloatField()
-    status = models.BooleanField()
+    status = models.BooleanField(default=False)
     # def save(self, *args, **kwargs):
     #     self.stockid=str(str('C-')+str(self.id))
     #     super(Inventoryofcolorstones, self).save(*args, **kwargs)
-
+    purchaseapproval_cs = models.BooleanField(blank=True)
     def ___str__(self):
         return str(self.id)
 
