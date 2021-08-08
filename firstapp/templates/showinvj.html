@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% for i in  showinvj %}
+    <h2>{{i.id}}</h2>
+    <h2>{{i.jewellery_type}}</h2>
+    {% if not i.purchaseapv%}
+    <a href="{% url 'returninvj' id1=i.id %}" >Return</a>
+    {%endif%}
+    {%endfor%}
+</body>
+</html>

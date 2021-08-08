@@ -1,0 +1,118 @@
+@media only screen and (min-width: 910px) and (max-width: 1215px) {
+  textarea {
+    width: 319px;
+  }
+}
+@media only screen and (min-width: 820px) and (max-width: 998px) {
+  #company_form {
+    font-size: 19px;
+  }
+  textarea,
+  input {
+    font-size: 16px;
+  }
+  #id_country {
+    width: 178px;
+    font-size: 16px;
+  }
+  #submit {
+    font-size: 15px;
+    width: 52px;
+  }
+}
+@media only screen and (min-width: 760px) and (max-width: 909px) {
+  textarea {
+    width: 265px;
+  }
+}
+@media only screen and (min-width: 690px) and (max-width: 820px) {
+  #company_form {
+    font-size: 18px;
+  }
+  textarea,
+  input {
+    font-size: 14px;
+  }
+  #id_country {
+    width: 155px;
+    font-size: 14px;
+  }
+  #submit {
+    font-size: 13px;
+    width: 45px;
+  }
+}
+@media only screen and (min-width: 690px) and (max-width: 760px) {
+  textarea {
+    width: 210px;
+  }
+}
+@media only screen and (min-width: 615px) and (max-width: 690px) {
+  #company_form {
+    font-size: 16px;
+  }
+  textarea,
+  input {
+    font-size: 12px;
+  }
+
+  #id_country {
+    width: 135px;
+    font-size: 12px;
+  }
+  #submit {
+    font-size: 11px;
+    width: 38px;
+  }
+}
+@media only screen and (min-width: 384px) and (max-width: 615px) {
+  #company_form {
+    font-size: 14px;
+    grid-template-columns: 16.75% 28% 2% 36.5% 16.75%;
+  }
+  textarea,
+  input {
+    font-size: 10px;
+  }
+  textarea {
+    width: 160px;
+  }
+  #id_country {
+    width: 131px;
+    font-size: 10px;
+  }
+  #submit {
+    font-size: 9px;
+    width: 33px;
+  }
+}
+@media only screen and (min-width: 470px) and (max-width: 690px) {
+  textarea {
+    width: 160px;
+  }
+}
+@media only screen and (min-width: 384px) and (max-width:470px){
+  textarea{
+    width: 123px;
+  }
+}
+@media only screen and (max-width:384px){
+  #company_form{
+    grid-template-columns: 16.75% 30% 0% 36.5% 16.75%;
+    font-size: 12px;
+  }
+  input, textarea{
+    font-size:8px;
+  }
+  textarea{
+    width:93px;
+  }
+  #id_country {
+    width: 102px;
+    font-size: 10px;
+  }
+  #submit {
+    font-size: 8px;
+    width: 30px;
+  }
+}

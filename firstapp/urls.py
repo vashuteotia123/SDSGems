@@ -21,5 +21,7 @@ urlpatterns = [
     # path('update_cs/<str:ck>/', views.update_cs, name="update_cs"),
     #path('deleteid_cs<int:idno>',views.deleteid_cs,name="deleteid_cs"),
     path('cform',views.cform,name="cform"),
+    path('showinvj',views.showinvj,name="showinvj"),
+    path('returninvj/<str:id1>',views.returninvj,name="returninvj"),
     # path(r'^delete/(?P<idno>\d+)/$',views.deleteid, name='deleteid')
 ]

@@ -179,3 +179,18 @@ def cform(request):
 #     current = PurchaseOfColorStones.objects.get(id=idno)
 #     current.delete()
 #     return render(request, "delete.html")
+
+def showinvj(request):
+    invjobj=Inventoryofjewellery.objects.all()
+    context={
+        "showinvj":invjobj,
+    }
+    return render(request,"showinvj.html",context=context)
+
+def returninvj(request, id1):
+    now = Inventoryofjewellery.objects.get(id=id1)
+    now.delete()
+    context={
+        "showinvj":Inventoryofjewellery.objects.all(),
+    }
+    return render(request, "showinvj.html",context=context)
