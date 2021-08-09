@@ -1,0 +1,302 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+  #purchasediamond {
+    list-style: none;
+    display: grid;
+    grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 5%;
+    grid-row-gap: 10px;
+    grid-template-columns: 20% 35% 5% 20% 20%;
+    list-style-type: none;
+    font-size: 21px;
+    font-family: "Roboto Condensed", sans-serif;
+    padding-top: 10vh;
+  }
+  #label_stock_id {
+    text-align: center;
+  }
+  #id_stock_id {
+    width: 62px;
+}
+  #stock_id {
+    grid-row: 2;
+    display: flex;
+    justify-content: center;
+  }
+  #label_company_name{
+    grid-row: 3;
+    grid-column:2;
+  }
+  #company_name{
+     grid-row: 3;
+     grid-column:4;
+  }
+  #label_location{
+    grid-row: 4;
+    grid-column:2;
+  }
+  #location{
+     grid-row: 4;
+     grid-column:4;
+  }
+  #label_shape{
+    grid-row: 5;
+    grid-column:2;
+  }
+  #shape{
+     grid-row: 5;
+     grid-column:4;
+  }
+  #label_clarity{
+    grid-row: 6;
+    grid-column:2;
+  }
+  #clarity{
+     grid-row: 6;
+     grid-column:4;
+  }
+  #label_colour_origin{
+    grid-row: 7;
+    grid-column:2;
+  }
+  #colour_origin{
+     grid-row: 7;
+     grid-column:4;
+  }
+  #label_white_c{
+    grid-row: 8;
+    grid-column:2;
+  }
+  #white_c{
+     grid-row: 8;
+     grid-column:4;
+  }
+  #label_fancy_colour{
+    grid-row: 9;
+    grid-column:2;
+  }
+  #fancy_colour{
+     grid-row: 9;
+     grid-column:4;
+  }
+  #label_overtone{
+    grid-row: 10;
+    grid-column:2;
+  }
+  #overtone{
+     grid-row: 10;
+     grid-column:4;
+  }
+  #label_fancy_colour2{
+    grid-row: 11;
+    grid-column:2;
+  }
+  #fancy_colour2{
+     grid-row: 11;
+     grid-column:4;
+  }
+  #label_fancy_colour_grade{
+    grid-row: 12;
+    grid-column:2;
+  }
+  #fancy_colour_grade{
+     grid-row: 12;
+     grid-column:4;
+  }
+  #label_cut{
+    grid-row: 13;
+    grid-column:2;
+  }
+  #cut{
+     grid-row: 13;
+     grid-column:4;
+  }
+  #label_polish{
+    grid-row: 14;
+    grid-column:2;
+  }
+  #polish{
+     grid-row: 14;
+     grid-column:4;
+  }
+  #label_symmetry{
+    grid-row: 15;
+    grid-column:2;
+  }
+  #symmetry{
+     grid-row: 15;
+     grid-column:4;
+  }
+  #label_measurements{
+    grid-row: 16;
+    grid-column:2;
+  }
+  #measurements{
+     grid-row: 16;
+     grid-column:4;
+  }
+  #label_Depth{
+    grid-row: 17;
+    grid-column:2;
+  }
+  #Depth{
+     grid-row: 17;
+     grid-column:4;
+  }
+  #label_table{
+    grid-row: 18;
+    grid-column:2;
+  }
+  #table{
+     grid-row: 18;
+     grid-column:4;
+  }
+  #label_fluorescenceI{
+    grid-row: 19;
+    grid-column:2;
+  }
+  #fluorescenceI{
+     grid-row: 19;
+     grid-column:4;
+  }
+  #label_fluorescenceC{
+    grid-row: 20;
+    grid-column:2;
+  }
+  #fluorescenceC{
+     grid-row: 20;
+     grid-column:4;
+  }
+  #label_certificate_no{
+    grid-row: 21;
+    grid-column:2;
+  }
+  #certificate_no{
+     grid-row: 21;
+     grid-column:4;
+  }
+  #label_laser_inscription{
+    grid-row: 22;
+    grid-column:2;
+  }
+  #laser_inscription{
+     grid-row: 22;
+     grid-column:4;
+  }
+  #label_pieces{
+    grid-row: 23;
+    grid-column:2;
+  }
+  #pieces{
+     grid-row: 23;
+     grid-column:4;
+  }
+  #label_weight{
+    grid-row: 24;
+    grid-column:2;
+  }
+  #weight{
+     grid-row: 24;
+     grid-column:4;
+  }
+  #label_price{
+    grid-row: 25;
+    grid-column:2;
+  }
+  #price{
+     grid-row: 25;
+     grid-column:4;
+  }
+  #label_units{
+    grid-row: 26;
+    grid-column:2;
+  }
+  #units{
+     grid-row: 26;
+     grid-column:4;
+  }
+  #label_amount{
+    grid-row: 27;
+    grid-column:2;
+  }
+  #amount{
+     grid-row: 27;
+     grid-column:4;
+  }
+  #label_discount{
+    grid-row: 28;
+    grid-column:2;
+  }
+  #discount{
+     grid-row: 28;
+     grid-column:4;
+  }
+  #label_disamount{
+    grid-row: 29;
+    grid-column:2;
+  }
+  #disamount{
+     grid-row: 29;
+     grid-column:4;
+  }
+  #label_origin{
+    grid-row: 30;
+    grid-column:2;
+  }
+  #origin{
+     grid-row: 30;
+     grid-column:4;
+  }
+  #label_currency{
+    grid-row: 31;
+    grid-column:2;
+  }
+  #currency{
+     grid-row: 31;
+     grid-column:4;
+  }
+  #label_tag_price{
+    grid-row: 32;
+    grid-column:2;
+  }
+  #tag_price{
+     grid-row: 32;
+     grid-column:4;
+  }
+  #label_rate{
+    grid-row: 33;
+    grid-column:2;
+  }
+  #rate{
+     grid-row: 33;
+     grid-column:4;
+  }
+  
+  .submit_button {
+    display: flex;
+    grid-column: 5;
+    grid-row:35;
+    justify-content: center;
+  }
+  
+  #submit {
+    grid-column: 5;
+    margin: 2% 0;
+    font-size: 16px;
+    width: 58px;
+    color: white;
+    background-color: #252627;
+    padding: 2px;
+    border-radius: 4px;
+    font-family: "Roboto Condensed", sans-serif;
+  }
+  
+  #submit:hover {
+    padding: 2px;
+    padding-right: 4px;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    background-position: right center;
+  }

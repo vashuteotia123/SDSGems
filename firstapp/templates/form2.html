@@ -1,4 +1,125 @@
+{% extends 'common.html' %}
 {% load static %}
+ <!-- CSS Link -->
+{% block css %}
+<link rel="stylesheet" href="/static/CSS/Purchases/stylediamond.css">
+<link rel="stylesheet" href="/static/CSS/Purchases/Responsive.css">
+{% endblock  %}
+{% block body %}
+<body>
+    <form action="" class="Purchasediamond">
+        <!-- {% csrf_token %} -->
+        <ul id="purchasediamond">
+
+        <!-- <label for="stock_id" id="label_stock_id">Stock ID</label>
+            <li id="stock_id">{{formshow2.company_id}}
+            </li> -->
+        <label for="company_name" id="label_company_name">Company Name</label>
+            <li id="company_name">{{formshow2.company_name}}
+            </li>
+        <label for="location" id="label_location">Location</label>
+            <li id="location">{{formshow2.location}}
+            </li>
+        <label for="shape" id="label_shape">Shape</label>
+            <li id="shape">{{formshow2.shape}}
+            </li>
+        <label for="clarity" id="label_clarity">Clarity</label>
+            <li id="clarity">{{formshow2.clarity}}
+            </li>
+        <label for="colour_origin" id="label_colour_origin">Colour Origin</label>
+            <li id="colour_origin">{{formshow2.color_origin1}}
+            </li>
+        <label for="white_c" id="label_white_c">White Colour Grade</label>
+            <li id="white_c">{{formshow2.white_color_grade1}}
+            </li>
+        <label for="fancy_colour" id="label_fancy_colour">Fancy Colour Intensity</label>
+            <li id="fancy_colour">{{formshow2.fancy_color_intensity1}}
+            </li>
+        <!-- <label for="overtone" id="label_overtone">Overtone</label>
+            <li id="overtone"><input id="id_overtone" type="text" name="overtone">
+            </li>
+        <label for="fancy_colour2" id="label_fancy_colour2">Fancy Colour 2</label>
+            <li id="fancy_colour2"><input id="id_fancy_colour2" type="text" name="fancy_colour2">
+            </li> -->
+        <label for="fancy_colour_grade" id="label_fancy_colour_grade">Fancy Colour Grade</label>
+            <li id="fancy_colour_grade">{{formshow2.fancycolor_grade}}
+            </li>
+        <label for="cut" id="label_cut">Cut</label>
+            <li id="cut">{{formshow2.cut}}
+            </li>
+        <label for="polish" id="label_polish">Polish</label>
+            <li id="polish"><input id="id_polish" type="text" name="polish">{{formshow2.polish}}
+            </li>
+        <label for="symmetry" id="label_symmetry">Symmetry</label>
+            <li id="symmetry">{{formshow2.symmetry}}
+            </li>
+        <label for="measurements" id="label_measurements">Measurements</label>
+            <li id="measurements"><input id="id_measurements" type="text" name="measurements">{{formshow2.measurements}}
+            </li>
+        <label for="Depth" id="label_Depth">Depth Percentage</label>
+            <li id="Depth">{{formshow2.depth}}
+            </li>
+        <label for="table" id="label_table">Table Percentage</label>
+            <li id="table"><input id="id_table" type="text" name="table">{{formshow2.table_perc}}
+            </li>
+        <label for="fluorescenceI" id="label_fluorescenceI">Fluorescence Intensity </label>
+            <li id="fluorescenceI">{{formshow2.fluorescence_intensity}}
+            </li>
+        <label for="fluorescenceC" id="label_fluorescenceC">Fluorescence Colour </label>
+            <li id="fluorescenceC">{{formshow2.fluorescence_color}}
+            </li>
+        
+            </li>
+        <label for="certificate_no" id="label_certificate_no">Certificate Number</label>
+            <li id="certificate_no"><input id="id_certificate_no" type="text" name="certificate_no">{{formshow2.certificate_no_d}}
+            </li>
+        <label for="laser_inscription" id="label_laser_inscription">Laser Inscription </label>
+            <li id="laser_inscription"><input id="id_laser_inscription" type="text" name="laser_inscription">{{formshow2.laser_inscription}}
+            </li>
+        <label for="pieces" id="label_pieces">Pieces</label>
+            <li id="pieces"><input id="id_pieces" type="text" name="pieces">{{formshow2.PCS_d}}
+            </li>
+        <label for="weight" id="label_weight">Weight</label>
+            <li id="weight"><input id="id_weight" type="text" name="weight">{{formshow2.weight_d}}
+            </li>
+        <label for="price" id="label_price">Price</label>
+            <li id="price">{{formshow2.price}}
+            </li>
+        <label for="units" id="label_units">Units</label>
+            <li id="units"><input id="id_units" type="text" name="units">{{formshow2.units}}
+            </li>
+        <label for="amount" id="label_amount">Amount</label>
+            <li id="amount"><input id="id_amount" type="text" name="amount">{{formshow2.amount_d}}
+            </li>
+        <label for="discount" id="label_discount">Discount</label>
+            <li id="discount"><input id="id_discount" type="text" name="discount">{{formshow2.DIS_d}}
+            </li>
+        <label for="disamount" id="label_disamount">Discounted Amount</label>
+            <li id="disamount"><input id="id_disamount" type="text" name="disamount">{{formshow2.DIS_Amount}}
+            </li>
+        <label for="origin" id="label_origin">Origin</label>
+            <li id="origin"><input id="id_origin" type="text" name="origin">{{formshow2.}}
+            </li>                                                                                <!--//ADD - certificate_d,purchase approval checkbox(purchaseapvd) , total_val_d_-->
+        <label for="currency" id="label_currency">Currency</label>                                 <!-- remove - origin,stockid,overtone and fancycolor1 , fancycolor2_-->
+            <li id="currency">{{formshow2.currency}}
+            </li>
+        <label for="tag_price" id="label_tag_price">Tag Price</label>
+            <li id="tag_price">{{formshow2.tag_price_d}}
+            </li>
+        <label for="rate" id="label_rate">Rate</label>
+            <li id="rate">{{formshow2.rate}}
+            </li>
+        <div class="submit_button">
+                <button type="submit" id="submit">Submit</button>
+        </div>
+        </body>
+   {% endblock %}     
+        
+        
+        
+        
+
+
 <html>
   <form method="POST">
   <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"> -->
@@ -6,13 +127,28 @@
     <button type="submit">Submit</button>
   </form>
 </html>
-
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
    if (!$) {
     $ = django.jQuery;
   }
-  $(document).on("change keyup blur", "#id_DIS_d", function() {
+  $(document).on("change keyup blur","#id_units",function() {
+  var pieces = $('#id_PCS_d').val();
+  var price = $('#id_price').val();
+  var unit =$("#id_units").val();
+  console.log(pieces);
+  console.log(unit);
+  console.log(price);
+  var t = parseInt(pieces)*parseInt(unit)*parseFloat(price);
+  console.log(t);
+  
+  if (pieces !='' && unit !='' && price!=''){
+       $('#id_amount_d').val(t.toFixed(2));
+  }else{
+    $('#id_amount_d').val('');
+  }
+});
+$(document).on("change keyup blur","#id_DIS_d",function() {
   var amd = $('#id_amount_d').val();
   var disc = $('#id_DIS_d').val();
   var z=(parseFloat(amd))* (parseFloat(disc))/100

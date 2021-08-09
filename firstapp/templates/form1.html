@@ -12,7 +12,23 @@
    if (!$) {
     $ = django.jQuery;
   }
-  $(document).on("change keyup blur", "#id_discount", function() {
+  $(document).on("change keyup blur","#id_units",function() {
+    var pieces = $('#id_PCS').val();
+    var price = $('#id_Price').val();
+    var unit =$("#id_units").val();
+    console.log(pieces);
+    console.log(unit);
+    console.log(price);
+    var t = parseInt(pieces)*parseInt(unit)*parseFloat(price);
+    console.log(t);
+    
+    if (pieces !='' && unit !='' && price!=''){
+         $('#id_amount').val(t.toFixed(2));
+    }else{
+      $('#id_amount').val('')
+    }
+  });
+  $(document).on("change keyup blur", "#id_discount",function() {
   var amd = $('#id_amount').val();
   var disc = $('#id_discount').val();
   var z=(parseFloat(amd))* (parseFloat(disc))/100

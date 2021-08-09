@@ -1,0 +1,76 @@
+@media only screen and (min-width: 820px) and (max-width: 998px) {
+  #PurchaseJewellary, #label_stock_id ,#purchasediamond, #Purchasecolourstone{
+    font-size: 19px;
+  }
+
+  input{
+    font-size:16px;
+  }
+  #submit {
+    font-size: 15px;
+    width: 52px;
+  }
+}
+
+@media only screen and (min-width: 690px) and (max-width: 820px) {
+  #PurchaseJewellary, #label_stock_id, #Purchasecolourstone,#purchasediamond {
+    font-size: 18px;
+  }
+
+  input {
+    font-size: 14px;
+  }
+
+  #submit {
+    font-size: 13px;
+    width: 45px;
+  }
+}
+@media only screen and (min-width: 615px) and (max-width: 690px) {
+  #PurchaseJewellary, #label_stock_id, #Purchasecolourstone,#purchasediamond {
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 12px;
+  }
+
+  #submit {
+    font-size: 11px;
+    width: 38px;
+  }
+  #id_stock_id{
+    width: 49px;
+}
+}
+@media only screen and (min-width: 384px) and (max-width: 615px) {
+    #PurchaseJewellary, #label_stock_id, #Purchasecolourstone,#purchasediamond {
+      font-size: 14px;
+ 
+    }
+    input {
+      font-size: 10px;
+    }
+    #submit {
+      font-size: 9px;
+      width: 33px;
+    }
+    #id_stock_id{
+        width: 51px;
+    }
+  }
+@media only screen and (max-width: 384px) {
+  #PurchaseJewellary, #label_stock_id,#Purchasecolourstone,#purchasediamond {
+    font-size: 12px;
+  }
+  input {
+    font-size: 8px;
+  }
+  #submit {
+    font-size: 8px;
+    width: 30px;
+  }
+  #id_stock_id{
+    width: 44px;
+}
+}

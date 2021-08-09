@@ -145,7 +145,7 @@ class POJ(models.Model):
     purchase_approval=models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
-
+        
         self.discount_amount = (self.amount * self.discount) // 100
         # self.stockid=str(str('J-')+str(self.id))
         self.total = self.amount-self.discount_amount
@@ -314,6 +314,7 @@ class POD(models.Model):
         decimal_places=2, max_digits=9, blank=True)
     purchaseapvd= models.BooleanField(default=False)
     def save(self, *args, **kwargs):
+        self.amount_d = (self.price * self.units* self.PCS_d) 
         self.DIS_Amount = (self.amount_d * self.DIS_d) // 100
         self.total_val_d = self.amount_d - self.DIS_Amount
         super(POD, self).save(*args, **kwargs)
@@ -417,7 +418,7 @@ class PurchaseOfColorStones(models.Model):
     Weight_cs = models.FloatField()
     Price = models.FloatField()
     units = models.IntegerField()
-    amount = models.DecimalField(decimal_places=2, max_digits=9)
+    amount = models.DecimalField(decimal_places=2, max_digits=9)        
     discount_amount = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True, null=True)
     discount = models.PositiveSmallIntegerField(blank=True, null=True)
@@ -425,7 +426,7 @@ class PurchaseOfColorStones(models.Model):
         decimal_places=2, max_digits=9, blank=True, null=True)
     purchaseapvcs= models.BooleanField(default=False)
     def save(self, *args, **kwargs):
-
+        self.amount = (self.Price * self.units* self.PCS) 
         self.discount_amount = (self.amount * self.discount) // 100
         self.stockid = str(str('C-')+str(self.id))
         self.total_value_c_s = self.amount-self.discount_amount
