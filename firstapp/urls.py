@@ -24,5 +24,9 @@ urlpatterns = [
     path('cform',views.cform,name="cform"),
     path('showinvj',views.showinvj,name="showinvj"),
     path('returninvj/<str:id1>',views.returninvj,name="returninvj"),
+    path('addjtocart/<str:primkey>',views.addjtocart,name="addjtocart"),
+    
+    # path('search',views.search,name="search"),
+
     # path(r'^delete/(?P<idno>\d+)/$',views.deleteid, name='deleteid')
 ]

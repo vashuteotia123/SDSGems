@@ -19,7 +19,10 @@ class PODForm(forms.ModelForm):
         model = POD
         fields = "__all__"
 
-
+# class cloneJForm(forms.ModelForm):
+#     class Meta:
+#         model = cloneInvofjewellery
+#         fields = "__all__"
     # def __init__(self, *args, **kwargs):
     #     super().__init__(*args, **kwargs)
 

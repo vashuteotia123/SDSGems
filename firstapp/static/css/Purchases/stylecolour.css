@@ -154,50 +154,60 @@
      grid-row: 18;
      grid-column:4;
   }
-  #label_discount{
+  
+  #label_disamount{
     grid-row: 19;
     grid-column:2;
   }
-  #discount{
+  #disamount{
      grid-row: 19;
      grid-column:4;
   }
-  #label_disamount{
+  #label_discount{
     grid-row: 20;
     grid-column:2;
   }
-  #disamount{
+  #discount{
      grid-row: 20;
      grid-column:4;
   }
-  #label_currency{
+
+  #label_total_val_cs{
     grid-row: 21;
     grid-column:2;
   }
-  #currency{
+  #total_val_cs{
      grid-row: 21;
      grid-column:4;
   }
-  #label_tag_price{
+  #label_currency{
     grid-row: 22;
     grid-column:2;
   }
-  #tag_price{
+  #currency{
      grid-row: 22;
      grid-column:4;
   }
-  #label_rate{
+  #label_tag_price{
     grid-row: 23;
     grid-column:2;
   }
-  #rate{
+  #tag_price{
      grid-row: 23;
+     grid-column:4;
+  }
+  #label_rate{
+    grid-row: 24;
+    grid-column:2;
+  }
+  #rate{
+     grid-row: 24;
      grid-column:4;
   }
   .submit_button {
     display: flex;
     grid-column: 5;
-    grid-row:24;
+    grid-row:25;
     justify-content: center;
   }
   

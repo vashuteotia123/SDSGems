@@ -185,7 +185,7 @@ class Inventoryofjewellery(models.Model):
     status=models.BooleanField(default=False)
     def __str__(self):
         return str(self.id)
-
+    
 
 # purchase of diamonds
 
@@ -357,7 +357,7 @@ class Inventoryofdiamond(models.Model):
     tag_price = models.FloatField()
     status = models.BooleanField(default=False)
     purchase_approval_d=models.BooleanField(blank=True)
-
+    
 # purchase of Colour Stones
 
 class Origin_cs(models.Model):
@@ -532,25 +532,45 @@ class Inventoryofcolorstones(models.Model):
 #     tag_price=models.FloatField()
 #     rate=models.FloatField()
 
-# class Salesofjewellery(models.Model):
-#     date=models.DateField(auto_now_add=True)
-#     stockid = models.CharField(max_length=30)
-#     company_name = models.CharField(max_length=30)
-#     location=models.CharField(max_length=30)
-#     jewellery_type = models.CharField(max_length=30)
-#     centre_stone = models.CharField(max_length=30)
-#     shape=models.CharField(max_length=30)
-#     metal=models.CharField(max_length=30)
-#     gross_wt=models.Floatfield()
-#     certificate=models.CharField(max_length=30)
-#     PCS=models.Integerfield()
-#     amount = models.FloatField()
-#     DIS=models.FloatField()
-#     DIS_amount=models.FloatField()
-#     total_value=models.FloatField()
-#     currency=models.CharField(max_length=30)
-#     tag_price=models.FloatField()
-#     rate=models.FloatField()
+class Salesofjewellery(models.Model):
+    date=models.DateField(auto_now_add=True)
+    stockid = models.CharField(max_length=30)
+    company_name = models.CharField(max_length=30)
+    location=models.CharField(max_length=30)
+    jewellery_type = models.CharField(max_length=30)
+    center_stone = models.CharField(max_length=30)
+    shape=models.CharField(max_length=30)
+    metal=models.CharField(max_length=30)
+    gross_wt=models.FloatField()
+    certificate=models.CharField(max_length=30)
+    PCS=models.IntegerField()
+    amount = models.FloatField()
+    DIS=models.FloatField()
+    DIS_amount=models.FloatField()
+    total_value=models.FloatField()
+    currency=models.CharField(max_length=30)
+    tag_price=models.FloatField()
+    rate=models.FloatField()
+
+class cloneInvofjewellery(models.Model): 
+    
+    stockid = models.CharField(max_length=30)
+    company_name = models.CharField(max_length=30)
+    location=models.CharField(max_length=30)
+    jewellery_type = models.CharField(max_length=30)
+    center_stone = models.CharField(max_length=30)
+    shape=models.CharField(max_length=30)
+    metal=models.CharField(max_length=30)
+    gross_wt=models.FloatField()
+    certificate=models.CharField(max_length=30)
+    PCS=models.IntegerField()
+    amount = models.FloatField(blank=True,null=True)
+    DIS=models.FloatField(blank=True,null=True)
+    DIS_amount=models.FloatField(blank=True,null=True)
+    total_value=models.FloatField(blank=True,null=True)
+    currency=models.CharField(max_length=30,blank=True,null=True)
+    tag_price=models.FloatField()
+    rate=models.FloatField(blank=True, null=True)
 
 # class Salesapproval(models.Model):
 #     date=models.DateField(auto_now_add=True)
@@ -577,3 +597,4 @@ class Inventoryofcolorstones(models.Model):
 #     currency=models.CharField(max_length=30)
 #     tag_price=models.FloatField()
 #     rate=models.FloatField()
+

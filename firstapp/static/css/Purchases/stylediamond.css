@@ -176,100 +176,110 @@
      grid-row: 21;
      grid-column:4;
   }
-  #label_laser_inscription{
+  #label_certificate_d{
     grid-row: 22;
     grid-column:2;
   }
-  #laser_inscription{
-     grid-row: 22;
-     grid-column:4;
+  #certificate_d{
+    grid-row: 22;
+    grid-column:4;
   }
-  #label_pieces{
+
+
+  #label_laser_inscription{
     grid-row: 23;
     grid-column:2;
   }
-  #pieces{
+  #laser_inscription{
      grid-row: 23;
      grid-column:4;
   }
-  #label_weight{
+  #label_pieces{
     grid-row: 24;
     grid-column:2;
   }
-  #weight{
+  #pieces{
      grid-row: 24;
      grid-column:4;
   }
-  #label_price{
+  #label_weight{
     grid-row: 25;
     grid-column:2;
   }
-  #price{
+  #weight{
      grid-row: 25;
      grid-column:4;
   }
-  #label_units{
+  #label_price{
     grid-row: 26;
     grid-column:2;
   }
-  #units{
+  #price{
      grid-row: 26;
      grid-column:4;
   }
-  #label_amount{
+  #label_units{
     grid-row: 27;
     grid-column:2;
   }
-  #amount{
+  #units{
      grid-row: 27;
      grid-column:4;
   }
-  #label_discount{
+  #label_amount{
     grid-row: 28;
     grid-column:2;
   }
-  #discount{
+  #amount{
      grid-row: 28;
      grid-column:4;
   }
-  #label_disamount{
+  #label_discount{
     grid-row: 29;
     grid-column:2;
   }
-  #disamount{
+  #discount{
      grid-row: 29;
      grid-column:4;
   }
-  #label_origin{
+  #label_disamount{
     grid-row: 30;
     grid-column:2;
   }
-  #origin{
+  #disamount{
      grid-row: 30;
      grid-column:4;
   }
-  #label_currency{
+  #label_total_val_d{
     grid-row: 31;
     grid-column:2;
   }
-  #currency{
+  #total_val_d{
      grid-row: 31;
      grid-column:4;
   }
-  #label_tag_price{
+  #label_currency{
     grid-row: 32;
     grid-column:2;
   }
-  #tag_price{
+  #currency{
      grid-row: 32;
      grid-column:4;
   }
-  #label_rate{
+  #label_tag_price{
     grid-row: 33;
     grid-column:2;
   }
-  #rate{
+  #tag_price{
      grid-row: 33;
+     grid-column:4;
+  }
+  #label_rate{
+    grid-row: 34;
+    grid-column:2;
+  }
+  #rate{
+     grid-row: 34;
      grid-column:4;
   }
   

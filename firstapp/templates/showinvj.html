@@ -7,11 +7,19 @@
     <title>Document</title>
 </head>
 <body>
+
+    <form method='GET' action="">
+        <input type="text" name="search" placeholder="Search posts"/>
+        <input type="submit"  value="Search"/>
+        </form>
+
     {% for i in  showinvj %}
     <h2>{{i.id}}</h2>
     <h2>{{i.jewellery_type}}</h2>
+    <a href="{% url 'addjtocart' primkey=i.id %}">ADD</a>
     {% if not i.purchaseapv%}
     <a href="{% url 'returninvj' id1=i.id %}" >Return</a>
+    
     {%endif%}
     {%endfor%}
 </body>

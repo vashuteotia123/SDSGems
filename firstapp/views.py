@@ -1,5 +1,7 @@
+from django.db.models import Q
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
+from django.utils.regex_helper import Group
 from .models import *
 from .forms import *
 
@@ -190,4 +192,29 @@ def showinvj(request):
 def returninvj(request, id1):
     now = Inventoryofjewellery.objects.get(id=id1)
     now.delete()
-    return render(request, "showinvj.html")
+    return redirect('/showinvj')
+
+# def search(request):
+#     posts = Inventoryofjewellery.objects.all()
+#     search_term = ''
+#     print("ABCD")
+#     if 'search' in request.GET:
+#         search_term = request.GET['search']
+#         posts = posts.filter(Q(id__icontains=search_term) | Q(jewellery_type__icontains=search_term))
+#         context={
+#             "showvalue":posts,
+
+#         }
+#         return render(request,"search.html",context=context)
+#     else:
+#         return render(request,".html",{})
+
+def addjtocart(request,primkey):
+    print("hello")
+    j_obj=Inventoryofjewellery.objects.get(id=primkey)
+    new_object=cloneInvofjewellery.objects.create(stockid=j_obj.stockid,location=j_obj.location,jewellery_type=j_obj.jewellery_type,center_stone=j_obj.center_stone,
+                                            shape=j_obj.shape,metal=j_obj.metal,gross_wt=j_obj.grosswt,certificate=j_obj.cert,
+                                            PCS=j_obj.pcs,tag_price=j_obj.tag_price)
+    return redirect('/showinvj')
+
+    

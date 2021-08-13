@@ -126,3 +126,9 @@ class fluorescence_intensityadmin(admin.ModelAdmin):
 @admin.register(certificate_d)
 class certificate_dadmin(admin.ModelAdmin):
     pass
+@admin.register(Salesofjewellery)
+class salesofjewadmin(admin.ModelAdmin):
+    pass
+@admin.register(cloneInvofjewellery)
+class cloneInvofjewadmin(admin.ModelAdmin):
+    pass
