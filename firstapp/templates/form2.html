@@ -7,8 +7,8 @@
 {% endblock  %}
 {% block body %}
 <body>
-    <form action="" class="Purchasediamond">
-        <!-- {% csrf_token %} -->
+    <form method="POST" id="showform2" class="Purchasediamond">
+        {% csrf_token %}
         <ul id="purchasediamond">
 
         <!-- <label for="stock_id" id="label_stock_id">Stock ID</label>
@@ -48,19 +48,19 @@
             <li id="cut">{{formshow2.cut}}
             </li>
         <label for="polish" id="label_polish">Polish</label>
-            <li id="polish"><input id="id_polish" type="text" name="polish">{{formshow2.polish}}
+            <li id="polish">{{formshow2.polish}}
             </li>
         <label for="symmetry" id="label_symmetry">Symmetry</label>
             <li id="symmetry">{{formshow2.symmetry}}
             </li>
         <label for="measurements" id="label_measurements">Measurements</label>
-            <li id="measurements"><input id="id_measurements" type="text" name="measurements">{{formshow2.measurements}}
+            <li id="measurements">{{formshow2.measurements}}
             </li>
         <label for="Depth" id="label_Depth">Depth Percentage</label>
             <li id="Depth">{{formshow2.depth}}
             </li>
         <label for="table" id="label_table">Table Percentage</label>
-            <li id="table"><input id="id_table" type="text" name="table">{{formshow2.table_perc}}
+            <li id="table">{{formshow2.table_perc}}
             </li>
         <label for="fluorescenceI" id="label_fluorescenceI">Fluorescence Intensity </label>
             <li id="fluorescenceI">{{formshow2.fluorescence_intensity}}
@@ -71,17 +71,17 @@
         
             </li>
         <label for="certificate_no" id="label_certificate_no">Certificate Number</label>
-            <li id="certificate_no"><input id="id_certificate_no" type="text" name="certificate_no">{{formshow2.certificate_no_d}}
+            <li id="certificate_no">{{formshow2.certificate_no_d}}
             </li>
         <label for="laser_inscription" id="label_laser_inscription">Laser Inscription </label>
-            <li id="laser_inscription"><input id="id_laser_inscription" type="text" name="laser_inscription">{{formshow2.laser_inscription}}
+            <li id="laser_inscription">{{formshow2.laser_inscription}}
             </li>
         <label for="pieces" id="label_pieces">Pieces</label>
             <li id="pieces">{{formshow2.PCS_d}}
             </li>
-            <h1>{{formshow2.PCS_d.id_for_label}}</h1>
+    
         <label for="weight" id="label_weight">Weight</label>
-            <li id="weight"><input id="id_weight" type="text" name="weight">{{formshow2.weight_d}}
+            <li id="weight">{{formshow2.weight_d}}
             </li>
         <label for="price" id="label_price">Price</label>
             <li id="price">{{formshow2.price}}
@@ -104,9 +104,9 @@
         <label for="total_val_d" id="label_total_val_d">Total value</label>                                 <!-- remove - origin,stockid,overtone and fancycolor1 , fancycolor2_-->
             <li id="total_val_d">{{formshow2.total_val_d}}
             </li>
-        <label for="origin" id="label_origin">Origin</label>
-            <li id="origin"><input id="id_origin" type="text" name="origin">{{formshow2.}}
-            </li>                                                                                <!--//ADD - certificate_d,purchase approval checkbox(purchaseapvd) , total_val_d_-->
+        <!-- <label for="origin" id="label_origin">Origin</label>
+            <li id="origin">{{formshow2.}}
+            </li>                                                                                //ADD - certificate_d,purchase approval checkbox(purchaseapvd) , total_val_d_ -->
         <label for="currency" id="label_currency">Currency</label>                                 <!-- remove - origin,stockid,overtone and fancycolor1 , fancycolor2_-->
             <li id="currency">{{formshow2.currency}}
             </li>
@@ -116,11 +116,13 @@
             <li id="tag_price">{{formshow2.tag_price_d}}
             </li>
         <label for="rate" id="label_rate">Rate</label>
-            <li id="rate">{{formshow2.rate}}
+            <li id="rate">{{formshow2.rate_d}}
             </li>
+        
         <div class="submit_button">
                 <button type="submit" id="submit">Submit</button>
-        </div>
+        </div> 
+    </form>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
    if (!$) {
@@ -156,21 +158,31 @@ $(document).on("change keyup blur","#id_DIS_d",function() {
   }
 });
 </script>
-        </body>
+</body>
    {% endblock %}     
         
-        
+   <!-- <form action="/action_page.php" method="get" id="form1">
+    <label for="fname">First name:</label>
+    <input type="text" id="fname" name="fname"><br><br>
+    <label for="lname">Last name:</label>
+    <input type="text" id="lname" name="lname">
+    </form>
+    
+    <button type="submit" form="form1" value="Submit">Submit</button>        -->
         
         
 
 
-<html>
+<!-- <html>
   <form method="POST">
-  <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"> -->
-    {% csrf_token %} {{formshow2}}
-    <button type="submit">Submit</button>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"> -->
+    <!-- {% csrf_token %} {{formshow2}} -->
+    <!-- <button type="submit">Submit</button> -->
+    <!-- <div class="submit_button">
+        <button type="submit" id="submit">Submit</button>
+    </div>
   </form>
-</html>
+</html> --> 
 
 <!-- <script>
   $("#id_country").change(function(){

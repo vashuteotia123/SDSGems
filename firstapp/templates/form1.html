@@ -9,9 +9,10 @@
 <h1>Colour Stones 
 </h1>
 <body>
-     <form action="" class="Purchasecolour"><!--doubt -->
-         <!-- {% csrf_token %} -->
-        <ul id="Purchasecolourstone"> <!--doubt -->
+  <form method="POST" id="showform1" class="Purchasecolour">
+    
+         {% csrf_token %}
+        <ul id="Purchasecolourstone"> 
 
         <!-- <label for="stock_id" id="label_stock_id">Stock ID</label>
             <li id="stock_id">{{formshow1.company_id}}
@@ -91,9 +92,13 @@
         <label for="rate" id="label_rate">Rate</label>
             <li id="rate">{{formshow1.rate}}
             </li><br>
-        <div class="submit_button">
-                <button type="submit" id="submit">Submit</button>
+        
+
+          
+            <div class="submit_button">
+              <button type="submit" form="showform1" value= "Submit" id="submit">Submit</button>
         </div> 
+      </form> 
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
    if (!$) {
@@ -130,20 +135,19 @@
   }
 });
 </script>
-        </body>
-   {% endblock %}     
+  </body>
+{% endblock %}     
         
+   <!-- <form action="/action_page.php" method="get" id="form1">
+    <label for="fname">First name:</label>
+    <input type="text" id="fname" name="fname"><br><br>
+    <label for="lname">Last name:</label>
+    <input type="text" id="lname" name="lname">
+    </form>
+    
+    <button type="submit" form="form1" value="Submit">Submit</button>        -->
 
 
-<html>
-  <form method="POST">
-  <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"> -->
-    {% csrf_token %} {{formshow1}}
-    <button type="submit">Submit</button>
-  </form>
-</html>
-
-<!-- don't uncomment below -->
 
 <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>

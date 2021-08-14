@@ -9,8 +9,8 @@
 <h1>Jewellary
 </h1>
 <body>
-     <form action="" class="PurchaseJewellary">
-          <!-- {% csrf_token %}  -->
+     <form method="POST" id="showform" class="PurchaseJewellary">
+          {% csrf_token %} 
         <ul id="PurchaseJewellary"> 
 
         <!-- <label for="stock_id" id="label_stock_id">Stock ID</label>
@@ -83,6 +83,7 @@
         <div class="submit_button">
                 <button type="submit" id="submit">Submit</button>
         </div> 
+      </form>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
    if (!$) {
@@ -102,19 +103,19 @@
   }
 });
 </script>
-        </body>
-   {% endblock %}     
+  </body>
+{% endblock %}     
 
-<html>
+<!-- <html>
   <head>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  </head>
+  </head> -->
 <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"> -->
-<form method="POST" id="companyform" curr-url="(% url 'ajax/load-currency/' %)">
+<!-- <form method="POST" id="companyform" curr-url="(% url 'ajax/load-currency/' %)">
   {% csrf_token %} {{formshow}}
   <button type="submit">Submit</button>
 </form>
-</html>
+</html> -->
 
 <!-- don't uncomment below -->
 <!-- <script>
