@@ -112,7 +112,7 @@ class currencies(models.Model):
 class POJ(models.Model):
 
     date = models.DateField(auto_now_add=True)
-    # stockid = models.CharField(max_length=30,blank=True)
+    stockid = models.CharField(max_length=30,blank=True)
     company_name = models.ForeignKey(
         'companyinfo', on_delete=PROTECT, blank=True)
     location = models.ForeignKey(
@@ -182,7 +182,9 @@ class Inventoryofjewellery(models.Model):
     #     self.save()
     tag_price = models.FloatField()
     purchaseapv=models.BooleanField(blank=True)
-    status=models.BooleanField(default=False)
+    status=models.CharField(max_length=30)
+    cartstatus=models.BooleanField(default=False)
+    appvreturnstatus = models.BooleanField(default=False)
     def __str__(self):
         return str(self.id)
     
@@ -571,6 +573,21 @@ class cloneInvofjewellery(models.Model):
     currency=models.CharField(max_length=30,blank=True,null=True)
     tag_price=models.FloatField()
     rate=models.FloatField(blank=True, null=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # class Salesapproval(models.Model):
 #     date=models.DateField(auto_now_add=True)

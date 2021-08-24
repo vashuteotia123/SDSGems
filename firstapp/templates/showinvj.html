@@ -1,26 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-
     <form method='GET' action="">
-        <input type="text" name="search" placeholder="Search posts"/>
-        <input type="submit"  value="Search"/>
-        </form>
-
-    {% for i in  showinvj %}
-    <h2>{{i.id}}</h2>
-    <h2>{{i.jewellery_type}}</h2>
-    <a href="{% url 'addjtocart' primkey=i.id %}">ADD</a>
-    {% if not i.purchaseapv%}
-    <a href="{% url 'returninvj' id1=i.id %}" >Return</a>
+        <input type="text" id="search" name="search" placeholder="Search posts" />
+        <input type="submit" value="Search" />
+      </form>
+      <br>
     
-    {%endif%}
-    {%endfor%}
+    <div class="container">
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>Location</th>
+                <th>Certification</th>
+            </thead>
+            <tbody>
+                {% csrf_token %}
+                {% for p in productsj %}
+                
+                <tr id="{{p.id}}">
+                    <td>{{p.stockid}}</td>
+                    <td>{{p.location}}</td>
+                    <td>Aryan</td>
+                    <td><input type="checkbox" name="jewell_id[]" value="{{p.id}}" id="delete_jewell"></td>
+                    {% if p.cartstatus is False %}
+                    <td><a class="btn btn-primary" href="{% url 'addtocart' id=p.id %}" >ADD TO CART</a></td>
+                    {% endif %}
+                    {% if p.cartstatus is True %}
+                    <td><a class="btn btn-primary">Go To CART</a></td>
+                    {% endif %}
+                    {% if p.appvreturnstatus is False and p.purchaseapv is False %}
+                    <td><a class="btn btn-primary" href="{% url 'returnj' id=p.id %}" >ADD TO Return table</a></td>
+                    {% endif %}
+                    
+                </tr>
+             
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <button type="submit" id="delete_btn">Delete from inventory</button>
+    </div>
+    <div>
+        <a class="btn btn-primary" href="{% url 'retobj_j' %}" >View returned objects</a>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <script>
+        if (!$) {
+            $ = django.jQuery;
+        }
+        $(document).ready(function () {
+            $('#delete_btn').click(function () {
+                if (confirm("You want to delete this")) {
+                    var id = [];
+                    var csrf = $('input[name=csrfmiddlewaretoken').val()
+                    $(':checkbox:checked').each(function (i) {
+
+                        id[i] = $(this).val()
+                    })
+                    if (id.length == 0) {
+                        alert("No items Selected Please Select Again");
+
+                    }
+                    else {
+                        $.ajax({
+                            url: '.',
+                            method: "POST",
+                            data: {
+                                id,
+                                csrfmiddlewaretoken: csrf,
+                            },
+                            
+                            success: function (response) {
+                                window.location.reload();
+                                for(var i=0;i<id.length;i++)
+                                {
+                                    
+                                    $('tr#'+id[i]+'').css('background-color','#ccc');
+                                    $('tr#'+id[i]+'').fadeOut('slow');
+
+                                }
+
+                            }
+
+                        });
+                    }
+
+
+                }
+
+
+
+
+            });
+
+        });
+    </script>
 </body>
+
 </html>

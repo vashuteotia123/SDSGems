@@ -1,3 +1,4 @@
+from django.views.generic import View
 from django.db.models import Q
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
@@ -33,15 +34,16 @@ def show_data(request):
 
 
 def showform(request):
-    form = POJForm(request.POST)
+    latest = POJ.objects.last()
+    form = POJForm(request.POST, initial={'stockid': latest.id})
     # countone=POJ.objects.all().count()
     # print(countone)
     if(form.is_valid()):
         form.save()
-
         return render(request, "index.html")
     context = {
         "formshow": form,
+        "latest": POJ.objects.last()
     }
     return render(request, "form.html", context=context)
 
@@ -49,21 +51,22 @@ def showform(request):
 def formsubmit(request):
     return render(request, "index.html")
 
+
 def showform1(request):
-    form1=POCSForm(request.POST)
+    form1 = POCSForm(request.POST)
     if(form1.is_valid()):
         #   new_object = invrt(jeweltype=form.cleaned_data['jeweltpye'], pieces=form.cleaned_data['pieces'])
-    #     obj1=Inventoryofcolorstones.objects.create(location=form.cleaned_data['location'],shape=form.cleaned_data['shape'],gem_type=form.cleaned_data['gem_type']
-    #     ,weight=form.cleaned_data['weight'],origin=form.cleaned_data['origin'],treatment=form.cleaned_data['treatment']
-    #     ,certificate_no_cs=form.cleaned_data['certificate_no_cs'],color=form.cleaned_data['color'],measurements=form.cleaned_data['measurements']
-    #     ,lab=form.cleaned_data['lab'],tag_price_cs=form.cleaned_data['tag_price_cs'])
+        #     obj1=Inventoryofcolorstones.objects.create(location=form.cleaned_data['location'],shape=form.cleaned_data['shape'],gem_type=form.cleaned_data['gem_type']
+        #     ,weight=form.cleaned_data['weight'],origin=form.cleaned_data['origin'],treatment=form.cleaned_data['treatment']
+        #     ,certificate_no_cs=form.cleaned_data['certificate_no_cs'],color=form.cleaned_data['color'],measurements=form.cleaned_data['measurements']
+        #     ,lab=form.cleaned_data['lab'],tag_price_cs=form.cleaned_data['tag_price_cs'])
 
-        form1.save() 
-        return render(request,"index.html")
-    context={
-        "formshow1":form1,
+        form1.save()
+        return render(request, "index.html")
+    context = {
+        "formshow1": form1,
     }
-    return render(request,"form1.html",context=context)
+    return render(request, "form1.html", context=context)
 
 
 def showform2(request):
@@ -89,6 +92,15 @@ def deleteid(request, idno):
     return render(request, "delete.html")
 
 
+def returnid(request, idno):
+    print("called")
+    current = POJ.objects.all()
+    context = {
+        "returnjewel": current,
+    }
+    return render(request, "returnj.html", context=context)
+
+
 def updateJ(request, pk):
 
     jewel_obj = POJ.objects.get(id=pk)
@@ -101,27 +113,30 @@ def updateJ(request, pk):
         form3.save()
         return redirect('/showj')
 
-    context = {'form3':form3}
+    context = {'form3': form3}
     return render(request, 'update_jewellery.html', context)
 
+
 def showjewell(request):
-    objjewell=POJ.objects.all()
-    context={
-        "showjewellery":objjewell,
+    objjewell = POJ.objects.all()
+    context = {
+        "showjewellery": objjewell,
     }
-    return render(request,"showj.html",context=context)
-    
+    return render(request, "showj.html", context=context)
+
 # def delete(request, idno):
 #     query = Inventoryofjewellery.objects.get(pk=idno)
 #     query.delete()
 #     return HttpResponse("Deleted!")
 
+
 def showdiamond(request):
-    diamondobj=POD.objects.all()
-    context={
-        "showdia":diamondobj,
+    diamondobj = POD.objects.all()
+    context = {
+        "showdia": diamondobj,
     }
-    return render(request,"showd.html",context=context)
+    return render(request, "showd.html", context=context)
+
 
 def update_d(request, dk):
 
@@ -135,16 +150,27 @@ def update_d(request, dk):
         form4.save()
         return redirect('/showd')
 
-    context = {'form4':form4}
+    context = {'form4': form4}
     return render(request, 'update_diamond.html', context)
+
+
+def returnid_d(request, idno):
+    print("called")
+    current = POD.objects.all()
+    context = {
+        "returndiamond": current,
+    }
+    return render(request, "return_d.html", context=context)
+
 
 def deleteid_d(request, idno):
     current = POD.objects.get(id=idno)
     current.delete()
     return render(request, "delete.html")
 
+
 def cform(request):
-    comform= CompanyForm(request.POST)
+    comform = CompanyForm(request.POST)
     if(comform.is_valid()):
 
         comform.save()
@@ -152,15 +178,27 @@ def cform(request):
     context = {
         "comform": comform,
     }
-    return render(request, "cform.html",context=context)
+    return render(request, "cform.html", context=context)
 
 ###
+
+
 def showcs(request):
-   cs_obj=PurchaseOfColorStones.objects.all()
-   context={
-       "show_cs":cs_obj,
-   }
-   return render(request,"showcs.html",context=context)
+    cs_obj = PurchaseOfColorStones.objects.all()
+    context = {
+        "show_cs": cs_obj,
+    }
+    return render(request, "showcs.html", context=context)
+
+
+def returnid_cs(request, idno):
+    print("called")
+    current = PurchaseOfColorStones.objects.all()
+    context = {
+        "returncs": current,
+    }
+    return render(request, "return_cs.html", context=context)
+
 
 def update_cs(request, ck):
 
@@ -174,25 +212,74 @@ def update_cs(request, ck):
         form5.save()
         return redirect('/showcs')
 
-    context = {'form5':form5}
+    context = {'form5': form5}
     return render(request, 'update_cs.html', context)
+
 
 def deleteid_cs(request, idno):
     current = PurchaseOfColorStones.objects.get(id=idno)
     current.delete()
     return render(request, "delete.html")
 
-def showinvj(request):
-    invjobj=Inventoryofjewellery.objects.all()
-    context={
-        "showinvj":invjobj,
-    }
-    return render(request,"showinvj.html",context=context)
+# def showinvj(request):
+#     invjobj=Inventoryofjewellery.objects.all()
+#     context={
+#         "showinvj":invjobj,
+#     }
+#     return render(request,"showinvj.html",context=context)
 
-def returninvj(request, id1):
-    now = Inventoryofjewellery.objects.get(id=id1)
+
+def showinv_d(request):
+    if request.session:
+        inv_dobj = Inventoryofdiamond.objects.all()
+        context = {
+            "showinv_d": inv_dobj,
+        }
+        return render(request, "showinvd.html", context=context)
+    else:
+        return render(request, "showinvd.html",{})
+
+
+def showinv_cs(request):
+    inv_csobj = Inventoryofcolorstones.objects.all()
+    context = {
+        "showinv_cs": inv_csobj,
+    }
+    return render(request, "showinvcs.html", context=context)
+
+
+# def returninvj(request, id):
+#     now = Inventoryofjewellery.objects.get(id=id)
+#     if now.appvreturnstatus is False:
+#         now.appvreturnstatus==True
+#     return redirect("/")
+
+def retobj_j(request):
+    objectsj = Inventoryofjewellery.objects.filter(appvreturnstatus=True)
+    context = {
+        "returned" : objectsj,
+    }
+    return render(request, "returnj.html",context=context)
+def returninv_d(request, id1):
+    now = Inventoryofdiamond.objects.get(id=id1)
+    # item = returnid(request, id1)
+    context = {
+        'returndiamond': now,
+    }
     now.delete()
-    return redirect('/showinvj')
+
+    return render(request, 'return_d.html', context=context)
+
+
+def returninv_cs(request, id1):
+    now = Inventoryofcolorstones.objects.get(id=id1)
+    # item = returnid(request, id1)
+    context = {
+        'returncs': now,
+    }
+    now.delete()
+
+    return render(request, 'return_cs.html', context=context)
 
 # def search(request):
 #     posts = Inventoryofjewellery.objects.all()
@@ -209,12 +296,93 @@ def returninvj(request, id1):
 #     else:
 #         return render(request,".html",{})
 
-def addjtocart(request,primkey):
-    print("hello")
-    j_obj=Inventoryofjewellery.objects.get(id=primkey)
-    new_object=cloneInvofjewellery.objects.create(stockid=j_obj.stockid,location=j_obj.location,jewellery_type=j_obj.jewellery_type,center_stone=j_obj.center_stone,
-                                            shape=j_obj.shape,metal=j_obj.metal,gross_wt=j_obj.grosswt,certificate=j_obj.cert,
-                                            PCS=j_obj.pcs,tag_price=j_obj.tag_price)
-    return redirect('/showinvj')
 
-    
+# def addjtocart(request, primkey):
+
+#     j_obj = Inventoryofjewellery.objects.get(id=primkey)
+#     new_object = cloneInvofjewellery.objects.create(stockid=j_obj.stockid, location=j_obj.location, jewellery_type=j_obj.jewellery_type, center_stone=j_obj.center_stone,
+#                                                     shape=j_obj.shape, metal=j_obj.metal, gross_wt=j_obj.grosswt, certificate=j_obj.cert,
+#                                                     PCS=j_obj.pcs, tag_price=j_obj.tag_price)
+#     return redirect('/showinvj')
+
+
+def showcart(request):
+    total = cloneInvofjewellery.objects.all()
+    form_list = []
+    for i in total:
+        form_list.append(ADCForm(instance=i))
+    context = {
+        "totalitems": form_list,
+    }
+    print(form_list)
+    return render(request, "showcart.html", context=context)
+
+
+
+
+def search(request):
+    posts = Inventoryofjewellery.objects.all()
+    search_term = ''
+    if 'search' in request.GET:
+        search_term = request.GET['search']
+        posts = posts.filter(Q(location__icontains=search_term) | Q(id__icontains=search_term)
+                             )
+        context = {
+            "productsj": posts,
+
+        }
+        return render(request, "showinvj.html", context=context)
+    else:
+        context = {
+            "productsj": Inventoryofjewellery.objects.all(),
+        }
+        return render(request, "showinvj.html", context)
+
+
+class Jewellery_view(View):
+    def get(self, request):
+        allproduct = Inventoryofjewellery.objects.all()
+        allclonej = cloneInvofjewellery.objects.all()
+        context = {
+            "productsj": allproduct,
+
+        }
+        return render(request, "showinvj.html", context=context)
+
+    def post(self, request, *args, **kwargs):
+        if(request.method == "POST"):
+            jewell_ids = request.POST.getlist('id[]')
+            for id in jewell_ids:
+                j = Inventoryofjewellery.objects.get(id=id)
+                j.delete()
+        return redirect('delete-jewell')
+
+    def addtocart(self, id):
+        print("hello")
+        j_obj = Inventoryofjewellery.objects.get(id=id)
+        j_obj.cartstatus = True
+        j_obj.save()
+        print(j_obj.cartstatus)
+        new_object = cloneInvofjewellery.objects.create(stockid=j_obj.stockid, location=j_obj.location, jewellery_type=j_obj.jewellery_type, center_stone=j_obj.center_stone,
+                                                        shape=j_obj.shape, metal=j_obj.metal, gross_wt=j_obj.grosswt, certificate=j_obj.cert,
+                                                        PCS=j_obj.pcs, tag_price=j_obj.tag_price)
+        return redirect('/delete')
+
+    def returnj(self, id):
+        jobj = Inventoryofjewellery.objects.get(id=id)
+        jobj.appvreturnstatus = True
+        jobj.save()
+        return redirect('/delete')
+
+
+class Cart(View):
+    def showcart(self,request):
+        total = cloneInvofjewellery.objects.all()
+        form_list = []
+        for i in total:
+            form_list.append(ADCForm(instance=i))
+        context = {
+        "totalitems": form_list,
+        }
+        print(form_list)
+        return render(request, "showcart.html", context=context)

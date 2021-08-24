@@ -171,7 +171,6 @@ input:focus {
   justify-self: center;
 }
 
-
 #label_total_val{
   grid-row: 17;
   grid-column:2;
@@ -180,33 +179,46 @@ input:focus {
    grid-row: 17;
    grid-column:4;
 }
-#label_currency {
+
+#label_purchaseapv {
   grid-row: 18;
   grid-column: 2;
 }
-#currency {
+#purchaseapv{
   grid-row: 18;
+  grid-column: 4;
+  justify-self: center;
+}
+
+#label_currency {
+  grid-row: 19;
+  grid-column: 2;
+}
+#currency {
+  grid-row: 19;
   grid-column: 4;
   justify-self: center;
 }
 #label_tag_price {
-  grid-row: 19;
+  grid-row: 20;
   grid-column: 2;
 }
 #tag_price {
-  grid-row: 19;
+  grid-row: 20;
   grid-column: 4;
   justify-self: center;
 }
 #label_rate {
-  grid-row: 20;
+  grid-row: 21;
   grid-column: 2;
 }
 #rate {
-  grid-row: 20;
+  grid-row: 21;
   grid-column: 4;
   justify-self: center;
 }
+
+
 /* #label_purchase_approval {
   grid-row: 18;
   grid-column: 2;
@@ -218,7 +230,7 @@ input:focus {
 } */
 .submit_button {
   display: flex;
-  grid-row: 21;
+  grid-row: 22;
   grid-column: 5;
   justify-content: center;
   

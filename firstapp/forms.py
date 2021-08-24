@@ -1,14 +1,17 @@
 from django import forms
 from .models import *
+from django.forms import formset_factory
 
 class CompanyForm(forms.ModelForm):
     class Meta:
         model = companyinfo
         fields = "__all__"
+        
 class POJForm(forms.ModelForm):
     class Meta:
         model = POJ
-        fields = "__all__"      
+        fields = "__all__"  
+
 class POCSForm(forms.ModelForm):
     class Meta:
         model = PurchaseOfColorStones
@@ -19,6 +22,23 @@ class PODForm(forms.ModelForm):
         model = POD
         fields = "__all__"
 
+
+# class ADCForm(forms.ModelForm):
+#     class Meta:
+#         model = cloneInvofjewellery
+#         fields = "__all__"
+
+class ADCForm(forms.ModelForm):
+    disabled_fields = ['stockid','location','jewellery_type','center_stone','shape','metal','gross_wt','certificate','PCS','amount','DIS','DIS_amount','total_value','currency','tag_price','rate']
+
+    class Meta:
+        model = cloneInvofjewellery
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(ADCForm, self).__init__(*args, **kwargs)
+        for field in self.disabled_fields:
+            self.fields[field].disabled = True
 # class cloneJForm(forms.ModelForm):
 #     class Meta:
 #         model = cloneInvofjewellery
@@ -38,3 +58,5 @@ class PODForm(forms.ModelForm):
     #             pass
     #     else:
     #         self.fields['currency'].queryset = Currency.objects.all()
+
+ADCFormSet = formset_factory(ADCForm)

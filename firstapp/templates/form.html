@@ -6,16 +6,17 @@
 <link rel="stylesheet" href="/static/CSS/Purchases/Responsive.css">
 {% endblock  %}
 {% block body %}
-<h1>Jewellary
+<h1>Jewellery
 </h1>
 <body>
+  <p>{{latest.id}}</p>
      <form method="POST" id="showform" class="PurchaseJewellary">
           {% csrf_token %} 
         <ul id="PurchaseJewellary"> 
 
-        <!-- <label for="stock_id" id="label_stock_id">Stock ID</label>
-            <li id="stock_id">{{formshow1.company_id}}
-            </li> -->
+        <label for="stock_id" id="label_stock_id">Stock ID</label>
+            <li id="stock_id" value="{{latest.id}}">{{formshow.stockid}}
+            </li>
         <label for="company_name" id="label_company_name">Company Name</label>
             <li id="company_name">{{formshow.company_name}}
             </li><br>
@@ -44,7 +45,7 @@
             <li id="phone_number">{{formshow.phone_number}}
             </li><br>
         
-  <label for="certifications" id="label_certifications">Certificate </label>
+        <label for="certifications" id="label_certifications">Certificate </label>
             <li id="certifications">{{formshow.cert}}
             </li><br>
         
@@ -65,24 +66,26 @@
             </li><br> 
         
 
-          <label for="total_val" id="label_total_val">Total value</label>                              
-            <li id="total_val">{{formshow.total}}
-            </li><br>
-                                                                                    
+        <label for="total_val" id="label_total_val">Total value</label>                              
+          <li id="total_val">{{formshow.total}}
+          </li><br>
+        <label for="purchaseapv" id="label_purchaseapv">Purchase approval</label>
+          <li id="purchaseapv">{{formshow.purchase_approval}}
+          </li><br>                                                                            
         <label for="currency" id="label_currency">Currency</label>                                
-             <li id="currency">{{formshow.currencyid}}
-            </li><br>
-            
+            <li id="currency">{{formshow.currencyid}}
+            </li><br>            
         
          <label for="tag_price" id="label_tag_price">Tag Price</label>
             <li id="tag_price">{{formshow.tag_price}}
             </li><br>
         <label for="rate" id="label_rate">Rate</label>
             <li id="rate">{{formshow.rate}}
-            </li><br>
+            </li><br>    
+        
         <div class="submit_button">
                 <button type="submit" id="submit">Submit</button>
-        </div> 
+        </div>
       </form>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
@@ -103,6 +106,7 @@
   }
 });
 </script>
+
   </body>
 {% endblock %}     
 
