@@ -8,17 +8,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <form method="POST" action="{% url 'sell_POJ'%}">
+    <form method="POST" action="">
         {% csrf_token %}  
     {% for a in totalitems %}
     <h3>{{a.as_p}}</h1>
     <hr>
     {%endfor%}
     <button type="submit">SELL</button>
-    <!-- <table>
-        {{totalitems}}
-    </table>
-    <button type="submit">BECH DE</button> -->
 </form>
 
    

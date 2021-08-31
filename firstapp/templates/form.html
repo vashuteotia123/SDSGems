@@ -10,6 +10,7 @@
 </h1>
 <body>
   <p>{{latest.id}}</p>
+  
      <form method="POST" id="showform" class="PurchaseJewellary">
           {% csrf_token %} 
         <ul id="PurchaseJewellary"> 
@@ -17,7 +18,7 @@
         <label for="stock_id" id="label_stock_id">Stock ID</label>
             <li id="stock_id" value="{{latest.id}}">{{formshow.stockid}}
             </li>
-        <label for="company_name" id="label_company_name">Company Name</label>
+        <label for="company_name" id="label_company_name">Company</label>
             <li id="company_name">{{formshow.company_name}}
             </li><br>
         <label for="location" id="label_location">Location</label>
@@ -106,7 +107,9 @@
   }
 });
 </script>
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript">
+    </script> 
+   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
   </body>
 {% endblock %}     
 

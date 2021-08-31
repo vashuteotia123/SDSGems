@@ -1,6 +1,6 @@
 from django.views.generic import View
 from django.db.models import Q
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.utils.regex_helper import Group
 from .models import *
@@ -311,32 +311,36 @@ def showcart(request):
     form_list = []
     for i in total:
         form_list.append(ADCForm(instance=i))
+    if request.method == "POST":
+
+        for item in form_list:
+            print(item)
+        return render(request, "showcart.html")
     context = {
         "totalitems": form_list,
     }
-    print(form_list)
     return render(request, "showcart.html", context=context)
 
 
 
 
 def search(request):
+    print("hello")
     posts = Inventoryofjewellery.objects.all()
     search_term = ''
-    if 'search' in request.GET:
-        search_term = request.GET['search']
-        posts = posts.filter(Q(location__icontains=search_term) | Q(id__icontains=search_term)
+    search_term = request.POST.get('search')
+    posts = posts.filter(Q(location__icontains=search_term) | Q(id__icontains=search_term)
                              )
-        context = {
+    context = {
             "productsj": posts,
 
         }
-        return render(request, "showinvj.html", context=context)
-    else:
-        context = {
-            "productsj": Inventoryofjewellery.objects.all(),
-        }
-        return render(request, "showinvj.html", context)
+    return render(request, "showinvj.html", context=context)
+    # else:
+    #     context = {
+    #         "productsj": Inventoryofjewellery.objects.all(),
+    #     }
+    #     return render(request, "showinvj.html", context)
 
 
 class Jewellery_view(View):
@@ -354,7 +358,8 @@ class Jewellery_view(View):
             jewell_ids = request.POST.getlist('id[]')
             for id in jewell_ids:
                 j = Inventoryofjewellery.objects.get(id=id)
-                j.delete()
+                j.appvreturnstatus = True
+                j.save()
         return redirect('delete-jewell')
 
     def addtocart(self, id):
@@ -368,21 +373,53 @@ class Jewellery_view(View):
                                                         PCS=j_obj.pcs, tag_price=j_obj.tag_price)
         return redirect('/delete')
 
-    def returnj(self, id):
-        jobj = Inventoryofjewellery.objects.get(id=id)
-        jobj.appvreturnstatus = True
-        jobj.save()
-        return redirect('/delete')
+    # def returnj(self, id):
+    #     jobj = Inventoryofjewellery.objects.get(id=id)
+    #     jobj.appvreturnstatus = True
+    #     jobj.save()
+    #     return redirect('/search')
+
+ 
+    
 
 
-class Cart(View):
-    def showcart(self,request):
-        total = cloneInvofjewellery.objects.all()
-        form_list = []
-        for i in total:
-            form_list.append(ADCForm(instance=i))
-        context = {
-        "totalitems": form_list,
-        }
-        print(form_list)
-        return render(request, "showcart.html", context=context)
+# class Cart(View):
+#     def showcart(self,request):
+#         form_list = []
+#         total = cloneInvofjewellery.objects.all()
+#         for i in total:
+#             form_list.append(ADCForm(instance=i))
+#         if request.method == 'POST':
+#             print("Function executed")
+#             for item in form_list:
+#                 print(item.location)
+#                 # item.save()
+#             return render(request, "showcart.html")
+        
+#         context = {
+#         "totalitems": form_list,
+#         }
+#         # print(form_list)
+#         return render(request, "showcart.html", context=context)
+
+def backtoinv(request,id):
+    myobj=Inventoryofjewellery.objects.get(id=id)
+    myobj.appvreturnstatus=False
+    myobj.save()
+    totalobjs=Inventoryofjewellery.objects.filter(appvreturnstatus=True)
+    return redirect('/retobj_j')
+ 
+# def get_Datas(request):
+#         if request.is_ajax():
+#             q = request.GET.get('company_name', '')
+#             Datas = companyinfo.objects.filter(company_name = q )[:20]
+#             results = []
+#             for Data in Datas:
+#                 Data_json = {}
+#                 Data_json['value'] = Data.company_name
+#                 results.append(Data_json)
+#             data = JsonResponse.dumps(results)
+#         else:
+#             data = 'fail'
+#         mimetype = 'application/json'
+#         return HttpResponse(data, mimetype)

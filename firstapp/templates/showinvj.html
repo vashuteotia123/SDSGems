@@ -9,9 +9,10 @@
 </head>
 
 <body>
-    <form method='GET' action="">
+    <form method='POST' action="{%url 'search' %}">
+        {% csrf_token %}
         <input type="text" id="search" name="search" placeholder="Search posts" />
-        <input type="submit" value="Search" />
+        <input type="submit" value="Search">
       </form>
       <br>
     
@@ -25,7 +26,7 @@
             <tbody>
                 {% csrf_token %}
                 {% for p in productsj %}
-                
+                {% if p.appvreturnstatus is False and p.purchaseapv is False %}
                 <tr id="{{p.id}}">
                     <td>{{p.stockid}}</td>
                     <td>{{p.location}}</td>
@@ -37,21 +38,21 @@
                     {% if p.cartstatus is True %}
                     <td><a class="btn btn-primary">Go To CART</a></td>
                     {% endif %}
-                    {% if p.appvreturnstatus is False and p.purchaseapv is False %}
-                    <td><a class="btn btn-primary" href="{% url 'returnj' id=p.id %}" >ADD TO Return table</a></td>
-                    {% endif %}
+                    
+        
                     
                 </tr>
-             
+                {% endif %}
                 {% endfor %}
             </tbody>
         </table>
     </div>
     <div>
-        <button type="submit" id="delete_btn">Delete from inventory</button>
+        <button type="submit" id="delete_btn">Add to return table</button>
     </div>
     <div>
         <a class="btn btn-primary" href="{% url 'retobj_j' %}" >View returned objects</a>
+        <a class="btn btn-primary" href="{% url 'showcart' %}" >View Cart</a>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 

@@ -56,7 +56,7 @@ class companyinfo(models.Model):
     wechat_id = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.company_name
+        return self.company_name+'  '+self.mobile_no+' '+self.address
 
 
 class jewell(models.Model):
@@ -182,7 +182,7 @@ class Inventoryofjewellery(models.Model):
     #     self.save()
     tag_price = models.FloatField()
     purchaseapv=models.BooleanField(blank=True)
-    status=models.CharField(max_length=30)
+    status=models.CharField(max_length=30,default=False)
     cartstatus=models.BooleanField(default=False)
     appvreturnstatus = models.BooleanField(default=False)
     def __str__(self):
@@ -574,7 +574,11 @@ class cloneInvofjewellery(models.Model):
     tag_price=models.FloatField()
     rate=models.FloatField(blank=True, null=True)
 
-
+    def save(self, *args, **kwargs):
+        
+        # self.delete()
+        super(cloneInvofjewellery, self).save()
+        
 
 
 

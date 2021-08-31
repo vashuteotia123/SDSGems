@@ -131,4 +131,5 @@ class salesofjewadmin(admin.ModelAdmin):
     pass
 @admin.register(cloneInvofjewellery)
 class cloneInvofjewadmin(admin.ModelAdmin):
-    pass
+    list_display = [entry.name for entry in cloneInvofjewellery._meta.fields]
+    list_editable = ["tag_price", "rate"]

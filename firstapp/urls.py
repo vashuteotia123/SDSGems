@@ -15,6 +15,7 @@ urlpatterns = [
     path('showd',views.showdiamond,name="showdiamond"),
     path('returnid<int:idno>',views.returnid,name="returnid"),
     path('deleteid<int:idno>',views.deleteid,name="deleteid"),
+    path('backtoinv<int:id>',views.backtoinv,name="backtoinv"),
     path('showform1',views.showform1,name="showform1"),
     path('showform2',views.showform2,name="showform2"),
     path('returnid_d<int:idno>',views.returnid_d,name="returnid_d"),
@@ -26,7 +27,7 @@ urlpatterns = [
     path('returnid_cs<int:idno>',views.returnid_cs,name="returnid_cs"),
     path('deleteid_cs<int:idno>',views.deleteid_cs,name="deleteid_cs"),
     path('cform',views.cform,name="cform"),
-    path('delete/search',views.search,name="search"),
+    # path('delete/search',views.search,name="search"),
     # path('delete/',Jewellery_view.as_view(),name="delete-jewell"),
     path('showinv_d',views.showinv_d,name="showinv_d"),
     path('showinv_cs',views.showinv_cs,name="showinv_cs"),
@@ -37,10 +38,12 @@ urlpatterns = [
     # path('sell_POJ', views.sell_POJ,name="sell_POJ"),
     path('addtocart<str:id>',Jewellery_view.addtocart,name="addtocart"),
     path('delete/',Jewellery_view.as_view(),name="delete-jewell"),
-    path('returnj<str:id>',Jewellery_view.returnj,name="returnj"),
+    # path('returnj<str:id>',Jewellery_view.returnj,name="returnj"),
     path('retobj_j',views.retobj_j,name="retobj_j"),
     # path('displayinv',views.displayinv,name="displayinv"),
-    # path('search',views.Jewellery_view.as_view(),name="search"),
+    path('search',views.search,name="search"),
+    #  path('delete/search',views.search,name="search"),
+    
     
     # path('search',views.search,name="search"),
 

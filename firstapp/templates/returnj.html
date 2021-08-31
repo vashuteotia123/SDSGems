@@ -13,6 +13,8 @@
      {% for p in returned %}
      <h2>{{p.stockid}}</h2>
      <h2>{{p.location}}</h2>
+     <a href="{% url 'backtoinv' id=p.id%}"> Return Back to Inventory</a>
+
      {%endfor%}
 
 </body>
