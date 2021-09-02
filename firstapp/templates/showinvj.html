@@ -13,9 +13,9 @@
         {% csrf_token %}
         <input type="text" id="search" name="search" placeholder="Search posts" />
         <input type="submit" value="Search">
-      </form>
-      <br>
-    
+    </form>
+    <br>
+
     <div class="container">
         <table>
             <thead>
@@ -33,14 +33,14 @@
                     <td>Aryan</td>
                     <td><input type="checkbox" name="jewell_id[]" value="{{p.id}}" id="delete_jewell"></td>
                     {% if p.cartstatus is False %}
-                    <td><a class="btn btn-primary" href="{% url 'addtocart' id=p.id %}" >ADD TO CART</a></td>
+                    <td><a class="btn btn-primary" href="{% url 'addtocart' id=p.id %}">ADD TO CART</a></td>
                     {% endif %}
                     {% if p.cartstatus is True %}
                     <td><a class="btn btn-primary">Go To CART</a></td>
                     {% endif %}
-                    
-        
-                    
+
+
+
                 </tr>
                 {% endif %}
                 {% endfor %}
@@ -51,8 +51,8 @@
         <button type="submit" id="delete_btn">Add to return table</button>
     </div>
     <div>
-        <a class="btn btn-primary" href="{% url 'retobj_j' %}" >View returned objects</a>
-        <a class="btn btn-primary" href="{% url 'showcart' %}" >View Cart</a>
+        <a class="btn btn-primary" href="{% url 'retobj_j' %}">View returned objects</a>
+        <a class="btn btn-primary" href="{% url 'showcart' %}">View Cart</a>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
@@ -81,14 +81,13 @@
                                 id,
                                 csrfmiddlewaretoken: csrf,
                             },
-                            
+
                             success: function (response) {
                                 window.location.reload();
-                                for(var i=0;i<id.length;i++)
-                                {
-                                    
-                                    $('tr#'+id[i]+'').css('background-color','#ccc');
-                                    $('tr#'+id[i]+'').fadeOut('slow');
+                                for (var i = 0; i < id.length; i++) {
+
+                                    $('tr#' + id[i] + '').css('background-color', '#ccc');
+                                    $('tr#' + id[i] + '').fadeOut('slow');
 
                                 }
 

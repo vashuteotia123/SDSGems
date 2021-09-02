@@ -5,6 +5,9 @@ from django.shortcuts import redirect, render
 from django.utils.regex_helper import Group
 from .models import *
 from .forms import *
+from django.urls import reverse_lazy
+
+from shapeshifter.views import MultiFormView
 
 # Create your views here.
 
@@ -237,7 +240,7 @@ def showinv_d(request):
         }
         return render(request, "showinvd.html", context=context)
     else:
-        return render(request, "showinvd.html",{})
+        return render(request, "showinvd.html", {})
 
 
 def showinv_cs(request):
@@ -257,9 +260,11 @@ def showinv_cs(request):
 def retobj_j(request):
     objectsj = Inventoryofjewellery.objects.filter(appvreturnstatus=True)
     context = {
-        "returned" : objectsj,
+        "returned": objectsj,
     }
-    return render(request, "returnj.html",context=context)
+    return render(request, "returnj.html", context=context)
+
+
 def returninv_d(request, id1):
     now = Inventoryofdiamond.objects.get(id=id1)
     # item = returnid(request, id1)
@@ -306,22 +311,21 @@ def returninv_cs(request, id1):
 #     return redirect('/showinvj')
 
 
-def showcart(request):
-    total = cloneInvofjewellery.objects.all()
-    form_list = []
-    for i in total:
-        form_list.append(ADCForm(instance=i))
-    if request.method == "POST":
+# def showcart(request):
+#     total = cloneInvofjewellery.objects.all()
+#     global formlist
+#     form_list = []
+#     for i in total:
+#         form_list.append(ADCForm(instance=i))
+#     if request.method == "POST":
 
-        for item in form_list:
-            print(item)
-        return render(request, "showcart.html")
-    context = {
-        "totalitems": form_list,
-    }
-    return render(request, "showcart.html", context=context)
-
-
+#         for item in form_list:
+#             print(item)
+#         return render(request, "showcart.html")
+#     context = {
+#         "totalitems": form_list,
+#     }
+#     return render(request, "showcart.html", context=context)
 
 
 def search(request):
@@ -330,11 +334,11 @@ def search(request):
     search_term = ''
     search_term = request.POST.get('search')
     posts = posts.filter(Q(location__icontains=search_term) | Q(id__icontains=search_term)
-                             )
+                         )
     context = {
-            "productsj": posts,
+        "productsj": posts,
 
-        }
+    }
     return render(request, "showinvj.html", context=context)
     # else:
     #     context = {
@@ -379,9 +383,6 @@ class Jewellery_view(View):
     #     jobj.save()
     #     return redirect('/search')
 
- 
-    
-
 
 # class Cart(View):
 #     def showcart(self,request):
@@ -395,20 +396,20 @@ class Jewellery_view(View):
 #                 print(item.location)
 #                 # item.save()
 #             return render(request, "showcart.html")
-        
+
 #         context = {
 #         "totalitems": form_list,
 #         }
 #         # print(form_list)
 #         return render(request, "showcart.html", context=context)
 
-def backtoinv(request,id):
-    myobj=Inventoryofjewellery.objects.get(id=id)
-    myobj.appvreturnstatus=False
+def backtoinv(request, id):
+    myobj = Inventoryofjewellery.objects.get(id=id)
+    myobj.appvreturnstatus = False
     myobj.save()
-    totalobjs=Inventoryofjewellery.objects.filter(appvreturnstatus=True)
+    totalobjs = Inventoryofjewellery.objects.filter(appvreturnstatus=True)
     return redirect('/retobj_j')
- 
+
 # def get_Datas(request):
 #         if request.is_ajax():
 #             q = request.GET.get('company_name', '')
@@ -423,3 +424,54 @@ def backtoinv(request,id):
 #             data = 'fail'
 #         mimetype = 'application/json'
 #         return HttpResponse(data, mimetype)
+
+
+form_list = []
+class Cart(View):
+    def get(self, request):
+        print("called")
+        total = cloneInvofjewellery.objects.all()
+        for i in total:
+            form_list.append(ADCForm(instance=i))
+
+        # for item in form_list:
+        #     print(item)
+        context = {
+            "totalitems": form_list,
+        }
+        return render(request, "showcart.html", context=context)
+
+    def post(self, request, *args, **kwargs):
+        if(request.method == "POST"):
+            print("hello m")
+            for i in form_list:
+                i=ADCForm(request.POST)
+                if (i.is_valid()):
+                    print("hello 2")
+                    i.save()
+        context = {
+            "totalitems": form_list,
+        }
+        return render(request, "showcart.html", context=context)
+
+
+
+# def show_jewwl_cart(request):
+#         print("called")
+#         total = cloneInvofjewellery.objects.all()
+#         global form_list
+#         form_list = []
+#         for i in total:
+#             form_list.append(ADCForm(instance=i))
+
+#         for item in form_list:
+#             print(item)
+#             return render(request, "showcart.html")
+#         context = {
+#             "totalitems": form_list,
+#         }
+#         return render(request, "showcart.html", context=context)
+
+#  def save_jewel_cart_form(request):
+#      if()
+#     return render(request, "showcart.html", context=context)

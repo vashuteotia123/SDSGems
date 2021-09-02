@@ -112,7 +112,6 @@ class currencies(models.Model):
 class POJ(models.Model):
 
     date = models.DateField(auto_now_add=True)
-    stockid = models.CharField(max_length=30,blank=True)
     company_name = models.ForeignKey(
         'companyinfo', on_delete=PROTECT, blank=True)
     location = models.ForeignKey(

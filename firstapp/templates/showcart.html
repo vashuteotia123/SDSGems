@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,16 +8,18 @@
     <title>Conditionals</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <form method="POST" action="">
-        {% csrf_token %}  
-    {% for a in totalitems %}
-    <h3>{{a.as_p}}</h1>
-    <hr>
-    {%endfor%}
-    <button type="submit">SELL</button>
-</form>
 
-   
+<body>
+    {% for a in totalitems %}
+    <form method="POST" action="">
+        {% csrf_token %}
+        <h3>{{a.as_p}}</h3>
+        
+    {%endfor%}
+    <button type="submit">Submit</button>
+    </form>
+
+
 </body>
+
 </html>
