@@ -1,6 +1,6 @@
 from django import forms
 from .models import *
-from django.forms import formset_factory
+from django.forms import formset_factory, modelformset_factory
 
 class CompanyForm(forms.ModelForm):
     class Meta:
@@ -59,4 +59,4 @@ class ADCForm(forms.ModelForm):
     #     else:
     #         self.fields['currency'].queryset = Currency.objects.all()
 
-ADCFormSet = formset_factory(ADCForm)
+ADCFormSet = modelformset_factory(cloneInvofjewellery,form = ADCForm, extra = 0)

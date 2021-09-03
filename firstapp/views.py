@@ -1,13 +1,14 @@
 from django.views.generic import View
 from django.db.models import Q
 from django.http.response import HttpResponse, JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_list_or_404, get_object_or_404
 from django.utils.regex_helper import Group
 from .models import *
 from .forms import *
 from django.urls import reverse_lazy
+from django.views.generic import DetailView
+from django.views.generic.edit import UpdateView
 
-from shapeshifter.views import MultiFormView
 
 # Create your views here.
 
@@ -425,53 +426,18 @@ def backtoinv(request, id):
 #         mimetype = 'application/json'
 #         return HttpResponse(data, mimetype)
 
+        
+def saving_jewel_cart(request):
+    total = cloneInvofjewellery.objects.all()
+    total_jewels = list(total.values())
+    jewel_formset = ADCFormSet(initial = total_jewels)
+    if request.method == "POST":
+        curr_formset = ADCFormSet(data = request.POST)
+        print(len(curr_formset))
+        if(curr_formset.is_valid()):
+            curr_formset.save()
+    context = {
+        "totalitems": jewel_formset,
+    }
+    return render(request, "showcart.html", context=context)
 
-form_list = []
-class Cart(View):
-    def get(self, request):
-        print("called")
-        total = cloneInvofjewellery.objects.all()
-        for i in total:
-            form_list.append(ADCForm(instance=i))
-
-        # for item in form_list:
-        #     print(item)
-        context = {
-            "totalitems": form_list,
-        }
-        return render(request, "showcart.html", context=context)
-
-    def post(self, request, *args, **kwargs):
-        if(request.method == "POST"):
-            print("hello m")
-            for i in form_list:
-                i=ADCForm(request.POST)
-                if (i.is_valid()):
-                    print("hello 2")
-                    i.save()
-        context = {
-            "totalitems": form_list,
-        }
-        return render(request, "showcart.html", context=context)
-
-
-
-# def show_jewwl_cart(request):
-#         print("called")
-#         total = cloneInvofjewellery.objects.all()
-#         global form_list
-#         form_list = []
-#         for i in total:
-#             form_list.append(ADCForm(instance=i))
-
-#         for item in form_list:
-#             print(item)
-#             return render(request, "showcart.html")
-#         context = {
-#             "totalitems": form_list,
-#         }
-#         return render(request, "showcart.html", context=context)
-
-#  def save_jewel_cart_form(request):
-#      if()
-#     return render(request, "showcart.html", context=context)

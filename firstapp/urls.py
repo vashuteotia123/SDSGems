@@ -43,8 +43,8 @@ urlpatterns = [
     # path('displayinv',views.displayinv,name="displayinv"),
     path('search', views.search, name="search"),
     #  path('delete/search',views.search,name="search"),
-    path('showcart', Cart.as_view(), name="cartget"),
     # path('search',views.search,name="search"),
 
     # path(r'^delete/(?P<idno>\d+)/$',views.deleteid, name='deleteid')
+    path('show_jewel_cart', saving_jewel_cart, name='show_jewel_cart')
 ]
