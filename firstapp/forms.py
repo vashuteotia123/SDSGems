@@ -11,7 +11,7 @@ class POJForm(forms.ModelForm):
     class Meta:
         model = POJ
         fields = "__all__"  
-
+POJFormSet = modelformset_factory(POJ,form = POJForm)
 class POCSForm(forms.ModelForm):
     class Meta:
         model = PurchaseOfColorStones

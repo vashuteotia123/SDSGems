@@ -46,5 +46,7 @@ urlpatterns = [
     # path('search',views.search,name="search"),
 
     # path(r'^delete/(?P<idno>\d+)/$',views.deleteid, name='deleteid')
-    path('show_jewel_cart', saving_jewel_cart, name='show_jewel_cart')
+    path('show_jewel_cart', saving_jewel_cart, name='show_jewel_cart'),
+    path('show_jewel_form',BirdAddView.as_view(), name="show_jewel_form"),
+
 ]

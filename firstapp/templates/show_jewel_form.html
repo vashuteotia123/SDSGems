@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conditionals</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <form id="form-container" method="POST">
+        {% csrf_token %}
+        {{totalitems.management_form}}
+        {% for form in totalitems %}
+        <div class="bird-form">
+        {{form.as_p}}
+        </div>
+        {% endfor %}
+        <button id="add-form" type="button">Add Another Bird</button>
+        <button type="submit">Create Birds</button>
+    </form>
+    <script>
+        let birdForm = document.querySelectorAll(".bird-form")
+        let container = document.querySelector("#form-container")
+        let addButton = document.querySelector("#add-form")
+        let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
+
+        let formNum = birdForm.length-1
+        addButton.addEventListener('click', addForm)
+
+        function addForm(e){
+            e.preventDefault()
+
+            let newForm = birdForm[0].cloneNode(true)
+            let formRegex = RegExp(`form-(\\d){1}-`,'g')
+
+            formNum++
+            newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
+            container.insertBefore(newForm, addButton)
+            
+            totalForms.setAttribute('value', `${formNum+1}`)
+        }
+    </script>
+  </body>
+</html>

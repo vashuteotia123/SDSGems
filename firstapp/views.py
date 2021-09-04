@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, get_list_or_404, get_object_or_404
 from django.utils.regex_helper import Group
+from django.views.generic.base import TemplateView
 from .models import *
 from .forms import *
 from django.urls import reverse_lazy
@@ -441,3 +442,33 @@ def saving_jewel_cart(request):
     }
     return render(request, "showcart.html", context=context)
 
+def save_jewel_forms(request):
+
+    poj_formset = POJFormSet(queryset=POJ.objects.none())
+    if request.method == "POST":
+        curr_formset = POJFormSet(data = request.POST)
+        if(curr_formset.is_valid()):
+            curr_formset.save()
+    context = {
+        "totalitems" : poj_formset,
+    }
+    return render(request, "show_jewel_form.html", context=context)
+    
+class BirdAddView(TemplateView):
+    template_name = "show_jewel_form.html"
+
+    def get(self, *args, **kwargs):
+        formset = POJFormSet(queryset=POJ.objects.none())
+        return self.render_to_response({'totalitems': formset})
+
+    # Define method to handle POST request
+    def post(self, *args, **kwargs):
+
+        formset = POJFormSet(data=self.request.POST)
+
+        # Check if submitted forms are valid
+        if formset.is_valid():
+            formset.save()
+            return redirect("/")
+
+        return self.render_to_response({'totalitems': formset})    
