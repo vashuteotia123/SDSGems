@@ -16,12 +16,12 @@ class POCSForm(forms.ModelForm):
     class Meta:
         model = PurchaseOfColorStones
         fields = "__all__"
-
+POCSFormSet= modelformset_factory(PurchaseOfColorStones,form = POCSForm)
 class PODForm(forms.ModelForm):
     class Meta:
         model = POD
         fields = "__all__"
-
+PODFormSet= modelformset_factory(POD,form = PODForm)
 
 # class ADCForm(forms.ModelForm):
 #     class Meta:
@@ -60,3 +60,5 @@ class ADCForm(forms.ModelForm):
     #         self.fields['currency'].queryset = Currency.objects.all()
 
 ADCFormSet = modelformset_factory(cloneInvofjewellery,form = ADCForm, extra = 0)
+
+

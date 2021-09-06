@@ -11,8 +11,8 @@
   <body>
     <form id="form-container" method="POST">
         {% csrf_token %}
-        {{totalitems.management_form}}
-        {% for form in totalitems %}
+        {{totalitems_d.management_form}}
+        {% for form in totalitems_d %}
         <div class="bird-form">
         {{form.as_p}}
         </div>

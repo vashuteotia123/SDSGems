@@ -545,14 +545,14 @@ class Salesofjewellery(models.Model):
     gross_wt=models.FloatField()
     certificate=models.CharField(max_length=30)
     PCS=models.IntegerField()
-    amount = models.FloatField()
-    DIS=models.FloatField()
-    DIS_amount=models.FloatField()
-    total_value=models.FloatField()
-    currency=models.CharField(max_length=30)
+    amount = models.FloatField(blank=True,null=True)
+    DIS=models.FloatField(blank=True,null=True)
+    DIS_amount=models.FloatField(blank=True,null=True)
+    total_value=models.FloatField(blank=True,null=True)
+    currency=models.CharField(max_length=30,blank=True,null=True)
     tag_price=models.FloatField()
-    rate=models.FloatField()
-
+    rate=models.FloatField(blank=True, null=True)
+    salesapprovalstatus = models.BooleanField(default=False)
 class cloneInvofjewellery(models.Model): 
     
     stockid = models.CharField(max_length=30)
@@ -572,14 +572,18 @@ class cloneInvofjewellery(models.Model):
     currency=models.CharField(max_length=30,blank=True,null=True)
     tag_price=models.FloatField()
     rate=models.FloatField(blank=True, null=True)
-
+    salesapprovalstatus = models.BooleanField(default=False)
     def save(self, *args, **kwargs):
         
         # self.delete()
+        
+        new_obj = Salesofjewellery.objects.create(stockid=str('J-')+str(self.id),company_name=self.company_name, location=self.location, jewellery_type=self.jewellery_type,
+                                                  center_stone= self.center_stone, shape=self.shape,
+                                                  metal=self.metal, gross_wt=self.gross_wt, certificate=self.certificate, PCS=self.PCS,amount=self.amount,DIS=self.DIS,DIS_amount=self.DIS_amount,total_value=self.total_value,currency=self.currency, tag_price=self.tag_price,
+                                                  rate=self.rate,salesapprovalstatus=self.salesapprovalstatus)
         super(cloneInvofjewellery, self).save()
         
-
-
+        
 
 
 

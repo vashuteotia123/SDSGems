@@ -48,5 +48,7 @@ urlpatterns = [
     # path(r'^delete/(?P<idno>\d+)/$',views.deleteid, name='deleteid')
     path('show_jewel_cart', saving_jewel_cart, name='show_jewel_cart'),
     path('show_jewel_form',BirdAddView.as_view(), name="show_jewel_form"),
+    path('show_diamond_form',DiamondAddView.as_view(), name="show_diamond_form"),
+    # path('show_colorstone_form',CSAddView.as_view(), name="show_colorstone_form"),
 
 ]

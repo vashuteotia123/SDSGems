@@ -452,6 +452,7 @@ def save_jewel_forms(request):
     context = {
         "totalitems" : poj_formset,
     }
+
     return render(request, "show_jewel_form.html", context=context)
     
 class BirdAddView(TemplateView):
@@ -471,4 +472,94 @@ class BirdAddView(TemplateView):
             formset.save()
             return redirect("/")
 
-        return self.render_to_response({'totalitems': formset})    
+        return self.render_to_response({'totalitems': formset})   
+
+def saving_diamond_cart(request):
+    total = cloneInvofjewellery.objects.all()
+    total_diamond = list(total.values())
+    diamond_formset = ADCFormSet(initial = total_diamond)
+    if request.method == "POST":
+        curr_formset = ADCFormSet(data = request.POST)
+        print(len(curr_formset))
+        if(curr_formset.is_valid()):
+            curr_formset.save()
+    context = {
+        "totalitems": diamond_formset,
+    }
+    return render(request, "showcart.html", context=context)
+
+def save_diamond_forms(request):
+
+    pod_formset = PODFormSet(queryset=POD.objects.none())
+    if request.method == "POST":
+        curr_formset = PODFormSet(data = request.POST)
+        if(curr_formset.is_valid()):
+            curr_formset.save()
+    context = {
+        "totalitems_d" : pod_formset,
+    }
+    return render(request, "show_diamond_form.html", context=context)
+    
+class DiamondAddView(TemplateView):
+    template_name = "show_diamond_form.html"
+
+    def get(self, *args, **kwargs):
+        formset = PODFormSet(queryset=POD.objects.none())
+        return self.render_to_response({'totalitems_d': formset})
+
+    # Define method to handle POST request
+    def post(self, *args, **kwargs):
+
+        formset = PODFormSet(data=self.request.POST)
+
+        # Check if submitted forms are valid
+        if formset.is_valid():
+            formset.save()
+            return redirect("/")
+
+        return self.render_to_response({'totalitems_d': formset})
+
+# def saving_colorstone_cart(request):
+#     total = cloneInvofcolorstones.objects.all()
+#     total_colorstones = list(total.values())
+#     colorstone_formset = ADCFormSet(initial = total_colorstones)
+#     if request.method == "POST":
+#         curr_formset = ADCFormSet(data = request.POST)
+#         print(len(curr_formset))
+#         if(curr_formset.is_valid()):
+#             curr_formset.save()
+#     context = {
+#         "totalitems_cs": colorstone_formset,
+#     }
+#     return render(request, "showcartcs.html", context=context)
+
+# def save_colorstones_forms(request):
+
+#     pocs_formset = POCSFormSet(queryset=PurchaseOfColorStones.objects.none())
+#     if request.method == "POST":
+#         curr_formset = POCSFormSet(data = request.POST)
+#         if(curr_formset.is_valid()):
+#             curr_formset.save()
+#     context = {
+#         "totalitems_cs" : pocs_formset,
+#     }
+#     return render(request, "show_colorstone_form.html", context=context)
+    
+# class CSAddView(TemplateView):
+#     template_name = "show_colorstone_form.html"
+
+#     def get(self, *args, **kwargs):
+#         formset = POCSFormSet(queryset=PurchaseOfColorStones.objects.none())
+#         return self.render_to_response({'totalitems_cs': formset})
+
+#     # Define method to handle POST request
+#     def post(self, *args, **kwargs):
+
+#         formset = POCSFormSet(data=self.request.POST)
+
+#         # Check if submitted forms are valid
+#         if formset.is_valid():
+#             formset.save()
+#             return redirect("/")
+
+#         return self.render_to_response({'totalitems_cs': formset})
