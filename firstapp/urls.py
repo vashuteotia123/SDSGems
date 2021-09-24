@@ -50,5 +50,6 @@ urlpatterns = [
     path('show_jewel_form',BirdAddView.as_view(), name="show_jewel_form"),
     path('show_diamond_form',DiamondAddView.as_view(), name="show_diamond_form"),
     # path('show_colorstone_form',CSAddView.as_view(), name="show_colorstone_form"),
-
+    path('sell_jewel', views.sell_jewel, name='sell_jewel'),
+    path('return_jewel_Inventory<int:id>', views.return_jewel_Inventory, name="return_jewel_Inventory")
 ]

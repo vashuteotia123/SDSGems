@@ -442,6 +442,45 @@ def saving_jewel_cart(request):
     }
     return render(request, "showcart.html", context=context)
 
+def sell_jewel(request):
+    jewellery_objects = cloneInvofjewellery.objects.all()
+    for object in jewellery_objects:
+        Salesofjewellery.objects.create(
+            stockid=object.stockid, 
+            company_name=object.company_name, 
+            location=object.location, 
+            jewellery_type=object.jewellery_type,
+            center_stone=object.center_stone,
+            shape=object.shape,
+            metal=object.metal, 
+            gross_wt=object.gross_wt, 
+            certificate=object.certificate, 
+            PCS=object.PCS, 
+            amount=object.amount, 
+            DIS=object.DIS, 
+            DIS_amount=object.DIS_amount, 
+            total_value=object.total_value, 
+            currency=object.currency, 
+            tag_price=object.tag_price,
+            rate=object.rate,
+            salesapprovalstatus=object.salesapprovalstatus)
+        Inventoryofjewellery.objects.filter(stockid=object.stockid).delete()
+    cloneInvofjewellery.objects.all().delete()
+    context = {
+        "sold_items" : Salesofjewellery.objects.all(),
+    }
+    return render(request, "show_sell_jewel_table.html", context = context)
+
+def return_jewel_Inventory(request, id):
+    object = Salesofjewellery.objects.get(pk = id)
+    Inventoryofjewellery.objects.create(stockid=object.stockid, )
+    Salesofjewellery.objects.filter(pk=id).delete()
+    context = {
+        "productsj": Inventoryofjewellery.objects.all(),
+
+    }
+    return render(request, "showcart.html", context=context)
+
 def save_jewel_forms(request):
 
     poj_formset = POJFormSet(queryset=POJ.objects.none())
