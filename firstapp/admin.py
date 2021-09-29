@@ -22,7 +22,7 @@ class CompanyAdmin(ImportExportModelAdmin):
 class gemtypeadmin(admin.ModelAdmin):
     pass 
 @admin.register(POJ)
-class PurchaseOFJewell(admin.ModelAdmin):
+class PurchaseOFJewell(ImportExportModelAdmin):
     readonly_fields=['total','discount_amount']
 @admin.register(Inventoryofjewellery)
 class iojadmin(admin.ModelAdmin):
@@ -133,3 +133,22 @@ class salesofjewadmin(admin.ModelAdmin):
 class cloneInvofjewadmin(admin.ModelAdmin):
     list_display = [entry.name for entry in cloneInvofjewellery._meta.fields]
     list_editable = ["tag_price", "rate"]
+
+@admin.register(cloneInvofcolorstones)
+class cloneInvofcsadmin(admin.ModelAdmin):
+    list_display = [entry.name for entry in cloneInvofcolorstones._meta.fields]
+    list_editable = ["tag_price_cs", "rate_cs"]
+
+@admin.register(Salesofcolorstones)
+class salesofcsadmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(cloneInvofdiamond)
+class cloneInvofdadmin(admin.ModelAdmin):
+    list_display = [entry.name for entry in cloneInvofdiamond._meta.fields]
+    list_editable = ["tag_price_d", "rate_d"]
+
+@admin.register(Salesofdiamond)
+class salesofdadmin(admin.ModelAdmin):
+    pass

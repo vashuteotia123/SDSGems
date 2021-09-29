@@ -14,7 +14,6 @@ class POJForm(forms.ModelForm):
         model = POJ
         fields = "__all__"
 
-
 POJFormSet = modelformset_factory(POJ, form=POJForm)
 
 
@@ -22,7 +21,6 @@ class POCSForm(forms.ModelForm):
     class Meta:
         model = PurchaseOfColorStones
         fields = "__all__"
-
 
 POCSFormSet = modelformset_factory(PurchaseOfColorStones, form=POCSForm)
 
@@ -81,3 +79,35 @@ class ADCForm(forms.ModelForm):
 
 
 ADCFormSet = modelformset_factory(cloneInvofjewellery, form=ADCForm, extra=0)
+
+class ADCForm_cs(forms.ModelForm):
+    disabled_fields = ['stockid', 'location', 'shape','gem_type','origin','treatment',
+                       'certificate_no_cs', 'color','measurements','lab','Weight_cs','amount_cs', 'DIS_cs', 'DIS_amount_cs', 'total_value_cs', 'currency_cs', 'tag_price_cs', 'rate_cs']
+
+    class Meta:
+        model = cloneInvofcolorstones
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(ADCForm_cs, self).__init__(*args, **kwargs)
+        for field in self.disabled_fields:
+            self.fields[field].disabled = True
+
+ADCFormSet_cs = modelformset_factory(cloneInvofcolorstones, form=ADCForm_cs, extra=0)
+
+class ADCForm_d(forms.ModelForm):
+    disabled_fields = ['stockid', 'location', 'shape','clarity','white_color_grade1','fancy_color_intensity1','fancycolor_grade','cut','polish','symmetry',
+                       'measurements', 'depth','table','fluorescence_intensity','fluorescence_color','certificate_no_d','certificate_d','laser_inscription','PCS_d','weight_d',
+                       'amount_d', 'DIS_d', 'DIS_Amount_d', 'total_value_d', 'currency', 'tag_price_d', 'rate_d']
+
+    class Meta:
+        model = cloneInvofdiamond
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(ADCForm_d, self).__init__(*args, **kwargs)
+        for field in self.disabled_fields:
+            self.fields[field].disabled = True
+
+ADCFormSet_d = modelformset_factory(cloneInvofdiamond, form=ADCForm_d, extra=0)
+

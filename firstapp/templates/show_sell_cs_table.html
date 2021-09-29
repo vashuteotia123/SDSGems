@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {%for item in sold_items%}
+    <table>
+        {{item.stockid}}
+        {{item.salesapprovalstatus_cs}}
+        {% if item.salesapprovalstatus_cs %}
+        <a href="{% url 'return_colorstone_Inventory' item.id %}" target=""> Return back to Inventory</a>
+        {% endif%}
+    </table>
+
+    {%endfor%}
+</body>
+</html>

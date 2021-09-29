@@ -5,29 +5,111 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
 </head>
 <body>
 
-    <form method='GET' action="">
-        <input type="text" name="search" placeholder="Search posts"/>
+    <form method='POST' action="{%url 'search_cs' %}">
+        {% csrf_token %}
+        <input type="text" name="search_cs" placeholder="Search posts"/>
         <input type="submit"  value="Search"/>
-        </form>
+    </form>
+    <br>
+    <div class="container">
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>Location</th>
+                <th>certificate_no_cs</th>
+            </thead>
+            <tbody>
+                {% csrf_token %}
+                {% for p in products_cs %}
+                {% if p.appvreturnstatus_cs is False %}
+                <tr id="{{p.id}}">
+                    <td>{{p.id}}</td>
+                    <td>{{p.location}}</td>
+                    <td>Aryan</td>
+                    {% if p.appvreturnstatus_cs is False %}
+                    <td><input type="checkbox" name="cs_id[]" value="{{p.id}}" class="save-cb-state"
+                            id="delete_cs"></td>
+                    {% endif %}
+                    {% if p.cartstatus is False %}
+                    <td><a class="btn btn-primary" href="{% url 'addtocart_cs' id=p.id %}">ADD TO CART</a></td>
+                    {% endif %}
+                    {% if p.cartstatus is True %}
+                    <td><a class="btn btn-primary">Go To CART</a></td>
+                    {% endif %}
 
-    {% for i in  showinv_cs %}
-    <h2>{{i.id}}</h2>
-    <h2>{{i.shape}}</h2>
-    <h2>{{i.gem_type}}</h2>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+            </table>
+            </div>
+            <div>
+                <button type="submit" id="delete_btn">Add to return table</button>
+            </div>
+            <div>
+                <a class="btn btn-primary" href="{% url 'retobj_cs' %}">View returned objects</a>
+                <a class="btn btn-primary" href="{% url 'show_colorstone_cart' %}">View Cart</a>
+            </div>
+            <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        
+            <script>
+                if (!$) {
+                    $ = django.jQuery;
+                }
+                $(document).ready(function () {
+                    $('#delete_btn').click(function () {
+                        if (confirm("You want to delete this")) {
+                            var id = [];
+                            var csrf = $('input[name=csrfmiddlewaretoken').val()
+                            $(':checkbox:checked').each(function (i) {
+        
+                                id[i] = $(this).val()
+                                console.log("ajax called")
+                                console.log(id[0])
+                            })
+                            if (id.length == 0) {
+                                alert("No items Selected Please Select Again");
+        
+                            }
+                            else {
+                                $.ajax({
+                                    url: '.',
+                                    method: "POST",
+                                    data: {
+                                        id,
+                                        csrfmiddlewaretoken: csrf,
+                                    },
+        
+                                    success: function (response) {
+                                        window.location.reload();
+                                        for (var i = 0; i < id.length; i++) {
+        
+                                            $('tr#' + id[i] + '').css('background-color', '#ccc');
+                                            $('tr#' + id[i] + '').fadeOut('slow');
+        
+                                        }
+        
+                                    }
+        
+                                });
+                            }
+        
+        
+                        }
+        
+        
+        
+        
+                    });
+        
+                });
+            </script>
+        </body>
+        
+        </html>
     
-    <a class="btn btn-primary" href="{% url 'addjtocart' primkey=i.id %}" >ADD TO CART</a>
-    {% if not i.purchaseapv%}
-    <a href="{% url 'returninv_cs' id1=i.id %}" >Return</a>
-
-    {%endif%}
-    {%endfor%}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
-</body>
-</html>

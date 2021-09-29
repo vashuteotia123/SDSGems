@@ -26,12 +26,16 @@
             <tbody>
                 {% csrf_token %}
                 {% for p in productsj %}
-                {% if p.appvreturnstatus is False and p.purchaseapv is False %}
+                {% if p.appvreturnstatus is False %}
                 <tr id="{{p.id}}">
                     <td>{{p.stockid}}</td>
                     <td>{{p.location}}</td>
                     <td>Aryan</td>
-                    <td><input type="checkbox" name="jewell_id[]" value="{{p.id}}" id="delete_jewell"></td>
+                    {% if p.appvreturnstatus is False and p.purchaseapv is False %}
+                    <td><input type="checkbox" name="jewell_id[]" value="{{p.id}}" class="save-cb-state"
+                            id="delete_jewell"></td>
+                    {% endif %}
+                    
                     {% if p.cartstatus is False %}
                     <td><a class="btn btn-primary" href="{% url 'addtocart' id=p.id %}">ADD TO CART</a></td>
                     {% endif %}

@@ -10,11 +10,12 @@
 
 <body>
     <h1>Return Successful</h1>
-  
-    <h2>{{returndiamond.stockid}}</h2>
-    <h2>{{returndiamond.shape}}</h2>
-    <h2>{{returndiamond.clarity}}</h2>
-
+    {% for p in returned_d %}
+    <h2>{{p.stockid}}</h2>
+    <h2>{{p.shape}}</h2>
+    
+    <a href="{% url 'backtoinv_d' id=p.id%}"> Return Back to Inventory</a>
+    {%endfor%}
 </body>
 
 </html>
