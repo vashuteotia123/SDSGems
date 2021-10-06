@@ -152,3 +152,7 @@ class cloneInvofdadmin(admin.ModelAdmin):
 @admin.register(Salesofdiamond)
 class salesofdadmin(admin.ModelAdmin):
     pass
+
+# @admin.register(Salesreturn)
+# class salesofdadmin(admin.ModelAdmin):
+#     pass

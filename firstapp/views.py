@@ -9,7 +9,7 @@ from .forms import *
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView
-
+import re
 
 # Create your views here.
 
@@ -91,11 +91,15 @@ def showform2(request):
 #     return render(request, 'templates/currency_dropdown_list_options.html', {'currency' : currency})
 
 #  Jewellary Function 
+
 def deleteid(request, idno):
     current = POJ.objects.get(id=idno)
+    jstr = "J-"+str(idno)
+    print(jstr)
+    current_invj =Inventoryofjewellery.objects.get(stockid=jstr)
     current.delete()
+    current_invj.delete()
     return render(request, "delete.html")
-
 
 def returnid(request, idno):
     print("called")
@@ -246,8 +250,8 @@ def search(request):
 
 class Jewellery_view(View):
     def get(self, request):
-        allproduct = Inventoryofjewellery.objects.all()
-        allclonej = cloneInvofjewellery.objects.all()
+        allproduct = Inventoryofjewellery.objects.all().order_by('stockid')
+        # allclonej = cloneInvofjewellery.objects.all()
         context = {
             "productsj": allproduct,
 
@@ -266,6 +270,12 @@ class Jewellery_view(View):
     def addtocart(self, id):
         print("hello")
         j_obj = Inventoryofjewellery.objects.get(id=id)
+        z=j_obj.stockid
+        x=re.findall("[0-9]+",z)
+        idj = int(x[0])
+        j_obj2 = POJ.objects.filter(id=idj)
+        if j_obj.purchaseapv is False:
+             j_obj2.update(purchase_approval=True)
         j_obj.cartstatus = True
         j_obj.save()
         print(j_obj.cartstatus)
@@ -274,31 +284,7 @@ class Jewellery_view(View):
                                                         PCS=j_obj.pcs, tag_price=j_obj.tag_price)
         return redirect('/delete')
 
-    # def returnj(self, id):
-    #     jobj = Inventoryofjewellery.objects.get(id=id)
-    #     jobj.appvreturnstatus = True
-    #     jobj.save()
-    #     return redirect('/search')
-
-
-# class Cart(View):
-#     def showcart(self,request):
-#         form_list = []
-#         total = cloneInvofjewellery.objects.all()
-#         for i in total:
-#             form_list.append(ADCForm(instance=i))
-#         if request.method == 'POST':
-#             print("Function executed")
-#             for item in form_list:
-#                 print(item.location)
-#                 # item.save()
-#             return render(request, "showcart.html")
-
-#         context = {
-#         "totalitems": form_list,
-#         }
-#         # print(form_list)
-#         return render(request, "showcart.html", context=context)
+    
 
 def backtoinv(request, id):
     myobj = Inventoryofjewellery.objects.get(id=id)
@@ -366,15 +352,38 @@ def sell_jewel(request):
     }
     return render(request, "show_sell_jewel_table.html", context = context)
 
+
 def return_jewel_Inventory(request, id):
     object = Salesofjewellery.objects.get(pk = id)
-    Inventoryofjewellery.objects.create(stockid=object.stockid, )
+    Inventoryofjewellery.objects.create(stockid=object.stockid, 
+
+            location=object.location, 
+            jewellery_type=object.jewellery_type,
+            center_stone=object.center_stone,
+            shape=object.shape,
+            metal=object.metal, 
+            grosswt=object.gross_wt, 
+            cert=object.certificate, 
+            pcs=object.PCS, 
+            purchaseapv=True,
+            cartstatus=False,
+            appvreturnstatus=False,
+            tag_price=object.tag_price,
+
+      )
+    Salesreturn.objects.create(
+        company_name=object.company_name,
+        stockid=object.stockid,
+        location=object.location,
+        jewellery_type=object.jewellery_type,
+
+    )
     Salesofjewellery.objects.filter(pk=id).delete()
     context = {
         "productsj": Inventoryofjewellery.objects.all(),
 
     }
-    return render(request, "showcart.html", context=context)
+    return render(request, "showinvj.html", context=context)
 
 def save_jewel_forms(request):
 
@@ -386,7 +395,6 @@ def save_jewel_forms(request):
     context = {
         "totalitems" : poj_formset,
     }
-
     return render(request, "show_jewel_form.html", context=context)
     
 class BirdAddView(TemplateView):
@@ -407,7 +415,44 @@ class BirdAddView(TemplateView):
             return redirect("/")
 
         return self.render_to_response({'totalitems': formset})   
+def returncart2(request,id):
+    myobject=cloneInvofjewellery.objects.get(id=id)
+    invobj=Inventoryofjewellery.objects.get(stockid=myobject.stockid)
+    invobj.cartstatus=False
+    invobj.save()
+    tjcart=cloneInvofjewellery.objects.all()
+    context={
+        "tjcart":tjcart,
 
+    }
+    return render(request,"displaycart.html",context=context)
+def displaysalesreturn(request):
+    ret_sj = Salesreturn.objects.all()
+    context={
+        "ret_sj":ret_sj,
+    }
+    return render(request,"salereturnjewellery.html",context=context)
+
+def displaycart2(request):
+    tjcart=cloneInvofjewellery.objects.all()
+    context={
+        "tjcart":tjcart,
+
+    }
+    return render(request,"displaycart.html",context=context)
+
+def return_jewel_cart(request,id):
+    rjc = cloneInvofjewellery.objects.get(id=id)
+    rjc2 = Inventoryofjewellery.objects.get(stockid=rjc.stockid)
+    if rjc2.purchaseapv is False:
+        x=re.findall("[0-9]+",rjc2.stockid)
+        rdj = int(x[0])
+        xy=POJ.objects.filter(id=rdj)
+        xy.update(purchase_approval=False)
+    rjc2.cartstatus=False
+    rjc2.save()
+    rjc.delete()
+    return redirect('/displaycart2')
 
 
 # Color stones function
@@ -445,10 +490,20 @@ def update_cs(request, ck):
     return render(request, 'update_cs.html', context)
 
 
+# def deleteid_cs(request, idno):
+#     current = PurchaseOfColorStones.objects.get(id=idno)
+#     current.delete()
+#     return render(request, "delete.html")
+
 def deleteid_cs(request, idno):
     current = PurchaseOfColorStones.objects.get(id=idno)
+    c_str = "C-"+str(idno)
+    print(c_str)
+    current_invcs =Inventoryofcolorstones.objects.get(stockid=c_str)
     current.delete()
-    return render(request, "delete.html")
+    current_invcs.delete()
+    return render(request, "delete_cs.html")
+
 
 def showinv_cs(request):
     inv_csobj = Inventoryofcolorstones.objects.all()
@@ -530,18 +585,39 @@ def sell_cs(request):
     }
     return render(request, "show_sell_cs_table.html", context = context)
 
+
+
 def return_colorstone_Inventory(request, id):
     object = Salesofcolorstones.objects.get(pk = id)
-    Inventoryofcolorstones.objects.create(stockid=object.stockid, )
+    Inventoryofcolorstones.objects.create(stockid=object.stockid, 
+
+            location=object.location, 
+            gem_type=object.gem_type,            
+            origin=object.origin,            
+            treatment=object.treatment, 
+            certificate_no_cs =object.certificate_no_cs , 
+            PCS=object.PCS, 
+            purchaseapv_cs=True,
+            cartstatus=False,
+            appvreturnstatus_cs=False,
+            tag_price_cs=object.tag_price_cs,
+
+      )
+    Salesreturn_cs.objects.create(
+        company_name=object.company_name,
+        stockid=object.stockid,
+        location=object.location,
+        gem_type=object.gem_type,
+
+    )
     Salesofcolorstones.objects.filter(pk=id).delete()
     context = {
         "products_cs": Inventoryofcolorstones.objects.all(),
 
     }
-    return render(request, "showcart_cs.html", context=context)
+    return render(request, "showinvcs.html", context=context)
 
-def save_colorstones_forms(request):
-
+def save_colorstone_forms(request):
     pocs_formset = POCSFormSet(queryset=PurchaseOfColorStones.objects.none())
     if request.method == "POST":
         curr_formset = POCSFormSet(data = request.POST)
@@ -574,8 +650,8 @@ class CSAddView(TemplateView):
 class colorstone_view(View):
     def get(self, request):
         print("hello")
-        allproduct = Inventoryofcolorstones.objects.all()
-        allclone_cs = cloneInvofcolorstones.objects.all()
+        allproduct = Inventoryofcolorstones.objects.all().order_by('stockid')
+        # allclone_cs = cloneInvofcolorstones.objects.all()
         context = {
             "products_cs": allproduct,
 
@@ -594,14 +670,60 @@ class colorstone_view(View):
     def addtocart_cs(self, id):
         print("hello")
         j_obj = Inventoryofcolorstones.objects.get(id=id)
+        z=j_obj.stockid
+        x=re.findall("[0-9]+",z)
+        idcs = int(x[0])
+        j_obj2 = PurchaseOfColorStones.objects.filter(id=idcs)
+        if j_obj.purchaseapv_cs is False:
+            j_obj2.update(purchaseapv_cs=True)
         j_obj.cartstatus = True
         j_obj.save()
-        print(j_obj.cartstatus)
+        print(j_obj.cartstatus)       
         new_object = cloneInvofcolorstones.objects.create(stockid=j_obj.stockid, location=j_obj.location,shape=j_obj.shape, gem_type=j_obj.gem_type,
-        origin=j_obj.origin,treatment=j_obj.treatment, certificate_no_cs=j_obj. certificate_no_cs,
-        color=j_obj.color,measurements=j_obj.measurements,lab=j_obj.lab,PCS=j_obj.PCS,Weight_cs=j_obj.Weight_cs,tag_price_cs=j_obj.tag_price_cs)
+                                                            origin=j_obj.origin,treatment=j_obj.treatment, certificate_no_cs=j_obj. certificate_no_cs,
+                                                            color=j_obj.color,measurements=j_obj.measurements,lab=j_obj.lab,PCS=j_obj.PCS,Weight_cs=j_obj.Weight_cs,tag_price_cs=j_obj.tag_price_cs)
         return redirect('/delete_cs')
 
+#  extra function cs
+
+def returncart2_cs(request,id):
+    myobject=cloneInvofcolorstones.objects.get(id=id)
+    invobj=Inventoryofcolorstones.objects.get(stockid=myobject.stockid)
+    invobj.cartstatus=False
+    invobj.save()
+    tcscart=cloneInvofcolorstones.objects.all()
+    context={
+        "tcscart":tcscart,
+
+    }
+    return render(request,"displaycart_cs.html",context=context)
+
+def displaysalesreturn_cs(request):
+    ret_scs = Salesreturn_cs.objects.all()
+    context={
+        "ret_scs":ret_scs,
+    }
+    return render(request,"salereturncolorstones.html",context=context)
+
+def displaycart2_cs(request):
+    tcscart=cloneInvofcolorstones.objects.all()
+    context={
+        "tcscart":tcscart,
+    }
+    return render(request,"displaycart_cs.html",context=context) 
+
+def return_colorstone_cart(request,id):
+    rjc = cloneInvofcolorstones.objects.get(id=id)
+    rjc2 = Inventoryofcolorstones.objects.get(stockid=rjc.stockid)
+    if rjc2.purchaseapv_cs is False:
+        x=re.findall("[0-9]+",rjc2.stockid)
+        rdj = int(x[0])
+        xy=PurchaseOfColorStones.objects.filter(id=rdj)
+        xy.update(purchaseapv_cs=False)
+    rjc2.cartstatus=False
+    rjc2.save()
+    rjc.delete()
+    return redirect('/displaycart2_cs')
 
 # Diamond Function 
 def showdiamond(request):
@@ -637,10 +759,19 @@ def returnid_d(request, idno):
     return render(request, "return_d.html", context=context)
 
 
+
+
 def deleteid_d(request, idno):
     current = POD.objects.get(id=idno)
+    d_str = "D-"+str(idno)
+    print(d_str)
+    current_invd =Inventoryofdiamond.objects.get(stockid=d_str)
     current.delete()
-    return render(request, "delete.html")
+    current_invd.delete()
+    return render(request, "delete_d.html")
+
+
+
 
 def showinv_d(request):
     if request.session:
@@ -727,8 +858,8 @@ def search_d(request):
 class Diamond_view(View):
     def get(self,request):
         print("hello")
-        allproduct = Inventoryofdiamond.objects.all()
-        allclone_d = cloneInvofdiamond.objects.all()
+        allproduct = Inventoryofdiamond.objects.all().order_by('stockid')
+        # allclone_d = cloneInvofdiamond.objects.all()
         context = {
             "products_d": allproduct,
 
@@ -747,14 +878,20 @@ class Diamond_view(View):
     def addtocart_d(self, id):
         print("hello")
         j_obj = Inventoryofdiamond.objects.get(id=id)
+        z=j_obj.stockid
+        x=re.findall("[0-9]+",z)
+        id_d = int(x[0])
+        j_obj2 = POJ.objects.filter(id=id_d)
+        if j_obj.purchaseapv_d is False:
+            j_obj2.update(purchaseapv_d=True)
         j_obj.cartstatus = True
         j_obj.save()
         print(j_obj.cartstatus)
         new_object = cloneInvofdiamond.objects.create(stockid=j_obj.stockid, location=j_obj.location,shape=j_obj.shape, clarity=j_obj.clarity,
-        white_color_grade1=j_obj.white_color_grade1,fancy_color_intensity1=j_obj.fancy_color_intensity1,fancycolor_grade=j_obj.fancycolor_grade, 
-        cut=j_obj.cut,polish=j_obj.polish,symmetry=j_obj.symmetry,measurements=j_obj.measurements,depth=j_obj.depth,table=j_obj.table,
-        fluorescence_intensity=j_obj.fluorescence_intensity,fluorescence_color=j_obj.fluorescence_color,certificate_no_d=j_obj. certificate_no_d,
-        certificate_d=j_obj.certificate_d,laser_inscription=j_obj.laser_inscription,PCS_d=j_obj.PCS_d,weight_d=j_obj.weight_d,units=j_obj.units,tag_price_d=j_obj.tag_price_d)
+                                                        white_color_grade1=j_obj.white_color_grade1,fancy_color_intensity1=j_obj.fancy_color_intensity1,fancycolor_grade=j_obj.fancycolor_grade, 
+                                                        cut=j_obj.cut,polish=j_obj.polish,symmetry=j_obj.symmetry,measurements=j_obj.measurements,depth=j_obj.depth,table=j_obj.table,
+                                                        fluorescence_intensity=j_obj.fluorescence_intensity,fluorescence_color=j_obj.fluorescence_color,certificate_no_d=j_obj. certificate_no_d,
+                                                        certificate_d=j_obj.certificate_d,laser_inscription=j_obj.laser_inscription,PCS_d=j_obj.PCS_d,weight_d=j_obj.weight_d,units=j_obj.units,tag_price_d=j_obj.tag_price_d)
         return redirect('/delete_d')
 
 def backtoinv_d(request,id):
@@ -809,12 +946,77 @@ def sell_diamond(request):
     }
     return render(request, "show_sell_diamond_table.html", context = context)
 
+
 def return_diamond_Inventory(request, id):
     object = Salesofdiamond.objects.get(pk = id)
-    Inventoryofdiamond.objects.create(stockid=object.stockid, )
+    Inventoryofdiamond.objects.create(stockid=object.stockid, 
+
+            location=object.location, 
+            shape=object.shape,            
+            clarity=object.clarity,
+            white_color_grade1=object.white_color_grade1, 
+            fancycolor_grade=object.fancycolor_grade, 
+            certificate_no_d=object.certificate_no_d, 
+            PCS_d=object.PCS_d, 
+            purchaseapv_d=True,
+            cartstatus=False,
+            appvreturnstatus_d=False,
+            tag_price_d=object.tag_price_d,
+
+      )
+    Salesreturn_d.objects.create(
+        company_name=object.company_name,
+        stockid=object.stockid,
+        location=object.location,
+        shape=object.shape,
+
+    )
     Salesofdiamond.objects.filter(pk=id).delete()
     context = {
         "products_d": Inventoryofdiamond.objects.all(),
 
     }
-    return render(request, "showcart_d.html", context=context)
+    return render(request, "showinvd.html", context=context)
+
+def return_diamond_cart(request,id):
+    rjc = cloneInvofdiamond.objects.get(id=id)
+    rjc2 = Inventoryofdiamond.objects.get(stockid=rjc.stockid)
+    if rjc2.purchaseapv_d is False:
+        x=re.findall("[0-9]+",rjc2.stockid)
+        rdj = int(x[0])
+        xy=POD.objects.filter(id=rdj)
+        xy.update(purchaseapv_d=False)
+    rjc2.cartstatus=False
+    rjc2.save()
+    rjc.delete()
+    return redirect('/displaycart2_d')
+
+
+
+# extra function d
+
+def returncart2_d(request,id):
+    myobject=cloneInvofdiamond.objects.get(id=id)
+    invobj=Inventoryofdiamond.objects.get(stockid=myobject.stockid)
+    invobj.cartstatus=False
+    invobj.save()
+    tdcart=cloneInvofdiamond.objects.all()
+    context={
+        "tdcart":tdcart,
+    }
+    return render(request,"displaycart_d.html",context=context)
+
+def displaysalesreturn_d(request):
+    ret_sd = Salesreturn_d.objects.all()
+    context={
+        "ret_sd":ret_sd,
+    }
+    return render(request,"salereturndiamond.html",context=context)
+
+def displaycart2_d(request):
+    tdcart=cloneInvofdiamond.objects.all()
+    context={
+        "tdcart":tdcart,
+    }
+    return render(request,"displaycart_d.html",context=context)
+

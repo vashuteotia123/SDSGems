@@ -7,15 +7,35 @@
     <title>Document</title>
 </head>
 <body>
+    <table border="1">
+        <tr>
+            <th>Date</th>
+            <th>Stockid</th>
+            <th>Company Name</th>
+            <th>Jewellery type</th>
+            <th>Country</th>
+            <th>Metal</th>
+            <th>Sales Status</th>
+            <th></th>
+            <th></th>
+        </tr>
     {%for item in sold_items%}
-    <table>
-        {{item.stockid}}
-        {{item.salesapprovalstatus}}
-        {% if item.salesapprovalstatus %}
-        <a href="{% url 'return_jewel_Inventory' item.id %}" target=""> Return back to Inventory</a>
+        <tr>
+            <td>{{item.date}}</td>
+        <td>{{item.stockid}}</td>
+        <td>{{item.company_name}}</td>
+        <td>{{item.jewellery_type}}</td>
+        <td>{{item.location}}</td>
+        <td>{{item.metal}}</td>
+        <td>{{item.salesapprovalstatus}}</td>
+        {% if item.salesapprovalstatus is False %}
+        <td><a href="{% url 'return_jewel_Inventory' item.id %}" target=""> Return back to Inventory</a></td>
         {% endif%}
-    </table>
+    </tr>
 
     {%endfor%}
+
+    <button><a href="{% url 'displaysalesreturn' %}" target=""> View Sales Return</a></button>
+</table>
 </body>
 </html>

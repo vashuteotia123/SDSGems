@@ -28,7 +28,7 @@ urlpatterns = [
     path('show_jewel_form',BirdAddView.as_view(), name="show_jewel_form"),
     path('sell_jewel', views.sell_jewel, name='sell_jewel'),
     path('return_jewel_Inventory<int:id>', views.return_jewel_Inventory, name="return_jewel_Inventory"),
-
+    path('return_jewel_cart<str:id>',views.return_jewel_cart, name='return_jewel_cart'),
     # path('delete/search',views.search,name="search"),
     # path('delete/',Jewellery_view.as_view(),name="delete-jewell"),
     # path('returninvj/<str:id>',views.returninvj,name="returninvj"),
@@ -60,7 +60,7 @@ urlpatterns = [
     path('addtocart_cs/<str:id>', colorstone_view.addtocart_cs, name="addtocart_cs"),
     path('backtoinvcs1/<str:id>',views.backtoinvcs1, name="backtoinvcs1"),
     path('return_colorstone_Inventory<int:id>', views.return_colorstone_Inventory, name="return_colorstone_Inventory"),
-    
+    path('return_colorstone_cart<str:id>',views.return_colorstone_cart, name='return_colorstone_cart'),
 
     # ///////diamond url/////////
 
@@ -80,5 +80,18 @@ urlpatterns = [
     path('addtocart_d/<str:id>',Diamond_view.addtocart_d, name="addtocart_d"),
     path('backtoinv_d/<str:id>',views.backtoinv_d, name="backtoinv_d"),
     path('return_diamond_Inventory<int:id>', views.return_diamond_Inventory, name="return_diamond_Inventory"),
-    
+    # ////
+    path('displaycart2', views.displaycart2, name='displaycart2'),
+    path('returncart2', views.returncart2, name='returncart2'),
+    path('displaysalesreturn', views.displaysalesreturn, name='displaysalesreturn'),
+
+    path('displaycart2_cs', views.displaycart2_cs, name='displaycart2_cs'),
+    path('returncart2_cs', views.returncart2_cs, name='returncart2_cs'),
+    path('displaysalesreturn_cs', views.displaysalesreturn_cs, name='displaysalesreturn_cs'),
+
+    path('displaycart2_d', views.displaycart2_d, name='displaycart2_d'),
+    path('returncart2_d', views.returncart2_d, name='returncart2_d'),
+    path('displaysalesreturn_d', views.displaysalesreturn_d, name='displaysalesreturn_d'),
+    path('return_diamond_cart<str:id>',views.return_diamond_cart, name='return_diamond_cart'),
+
 ]

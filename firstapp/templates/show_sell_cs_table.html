@@ -7,15 +7,35 @@
     <title>Document</title>
 </head>
 <body>
+    <table border="1">
+        <tr>
+            <th>Date</th>
+            <th>Stockid</th>
+            <th>Company Name</th>
+            <th>Gem type</th>
+            <th>Country</th>
+            <th>origin</th>
+            <th>Sales Status</th>
+            <th></th>
+            <th></th>
+        </tr>
     {%for item in sold_items%}
-    <table>
-        {{item.stockid}}
-        {{item.salesapprovalstatus_cs}}
-        {% if item.salesapprovalstatus_cs %}
-        <a href="{% url 'return_colorstone_Inventory' item.id %}" target=""> Return back to Inventory</a>
+        <tr>
+            <td>{{item.date}}</td>
+        <td>{{item.stockid}}</td>
+        <td>{{item.company_name}}</td>
+        <td>{{item.gem_type}}</td>
+        <td>{{item.location}}</td>
+        <td>{{item.origin}}</td>
+        <td>{{item.salesapprovalstatus_cs}}</td>
+        {% if item.salesapprovalstatus_cs is False %}
+        <td><a href="{% url 'return_colorstone_Inventory' item.id %}" target=""> Return back to Inventory</a></td>
         {% endif%}
-    </table>
+    </tr>
 
     {%endfor%}
+
+    <button><a href="{% url 'displaysalesreturn_cs' %}" target=""> View Sales Return</a></button>
+</table>
 </body>
 </html>
