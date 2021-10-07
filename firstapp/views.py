@@ -539,6 +539,7 @@ def search_cs(request):
     return render (request, " showinvcs.html", context=context)
 
 def saving_colorstone_cart(request):
+    print("saving")
     total = cloneInvofcolorstones.objects.all()
     total_colorstones = list(total.values())
     colorstone_formset = ADCFormSet_cs(initial = total_colorstones)
@@ -560,6 +561,7 @@ def sell_cs(request):
             location=object.location, 
             shape=object.shape,
             gem_type=object.gem_type,
+            certificate_no=object.certificate_no,
             origin=object.origin,
             treatment=object.treatment,
             Clarity=object.Clarity, 
@@ -588,21 +590,29 @@ def sell_cs(request):
 
 
 def return_colorstone_Inventory(request, id):
-    object = Salesofcolorstones.objects.get(pk = id)
-    Inventoryofcolorstones.objects.create(stockid=object.stockid, 
-
+    print("called sales cs")
+    object = Salesofcolorstones.objects.get(id = id)
+    print(object.certificate_no)
+    Inventoryofcolorstones.objects.create(
+            stockid=object.stockid, 
+            shape=object.shape,
             location=object.location, 
             gem_type=object.gem_type,            
             origin=object.origin,            
             treatment=object.treatment, 
-            certificate_no_cs =object.certificate_no_cs , 
+            certificate_no =object.certificate_no , 
             PCS=object.PCS, 
-            purchaseapv_cs=True,
+            Clarity=object.Clarity,
+            lab=object.lab,
+            color=object.color,
+            purchaseapv=True,
+            Weight = object.Weight_cs,
             cartstatus=False,
-            appvreturnstatus_cs=False,
-            tag_price_cs=object.tag_price_cs,
-
+            appvreturnstatus=False,
+            tag_price=object.tag_price_cs,
+            measurements=object.measurements,
       )
+
     Salesreturn_cs.objects.create(
         company_name=object.company_name,
         stockid=object.stockid,
@@ -653,7 +663,7 @@ class colorstone_view(View):
         allproduct = Inventoryofcolorstones.objects.all().order_by('stockid')
         # allclone_cs = cloneInvofcolorstones.objects.all()
         context = {
-            "products_cs": allproduct,
+            "products_cs": allproduct.order_by('stockid'),
 
         }
         return render(request, "showinvcs.html", context=context)
@@ -674,14 +684,15 @@ class colorstone_view(View):
         x=re.findall("[0-9]+",z)
         idcs = int(x[0])
         j_obj2 = PurchaseOfColorStones.objects.filter(id=idcs)
-        if j_obj.purchaseapv_cs is False:
-            j_obj2.update(purchaseapv_cs=True)
+        if j_obj.purchaseapv is False:
+            j_obj2.update(purchaseapv=True)
         j_obj.cartstatus = True
         j_obj.save()
         print(j_obj.cartstatus)       
         new_object = cloneInvofcolorstones.objects.create(stockid=j_obj.stockid, location=j_obj.location,shape=j_obj.shape, gem_type=j_obj.gem_type,
-                                                            origin=j_obj.origin,treatment=j_obj.treatment, certificate_no_cs=j_obj. certificate_no_cs,
-                                                            color=j_obj.color,measurements=j_obj.measurements,lab=j_obj.lab,PCS=j_obj.PCS,Weight_cs=j_obj.Weight_cs,tag_price_cs=j_obj.tag_price_cs)
+                                                            origin=j_obj.origin,treatment=j_obj.treatment, certificate_no=j_obj. certificate_no,
+                                                            color=j_obj.color,measurements=j_obj.measurements,lab=j_obj.lab,PCS=j_obj.PCS,
+                                                            Weight_cs=j_obj.Weight,tag_price_cs=j_obj.tag_price,Clarity=j_obj.Clarity)
         return redirect('/delete_cs')
 
 #  extra function cs
@@ -715,11 +726,11 @@ def displaycart2_cs(request):
 def return_colorstone_cart(request,id):
     rjc = cloneInvofcolorstones.objects.get(id=id)
     rjc2 = Inventoryofcolorstones.objects.get(stockid=rjc.stockid)
-    if rjc2.purchaseapv_cs is False:
+    if rjc2.purchaseapv is False:
         x=re.findall("[0-9]+",rjc2.stockid)
         rdj = int(x[0])
         xy=PurchaseOfColorStones.objects.filter(id=rdj)
-        xy.update(purchaseapv_cs=False)
+        xy.update(purchaseapv=False)
     rjc2.cartstatus=False
     rjc2.save()
     rjc.delete()
@@ -881,7 +892,7 @@ class Diamond_view(View):
         z=j_obj.stockid
         x=re.findall("[0-9]+",z)
         id_d = int(x[0])
-        j_obj2 = POJ.objects.filter(id=id_d)
+        j_obj2 = POD.objects.filter(id=id_d)
         if j_obj.purchaseapv_d is False:
             j_obj2.update(purchaseapv_d=True)
         j_obj.cartstatus = True
@@ -950,7 +961,7 @@ def sell_diamond(request):
 def return_diamond_Inventory(request, id):
     object = Salesofdiamond.objects.get(pk = id)
     Inventoryofdiamond.objects.create(stockid=object.stockid, 
-
+            fancy_color_intensity1=object.fancy_color_intensity1,
             location=object.location, 
             shape=object.shape,            
             clarity=object.clarity,
@@ -962,6 +973,20 @@ def return_diamond_Inventory(request, id):
             cartstatus=False,
             appvreturnstatus_d=False,
             tag_price_d=object.tag_price_d,
+            cut=object.cut,
+            polish=object.polish,
+            symmetry=object.symmetry,
+            measurements=object.measurements,
+            depth=object.depth,
+            table=object.table,
+            fluorescence_intensity=object.fluorescence_intensity,
+            fluorescence_color=object.fluorescence_color,
+            certificate_d=object.certificate_d,
+            laser_inscription=object.laser_inscription,
+            weight_d=object.weight_d,
+            units=object.units,
+            price=object.price,
+
 
       )
     Salesreturn_d.objects.create(

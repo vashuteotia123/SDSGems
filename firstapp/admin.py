@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import *
-from import_export.admin import ImportExportModelAdmin
+# from import_export.admin import ImportExportModelAdmin
 # Register your models here.
 @admin.register(Database)
 class DataAdmin(admin.ModelAdmin):
@@ -10,7 +10,7 @@ class CountryAdmin(admin.ModelAdmin):
     pass
 
 @admin.register(companyinfo)
-class CompanyAdmin(ImportExportModelAdmin):
+class CompanyAdmin(admin.ModelAdmin):
     actions=['change_name']
     search_fields = ['company_name']
     list_display=[f.name for f in companyinfo._meta.fields]
@@ -22,7 +22,7 @@ class CompanyAdmin(ImportExportModelAdmin):
 class gemtypeadmin(admin.ModelAdmin):
     pass 
 @admin.register(POJ)
-class PurchaseOFJewell(ImportExportModelAdmin):
+class PurchaseOFJewell(admin.ModelAdmin):
     readonly_fields=['total','discount_amount']
 @admin.register(Inventoryofjewellery)
 class iojadmin(admin.ModelAdmin):
@@ -58,7 +58,7 @@ class treatcsadmin(admin.ModelAdmin):
 @admin.register(Origin_cs)
 class originadmin(admin.ModelAdmin):
     pass
-@admin.register(certificate_no_cs)
+@admin.register(cert_no_cs)
 class certadmin(admin.ModelAdmin):
     pass
 @admin.register(Lab_cs)

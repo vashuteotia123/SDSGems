@@ -21,7 +21,6 @@ class POCSForm(forms.ModelForm):
     class Meta:
         model = PurchaseOfColorStones
         fields = "__all__"
-
 POCSFormSet = modelformset_factory(PurchaseOfColorStones, form=POCSForm)
 
 
@@ -82,8 +81,8 @@ ADCFormSet = modelformset_factory(cloneInvofjewellery, form=ADCForm, extra=0)
 
 class ADCForm_cs(forms.ModelForm):
     disabled_fields = ['stockid', 'location', 'shape','gem_type','origin','treatment',
-                       'certificate_no_cs', 'color','measurements','lab','Weight_cs','amount_cs', 'DIS_cs', 'DIS_amount_cs', 'total_value_cs', 'currency_cs', 'tag_price_cs', 'rate_cs']
-
+                       'certificate_no', 'color','measurements','lab','Weight_cs','amount_cs', 'DIS_cs', 'DIS_amount_cs', 'total_value_cs', 'currency_cs']
+    
     class Meta:
         model = cloneInvofcolorstones
         fields = '__all__'

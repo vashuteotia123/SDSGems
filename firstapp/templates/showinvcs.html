@@ -5,8 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
 </head>
 <body>
 
@@ -17,31 +15,33 @@
     </form>
     <br>
     <div class="container">
-        <table>
+        <table border="1">
             <thead>
-                <th>ID</th>
+                <th>Stock ID</th>
                 <th>Location</th>
-                <th>certificate_no_cs</th>
+                <th>certificate_no</th>
+                <th>Add to Cart</th>
+                <th>Check</th>
             </thead>
             <tbody>
                 {% csrf_token %}
                 {% for p in products_cs %}
-                {% if p.appvreturnstatus_cs is False %}
+                {% if p.appvreturnstatus is False %}
                 <tr id="{{p.id}}">
-                    <td>{{p.id}}</td>
+                    <td>{{p.stockid}}</td>
                     <td>{{p.location}}</td>
-                    <td>Aryan</td>
-                    {% if p.appvreturnstatus_cs is False %}
-                    <td><input type="checkbox" name="cs_id[]" value="{{p.id}}" class="save-cb-state"
-                            id="delete_cs"></td>
-                    {% endif %}
+                    <td>{{p.certificate_no}}</td>
+                  
                     {% if p.cartstatus is False %}
                     <td><a class="btn btn-primary" href="{% url 'addtocart_cs' id=p.id %}">ADD TO CART</a></td>
                     {% endif %}
                     {% if p.cartstatus is True %}
                     <td><a class="btn btn-primary">Go To CART</a></td>
                     {% endif %}
-
+                    {% if p.appvreturnstatus is False and p.purchaseapv is False %}
+                    <td><input type="checkbox" name="cs_id[]" value="{{p.id}}" class="save-cb-state"
+                            id="delete_cs"></td>
+                    {% endif %}
                 </tr>
                 {% endif %}
                 {% endfor %}
@@ -53,7 +53,7 @@
             </div>
             <div>
                 <a class="btn btn-primary" href="{% url 'retobj_cs' %}">View returned objects</a>
-                <a class="btn btn-primary" href="{% url 'show_colorstone_cart' %}">View Cart</a>
+                <a class="btn btn-primary" href="{% url 'displaycart2_cs' %}">View Cart</a>
             </div>
             <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         

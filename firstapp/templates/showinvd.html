@@ -16,31 +16,33 @@
     </form>
     <br>
     <div class="container">
-        <table>
+        <table border="1">
             <thead>
-                <th>ID</th>
+                <th>Stock ID</th>
                 <th>Location</th>
-                <th>certificate_no_d</th>
+                <th>certificate</th>
+                <th>Add to Cart</th>
+                <th>check</th>
             </thead>
             <tbody>
                 {% csrf_token %}
                 {% for p in products_d %}
                 {% if p.appvreturnstatus_d is False %}
                 <tr id="{{p.id}}">
-                    <td>{{p.id}}</td>
+                    <td>{{p.stockid}}</td>
                     <td>{{p.location}}</td>
-                    <td>Aryan</td>
-                    {% if p.appvreturnstatus_d is False and p.purchaseapv_d is False %}
-                    <td><input type="checkbox" name="d_id[]" value="{{p.id}}" class="save-cb-state"
-                            id="delete_d"></td>
-                    {% endif %}
+                    <td>{{p.certificate_no_d}}</td>
+                    
                     {% if p.cartstatus is False %}
                     <td><a class="btn btn-primary" href="{% url 'addtocart_d' id=p.id %}">ADD TO CART</a></td>
                     {% endif %}
                     {% if p.cartstatus is True %}
                     <td><a class="btn btn-primary">Go To CART</a></td>
                     {% endif %}
-
+                    {% if p.appvreturnstatus_d is False and p.purchaseapv_d is False %}
+                    <td><input type="checkbox" name="d_id[]" value="{{p.id}}" class="save-cb-state"
+                            id="delete_d"></td>
+                    {% endif %}
                 </tr>
                 {% endif %}
                 {% endfor %}
@@ -52,7 +54,7 @@
             </div>
             <div>
                 <a class="btn btn-primary" href="{% url 'retobj_d' %}">View returned objects</a>
-                <a class="btn btn-primary" href="{% url 'show_diamond_cart' %}">View Cart</a>
+                <a class="btn btn-primary" href="{% url 'displaycart2_d' %}">View Cart</a>
             </div>
             <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         
