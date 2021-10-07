@@ -425,11 +425,17 @@ def returncart2(request,id):
     invobj.cartstatus=False
     invobj.save()
     tjcart=cloneInvofjewellery.objects.all()
-    context={
-        "tjcart":tjcart,
+    if tjcart is None:
+        context={
+            "Cart is Empty":tjcart,
+        }
+        return render(request,"displaycart.html",context=context)
 
-    }
-    return render(request,"displaycart.html",context=context)
+    else:
+        context={
+        "tjcart":tjcart,
+        }
+        return render(request,"displaycart.html",context=context)
 def displaysalesreturn(request):
     ret_sj = Salesreturn.objects.all()
     context={
@@ -439,11 +445,17 @@ def displaysalesreturn(request):
 
 def displaycart2(request):
     tjcart=cloneInvofjewellery.objects.all()
-    context={
-        "tjcart":tjcart,
+    if tjcart is None:
+        context={
+            "Cart is Empty":tjcart,
+        }
+        return render(request,"displaycart.html",context=context)
 
-    }
-    return render(request,"displaycart.html",context=context)
+    else:
+        context={
+        "tjcart":tjcart,
+        }
+        return render(request,"displaycart.html",context=context)
 
 def return_jewel_cart(request,id):
     rjc = cloneInvofjewellery.objects.get(id=id)
@@ -530,17 +542,6 @@ def backtoinvcs1(request, id):
      myobj.save()
      totalobjs = Inventoryofcolorstones.objects.filter(appvreturnstatus_cs=True)
      return redirect('/retobj_cs')
-
-def search_cs(request):
-    print("Hello")
-    posts = Inventoryofcolorstones.objects.all()
-    search_term = ''
-    search_term= request.POST.get('search_cs')
-    posts = posts.filter(Q(location_icontains=search_item) | Q(id_icontains=search_item))
-    context = {
-            "product_cs":posts,
-        }
-    return render (request, " showinvcs.html", context=context)
 
 def saving_colorstone_cart(request):
     print("saving")
@@ -859,16 +860,6 @@ def retobj_d(request):
     }
     return render(request, "return_d.html",context=context)
 
-def search_d(request):
-    print("hello")
-    posts =  Inventoryofdiamond.objects.all()
-    search_term = ''
-    search_term = request.POST.get('search_d')
-    posts = posts.filter(Q(location_icontains=search_item) | Q(id_icontains=search_item))
-    context = {
-        "product_d": posts,
-    }
-    return render(request , " showinvd.html",context = context)
 
 class Diamond_view(View):
     def get(self,request):

@@ -9,19 +9,22 @@
 </head>
 
 <body>
-    <form method='POST' action="{%url 'search' %}">
-        {% csrf_token %}
-        <input type="text" id="search" name="search" placeholder="Search posts" />
-        <input type="submit" value="Search">
-    </form>
+    <h1><center>
+        Jewellery Details
+    </center></h1>
+    <br>
+    <br>
     <br>
 
     <div class="container">
-        <table>
+        <table border="1">
             <thead>
                 <th>Stock ID</th>
                 <th>Location</th>
                 <th>Certification</th>
+                <th>Cart Status</th>
+                <th>Return Item
+                </th>
             </thead>
             <tbody>
                 {% csrf_token %}
@@ -30,18 +33,18 @@
                 <tr id="{{p.id}}">
                     <td>{{p.stockid}}</td>
                     <td>{{p.location}}</td>
-                    <td>Aryan</td>
-                    {% if p.appvreturnstatus is False and p.purchaseapv is False %}
-                    <td><input type="checkbox" name="jewell_id[]" value="{{p.id}}" class="save-cb-state"
-                            id="delete_jewell"></td>
-                    {% endif %}
-                    
+                    <td>{{p.cert}}</td>
                     {% if p.cartstatus is False %}
                     <td><a class="btn btn-primary" href="{% url 'addtocart' id=p.id %}">ADD TO CART</a></td>
                     {% endif %}
                     {% if p.cartstatus is True %}
                     <td><a class="btn btn-primary">Go To CART</a></td>
                     {% endif %}
+                    {% if p.appvreturnstatus is False and p.purchaseapv is False %}
+                    <td><input type="checkbox" name="jewell_id[]" value="{{p.id}}" class="save-cb-state"
+                            id="delete_jewell"></td>
+                    {% endif %}
+                    
 
                 </tr>
                 {% endif %}
