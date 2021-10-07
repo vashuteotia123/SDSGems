@@ -9,7 +9,11 @@ from .forms import *
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView
+from django.contrib import messages
 import re
+import csv,io
+from datetime import datetime
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 
@@ -1045,3 +1049,125 @@ def displaycart2_d(request):
     }
     return render(request,"displaycart_d.html",context=context)
 
+def jewellery_upload(request):
+    template="jewelleryupload.html"
+    if request.method=="GET":
+        return render(request,template)
+
+    csv_file=request.FILES['file']
+    if not csv_file.name.endswith('.csv'):
+        messages.error(request,"This is not a CSV file")
+    dataset=csv_file.read().decode('UTF-8')
+    io_string=io.StringIO(dataset)
+    next(io_string)
+    for column in csv.reader(io_string,delimiter=','):
+        z=re.findall("[0-9]+",column[13])
+        # datere=re.findall(r'\d{2}/\d{2}/\d{4}',column[0])
+        # date_value=list(datere[0])
+        # final_date=datetime.date(int(''.join(date_value[6:])),int(''.join(date_value[3:4])),int(''.join(date_value[0:2])))
+        temp_date = datetime.strptime(str(column[0]), "%m-%d-%y").date()
+        print(temp_date)
+        # print(final_date)
+        f=POJ
+        try:
+            f.company_name = companyinfo.objects.get(company_name=column[2])
+        except ObjectDoesNotExist:
+            html="Company Name does not exist " + '<a href="/showform">Create Company details</a>'
+            return HttpResponse(html)
+        print(f.company_name)
+        try:
+            f.location,lcobj = loc.objects.get_or_create(place=column[3].lower())
+            if lcobj :
+                f.location.save()
+        except Exception as e:
+            raise e
+        print(f.location)
+        try:
+            f.jewellery,jlobj = jewell.objects.get_or_create(jewel=column[4].lower())
+            if jlobj :
+                f.jewellery.save()
+        except Exception as e:
+            raise e
+        print(f.jewellery)
+        try:
+            f.center_stone,clobj = centerstone.objects.get_or_create(stone=column[5].lower())
+            if clobj :
+                f.center_stone.save()
+        except Exception as e:
+            raise e
+        print(f.center_stone)
+        try:
+            f.color_of_center_stone,clsobj=colorofcstone.objects.get_or_create(color=column[6].lower()) 
+            if clsobj :
+                f.color_of_center_stone.save()
+        except Exception as e:
+            raise e
+        f.color_of_center_stone=colorofcstone.objects.get(color=column[6]) 
+        print(f.color_of_center_stone)
+        try:
+            f.shape,sobj=shape1.objects.get_or_create(shape=column[7].lower())     
+            if sobj :
+                f.shape.save()
+        except Exception as e:
+            raise e
+      
+        print(f.shape)
+        try:
+            f.metal,mobj = metal1.objects.get_or_create(metal=column[8].lower())
+            if mobj :
+                f.metal.save()
+        except Exception as e:
+            raise e
+        
+        print(f.metal)
+        try:
+            f.cert,cerobj = certificate.objects.get_or_create(cert=column[11].lower())
+            if cerobj :
+                f.cert.save()
+        except Exception as e:
+            raise e
+    
+        print(f.cert)
+        try:
+            f.currencyid,crobj = currencies.objects.get_or_create(currency=column[17].lower())
+            if crobj :
+                f.currencyid.save()
+        except Exception as e:
+            raise e
+        print(column[17])
+        print(column[19])
+        print(f.currencyid)
+        if(column[20]=="NO"):
+    
+            y=False
+            print(y)
+        else:
+            y=True
+        print("Called1234")
+        try:
+            if float(column[13]):
+                pass
+        except:
+            return HttpResponse("enter float ") 
+        myibj=POJ.objects.create(date=temp_date,
+        company_name_id=f.company_name.id,
+        location_id=f.location.id,
+        jewellery_id=f.jewellery.id,
+        center_stone_id=f.center_stone.id,
+        color_of_center_stone_id=f.color_of_center_stone.id,
+        shape_id=f.shape.id,
+        metal_id=f.metal.id,
+        grosswt=column[9],
+        phone_number=column[10],
+        cert_id=f.cert.id,
+        pcs=column[12],
+        amount=float(column[13]),
+        discount_amount=float(column[15]),
+        discount=float(z[0]),
+        total=float(column[16]),
+        purchase_approval=y,
+        currencyid_id=f.currencyid.id,
+        tag_price=float(column[18]),
+        rate=float(column[19]),
+        )
+    return HttpResponse('Hi')

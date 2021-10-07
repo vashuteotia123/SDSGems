@@ -93,5 +93,5 @@ urlpatterns = [
     path('returncart2_d', views.returncart2_d, name='returncart2_d'),
     path('displaysalesreturn_d', views.displaysalesreturn_d, name='displaysalesreturn_d'),
     path('return_diamond_cart<str:id>',views.return_diamond_cart, name='return_diamond_cart'),
-
+    path('upload-csv',jewellery_upload,name="jewellery_upload"),
 ]

@@ -95,7 +95,6 @@ class certificate(models.Model):
 
 
 class currencies(models.Model):
-    country = models.ForeignKey('countries', on_delete=models.PROTECT)
     currency = models.CharField(max_length=30)
 
     def __str__(self):
