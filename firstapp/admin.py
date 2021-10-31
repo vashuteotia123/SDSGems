@@ -51,6 +51,9 @@ class curradmin(admin.ModelAdmin):
 @admin.register(PurchaseOfColorStones)
 class pocsadmin(admin.ModelAdmin):
     pass
+@admin.register(Blog)
+class blogadmin(admin.ModelAdmin):
+    pass
     
 @admin.register(Treatment_cs)
 class treatcsadmin(admin.ModelAdmin):

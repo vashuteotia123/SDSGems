@@ -59,7 +59,7 @@ urlpatterns = [
     path('backtoinvcs1/<str:id>',views.backtoinvcs1, name="backtoinvcs1"),
     path('return_colorstone_Inventory<int:id>', views.return_colorstone_Inventory, name="return_colorstone_Inventory"),
     path('return_colorstone_cart<str:id>',views.return_colorstone_cart, name='return_colorstone_cart'),
-
+    # path('upload-csv',colorstone_upload,name="colorstone_upload"),
     # ///////diamond url/////////
 
     path('deleteid_d<int:idno>', views.deleteid_d, name="deleteid_d"),
@@ -91,4 +91,6 @@ urlpatterns = [
     path('displaysalesreturn_d', views.displaysalesreturn_d, name='displaysalesreturn_d'),
     path('return_diamond_cart<str:id>',views.return_diamond_cart, name='return_diamond_cart'),
     path('upload-csv',jewellery_upload,name="jewellery_upload"),
+    path('displayblog',views.displayblog,name="displayblog"),
+     # path('upload-csv',diamond_upload,name="diamond_upload"),
 ]

@@ -14,6 +14,8 @@ class POJForm(forms.ModelForm):
         model = POJ
         fields = "__all__"
 
+
+
 POJFormSet = modelformset_factory(POJ, form=POJForm)
 
 
@@ -21,6 +23,8 @@ class POCSForm(forms.ModelForm):
     class Meta:
         model = PurchaseOfColorStones
         fields = "__all__"
+
+
 POCSFormSet = modelformset_factory(PurchaseOfColorStones, form=POCSForm)
 
 
@@ -39,17 +43,11 @@ PODFormSet = modelformset_factory(POD, form=PODForm)
 
 
 class ADCForm(forms.ModelForm):
-    disabled_fields = ['stockid', 'location', 'jewellery_type', 'center_stone', 'shape', 'metal', 'gross_wt',
-                       'certificate', 'PCS', 'amount', 'DIS', 'DIS_amount', 'total_value', 'currency', 'tag_price', 'rate']
 
     class Meta:
         model = cloneInvofjewellery
         fields = '__all__'
 
-    def __init__(self, *args, **kwargs):
-        super(ADCForm, self).__init__(*args, **kwargs)
-        for field in self.disabled_fields:
-            self.fields[field].disabled = True
 
     # def save(self, *args, **kwargs):
     #     new_obj = Salesofjewellery.objects.create(stockid=self.stockid, company_name=self.company_name, location=self.location, jewellery_type=self.jewellery_type,
@@ -79,10 +77,11 @@ class ADCForm(forms.ModelForm):
 
 ADCFormSet = modelformset_factory(cloneInvofjewellery, form=ADCForm, extra=0)
 
+
 class ADCForm_cs(forms.ModelForm):
-    disabled_fields = ['stockid', 'location', 'shape','gem_type','origin','treatment',
-                       'certificate_no', 'color','measurements','lab','Weight_cs','amount_cs', 'DIS_cs', 'DIS_amount_cs', 'total_value_cs', 'currency_cs']
-    
+    disabled_fields = ['stockid', 'location', 'shape', 'gem_type', 'origin', 'treatment',
+                       'certificate_no', 'color', 'measurements', 'lab', 'Weight_cs', 'amount_cs', 'DIS_cs', 'DIS_amount_cs', 'total_value_cs', 'currency_cs']
+
     class Meta:
         model = cloneInvofcolorstones
         fields = '__all__'
@@ -92,11 +91,14 @@ class ADCForm_cs(forms.ModelForm):
         for field in self.disabled_fields:
             self.fields[field].disabled = True
 
-ADCFormSet_cs = modelformset_factory(cloneInvofcolorstones, form=ADCForm_cs, extra=0)
+
+ADCFormSet_cs = modelformset_factory(
+    cloneInvofcolorstones, form=ADCForm_cs, extra=0)
+
 
 class ADCForm_d(forms.ModelForm):
-    disabled_fields = ['stockid', 'location', 'shape','clarity','white_color_grade1','fancy_color_intensity1','fancycolor_grade','cut','polish','symmetry',
-                       'measurements', 'depth','table','fluorescence_intensity','fluorescence_color','certificate_no_d','certificate_d','laser_inscription','PCS_d','weight_d',
+    disabled_fields = ['stockid', 'location', 'shape', 'clarity', 'white_color_grade1', 'fancy_color_intensity1', 'fancycolor_grade', 'cut', 'polish', 'symmetry',
+                       'measurements', 'depth', 'table', 'fluorescence_intensity', 'fluorescence_color', 'certificate_no_d', 'certificate_d', 'laser_inscription', 'PCS_d', 'weight_d',
                        'amount_d', 'DIS_d', 'DIS_Amount_d', 'total_value_d', 'currency', 'tag_price_d', 'rate_d']
 
     class Meta:
@@ -108,5 +110,5 @@ class ADCForm_d(forms.ModelForm):
         for field in self.disabled_fields:
             self.fields[field].disabled = True
 
-ADCFormSet_d = modelformset_factory(cloneInvofdiamond, form=ADCForm_d, extra=0)
 
+ADCFormSet_d = modelformset_factory(cloneInvofdiamond, form=ADCForm_d, extra=0)

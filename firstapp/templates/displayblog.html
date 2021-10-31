@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% for i in blogobj %}
+    {{i.subject | safe}}
+    <div class="owlwww" data-aos="zoom-in-up ">{% if i.image%}<img class="owl"  src="/media/{{ i.image }}"
+        >{% endif %}
+    {% endfor %}
+    </div>
+
+</body>
+</html>
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    var x= document.querySelector('.owl')
+    console.log(x)
+
+
+</script>

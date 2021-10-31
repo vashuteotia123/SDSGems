@@ -5,10 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Conditionals</title>
-    <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
+    {% if message %}
+    {{message}}
+    {% endif %}
     <form method="post" action="">
       {%csrf_token%} {{totalitems.management_form }}
       <table>
@@ -17,5 +19,13 @@
       <button type="submit" class="btn btn-3">Submit</button>
       <a href="{% url 'sell_jewel' %}">Sell</a>
     </form>
+    <script>
+      const list =[0,1,2,3]
+      for(let i=0;i<2;i++)
+      {
+        let string="gggh"+`${list[i]}`
+        const disc=document.getElementById(string)
+      }
+    </script>
   </body>
 </html>

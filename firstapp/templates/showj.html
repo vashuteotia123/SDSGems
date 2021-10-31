@@ -16,6 +16,7 @@
         <th scope="col">ID</th>
         <th scope="col">Metal</th>
         <th scope="col">Shape</th>
+        <th scope="col">Certificate</th>
         <th scope="col">Action</th>
         <th scope="col">Action</th>
       </tr>
@@ -27,6 +28,7 @@
         <td>{{obj.id}}</td>
         <td>{{obj.metal}}</td>
         <td>{{obj.shape}}</td>
+        <td><a href="/media/{{ obj.cert.file }}"> Certficate Details</a></td>
         <td><a class="btn btn-primary" href="{% url 'deleteid' idno=obj.id %}" >Delete</a></td>
         <td><a class="btn btn-primary" href="{% url 'updateJ' pk=obj.id %}">Edit</a></td>
       </tr>

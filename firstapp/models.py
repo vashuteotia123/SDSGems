@@ -4,6 +4,13 @@ from django.db import models
 from django.db.models.deletion import PROTECT
 from django.db.models.fields.related import ForeignKey
 from django.core.validators import RegexValidator
+from tinymce.models import HTMLField
+class Blog(models.Model):
+    date=models.DateField(auto_now_add=True)
+    image=models.ImageField(upload_to="profile/",blank=True,null=True)
+    title=models.CharField(max_length=30)
+    subject=HTMLField(blank=True,null=True)
+
 
 
 # Create your models here.
@@ -88,7 +95,9 @@ class metal1(models.Model):
 
 
 class certificate(models.Model):
+    
     cert = models.CharField(max_length=30)
+    file=models.FileField(upload_to="certificate/")
 
     def __str__(self):
         return self.cert
@@ -127,10 +136,11 @@ class POJ(models.Model):
         'certificate', on_delete=models.PROTECT, null=True, blank=True)
     pcs = models.BigIntegerField()
     amount = models.DecimalField(decimal_places=2, max_digits=9)
-    discount_amount = models.DecimalField(
-        decimal_places=2, max_digits=9, blank=True, null=True)
     discount = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True)
+    discount_amount = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True, null=True)
+  
     total = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True)
     purchase_approval = models.BooleanField(default=False)
@@ -190,16 +200,16 @@ class Salesofjewellery(models.Model):
     center_stone = models.CharField(max_length=30)
     shape = models.CharField(max_length=30)
     metal = models.CharField(max_length=30)
-    gross_wt = models.FloatField(null=True)
+    gross_wt = models.FloatField()
     certificate = models.CharField(max_length=30)
     PCS = models.IntegerField()
-    amount = models.FloatField(blank=True, null=True)
-    DIS = models.FloatField(blank=True, null=True)
-    DIS_amount = models.FloatField(blank=True, null=True)
-    total_value = models.FloatField(blank=True, null=True)
-    currency = models.CharField(max_length=30, blank=True, null=True)
+    amount = models.FloatField()
+    DIS = models.FloatField()
+    DIS_amount = models.FloatField()
+    total_value = models.FloatField()
+    currency = models.CharField(max_length=30)
     tag_price = models.FloatField()
-    rate = models.FloatField(blank=True, null=True)
+    rate = models.FloatField()
     salesapprovalstatus = models.BooleanField(default=False)
 
 
@@ -219,7 +229,7 @@ class cloneInvofjewellery(models.Model):
     DIS = models.FloatField(blank=True, null=True)
     DIS_amount = models.FloatField(blank=True, null=True)
     total_value = models.FloatField(blank=True, null=True)
-    currency = models.CharField(max_length=30, blank=True, null=True)
+    currency = models.ForeignKey(currencies,on_delete=models.PROTECT,null=True,blank=True)
     tag_price = models.FloatField()
     rate = models.FloatField(blank=True, null=True)
     salesapprovalstatus = models.BooleanField(default=False)
