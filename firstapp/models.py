@@ -64,7 +64,7 @@ class companyinfo(models.Model):
     wechat_id = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.company_name+'  '+self.mobile_no+' '+self.address
+         return self.company_name
 
 
 class jewell(models.Model):

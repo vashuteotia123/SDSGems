@@ -3,7 +3,7 @@ from .models import *
 # from import_export.admin import ImportExportModelAdmin
 # Register your models here.
 
-development_mode = False
+development_mode = True
 
 if development_mode:
     @admin.register(Database)

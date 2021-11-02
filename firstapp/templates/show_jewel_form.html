@@ -41,9 +41,68 @@
       container.insertBefore(newForm, addButton)
       totalForms.setAttribute('value', `${formNum + 1}`)
       eval(s);
+
+      $("#id_form-"+(formnum)+"-company_name").change(function() {
+    var company_name = $(this).find(':selected')[0].text;
+    // console.log(id);
+    $.ajax({
+      type: 'GET',
+      url: "{% url 'get_company_details' %}",
+      data: {
+        "name": company_name,
+     
+      },
+      success: function(data) {
+        var phone_no = document.getElementById("id_form-"+(formnum)+"-phone_number");
+        phone_no.value = data.contact_no;
+        var location = document.getElementById("id_form-"+(formnum)+"-location");
+        var loc_index = ':selected';
+        for(var i=0; i<location.length; i++){
+          if(location[i].text == data.location){
+            loc_index = i;
+            break;
+          }
+        }
+        location.value = loc_index;
+      }
+    })
+  })
+
+
+
     }
     eval(s);
   </script>
+
+<script>
+  $("#id_form-0-company_name").change(function() {
+    var company_name = $(this).find(':selected')[0].text;
+    // console.log(id);
+    $.ajax({
+      type: 'GET',
+      url: "{% url 'get_company_details' %}",
+      data: {
+        "name": company_name,
+     
+      },
+      success: function(data) {
+        var phone_no = document.getElementById('id_form-0-phone_number');
+        phone_no.value = data.contact_no;
+        var location = document.getElementById('id_form-0-location');
+        var loc_index = ':selected';
+        for(var i=0; i<location.length; i++){
+          if(location[i].text == data.location){
+            loc_index = i;
+            break;
+          }
+        }
+        location.value = loc_index;
+      }
+    })
+  })
+
+     
+</script>
 
 </body>
 

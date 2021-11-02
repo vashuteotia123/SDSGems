@@ -43,6 +43,7 @@ urlpatterns = [
     # path('displayinv',views.displayinv,name="displayinv"),
     path('show_on_frontend_jewel<int:id>', views.show_on_frontend_jewel, name="show_on_frontend_jewel"),
     path('hide_from_frontend_jewel<int:id>', views.hide_from_frontend_jewel, name="hide_from_frontend_jewel"),
+    path('get_company_details', views.get_company_details,name="get_company_details"),
     # ////////////colorstones url////////////
 
     path('showcs', views.showcs, name="showcs"),

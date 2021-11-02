@@ -1688,3 +1688,11 @@ def hide_from_frontend_jewel(request, id):
         "productsj": allproduct,
         }
     return render(request, "showinvj.html", context=context)
+
+def get_company_details(request):
+    if request.is_ajax:
+        name = request.GET.get('name', 'None')
+        if companyinfo.objects.filter(company_name =name).exists():
+            company = companyinfo.objects.get(company_name=name)
+            return JsonResponse({"contact_no": company.contact, "location": company.address}, status=200)
+    return JsonResponse({}, status=200)
