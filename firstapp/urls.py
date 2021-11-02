@@ -41,8 +41,8 @@ urlpatterns = [
     # path(r'^delete/(?P<idno>\d+)/$',views.deleteid, name='deleteid')
     # path('returnj<str:id>',Jewellery_view.returnj,name="returnj"),
     # path('displayinv',views.displayinv,name="displayinv"),
-
-
+    path('show_on_frontend_jewel<int:id>', views.show_on_frontend_jewel, name="show_on_frontend_jewel"),
+    path('hide_from_frontend_jewel<int:id>', views.hide_from_frontend_jewel, name="hide_from_frontend_jewel"),
     # ////////////colorstones url////////////
 
     path('showcs', views.showcs, name="showcs"),
@@ -92,5 +92,7 @@ urlpatterns = [
     path('return_diamond_cart<str:id>',views.return_diamond_cart, name='return_diamond_cart'),
     path('upload-csv',jewellery_upload,name="jewellery_upload"),
     path('displayblog',views.displayblog,name="displayblog"),
+    path('itemsearch',views.itemsearch, name='itemsearch'),
      # path('upload-csv',diamond_upload,name="diamond_upload"),
+
 ]

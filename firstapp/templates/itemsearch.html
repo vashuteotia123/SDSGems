@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Django Search</title>
+</head>
+
+<body>
+    {% if message %} <center><b>{{message}}</b></center>{%endif%}
+    <form action="{% url 'itemsearch' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="Stockid">
+        <input type="submit" name="submit" value="Search">
+    </form>
+   {% if purjobj %}
+   {% for result in purjobj%}
+   <p>J-{{result.id}}</p>
+   <p>{{result.location}}</p>
+   <p>{{result.jewellery}}</p>
+   <p>{{result.amount}}</p>
+   <p>{{result.discount}}</p>
+   <p>{{result.discount_amount}}</p>
+   {%endfor%}
+   {% if salesJewelleryObj%}
+   {% for r in salesJewelleryObj %}
+   <p>{{r.stockid}}</p>
+   <p>{{r.location}}</p>
+   <p>{{r.jewellery_type}}</p>
+   <p>{{r.rate}}</p>
+   <p>{{r.tag_price}}</p>
+   <p>{{r.salesapprovalstatus}}</p>
+   {%endfor%}
+   {%else%}
+   No sales record found.
+   {%endif%}
+   {%endif%}
+   {% if purdobj %}
+   {% for result in purdobj %}
+   <p>D-{{result.id}}</p>
+   <p>{{result.location}}</p>
+   <p>{{result.company_name}}</p>
+   <p>{{result.shape}}</p>
+   <p>{{result.amount}}</p>
+   <p>{{result.discount}}</p>
+   <p>{{result.discount_amount}}</p>
+   {%endfor%}
+   {% for r in salesdobj %}
+   <p>{{r.stockid}}</p>
+   <p>{{r.clarity}}</p>
+   <p>{{r.price}}</p>
+   <p>{{r.rate_d}}</p>
+   <p>{{r.tag_price_d}}</p>
+ 
+   {%endfor%}
+   {%endif%}
+
+
+</body>
+
+
+</html>

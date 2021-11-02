@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Conditionals</title>
-    <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
@@ -20,12 +19,13 @@
         <button id="add-form" type="button">Add Another Form</button>
         <button type="submit">Submit</button>
     </form>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
         let birdForm = document.querySelectorAll(".bird-form")
         let container = document.querySelector("#form-container")
         let addButton = document.querySelector("#add-form")
         let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
-
+        var s = "$('#id_form-" + 0 + "-DIS_d').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + 0 + "-amount_d').value; var disc = document.getElementById('id_form-" + 0 + "-DIS_d').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" + 0 + "-DIS_Amount_d').value = discamt; document.getElementById('id_form-" + 0 + "-total_val_d').value=amount- discamt;  });  "
         let formNum = birdForm.length-1
         addButton.addEventListener('click', addForm)
 
@@ -36,11 +36,14 @@
             let formRegex = RegExp(`form-(\\d){1}-`,'g')
 
             formNum++
+            s+="$('#id_form-" + (formNum) + "-DIS_d').on('change keyup blur', function () { var amount = document.getElementById('id_form-" +(formNum)+ "-amount_d').value; var disc = document.getElementById('id_form-" +(formNum)+ "-DIS_d').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" +(formNum)+ "-DIS_Amount_d').value = discamt; document.getElementById('id_form-" +(formNum) + "-total_val_d').value=amount- discamt;  });  "
             newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
             container.insertBefore(newForm, addButton)
             
             totalForms.setAttribute('value', `${formNum+1}`)
+            eval(s);
         }
+        eval(s);
     </script>
   </body>
 </html>

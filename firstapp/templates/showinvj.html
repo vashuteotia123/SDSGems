@@ -9,9 +9,11 @@
 </head>
 
 <body>
-    <h1><center>
-        Jewellery Details
-    </center></h1>
+    <h1>
+        <center>
+            Jewellery Details
+        </center>
+    </h1>
     <br>
     <br>
     <br>
@@ -25,6 +27,7 @@
                 <th>Cart Status</th>
                 <th>Return Item
                 </th>
+                <th>Show user</th>
             </thead>
             <tbody>
                 {% csrf_token %}
@@ -40,12 +43,17 @@
                     {% if p.cartstatus is True %}
                     <td><a class="btn btn-primary">Go To CART</a></td>
                     {% endif %}
-                    {% if p.appvreturnstatus is False and p.purchaseapv is False %}
-                    <td><input type="checkbox" name="jewell_id[]" value="{{p.id}}" class="save-cb-state"
+                    <td>
+                        {% if p.appvreturnstatus is False and p.purchaseapv is False %}
+                        <input type="checkbox" name="jewell_id[]" value="{{p.id}}" class="save-cb-state"
                             id="delete_jewell"></td>
-                    {% endif %}
-                    
-
+                            {% endif %}
+                        <td>{%if p.frontend%}
+                        <a href="{% url 'hide_from_frontend_jewel' id=p.id%}">Remove from home page</a>
+                        {%else%}
+                        <a href="{% url 'show_on_frontend_jewel' id=p.id %}">Show on home page</a>
+                        {%endif%}
+                    </td>
                 </tr>
                 {% endif %}
                 {% endfor %}

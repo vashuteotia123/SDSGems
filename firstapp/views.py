@@ -730,14 +730,16 @@ def save_colorstone_forms(request):
 
 
 class CSAddView(TemplateView):
-    template_name = "show_colorstone_form.html"
 
-    @login_required
+    template_name = "show_colorstone_form.html"
+    method_decorator(login_required)
+
+  
     def get(self, *args, **kwargs):
         formset = POCSFormSet(queryset=PurchaseOfColorStones.objects.none())
         return self.render_to_response({'totalitems_cs': formset})
 
-    @login_required
+  
     def post(self, *args, **kwargs):
 
         formset = POCSFormSet(data=self.request.POST)
@@ -1300,6 +1302,75 @@ def jewellery_upload(request):
                                    )
     return HttpResponse('Hi')
 
+def itemsearch(request):
+    if request.method == "POST":
+        query_name = request.POST.get('Stockid', None)
+        if query_name:
+            h=re.findall("[0-9]+",query_name)
+            if len(h) == 0:
+                return render(request, 'itemsearch.html',{"message": "Does not exist"})
+            id=int(h[0])
+            if  query_name.startswith("j") or query_name.startswith("J"):
+                purchaseJobj=POJ.objects.filter(id=id)
+                if len(purchaseJobj) == 0:
+                    return render(request, 'itemsearch.html',{"message": "Does not exist"})
+                salesJobj=Salesofjewellery.objects.filter(stockid=str("J-")+str(id))
+                context={
+                    "purjobj":purchaseJobj,
+                    "salesJewelleryObj":salesJobj
+
+                }
+                return render(request,"itemsearch.html",context=context)
+            elif query_name.startswith("d") or query_name.startswith("D"):
+                purchaseddobj=POD.objects.filter(id=id)
+                salesdobj=Salesofdiamond.objects.filter(stockid=str("D-")+str(id))
+                
+                context={
+                    "purdobj":purchaseddobj,
+                    "salesdobj":salesdobj
+
+                }
+                return render(request,"itemsearch.html",context=context)
+
+            elif query_name.startswith("C") or query_name.startswith("c"):
+                purchasecsobj=PurchaseOfColorStones.objects.filter(id=id)
+                salescsobj=Salesofcolorstones.objects.filter(stockid=str("C-")+str(id))
+                context={
+                    "purcsobj":purchasecsobj,
+                    "salescsobj":salescsobj
+
+                }
+                return render(request,"itemsearch.html",context=context)
+            else:
+                return render(request, 'itemsearch.html',{"message": "Does not exist"})
+        
+    return render(request,"itemsearch.html")
+
+            
+            
+
+
+
+
+
+                # h=re.findall("[0-9]+",query_name)
+                # query_name.startswith("J")
+                # isj= int(h[0])
+
+                # results =  POJ.objects.filter(id=isj)
+                # salesres = Salesofjewellery.objects.filter(stockid=query_name)
+                # if len(salesres)!=0 or len(results)!=0:
+
+                #          context = {
+                #             "results":results,
+                #             "salesres":salesres,
+                #              }
+                #          return render(request, 'itemsearchj.html', context=context)
+                # else:
+                #         
+
+
+
 # @login_required
 # def colorstone_upload(request):
 #     template="colorstoneupload.html"
@@ -1597,3 +1668,23 @@ def jewellery_upload(request):
 #         )
 #     return HttpResponse('Hi')
 
+
+def show_on_frontend_jewel(request, id):
+    obj = Inventoryofjewellery.objects.get(id = id)
+    obj.frontend = True
+    obj.save()
+    allproduct = Inventoryofjewellery.objects.all().order_by('stockid')
+    context = {
+        "productsj": allproduct,
+        }
+    return render(request, "showinvj.html", context=context)
+
+def hide_from_frontend_jewel(request, id):
+    obj = Inventoryofjewellery.objects.get(id = id)
+    obj.frontend = False
+    obj.save()
+    allproduct = Inventoryofjewellery.objects.all().order_by('stockid')
+    context = {
+        "productsj": allproduct,
+        }
+    return render(request, "showinvj.html", context=context)

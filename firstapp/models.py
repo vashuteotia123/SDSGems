@@ -5,12 +5,16 @@ from django.db.models.deletion import PROTECT
 from django.db.models.fields.related import ForeignKey
 from django.core.validators import RegexValidator
 from tinymce.models import HTMLField
-class Blog(models.Model):
-    date=models.DateField(auto_now_add=True)
-    image=models.ImageField(upload_to="profile/",blank=True,null=True)
-    title=models.CharField(max_length=30)
-    subject=HTMLField(blank=True,null=True)
 
+
+class Blog(models.Model):
+    date = models.DateField(auto_now_add=True)
+    image = models.ImageField(upload_to="profile/", blank=True, null=True)
+    title = models.CharField(max_length=30)
+    subject = HTMLField(blank=True, null=True)
+
+    def __str__(self):
+        return (self.title)
 
 
 # Create your models here.
@@ -31,6 +35,10 @@ class loc(models.Model):
 
     def __str__(self):
         return self.place
+
+    def save(self, *args, **kwargs):
+        self.place = self.place.lower()
+        super(loc, self).save(*args, **kwargs)
 
 
 class gemtype(models.Model):
@@ -95,9 +103,9 @@ class metal1(models.Model):
 
 
 class certificate(models.Model):
-    
+
     cert = models.CharField(max_length=30)
-    file=models.FileField(upload_to="certificate/")
+    file = models.FileField(upload_to="certificate/")
 
     def __str__(self):
         return self.cert
@@ -140,7 +148,7 @@ class POJ(models.Model):
         decimal_places=2, max_digits=9, blank=True)
     discount_amount = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True, null=True)
-  
+
     total = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True)
     purchase_approval = models.BooleanField(default=False)
@@ -187,9 +195,11 @@ class Inventoryofjewellery(models.Model):
     status = models.CharField(max_length=30, default=False)
     cartstatus = models.BooleanField(default=False)
     appvreturnstatus = models.BooleanField(default=False)
+    frontend = models.BooleanField(default=False)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.stockid)
+
 
 class Salesofjewellery(models.Model):
     date = models.DateField(auto_now_add=True)
@@ -229,25 +239,26 @@ class cloneInvofjewellery(models.Model):
     DIS = models.FloatField(blank=True, null=True)
     DIS_amount = models.FloatField(blank=True, null=True)
     total_value = models.FloatField(blank=True, null=True)
-    currency = models.ForeignKey(currencies,on_delete=models.PROTECT,null=True,blank=True)
+    currency = models.ForeignKey(
+        currencies, on_delete=models.PROTECT, null=True, blank=True)
     tag_price = models.FloatField()
     rate = models.FloatField(blank=True, null=True)
     salesapprovalstatus = models.BooleanField(default=False)
-    
+
     def save(self, *args, **kwargs):
         # new_obj = Salesofjewellery.objects.create(stockid=self.stockid, company_name=self.company_name, location=self.location, jewellery_type=self.jewellery_type,
         #                                           center_stone=self.center_stone, shape=self.shape,
         #                                           metal=self.metal, gross_wt=self.gross_wt, certificate=self.certificate, PCS=self.PCS, amount=self.amount, DIS=self.DIS, DIS_amount=self.DIS_amount, total_value=self.total_value, currency=self.currency, tag_price=self.tag_price,
         #                                           rate=self.rate, salesapprovalstatus=self.salesapprovalstatus)
         super(cloneInvofjewellery, self).save()
-    
+
+
 class Salesreturn(models.Model):
     date = models.DateField(auto_now_add=True)
     stockid = models.CharField(max_length=30)
     company_name = models.CharField(max_length=30)
     location = models.CharField(max_length=30)
     jewellery_type = models.CharField(max_length=30)
-
 
 
 # purchase of diamonds
@@ -369,9 +380,10 @@ class POD(models.Model):
     price = models.FloatField(null=True, blank=True)
     units = models.IntegerField()
     amount_d = models.DecimalField(decimal_places=2, max_digits=9)
+    DIS_d = models.PositiveSmallIntegerField(blank=True, null=True)
     DIS_Amount_d = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True, null=True)
-    DIS_d = models.PositiveSmallIntegerField(blank=True, null=True)
+    
 
     total_val_d = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True)
@@ -384,9 +396,9 @@ class POD(models.Model):
         super(POD, self).save(*args, **kwargs)
         obj2 = Inventoryofdiamond.objects.create(stockid=str('D-')+str(self.id), location=self.location, shape=self.shape,
                                                  clarity=self.clarity, white_color_grade1=self.white_color_grade1, fancy_color_intensity1=self.fancy_color_intensity1,
-                                                 fancycolor_grade=self.fancycolor_grade, cut=self.cut, weight_d=self.weight_d, price=self.price,polish=self.polish, symmetry=self.symmetry, measurements=self.measurements,
+                                                 fancycolor_grade=self.fancycolor_grade, cut=self.cut, weight_d=self.weight_d, price=self.price, polish=self.polish, symmetry=self.symmetry, measurements=self.measurements,
                                                  depth=self.depth, table=self.table_perc, fluorescence_intensity=self.fluorescence_intensity, fluorescence_color=self.fluorescence_color, certificate_no_d=self.certificate_no_d,
-                                                 certificate_d=self.certificate_d,units=self.units, laser_inscription=self.laser_inscription, PCS_d=self.PCS_d, tag_price_d=self.tag_price_d, purchaseapv_d=self.purchaseapv_d)
+                                                 certificate_d=self.certificate_d, units=self.units, laser_inscription=self.laser_inscription, PCS_d=self.PCS_d, tag_price_d=self.tag_price_d, purchaseapv_d=self.purchaseapv_d)
     currency = models.ForeignKey('currencies', on_delete=models.PROTECT)
     tag_price_d = models.FloatField()
     rate_d = models.FloatField()
@@ -401,25 +413,25 @@ class Inventoryofdiamond(models.Model):
     stockid = models.CharField(max_length=30)
     location = models.CharField(max_length=30)
     shape = models.CharField(max_length=30)
-    clarity = models.CharField(max_length=30)    
+    clarity = models.CharField(max_length=30)
     white_color_grade1 = models.CharField(max_length=30)
     fancy_color_intensity1 = models.CharField(max_length=30)
-    fancycolor_grade = models.CharField(max_length=30)    
+    fancycolor_grade = models.CharField(max_length=30)
     cut = models.CharField(max_length=30)
     polish = models.CharField(max_length=30)
     symmetry = models.CharField(max_length=30)
-    measurements = models.FloatField(null=True,blank=True)
-    depth = models.FloatField(null=True,blank=True)
-    table = models.FloatField(null=True,blank=True)
+    measurements = models.FloatField(null=True, blank=True)
+    depth = models.FloatField(null=True, blank=True)
+    table = models.FloatField(null=True, blank=True)
     fluorescence_intensity = models.CharField(max_length=30)
     fluorescence_color = models.CharField(max_length=30)
     certificate_no_d = models.CharField(max_length=30)
     certificate_d = models.CharField(max_length=30)
     laser_inscription = models.CharField(max_length=30)
-    PCS_d = models.IntegerField(null=True,blank=True)
-    weight_d = models.FloatField(null=True,blank=True)
-    units=models.IntegerField(null=True,blank=True)
-    tag_price_d = models.FloatField(null=True,blank=True)
+    PCS_d = models.IntegerField(null=True, blank=True)
+    weight_d = models.FloatField(null=True, blank=True)
+    units = models.IntegerField(null=True, blank=True)
+    tag_price_d = models.FloatField(null=True, blank=True)
     status = models.BooleanField(default=False)
     purchaseapv_d = models.BooleanField(blank=True)
     cartstatus = models.BooleanField(default=False)
@@ -431,40 +443,41 @@ class Inventoryofdiamond(models.Model):
 
 # SALE OF DIAMOND
 class Salesofdiamond(models.Model):
-    date=models.DateField(auto_now_add=True)
+    date = models.DateField(auto_now_add=True)
     stockid = models.CharField(max_length=30)
     company_name = models.CharField(max_length=30)
-    location=models.CharField(max_length=30)
+    location = models.CharField(max_length=30)
     shape = models.CharField(max_length=30)
-    clarity =models.CharField(max_length=30)
-    color_origin1=models.CharField(max_length=30)
-    white_color_grade1=models.CharField(max_length=30)
-    fancy_color_intensity1=models.CharField(max_length=30)
+    clarity = models.CharField(max_length=30)
+    color_origin1 = models.CharField(max_length=30)
+    white_color_grade1 = models.CharField(max_length=30)
+    fancy_color_intensity1 = models.CharField(max_length=30)
     fancycolor_grade = models.CharField(max_length=30)
-    fancy_color_grade=models.CharField(max_length=30)
-    cut=models.CharField(max_length=30)
-    polish=models.CharField(max_length=30)
-    symmetry=models.CharField(max_length=30)
-    measurements = models.FloatField(null=True,blank=True)
-    depth= models.FloatField(null=True,blank=True)
-    table=models.FloatField(null=True,blank=True)
-    fluorescence_intensity=models.CharField(max_length=30)
-    fluorescence_color=models.CharField(max_length=30)
-    certificate_no_d=models.CharField(max_length=30)
-    certificate_d=models.CharField(max_length=30)
-    laser_inscription=models.CharField(max_length=30)
-    PCS_d=models.IntegerField(null=True,blank=True)
-    weight_d=models.FloatField(null=True,blank=True)
-    price=models.FloatField(null=True, blank=True)
-    units=models.IntegerField(null=True,blank=True)
+    fancy_color_grade = models.CharField(max_length=30)
+    cut = models.CharField(max_length=30)
+    polish = models.CharField(max_length=30)
+    symmetry = models.CharField(max_length=30)
+    measurements = models.FloatField(null=True, blank=True)
+    depth = models.FloatField(null=True, blank=True)
+    table = models.FloatField(null=True, blank=True)
+    fluorescence_intensity = models.CharField(max_length=30)
+    fluorescence_color = models.CharField(max_length=30)
+    certificate_no_d = models.CharField(max_length=30)
+    certificate_d = models.CharField(max_length=30)
+    laser_inscription = models.CharField(max_length=30)
+    PCS_d = models.IntegerField(null=True, blank=True)
+    weight_d = models.FloatField(null=True, blank=True)
+    price = models.FloatField(null=True, blank=True)
+    units = models.IntegerField(null=True, blank=True)
     amount_d = models.FloatField(blank=True, null=True)
-    DIS_d=models.FloatField(blank=True, null=True)
-    DIS_Amount_d=models.FloatField(blank=True, null=True)
-    total_value_d=models.FloatField(blank=True, null=True)
-    currency=models.CharField(max_length=30,blank=True, null=True)
-    tag_price_d=models.FloatField()
-    rate_d=models.FloatField(blank=True, null=True)
+    DIS_d = models.FloatField(blank=True, null=True)
+    DIS_Amount_d = models.FloatField(blank=True, null=True)
+    total_value_d = models.FloatField(blank=True, null=True)
+    currency = models.CharField(max_length=30, blank=True, null=True)
+    tag_price_d = models.FloatField()
+    rate_d = models.FloatField(blank=True, null=True)
     salesapprovalstatus_d = models.BooleanField(default=False)
+
 
 class cloneInvofdiamond(models.Model):
     stockid = models.CharField(max_length=30)
@@ -472,36 +485,38 @@ class cloneInvofdiamond(models.Model):
     location = models.CharField(max_length=30)
     shape = models.CharField(max_length=30)
     clarity = models.CharField(max_length=30)
-    color_origin1=models.CharField(max_length=30)
+    color_origin1 = models.CharField(max_length=30)
     white_color_grade1 = models.CharField(max_length=30)
     fancy_color_intensity1 = models.CharField(max_length=30)
-    fancycolor_grade = models.CharField(max_length=30)    
+    fancycolor_grade = models.CharField(max_length=30)
     cut = models.CharField(max_length=30)
     polish = models.CharField(max_length=30)
     symmetry = models.CharField(max_length=30)
-    measurements = models.FloatField(null=True,blank=True)
-    depth = models.FloatField(null=True,blank=True)
-    table = models.FloatField(null=True,blank=True)
+    measurements = models.FloatField(null=True, blank=True)
+    depth = models.FloatField(null=True, blank=True)
+    table = models.FloatField(null=True, blank=True)
     fluorescence_intensity = models.CharField(max_length=30)
     fluorescence_color = models.CharField(max_length=30)
     certificate_no_d = models.CharField(max_length=30)
     certificate_d = models.CharField(max_length=30)
     laser_inscription = models.CharField(max_length=30)
-    PCS_d = models.IntegerField(null=True,blank=True)
-    weight_d = models.FloatField(null=True,blank=True)
-    units=models.FloatField(null=True,blank=True) 
+    PCS_d = models.IntegerField(null=True, blank=True)
+    weight_d = models.FloatField(null=True, blank=True)
+    units = models.FloatField(null=True, blank=True)
     amount_d = models.FloatField(blank=True, null=True)
     DIS_d = models.FloatField(blank=True, null=True)
     DIS_Amount_d = models.FloatField(blank=True, null=True)
     total_value_d = models.FloatField(blank=True, null=True)
     currency = models.CharField(max_length=30, blank=True, null=True)
-    tag_price_d = models.FloatField()    
-    rate_d = models.FloatField(blank=True, null=True)    
+    tag_price_d = models.FloatField()
+    rate_d = models.FloatField(blank=True, null=True)
     salesapprovalstatus_d = models.BooleanField(default=False)
     price = models.FloatField(null=True, blank=True)
+
     def save(self, *args, **kwargs):
-        
+
         super(cloneInvofdiamond, self).save()
+
 
 class Salesreturn_d(models.Model):
     date = models.DateField(auto_now_add=True)
@@ -512,7 +527,6 @@ class Salesreturn_d(models.Model):
 
 # purchase of Colour Stones
 
-
 class Origin_cs(models.Model):
     org = models.CharField(max_length=30)
 
@@ -522,7 +536,6 @@ class Origin_cs(models.Model):
 
 class Lab_cs(models.Model):
     lab = models.CharField(max_length=20)
-
     def __str__(self):
         return self.lab
 
@@ -568,21 +581,23 @@ class PurchaseOfColorStones(models.Model):
     measurements = models.IntegerField()
     lab = models.ForeignKey('Lab_cs', on_delete=models.PROTECT, blank=True)
     PCS = models.IntegerField()
-    Weight= models.FloatField(null=True)
+    Weight = models.FloatField(null=True)
     Price = models.FloatField()
     units = models.IntegerField()
     amount = models.DecimalField(decimal_places=2, max_digits=9)
+    discount = models.PositiveSmallIntegerField(blank=True, null=True)
     discount_amount = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True, null=True)
-    discount = models.PositiveSmallIntegerField(blank=True, null=True)
     total_val = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True, null=True)
-    purchaseapv= models.BooleanField(default=False)
+    purchaseapv = models.BooleanField(default=False)
     currency = models.ForeignKey('currencies', on_delete=models.PROTECT)
     tag_price = models.FloatField()
     rate = models.FloatField()
+
     def __str__(self):
         return str(self.id)
+
     def save(self, *args, **kwargs):
         self.amount = (self.Price * self.units * self.PCS)
         self.discount_amount = (self.amount * self.discount) // 100
@@ -590,9 +605,7 @@ class PurchaseOfColorStones(models.Model):
         self.total_value_c_s = self.amount-self.discount_amount
         super(PurchaseOfColorStones, self).save(*args, **kwargs)
         obj1 = Inventoryofcolorstones.objects.create(stockid=str('C-')+str(self.id), location=self.location, shape=self.shape,
-                                                     Clarity=self.Clarity,PCS=self.PCS,gem_type=self.gem_type, Weight=self.Weight, origin=self.origin, treatment=self.Treatment, certificate_no=self.certificate_no, color=self.colour, measurements=self.measurements, lab=self.lab, tag_price=self.tag_price, purchaseapv=self.purchaseapv)
-    
-    
+                                                     Clarity=self.Clarity, PCS=self.PCS, gem_type=self.gem_type, Weight=self.Weight, origin=self.origin, treatment=self.Treatment, certificate_no=self.certificate_no, color=self.colour, measurements=self.measurements, lab=self.lab, tag_price=self.tag_price, purchaseapv=self.purchaseapv)
 
 
 class Inventoryofcolorstones(models.Model):
@@ -612,38 +625,41 @@ class Inventoryofcolorstones(models.Model):
     tag_price = models.FloatField(null=True)
     status = models.BooleanField(default=False)
     purchaseapv = models.BooleanField(blank=True)
-    appvreturnstatus= models.BooleanField(default=False)
+    appvreturnstatus = models.BooleanField(default=False)
     cartstatus = models.BooleanField(default=False)
+
     def __str__(self):
-        return str(self.id) 
-   
+        return str(self.id)
+
+
 class Salesofcolorstones(models.Model):
-    date=models.DateField(auto_now_add=True)
+    date = models.DateField(auto_now_add=True)
     stockid = models.CharField(max_length=30)
     company_name = models.CharField(max_length=30)
-    location=models.CharField(max_length=30)
+    location = models.CharField(max_length=30)
     shape = models.CharField(max_length=30)
     gem_type = models.CharField(max_length=30)
-    origin=models.CharField(max_length=30)
-    treatment=models.CharField(max_length=30)
-    Clarity=models.CharField(max_length=30)
-    certificate_no=models.CharField(max_length=30)
-    color=models.CharField(max_length=30)
-    measurements = models.FloatField(null=True,blank=True)
-    lab=models.CharField(max_length=30)
-    PCS=models.IntegerField(null=True)
-    Weight_cs=models.FloatField(null=True)
+    origin = models.CharField(max_length=30)
+    treatment = models.CharField(max_length=30)
+    Clarity = models.CharField(max_length=30)
+    certificate_no = models.CharField(max_length=30)
+    color = models.CharField(max_length=30)
+    measurements = models.FloatField(null=True, blank=True)
+    lab = models.CharField(max_length=30)
+    PCS = models.IntegerField(null=True)
+    Weight_cs = models.FloatField(null=True)
     # price=models.FloatField(null=True)
     # units_cs=models.IntegerField(null=True)
-    amount_cs = models.FloatField(blank=True,null=True)
-    DIS_cs=models.FloatField(blank=True,null=True)
-    DIS_amount_cs=models.FloatField(blank=True,null=True)
-    total_value_cs=models.FloatField(blank=True,null=True)
-    currency_cs=models.CharField(max_length=30,blank=True,null=True)
-    tag_price_cs=models.FloatField(null=True)
-    rate_cs=models.FloatField(blank=True,null=True)
+    amount_cs = models.FloatField(blank=True, null=True)
+    DIS_cs = models.FloatField(blank=True, null=True)
+    DIS_amount_cs = models.FloatField(blank=True, null=True)
+    total_value_cs = models.FloatField(blank=True, null=True)
+    currency_cs = models.CharField(max_length=30, blank=True, null=True)
+    tag_price_cs = models.FloatField(null=True)
+    rate_cs = models.FloatField(blank=True, null=True)
     salesapprovalstatus_cs = models.BooleanField(default=False)
-    
+
+
 class cloneInvofcolorstones(models.Model):
     stockid = models.CharField(max_length=30, blank=True)
     company_name = models.CharField(max_length=30)
@@ -656,29 +672,31 @@ class cloneInvofcolorstones(models.Model):
     Clarity = models.CharField(max_length=30)
     certificate_no = models.CharField(max_length=30)
     color = models.CharField(max_length=30)
-    measurements = models.FloatField(null=True,blank=True)
+    measurements = models.FloatField(null=True, blank=True)
     lab = models.CharField(max_length=30)
     PCS = models.IntegerField(null=True)
     Weight_cs = models.FloatField(null=True)
     # price=models.FloatField(null=True)
     # units_cs=models.IntegerField(null=True)
-    amount_cs = models.FloatField(blank=True,null=True)
-    DIS_cs=models.FloatField(blank=True,null=True)
-    DIS_amount_cs=models.FloatField(blank=True,null=True)
-    total_value_cs=models.FloatField(blank=True,null=True)
-    currency_cs=models.CharField(max_length=30,blank=True,null=True)
+    amount_cs = models.FloatField(blank=True, null=True)
+    DIS_cs = models.FloatField(blank=True, null=True)
+    DIS_amount_cs = models.FloatField(blank=True, null=True)
+    total_value_cs = models.FloatField(blank=True, null=True)
+    currency_cs = models.CharField(max_length=30, blank=True, null=True)
     tag_price_cs = models.FloatField(null=True)
-    rate_cs=models.FloatField(blank=True, null=True)
+    rate_cs = models.FloatField(blank=True, null=True)
     salesapprovalstatus_cs = models.BooleanField(default=False)
+
     def save(self, *args, **kwargs):
 
         # self.delete()
 
-        # new_obj = Salesofcolorstones.objects.create(stockid=str('C-')+str(self.id),company_name=self.company_name, location=self.location, 
-        #                                            shape=self.shape,gem_type=self.gem_type,origin=self.origin,treatment=self.treatment, clarity=self.clarity,certificate_no_cs=self.certificate_no, color=self.color,measurement=self.measurements,lab=self.lab,pcs=self.PCS,weight=self.weight,price=self.price, 
+        # new_obj = Salesofcolorstones.objects.create(stockid=str('C-')+str(self.id),company_name=self.company_name, location=self.location,
+        #                                            shape=self.shape,gem_type=self.gem_type,origin=self.origin,treatment=self.treatment, clarity=self.clarity,certificate_no_cs=self.certificate_no, color=self.color,measurement=self.measurements,lab=self.lab,pcs=self.PCS,weight=self.weight,price=self.price,
         #                                           units=self.units,amount=self.amount,DIS=self.DIS,DIS_amount=self.DIS_amount,total_value=self.total_value,currency=self.currency, tag_price=self.tag_price,
         #                                           rate=self.rate,salesapprovalstatus=self.salesapprovalstatus)
         super(cloneInvofcolorstones, self).save()
+
 
 class Salesreturn_cs(models.Model):
     date = models.DateField(auto_now_add=True)
@@ -687,3 +705,14 @@ class Salesreturn_cs(models.Model):
     location = models.CharField(max_length=30)
     gem_type = models.CharField(max_length=30)
 
+
+class Jewel_media(models.Model):
+    jewel_object = models.ForeignKey(
+        Inventoryofjewellery, on_delete=models.CASCADE)
+    image1 = models.ImageField(
+        upload_to="JewelleryMedia/", blank=True, null=True)
+    image2 = models.ImageField(
+        upload_to="JewelleryMedia/", blank=True, null=True)
+    image3 = models.ImageField(
+        upload_to="JewelleryMedia/", blank=True, null=True)
+    video_embed_link = models.TextField(null=True, blank=True)

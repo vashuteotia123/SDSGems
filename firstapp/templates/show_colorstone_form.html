@@ -20,12 +20,13 @@
         <button id="add-form" type="button">Add Another Form</button>
         <button type="submit">Submit</button>
     </form>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
         let birdForm = document.querySelectorAll(".bird-form")
         let container = document.querySelector("#form-container")
         let addButton = document.querySelector("#add-form")
         let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
-
+        var s = "$('#id_form-" + 0 + "-discount').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + 0 + "-amount').value; var disc = document.getElementById('id_form-" + 0 + "-discount').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" + 0 + "-discount_amount').value = discamt; document.getElementById('id_form-" + 0 + "-total_val').value=amount- discamt;  });  "
         let formNum = birdForm.length-1
         addButton.addEventListener('click', addForm)
 
@@ -36,11 +37,15 @@
             let formRegex = RegExp(`form-(\\d){1}-`,'g')
 
             formNum++
+            s+= "$('#id_form-" +(formNum)+ "-discount').on('change keyup blur', function () { var amount = document.getElementById('id_form-" +(formNum) + "-amount').value; var disc = document.getElementById('id_form-" + (formNum) + "-discount').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" +(formNum)+ "-discount_amount').value = discamt; document.getElementById('id_form-" +(formNum)+ "-total_val').value=amount- discamt;  });  "
             newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
             container.insertBefore(newForm, addButton)
             
             totalForms.setAttribute('value', `${formNum+1}`)
+            eval(s);
         }
+        eval(s);
+
     </script>
   </body>
 </html>
