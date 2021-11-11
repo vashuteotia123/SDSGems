@@ -1,0 +1,38 @@
+
+  {% extends 'nav_bar.html' %}
+
+  {% block data %}
+
+
+        {%if metalcat%}
+        {% for p in metalcat %}
+
+<div class="card" style="width: 18rem;">
+    <img src="https://4.imimg.com/data4/OU/SP/MY-3456141/ruby-jewellery-earring-500x500.jpg" class="card-img-top" alt="..." width="100px" height="100px">
+    <div class="card-body" style="display:inline-block">
+      <h5 class="card-title">About jewellery</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Jewellery type - <b>{{p.jewellery_type}}</b></li>
+      <li class="list-group-item">Tag Price - <b>{{p.tag_price}}</b></li>
+      <li class="list-group-item">Shape - <b>{{p.shape}}</b></li>
+      <li class="list-group-item">Metal - <b>{{p.metal}}</b></li>
+      <li class="list-group-item">Center Stone - <b>{{p.center_stone}}</b></li>
+    </ul>
+    <div class="card-body">
+      <a href="#" class="card-link">Card link</a>
+      <a href="#" class="card-link">Another link</a>
+    </div>
+  </div>
+  {%endfor%}
+  {%endif%}
+  {%if message%}
+  <p>{{message}}</p>
+  {% endif %}
+
+
+{% endblock data %}
+
+
+
+

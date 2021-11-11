@@ -46,6 +46,9 @@ class gemtype(models.Model):
 
     def __str__(self):
         return self.gem
+    def save(self, *args, **kwargs):
+        self.gem = self.gem.lower()
+        super(gemtype, self).save(*args, **kwargs)
 
 
 class companyinfo(models.Model):
@@ -72,6 +75,9 @@ class jewell(models.Model):
 
     def __str__(self):
         return self.jewel
+    def save(self, *args, **kwargs):
+        self.jewel = self.jewel.lower()
+        super(jewell, self).save(*args, **kwargs)
 
 
 class centerstone(models.Model):
@@ -79,6 +85,9 @@ class centerstone(models.Model):
 
     def __str__(self):
         return self.stone
+    def save(self, *args, **kwargs):
+        self.stone = self.stone.lower()
+        super(centerstone, self).save(*args, **kwargs)
 
 
 class colorofcstone(models.Model):
@@ -86,6 +95,9 @@ class colorofcstone(models.Model):
 
     def __str__(self):
         return self.color
+    def save(self, *args, **kwargs):
+        self.color = self.color.lower()
+        super(colorofcstone, self).save(*args, **kwargs)
 
 
 class shape1(models.Model):
@@ -93,6 +105,9 @@ class shape1(models.Model):
 
     def __str__(self):
         return self.shape
+    def save(self, *args, **kwargs):
+        self.shape = self.shape.lower()
+        super(shape1, self).save(*args, **kwargs)
 
 
 class metal1(models.Model):
@@ -100,6 +115,9 @@ class metal1(models.Model):
 
     def __str__(self):
         return self.metal
+    def save(self, *args, **kwargs):
+        self.metal= self.metal.lower()
+        super(metal1, self).save(*args, **kwargs)
 
 
 class certificate(models.Model):
@@ -109,6 +127,9 @@ class certificate(models.Model):
 
     def __str__(self):
         return self.cert
+    def save(self, *args, **kwargs):
+        self.cert = self.cert.lower()
+        super(certificate, self).save(*args, **kwargs)
 
 
 class currencies(models.Model):
@@ -116,6 +137,9 @@ class currencies(models.Model):
 
     def __str__(self):
         return self.currency
+    def save(self, *args, **kwargs):
+        self.currency = self.currency.lower()
+        super(currencies, self).save(*args, **kwargs)
 
 
 class POJ(models.Model):
@@ -541,7 +565,7 @@ class Lab_cs(models.Model):
 
 
 class Treatment_cs(models.Model):
-    treat = models.CharField(max_length=20)
+    treat = models.CharField(max_length=30)
 
     def __str__(self):
         return self.treat

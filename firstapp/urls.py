@@ -5,7 +5,7 @@ from firstapp.views import *
 
 urlpatterns = [
     path('', views.index, name="index"),
-    path('second', views.index2, name="second"),
+    path('home', views.home, name="home"),
     path('takeinput', views.take_input, name="takeinput"),
     path('show_data', views.show_data, name="show_data"),
     path('showform', views.showform, name="showdform"),
@@ -94,6 +94,13 @@ urlpatterns = [
     path('upload-csv',jewellery_upload,name="jewellery_upload"),
     path('displayblog',views.displayblog,name="displayblog"),
     path('itemsearch',views.itemsearch, name='itemsearch'),
+    path('jewel_metal_filter/<str:value>/<str:category>/', views.jewel_metal_filter, name='jewel_metal_filter'),
+    path('diamond_filter/<str:value>/<str:category>/', views.diamond_filter, name='diamond_filter'),
      # path('upload-csv',diamond_upload,name="diamond_upload"),
+    path('cs_filter/<str:value>/<str:category>/',views.cs_filter, name='cs_filter'),
+    path('cstone_listing',views.cstone_listing, name='cstone_listing'),
+    path('jewel_listing',views.jewel_listing, name='jewel_listing'),
+    path('diamond_listing',views.diamond_listing, name='diamond_listing'),
 
+    path("contact", views.contactsendmail, name="contact"), 
 ]

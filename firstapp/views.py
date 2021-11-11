@@ -18,16 +18,42 @@ from django.core.exceptions import ObjectDoesNotExist
 from SDSDiamonds import settings
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.core.mail import send_mail
 # Create your views here.
 
 
 def index(request):
-    return render(request, 'index.html')
+    cscolors = colorofcstone.objects.all()
+    context={
+        'cscolor': cscolors,
+    }
+    return render(request, 'index.html',context=context)
 
 
-@login_required
-def index2(request):
-    return render(request, 'second.html')
+
+def home(request):
+    jewel_colors = colorofcstone.objects.all()
+    jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
+    center_stone_types = set(Inventoryofjewellery.objects.values_list('center_stone', flat=True))
+    diam_fci = set(Inventoryofdiamond.objects.values_list('fancy_color_intensity1', flat=True))
+    diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
+    diam_wcg1 = set(Inventoryofdiamond.objects.values_list('white_color_grade1',flat=True))
+    cs_treatment=set(Inventoryofcolorstones.objects.values_list('treatment',flat=True))
+    cs_origin=set(Inventoryofcolorstones.objects.values_list('origin',flat=True))
+    cs_shape=set(Inventoryofcolorstones.objects.values_list('shape',flat=True))
+    
+    context = {
+        'gemstones': jewel_colors,
+        'jewel_types': jewel_types,
+        'center_stone_types':center_stone_types,
+        'diam_fancy_color_intensity1':diam_fci,
+        'diam_polish':diam_pol,
+        'diamwcg':diam_wcg1,
+        'cs_tr':cs_treatment,
+        'cs_org':cs_origin,
+        'cs_shpe':cs_shape,
+    }
+    return render(request, 'home.html', context)
 
 
 @login_required
@@ -1696,3 +1722,331 @@ def get_company_details(request):
             company = companyinfo.objects.get(company_name=name)
             return JsonResponse({"contact_no": company.contact, "location": company.address}, status=200)
     return JsonResponse({}, status=200)
+
+def jewel_metal_filter(request,value,category):
+    print(category)
+    if category == "color_of_center_stone":
+        print(value)
+        jw = Inventoryofjewellery.objects.filter(Q(color_of_center_stone=value) & Q(frontend =True))
+        print(jw)
+        if len(jw) == 0:
+            message ="No records found"
+            context = {
+                'message':message,
+            }
+        else:
+            jewel_colors = colorofcstone.objects.all()
+            jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
+            center_stone_types = set(Inventoryofjewellery.objects.values_list('center_stone', flat=True))
+            diam_fci = set(Inventoryofdiamond.objects.values_list('fancy_color_intensity1', flat=True))
+            diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
+            diam_wcg1 = set(Inventoryofdiamond.objects.values_list('white_color_grade1',flat=True))
+            cs_treatment=set(Inventoryofcolorstones.objects.values_list('treatment',flat=True))
+            cs_origin=set(Inventoryofcolorstones.objects.values_list('origin',flat=True))
+            cs_shape=set(Inventoryofcolorstones.objects.values_list('shape',flat=True))
+            
+            context = {
+                'gemstones': jewel_colors,
+                'jewel_types': jewel_types,
+                'center_stone_types':center_stone_types,
+                'diam_fancy_color_intensity1':diam_fci,
+                'diam_polish':diam_pol,
+                'diamwcg':diam_wcg1,
+                'cs_tr':cs_treatment,
+                'cs_org':cs_origin,
+                'cs_shpe':cs_shape,
+                "metalcat" : jw,
+            }
+        
+        print(jw)    
+        return render(request,"filtered.html",context=context)    
+    elif category == "jewellery_type":
+        jw = Inventoryofjewellery.objects.filter(Q(jewellery_type=value) & Q(frontend =True))
+        if jw is None:
+            message ="No records found"
+            context = {
+                'message':message,
+            }
+        else:
+            jewel_colors = colorofcstone.objects.all()
+            jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
+            center_stone_types = set(Inventoryofjewellery.objects.values_list('center_stone', flat=True))
+            diam_fci = set(Inventoryofdiamond.objects.values_list('fancy_color_intensity1', flat=True))
+            diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
+            diam_wcg1 = set(Inventoryofdiamond.objects.values_list('white_color_grade1',flat=True))
+            cs_treatment=set(Inventoryofcolorstones.objects.values_list('treatment',flat=True))
+            cs_origin=set(Inventoryofcolorstones.objects.values_list('origin',flat=True))
+            cs_shape=set(Inventoryofcolorstones.objects.values_list('shape',flat=True))
+            
+            context = {
+                'gemstones': jewel_colors,
+                'jewel_types': jewel_types,
+                'center_stone_types':center_stone_types,
+                'diam_fancy_color_intensity1':diam_fci,
+                'diam_polish':diam_pol,
+                'diamwcg':diam_wcg1,
+                'cs_tr':cs_treatment,
+                'cs_org':cs_origin,
+                'cs_shpe':cs_shape,
+                "metalcat" : jw,
+            }
+        return render(request,"filtered.html",context=context)    
+    elif category == "center_stone":
+        jw = Inventoryofjewellery.objects.filter(Q(center_stone=value) & Q(frontend =True))
+        if jw is None:
+            message ="No records found"
+            context = {
+                'message':message,
+            }
+        else:
+            jewel_colors = colorofcstone.objects.all()
+            jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
+            center_stone_types = set(Inventoryofjewellery.objects.values_list('center_stone', flat=True))
+            diam_fci = set(Inventoryofdiamond.objects.values_list('fancy_color_intensity1', flat=True))
+            diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
+            diam_wcg1 = set(Inventoryofdiamond.objects.values_list('white_color_grade1',flat=True))
+            cs_treatment=set(Inventoryofcolorstones.objects.values_list('treatment',flat=True))
+            cs_origin=set(Inventoryofcolorstones.objects.values_list('origin',flat=True))
+            cs_shape=set(Inventoryofcolorstones.objects.values_list('shape',flat=True))
+            
+            context = {
+                'gemstones': jewel_colors,
+                'jewel_types': jewel_types,
+                'center_stone_types':center_stone_types,
+                'diam_fancy_color_intensity1':diam_fci,
+                'diam_polish':diam_pol,
+                'diamwcg':diam_wcg1,
+                'cs_tr':cs_treatment,
+                'cs_org':cs_origin,
+                'cs_shpe':cs_shape,
+                "metalcat" : jw,
+            }
+        return render(request,"filtered.html",context=context)    
+    else:
+        pass
+
+def jewel_listing(request):
+    return render(request,"jewel_listing.html")
+    
+
+def contactsendmail(request):
+    if request.method=="GET":
+        form=contactformemail()
+    else:
+        form=contactformemail(request.POST) 
+        if form.is_valid():
+            fromemail = form.cleaned_data["fromemail"]
+            subject = form.cleaned_data["subject"]
+            message = form.cleaned_data["message"]
+            send_mail(subject,message,fromemail,['krgconnect86@gmail.com',fromemail])
+    return render(request,'contact.html',{'form':form})    
+
+def diamond_filter(request,value,category):
+    print(category)
+    if category == "fancy_color_intensity1":
+        print(value)
+        dm = Inventoryofdiamond.objects.filter(Q(fancy_color_intensity1=value))
+        print(dm)
+        if len(dm) == 0:
+            message ="No records found"
+            context = {
+                'message':message,
+            }
+        else:
+            jewel_colors = colorofcstone.objects.all()
+            jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
+            center_stone_types = set(Inventoryofjewellery.objects.values_list('center_stone', flat=True))
+            diam_fci = set(Inventoryofdiamond.objects.values_list('fancy_color_intensity1', flat=True))
+            diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
+            diam_wcg1 = set(Inventoryofdiamond.objects.values_list('white_color_grade1',flat=True))
+            cs_treatment=set(Inventoryofcolorstones.objects.values_list('treatment',flat=True))
+            cs_origin=set(Inventoryofcolorstones.objects.values_list('origin',flat=True))
+            cs_shape=set(Inventoryofcolorstones.objects.values_list('shape',flat=True))
+            
+            context = {
+                'gemstones': jewel_colors,
+                'jewel_types': jewel_types,
+                'center_stone_types':center_stone_types,
+                'diam_fancy_color_intensity1':diam_fci,
+                'diam_polish':diam_pol,
+                'diamwcg':diam_wcg1,
+                'cs_tr':cs_treatment,
+                'cs_org':cs_origin,
+                'cs_shpe':cs_shape,
+                "diamcat" : dm,
+            }
+        print(dm)    
+        return render(request,"filtered_d.html",context=context)    
+    elif category == "polish":
+        dm= Inventoryofdiamond.objects.filter(Q(polish=value))
+        if dm is None:
+            message ="No records found"
+            context = {
+                'message':message,
+            }
+        else:
+            jewel_colors = colorofcstone.objects.all()
+            jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
+            center_stone_types = set(Inventoryofjewellery.objects.values_list('center_stone', flat=True))
+            diam_fci = set(Inventoryofdiamond.objects.values_list('fancy_color_intensity1', flat=True))
+            diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
+            diam_wcg1 = set(Inventoryofdiamond.objects.values_list('white_color_grade1',flat=True))
+            cs_treatment=set(Inventoryofcolorstones.objects.values_list('treatment',flat=True))
+            cs_origin=set(Inventoryofcolorstones.objects.values_list('origin',flat=True))
+            cs_shape=set(Inventoryofcolorstones.objects.values_list('shape',flat=True))
+            
+            context = {
+                'gemstones': jewel_colors,
+                'jewel_types': jewel_types,
+                'center_stone_types':center_stone_types,
+                'diam_fancy_color_intensity1':diam_fci,
+                'diam_polish':diam_pol,
+                'diamwcg':diam_wcg1,
+                'cs_tr':cs_treatment,
+                'cs_org':cs_origin,
+                'cs_shpe':cs_shape,
+                "diamcat" : dm,
+            }
+        return render(request,"filtered_d.html",context=context)    
+    elif category == "white_color_grade1":
+        dm = Inventoryofdiamond.objects.filter(Q(white_color_grade1=value))
+        if dm is None:
+            message ="No records found"
+            context = {
+                'message':message,
+            }
+        else:
+            jewel_colors = colorofcstone.objects.all()
+            jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
+            center_stone_types = set(Inventoryofjewellery.objects.values_list('center_stone', flat=True))
+            diam_fci = set(Inventoryofdiamond.objects.values_list('fancy_color_intensity1', flat=True))
+            diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
+            diam_wcg1 = set(Inventoryofdiamond.objects.values_list('white_color_grade1',flat=True))
+            cs_treatment=set(Inventoryofcolorstones.objects.values_list('treatment',flat=True))
+            cs_origin=set(Inventoryofcolorstones.objects.values_list('origin',flat=True))
+            cs_shape=set(Inventoryofcolorstones.objects.values_list('shape',flat=True))
+            
+            context = {
+                'gemstones': jewel_colors,
+                'jewel_types': jewel_types,
+                'center_stone_types':center_stone_types,
+                'diam_fancy_color_intensity1':diam_fci,
+                'diam_polish':diam_pol,
+                'diamwcg':diam_wcg1,
+                'cs_tr':cs_treatment,
+                'cs_org':cs_origin,
+                'cs_shpe':cs_shape,
+                "diamcat" : dm,
+            }
+           
+        return render(request,"filtered_d.html",context=context)        
+    else:
+        pass
+
+def diamond_listing(request):
+    return render(request,"diamond_listing.html")  
+
+def cs_filter(request,value,category):
+    print(category)
+    if category == "origin":
+        print(value)
+        clst = Inventoryofcolorstones.objects.filter(Q(origin=value))
+        print(clst)
+        if len(clst) == 0:
+            message ="No records found"
+            context = {
+                'message':message,
+            }
+        else:
+            jewel_colors = colorofcstone.objects.all()
+            jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
+            center_stone_types = set(Inventoryofjewellery.objects.values_list('center_stone', flat=True))
+            diam_fci = set(Inventoryofdiamond.objects.values_list('fancy_color_intensity1', flat=True))
+            diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
+            diam_wcg1 = set(Inventoryofdiamond.objects.values_list('white_color_grade1',flat=True))
+            cs_treatment=set(Inventoryofcolorstones.objects.values_list('treatment',flat=True))
+            cs_origin=set(Inventoryofcolorstones.objects.values_list('origin',flat=True))
+            cs_shape=set(Inventoryofcolorstones.objects.values_list('shape',flat=True))
+            
+            context = {
+                'gemstones': jewel_colors,
+                'jewel_types': jewel_types,
+                'center_stone_types':center_stone_types,
+                'diam_fancy_color_intensity1':diam_fci,
+                'diam_polish':diam_pol,
+                'diamwcg':diam_wcg1,
+                'cs_tr':cs_treatment,
+                'cs_org':cs_origin,
+                'cs_shpe':cs_shape,
+                "cscat" : clst,
+            }
+           
+        return render(request,"filtered_cs.html",context=context)    
+    elif category == "treatment":
+        clst= Inventoryofcolorstones.objects.filter(Q(treatment=value))
+        if len(clst) ==0:
+            message ="No records found"
+            context = {
+                'message':message,
+            }
+        else:
+            jewel_colors = colorofcstone.objects.all()
+            jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
+            center_stone_types = set(Inventoryofjewellery.objects.values_list('center_stone', flat=True))
+            diam_fci = set(Inventoryofdiamond.objects.values_list('fancy_color_intensity1', flat=True))
+            diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
+            diam_wcg1 = set(Inventoryofdiamond.objects.values_list('white_color_grade1',flat=True))
+            cs_treatment=set(Inventoryofcolorstones.objects.values_list('treatment',flat=True))
+            cs_origin=set(Inventoryofcolorstones.objects.values_list('origin',flat=True))
+            cs_shape=set(Inventoryofcolorstones.objects.values_list('shape',flat=True))
+            
+            context = {
+                'gemstones': jewel_colors,
+                'jewel_types': jewel_types,
+                'center_stone_types':center_stone_types,
+                'diam_fancy_color_intensity1':diam_fci,
+                'diam_polish':diam_pol,
+                'diamwcg':diam_wcg1,
+                'cs_tr':cs_treatment,
+                'cs_org':cs_origin,
+                'cs_shpe':cs_shape,
+                "cscat" : clst,
+            }
+        return render(request,"filtered_cs.html",context=context)    
+    elif category == "shape":
+        clst = Inventoryofcolorstones.objects.filter(Q(shape=value))
+        if len(clst) ==0:
+            message ="No records found"
+            context = {
+                'message':message,
+            }
+        else:
+            jewel_colors = colorofcstone.objects.all()
+            jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
+            center_stone_types = set(Inventoryofjewellery.objects.values_list('center_stone', flat=True))
+            diam_fci = set(Inventoryofdiamond.objects.values_list('fancy_color_intensity1', flat=True))
+            diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
+            diam_wcg1 = set(Inventoryofdiamond.objects.values_list('white_color_grade1',flat=True))
+            cs_treatment=set(Inventoryofcolorstones.objects.values_list('treatment',flat=True))
+            cs_origin=set(Inventoryofcolorstones.objects.values_list('origin',flat=True))
+            cs_shape=set(Inventoryofcolorstones.objects.values_list('shape',flat=True))
+            
+            context = {
+                'gemstones': jewel_colors,
+                'jewel_types': jewel_types,
+                'center_stone_types':center_stone_types,
+                'diam_fancy_color_intensity1':diam_fci,
+                'diam_polish':diam_pol,
+                'diamwcg':diam_wcg1,
+                'cs_tr':cs_treatment,
+                'cs_org':cs_origin,
+                'cs_shpe':cs_shape,
+                "cscat" : clst,
+            }
+            
+        return render(request,"filtered_cs.html",context=context)        
+    else:
+        pass
+
+def cstone_listing(request):
+    return render(request,"cstone_listing.html")  

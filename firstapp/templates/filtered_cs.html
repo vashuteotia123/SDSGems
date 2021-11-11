@@ -1,0 +1,44 @@
+{% extends 'nav_bar.html' %}
+{% block data %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {%if cscat%}
+    {% for p in cscat %}
+
+<div class="card" style="width: 18rem;">
+    <img src="https://4.imimg.com/data4/OU/SP/MY-3456141/ruby-jewellery-earring-500x500.jpg" class="card-img-top" alt="..." width="100px" height="100px">
+    <div class="card-body" style="display:inline-block">
+      <h5 class="card-title">About Colour Stones</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Origin - <b>{{p.origin}}</b></li>
+      <li class="list-group-item">Tag Price - <b>{{p.tag_price_cs}}</b></li>
+      <li class="list-group-item">Shape - <b>{{p.shape}}</b></li>
+      <li class="list-group-item">Treatment - <b>{{p.treatment}}</b></li>
+      <li class="list-group-item">Lab - <b>{{p.lab}}</b></li>
+    </ul>
+    <div class="card-body">
+      <a href="#" class="card-link">Card link</a>
+      <a href="#" class="card-link">Another link</a>
+    </div>
+  </div>
+  {%endfor%}
+  {%endif%}
+  {%if message%}
+  <p>{{message}}</p>
+  {% endif %}
+</body>
+</html>
+
+{% endblock data %}
+
+
+
+

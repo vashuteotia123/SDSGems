@@ -112,3 +112,8 @@ class ADCForm_d(forms.ModelForm):
 
 
 ADCFormSet_d = modelformset_factory(cloneInvofdiamond, form=ADCForm_d, extra=0)
+
+class contactformemail(forms.Form):
+    fromemail = forms.EmailField(max_length = 150,required=True)
+    subject= forms.CharField(required=True)
+    message = forms.CharField(widget = forms.Textarea, max_length = 2000,required=True)
