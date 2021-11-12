@@ -26,6 +26,7 @@
         let addButton = document.querySelector("#add-form")
         let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
         var s = "$('#id_form-" + 0 + "-DIS_d').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + 0 + "-amount_d').value; var disc = document.getElementById('id_form-" + 0 + "-DIS_d').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" + 0 + "-DIS_Amount_d').value = discamt; document.getElementById('id_form-" + 0 + "-total_val_d').value=amount- discamt;  });  "
+        var amt = "$('#id_form-" + 0 + "-price').on('change keyup blur', function () { var weight = document.getElementById('id_form-" + 0 + "-weight_d').value; var price = document.getElementById('id_form-" + 0 + "-price').value; var amount_value = (price * weight); document.getElementById('id_form-" + 0 + "-amount_d').value = amount_value;  });  "
         let formNum = birdForm.length-1
         addButton.addEventListener('click', addForm)
 
@@ -37,13 +38,16 @@
 
             formNum++
             s+="$('#id_form-" + (formNum) + "-DIS_d').on('change keyup blur', function () { var amount = document.getElementById('id_form-" +(formNum)+ "-amount_d').value; var disc = document.getElementById('id_form-" +(formNum)+ "-DIS_d').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" +(formNum)+ "-DIS_Amount_d').value = discamt; document.getElementById('id_form-" +(formNum) + "-total_val_d').value=amount- discamt;  });  "
+            amt += "$('#id_form-" + (formNum) + "-price').on('change keyup blur', function () { var weight = document.getElementById('id_form-" + (formNum) + "-weight_d').value; var price = document.getElementById('id_form-" +(formNum)+ "-price').value; var amount_value = (price * weight); document.getElementById('id_form-" + (formNum)+ "-amount_d').value = amount_value;  });  "
             newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
             container.insertBefore(newForm, addButton)
             
             totalForms.setAttribute('value', `${formNum+1}`)
             eval(s);
+            eval(amt);
         }
         eval(s);
+        eval(amt);
     </script>
   </body>
 </html>

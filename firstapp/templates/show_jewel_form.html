@@ -27,30 +27,32 @@
     let addButton = document.querySelector("#add-form")
     let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
     var s = "$('#id_form-" + 0 + "-discount').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + 0 + "-amount').value; var disc = document.getElementById('id_form-" + 0 + "-discount').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" + 0 + "-discount_amount').value = discamt; document.getElementById('id_form-" + 0 + "-total').value=amount- discamt;  });  "
-    $("#id_form-0-company_name").change(function(){
-    var company_name = $(this).find(':selected')[0].text;
-    $.ajax({
-      type: 'GET',
-      url: "{% url 'get_company_details' %}",
-      data: {
-        "name": company_name,
-     
-      },
-      success: function(data) {
-        var phone_no = document.getElementById('id_form-0-phone_number');
-        phone_no.value = data.contact_no;
-        var location = document.getElementById('id_form-0-location');
-        var loc_index = ':selected';
-        for(var i=0; i<location.length; i++){
-          if(location[i].text == data.location){
-            loc_index = i;
-            break;
-          }
-        }
-        location.value = loc_index;
-      }
-    })
-  })
+    var company_detail_call = "$('#id_form-"+0+"-company_name').change(function(){var company_name = $(this).find(':selected')[0].text;$.ajax({type: 'GET',url: '{% url 'get_company_details' %}',data: {'name': company_name,},success: function(data) {var phone_no = document.getElementById('id_form-"+0+"-phone_number');phone_no.value = data.contact_no;var location = document.getElementById('id_form-"+0+"-location');var loc_index = ':selected';for(var i=0; i<location.length; i++){if(location[i].text == data.location){loc_index = i;break; } } location.value = loc_index; } }) });"
+
+    // console.log($('#id_form-0-company_name').change(function(){var company_name = $(this).find(':selected'); console.log(company_name)}));
+  //   $("#id_form-0-company_name").change(function(){
+  //   var company_name = $(this).find(':selected')[0].text;
+  //   $.ajax({
+  //     type: 'GET',
+  //     url: "{% url 'get_company_details' %}",
+  //     data: {
+  //       "name": company_name,
+  //     },
+  //     success: function(data) {
+  //       var phone_no = document.getElementById('id_form-0-phone_number');
+  //       phone_no.value = data.contact_no;
+  //       var location = document.getElementById('id_form-0-location');
+  //       var loc_index = ':selected';
+  //       for(var i=0; i<location.length; i++){
+  //         if(location[i].text == data.location){
+  //           loc_index = i;
+  //           break;
+  //         }
+  //       }
+  //       location.value = loc_index;
+  //     }
+  //   })
+  // })
     let formNum = birdForm.length - 1
     addButton.addEventListener('click', addForm)
 
@@ -61,15 +63,18 @@
       
       formNum++
       s += "$('#id_form-" + (formNum) + "-discount').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + (formNum) + "-amount').value; var disc = document.getElementById('id_form-" + (formNum) + "-discount').value; var discamt = ((amount * disc) / 100); document.getElementById('id_form-" + (formNum) + "-discount_amount').value = discamt; document.getElementById('id_form-" + formNum + "-total').value= (amount - discamt); });   "
-      
+      company_detail_call += "$('#id_form-"+(formNum)+"-company_name').change(function(){var company_name = $(this).find(':selected')[0].text;$.ajax({type: 'GET',url: '{% url 'get_company_details' %}',data: {'name': company_name,},success: function(data) {var phone_no = document.getElementById('id_form-"+(formNum)+"-phone_number');phone_no.value = data.contact_no;var location = document.getElementById('id_form-"+(formNum)+"-location');var loc_index = ':selected';for(var i=0; i<location.length; i++){if(location[i].text == data.location){loc_index = i;break; } } location.value = loc_index; } }) });"
       newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
       container.insertBefore(newForm, addButton)
       totalForms.setAttribute('value', `${formNum + 1}`)
       eval(s);
-     
+      eval(company_detail_call);
   
   }
-  eval(s); 
+  eval(s);
+  console.log(company_detail_call);
+  eval(company_detail_call);
+
   </script>
    
 

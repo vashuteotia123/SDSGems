@@ -14,6 +14,7 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>SDS Gems</title>
+    {% block css %}{% endblock css %}
     <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"> -->
 </head>
 
@@ -42,8 +43,9 @@
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="/showcs">Edit Purchased Items</a></li>
                             <li><a class="dropdown-item" href="/delete_cs">Inventory</a></li>
-                            <li><a class="dropdown-item" href="/showform1">Purchase</a></li>
+                            <li><a class="dropdown-item" href="/show_colorstone_form">Purchase</a></li>
                             <li><a class="dropdown-item" href="/sell_cs">View Sold Items</li>
+                            <li><a class="dropdown-item" href="/upload-csv_cs">Upload CSV</li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -87,6 +89,9 @@
                             <li><a class="dropdown-item" href="#">Something else here</a></li>
                             </ul>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/firstapp/certificate">Upload Certificates</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -95,18 +100,10 @@
     </div>
     <br>
     <br>
-    <h3>Enter Login Details</h3>
-    <div class="flex-container">
-        <form class="flex" action="{% url 'takeinput'%}" method="POST" >
-            {% csrf_token %}
-            <input type="text" name="user_name" id="user_name" placeholder="Enter Username">
-            <br>
-            <input type="email" name="email_id" id="email_id" placeholder="Enter the Email ID">
-            <button type="submit">submit</button>
-        </form>
-    </div>
     
     
+    {% block content %}
+    {% endblock content %}
 
 
     <!-- Optional JavaScript; choose one of the two! -->

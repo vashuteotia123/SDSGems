@@ -105,16 +105,16 @@
     $ = django.jQuery;
   }
   $(document).on("change keyup blur","#id_units",function() {
-    var pieces = $('#id_PCS').val();
+    var weight = $('#id_Weight').val();
     var price = $('#id_Price').val();
     var unit =$("#id_units").val();
     console.log(pieces);
     console.log(unit);
     console.log(price);
-    var t = parseInt(pieces)*parseInt(unit)*parseFloat(price);
+    var t = parseInt(weight)*parseFloat(price);
     console.log(t);
     
-    if (pieces !='' && unit !='' && price!=''){
+    if (weight !='' && price!=''){
          $('#id_amount').val(t.toFixed(2));
     }else{
       $('#id_amount').val('')

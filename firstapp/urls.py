@@ -97,6 +97,7 @@ urlpatterns = [
     path('jewel_metal_filter/<str:value>/<str:category>/', views.jewel_metal_filter, name='jewel_metal_filter'),
     path('diamond_filter/<str:value>/<str:category>/', views.diamond_filter, name='diamond_filter'),
      # path('upload-csv',diamond_upload,name="diamond_upload"),
+    path('upload-csv_cs',colorstone_upload,name="colorstone_upload"),
     path('cs_filter/<str:value>/<str:category>/',views.cs_filter, name='cs_filter'),
     path('cstone_listing',views.cstone_listing, name='cstone_listing'),
     path('jewel_listing',views.jewel_listing, name='jewel_listing'),

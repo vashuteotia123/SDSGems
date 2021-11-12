@@ -1212,7 +1212,7 @@ def jewellery_upload(request):
         # datere=re.findall(r'\d{2}/\d{2}/\d{4}',column[0])
         # date_value=list(datere[0])
         # final_date=datetime.date(int(''.join(date_value[6:])),int(''.join(date_value[3:4])),int(''.join(date_value[0:2])))
-        temp_date = datetime.strptime(str(column[0]), "%m-%d-%y").date()
+        temp_date = datetime.strptime(str(column[0]), "%m-%d-%Y").date()
         print(temp_date)
         # print(final_date)
         f = POJ
@@ -1220,7 +1220,7 @@ def jewellery_upload(request):
             f.company_name = companyinfo.objects.get(company_name=column[2])
         except ObjectDoesNotExist:
             html = "Company Name does not exist " + \
-                '<a href="/showform">Create Company details</a>'
+                '<a href="/cform">Create Company details</a>'
             return HttpResponse(html)
         print(f.company_name)
         try:
@@ -1397,137 +1397,137 @@ def itemsearch(request):
 
 
 
-# @login_required
-# def colorstone_upload(request):
-#     template="colorstoneupload.html"
-#     if request.method=="GET":
-#         return render(request,template)
+@login_required
+def colorstone_upload(request):
+    template="colorstoneupload.html"
+    if request.method=="GET":
+        return render(request,template)
 
-#     csv_file=request.FILES['file']
-#     if not csv_file.name.endswith('.csv'):
-#         messages.error(request,"This is not a CSV file")
-#     dataset=csv_file.read().decode('UTF-8')
-#     io_string=io.StringIO(dataset)
-#     next(io_string)
-#     for column in csv.reader(io_string,delimiter=','):
-#         z=re.findall("[0-9]+",column[19])
-#         # datere=re.findall(r'\d{2}/\d{2}/\d{4}',column[0])
-#         # date_value=list(datere[0])
-#         # final_date=datetime.date(int(''.join(date_value[6:])),int(''.join(date_value[3:4])),int(''.join(date_value[0:2])))
-#         temp_date = datetime.strptime(str(column[0]), "%m-%d-%y").date()
-#         print(temp_date)
-#         # print(final_date)
-#         f=PurchaseOfColorStones
-#         try:
-#             f.company_name = companyinfo.objects.get(company_name=column[2])
-#         except ObjectDoesNotExist:
-#             html="Company Name does not exist " + '<a href="/showform">Create Company details</a>'
-#             return HttpResponse(html)
-#         print(f.company_name)
-#         try:
-#             f.location,lcobj = loc.objects.get_or_create(place=column[3].lower())
-#             if lcobj :
-#                 f.location.save()
-#         except Exception as e:
-#             raise e
-#         print(f.location)
-#         try:
-    #       f.shape,sobj=shape_cs.objects.get_or_create(shape=column[4].lower())
-    #       if sobj :
-    #           f.shape.save()
-    #     except Exception as e:
-    #       raise e
-#         try:
-#           ..  f.gem_type,jlobj = gemtype.objects.get_or_create(gem_type=column[5].lower())
-#             if jlobj :
-#                 f.gem_type.save()
-#         except Exception as e:
-#             raise e
-#         print(f.gem_type)
-#         try:
-#             f.origin,clobj = Origin_cs.objects.get_or_create(origin=column[6].lower())
-#             if clobj :
-#                 f.origin.save()
-#         except Exception as e:
-#             raise e
-#         print(f.origin)
-#         try:
-#             f.Treatment,clsobj=Treatment_cs.objects.get_or_create(Treatment=column[7].lower())
-#             if clsobj :
-#                 f.Treatment.save()
-#         except Exception as e:
-#             raise e
-#         f.Treatment=Treatment_cs.objects.get(Treatment=column[7])
-#         print(f.Treatment)
+    csv_file=request.FILES['file']
+    if not csv_file.name.endswith('.csv'):
+        messages.error(request,"This is not a CSV file")
+    dataset=csv_file.read().decode('UTF-8')
+    io_string=io.StringIO(dataset)
+    next(io_string)
+    for column in csv.reader(io_string,delimiter=','):
+        z=re.findall("[0-9]+",column[19])
+        # datere=re.findall(r'\d{2}/\d{2}/\d{4}',column[0])
+        # date_value=list(datere[0])
+        # final_date=datetime.date(int(''.join(date_value[6:])),int(''.join(date_value[3:4])),int(''.join(date_value[0:2])))
+        temp_date = datetime.strptime(str(column[0]), "%m-%d-%Y").date()
+        print(temp_date)
+        # print(final_date)
+        f=PurchaseOfColorStones
+        try:
+            f.company_name = companyinfo.objects.get(company_name=column[2])
+        except ObjectDoesNotExist:
+            html="Company Name does not exist " + '<a href="/cform">Create Company details</a>'
+            return HttpResponse(html)
+        print(f.company_name)
+        try:
+            f.location,lcobj = loc.objects.get_or_create(place=column[3].lower())
+            if lcobj :
+                f.location.save()
+        except Exception as e:
+            raise e
+        print(f.location)
+        try:
+          f.shape,sobj=shape_cs.objects.get_or_create(shape=column[4].lower())
+          if sobj :
+              f.shape.save()
+        except Exception as e:
+          raise e
+        try:
+          f.gem_type,jlobj = gemtype.objects.get_or_create(gem=column[5].lower())
+          if jlobj :
+                f.gem_type.save()
+        except Exception as e:
+            raise e
+        print(f.gem_type)
+        try:
+            f.origin,clobj = Origin_cs.objects.get_or_create(org=column[6].lower())
+            if clobj :
+                f.origin.save()
+        except Exception as e:
+            raise e
+        print(f.origin)
+        try:
+            f.Treatment,clsobj=Treatment_cs.objects.get_or_create(treat=column[7].lower())
+            if clsobj :
+                f.Treatment.save()
+        except Exception as e:
+            raise e
+        # f.Treatment=Treatment_cs.objects.get(Treatment=column[7])
+        # print(f.Treatment)
 
 
-#         try:
-#             f.certificate_no,cerobj = cert_no_cs.objects.get_or_create(certificate_no=column[9].lower())
-#             if cerobj :
-#                 f.certificate_no.save()
-#         except Exception as e:
-#             raise e
+        try:
+            f.certificate_no,cerobj = cert_no_cs.objects.get_or_create(cert=column[9].lower())
+            if cerobj :
+                f.certificate_no.save()
+        except Exception as e:
+            raise e
 
-#         print(f.certificate_no)
+        print(f.certificate_no)
 
-#         try:
-#             f.lab,mobj = metal1.objects.get_or_create(lab=column[12].lower())
-#             if mobj :
-#                 f.lab.save()
-#         except Exception as e:
-#             raise e
+        try:
+            f.lab,mobj = Lab_cs.objects.get_or_create(lab=column[12].lower())
+            if mobj :
+                f.lab.save()
+        except Exception as e:
+            raise e
 
-#         print(f.lab)
+        print(f.lab)
 
-#         try:
-#             f.currency,crobj = currencies.objects.get_or_create(currency=column[22].lower())
-#             if crobj :
-#                 f.currency.save()
-#         except Exception as e:
-#             raise e
-#         print(f.currency)
+        try:
+            f.currency,crobj = currencies.objects.get_or_create(currency=column[22].lower())
+            if crobj :
+                f.currency.save()
+        except Exception as e:
+            raise e
+        print(f.currency)
          
-#         print(f.currency)
-#         if(column[21]=="NO"):
-#             y=False
-#             print(y)
-#         else:
-#             y=True
+        print(f.currency)
+        if(column[21]=="NO"):
+            y=False
+            print(y)
+        else:
+            y=True
 
-#         print("Called1234")
+        print("Called1234")
 
-#         try:
-#             if float(column[17]):
-#                 pass
-#         except:
-#             return HttpResponse("enter float ")
+        try:
+            if float(column[17]):
+                pass
+        except:
+            return HttpResponse("enter float ")
 
-#         myibj=PurchaseOfColorStones.objects.create(date=temp_date,
-#         company_name_id=f.company_name.id,
-#         location_id=f.location.id,
-#         shape_id=f.shape.id,
-#         gem_type_id=f.gem_type.id,
-#         origin_id=f.origin.id,
-#         Treatment_id=f.Treatment.id,
-#         Clarity_id=f.Clarity.id,
-#         certificate_no_id=f.certificate_no.id,
-#         colour=column[10],
-#         measurements=column[11],
-#         lab_id=f.lab.id,
-#         PCS=column[13],
-#         Weight=column[14],
-#         Price=column[15],
-#         units=column[16],
-#         amount=float(column[17]),
-#         discount_amount=float(column[18]),
-#         discount=float(z[0]),
-#         total_val=float(column[20]),
-#         purchaseapv=y,
-#         currency_id=f.currencyid.id,
-#         tag_price=float(column[23]),
-#         rate=float(column[24]),
-#         )
-#     return HttpResponse('Hi')
+        myibj=PurchaseOfColorStones.objects.create(date=temp_date,
+        company_name_id=f.company_name.id,
+        location_id=f.location.id,
+        shape_id=f.shape.id,
+        gem_type_id=f.gem_type.id,
+        origin_id=f.origin.id,
+        Treatment_id=f.Treatment.id,
+        Clarity=column[8],
+        certificate_no_id=f.certificate_no.id,
+        colour=column[10],
+        measurements=column[11],
+        lab_id=f.lab.id,
+        PCS=column[13],
+        Weight=column[14],
+        Price=column[15],
+        units=column[16],
+        amount=float(column[17]),
+        discount_amount=float(column[18]),
+        discount=float(z[0]),
+        total_val=float(column[20]),
+        purchaseapv=y,
+        currency_id=f.currency.id,
+        tag_price=float(column[23]),
+        rate=float(column[24]),
+        )
+    return HttpResponse('Hi')
 
 
 # @login_required

@@ -21,6 +21,8 @@
    <p>{{result.discount}}</p>
    <p>{{result.discount_amount}}</p>
    {%endfor%}
+   {% else %}
+   No Purchase Records Found
    {% if salesJewelleryObj%}
    {% for r in salesJewelleryObj %}
    <p>{{r.stockid}}</p>
@@ -32,8 +34,8 @@
    {%endfor%}
    {%else%}
    No sales record found.
-   {%endif%}
-   {%endif%}
+  {%endif%}
+  {%endif%}
    {% if purdobj %}
    {% for result in purdobj %}
    <p>D-{{result.id}}</p>
@@ -44,6 +46,7 @@
    <p>{{result.discount}}</p>
    <p>{{result.discount_amount}}</p>
    {%endfor%}
+   {% if salesdobj}
    {% for r in salesdobj %}
    <p>{{r.stockid}}</p>
    <p>{{r.clarity}}</p>
@@ -53,6 +56,16 @@
  
    {%endfor%}
    {%endif%}
+   {% endif %}
+   {% if purcsobj %}
+   { for r in purcsobj}
+   <p>C-{{r.id}}</p>
+   <p>{{r.gem_type}}</p>
+   <p>{{r.origin}}</p>
+   <p>{{r.Treatment}}</p>
+   {% endfor %}
+
+
 
 
 </body>
