@@ -68,6 +68,7 @@ class companyinfo(models.Model):
 
     def __str__(self):
          return self.company_name
+         
     def save(self, *args, **kwargs):
         self.company_name = self.company_name.lower()
         super(companyinfo, self).save(*args, **kwargs)

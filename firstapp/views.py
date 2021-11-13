@@ -2063,3 +2063,20 @@ def cs_filter(request,value,category):
 
 def cstone_listing(request):
     return render(request,"cstone_listing.html")  
+
+
+
+def ExportPurcahseOfColorStones(request):
+    objects = PurchaseOfColorStones.objects.all()
+    output = []
+    response = HttpResponse(content_type='text/csv')
+    filename = "PurchaseOfColorStones.csv"
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    writer = csv.writer(response)
+    writer.writerow(['Date','Stock id', 'Company Name','Location', 'Shape', 'Gem Type', 'Origin', 'Treatment', 'Clarity', 'Certificate', 'Colour', 'Measurement', 'Lab', 'PCS', 'Weight', 'Price', 'Units', 'Amount', 'Dicount Amount', 'Discount', 'Total Value', 'Bought', 'Currency', 'Tag Price', 'Rate'])
+    for item in objects:
+        output.append([item.date, 'C-' + str(item.id), item.company_name, item.location.place, item.shape.shape, item.gem_type.gem, item.origin.org, item.Treatment.treatment, item.Clarity, item.certificate_no.cert, item.colour, item.measurements, item.lab, item.PCS, item.Weight, item.Price, item.units, item.amount, item.discount_amount ,str(item.discount)+"%", item.total_val, item.purchaseapv, item.currency.currency, item.tag_price, item.rate])
+    
+    writer.writerows(output)
+    return response
+

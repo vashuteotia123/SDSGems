@@ -1,6 +1,8 @@
 from django.contrib import admin
+from import_export.admin import ImportExportModelAdmin
 from .models import *
-# from import_export.admin import ImportExportModelAdmin
+from import_export import fields, resources
+from import_export.widgets import ForeignKeyWidget
 # Register your models here.
 
 development_mode = True
@@ -56,8 +58,9 @@ if development_mode:
         pass
 
     @admin.register(PurchaseOfColorStones)
-    class pocsadmin(admin.ModelAdmin):
+    class pcosadmin(admin.ModelAdmin):
         pass
+
 
     @admin.register(Treatment_cs)
     class treatcsadmin(admin.ModelAdmin):
@@ -80,7 +83,7 @@ if development_mode:
         pass
 
     @admin.register(Inventoryofcolorstones)
-    class inventoryofcsadmin(admin.ModelAdmin):
+    class inventoryofcsadmin(ImportExportModelAdmin):
         pass
 
     @admin.register(shape1)
