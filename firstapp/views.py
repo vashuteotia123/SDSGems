@@ -2087,5 +2087,31 @@ def ExportPurcahseOfColorStones(request):
     writer.writerows(output)
     return response
 
+def ExportInventoryofcolorstones(request):
+    objects = Inventoryofcolorstones.objects.all()
+    output = []
+    response = HttpResponse(content_type='text/csv')
+    filename = "Inventoryofcolorstones.csv"
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    writer = csv.writer(response)
+    writer.writerow(['Stock id','Location', 'Shape', 'Gem Type', 'Origin', 'Treatment', 'Clarity', 'Certificate', 'Colour', 'Measurement', 'Lab', 'PCS', 'Weight','Tag Price'])
+    for item in objects:
+        output.append(['C-' + str(item.id),item.location, item.shape, item.gem_type, item.origin, item.treatment, item.Clarity, item.certificate_no, item.color, item.measurements, item.lab, item.PCS, item.Weight, item.tag_price])
 
+    writer.writerows(output)
+    return response
+
+def ExportSalesofcolorstones(request):
+    objects = Salesofcolorstones.objects.all()
+    output = []
+    response = HttpResponse(content_type='text/csv')
+    filename = "Salesofcolorstones.csv"
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    writer = csv.writer(response)
+    writer.writerow(['Date','Stock id', 'Company Name','Location', 'Shape', 'Gem Type', 'Origin', 'Treatment', 'Clarity', 'Certificate', 'Colour', 'Measurement', 'Lab', 'PCS', 'Weight','Amount','Discount','Dicount Amount','Total Value','Currency','Tag Price', 'Rate'])
+    for item in objects:
+        output.append([item.date, 'C-' + str(item.id), item.company_name, item.location, item.shape, item.gem_type, item.origin, item.treatment, item.Clarity, item.certificate_no, item.color, item.measurements, item.lab, item.PCS, item.Weight_cs,item.amount_cs,str(item.DIS_cs)+"%",item.DIS_amount_cs ,item.total_value_cs, item.currency_cs, item.tag_price_cs, item.rate_cs])
+
+    writer.writerows(output)
+    return response
 

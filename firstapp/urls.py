@@ -62,6 +62,9 @@ urlpatterns = [
     path('return_colorstone_cart<str:id>',views.return_colorstone_cart, name='return_colorstone_cart'),
     # path('upload-csv',colorstone_upload,name="colorstone_upload"),
     path('export_purchase_of_color_stones', views.ExportPurcahseOfColorStones, name="export_purchase_of_color_stones"),
+    path('export_inventory_of_color_stones', views.ExportInventoryofcolorstones, name="export_inventory_of_color_stones"),
+    path('export_sales_of_color_stones', views.ExportSalesofcolorstones, name="export_sales_of_color_stones"),
+
 
     # ///////diamond url/////////
 
