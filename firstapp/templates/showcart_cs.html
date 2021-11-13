@@ -7,15 +7,21 @@
     <title>Conditionals</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-
   <body>
+    {% if messages%}
+    {% for message in messages%}
+    {{message}}
+    {%endfor%}
+    {%endif%}
     <form method="post" action="">
       {%csrf_token%} {{totalitems_cs.management_form }}
       <table>
         {% for form in totalitems_cs %} {{ form }} {% endfor %}
       </table>
-      <button type="submit" class="btn btn-3">Submit</button>
-      <a href="{% url 'sell_cs' %}">Sell</a>
+      <button type="submit" class="btn btn-3" onclick=''>Submit</button>
+      {% if is_valid%}
+     <a href='{% url 'sell_cs' %}'>Sell</a>
+     {%endif%}
     </form>
   </body>
 </html>

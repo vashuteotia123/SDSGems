@@ -67,7 +67,7 @@
                 }
                 $(document).ready(function () {
                     $('#delete_btn').click(function () {
-                        if (confirm("You want to delete this")) {
+                        if (confirm("You want to return selected items")) {
                             var id = [];
                             var csrf = $('input[name=csrfmiddlewaretoken').val()
                             $(':checkbox:checked').each(function (i) {

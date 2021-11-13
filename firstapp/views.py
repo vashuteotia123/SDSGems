@@ -633,7 +633,7 @@ def showinv_cs(request):
 
 @login_required
 def retobj_cs(request):
-    object_cs = Inventoryofcolorstones.objects.filter(appvreturnstatus_cs=True)
+    object_cs = Inventoryofcolorstones.objects.filter(appvreturnstatus=True)
     context = {
         "returned_cs": object_cs,
     }
@@ -661,6 +661,10 @@ def saving_colorstone_cart(request):
         print(len(curr_formset))
         if(curr_formset.is_valid()):
             curr_formset.save()
+            return render(request, 'showcart_cs.html',{"totalitems_cs": curr_formset,'is_valid':True})
+        else:
+            context = {"totalitems_cs": curr_formset, 'is_valid': False}
+            return render(request, 'showcart_cs.html', context)
     context = {
         "totalitems_cs": colorstone_formset,
     }
@@ -670,6 +674,7 @@ def saving_colorstone_cart(request):
 @login_required
 def sell_cs(request):
     cs_objects = cloneInvofcolorstones.objects.all()
+    # try:
     for object in cs_objects:
         Salesofcolorstones.objects.create(
             stockid=object.stockid,
@@ -702,6 +707,9 @@ def sell_cs(request):
         "sold_items": Salesofcolorstones.objects.all(),
     }
     return render(request, "show_sell_cs_table.html", context=context)
+    # except:
+    #     messages.success(request, 'Please fill all the details')
+    #     return redirect('show_colorstone_cart')
 
 
 @login_required
@@ -785,7 +793,6 @@ class colorstone_view(View):
     method_decorator(login_required)
 
     def get(self, request):
-        print("hello")
         allproduct = Inventoryofcolorstones.objects.all().order_by('stockid')
         # allclone_cs = cloneInvofcolorstones.objects.all()
         context = {
@@ -799,7 +806,7 @@ class colorstone_view(View):
             cs_ids = request.POST.getlist('id[]')
             for id in cs_ids:
                 j = Inventoryofcolorstones.objects.get(id=id)
-                j.appvreturnstatus_cs = True
+                j.appvreturnstatus = True
                 j.save()
         return redirect('delete-cs')
 
@@ -811,8 +818,6 @@ class colorstone_view(View):
         idcs = int(x[0])
         j_obj2 = PurchaseOfColorStones.objects.filter(id=idcs)
         j_obj3 = PurchaseOfColorStones.objects.get(id=idcs)
-        if j_obj.purchaseapv is False:
-            j_obj2.update(purchaseapv=True)
         j_obj.cartstatus = True
         j_obj.save()
         print(j_obj.cartstatus)
@@ -820,7 +825,9 @@ class colorstone_view(View):
                                                           origin=j_obj.origin, treatment=j_obj.treatment, certificate_no=j_obj. certificate_no,
                                                           color=j_obj.color, measurements=j_obj.measurements, lab=j_obj.lab, PCS=j_obj.PCS,
                                                           Weight_cs=j_obj.Weight, tag_price_cs=j_obj.tag_price, Clarity=j_obj.Clarity,
-                                                          amount_cs=j_obj3.amount,DIS_cs=j_obj3.discount,DIS_amount_cs=j_obj3.discount_amount,total_value_cs=j_obj3.total_val,currency_cs=j_obj3.currency)
+                                                          )
+        if j_obj.purchaseapv is False:
+            j_obj2.update(purchaseapv=True)
         return redirect('/delete_cs')
 
 #  extra function cs
@@ -2079,4 +2086,6 @@ def ExportPurcahseOfColorStones(request):
     
     writer.writerows(output)
     return response
+
+
 

@@ -644,7 +644,7 @@ class PurchaseOfColorStones(models.Model):
         # self.total_value_c_s = self.amount-self.discount_amount
         super(PurchaseOfColorStones, self).save(*args, **kwargs)
         obj1 = Inventoryofcolorstones.objects.create(stockid=str('C-')+str(self.id), location=self.location, shape=self.shape,
-                                                     Clarity=self.Clarity, PCS=self.PCS, gem_type=self.gem_type, Weight=self.Weight, origin=self.origin, treatment=self.Treatment, certificate_no=self.certificate_no, color=self.colour, measurements=self.measurements, lab=self.lab, tag_price=self.tag_price, purchaseapv=self.purchaseapv)
+                                                     Clarity=self.Clarity, PCS=self.PCS, gem_type=self.gem_type, Weight=self.Weight, origin=self.origin, treatment=self.Treatment, certificate_no=self.certificate_no, color=self.colour, measurements=self.measurements, lab=self.lab.lab, tag_price=self.tag_price, purchaseapv=self.purchaseapv)
 
 
 class Inventoryofcolorstones(models.Model):
@@ -668,7 +668,7 @@ class Inventoryofcolorstones(models.Model):
     cartstatus = models.BooleanField(default=False)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.stockid)
 
 
 class Salesofcolorstones(models.Model):
@@ -689,13 +689,13 @@ class Salesofcolorstones(models.Model):
     Weight_cs = models.FloatField(null=True)
     # price=models.FloatField(null=True)
     # units_cs=models.IntegerField(null=True)
-    amount_cs = models.FloatField(blank=True, null=True)
-    DIS_cs = models.FloatField(blank=True, null=True)
-    DIS_amount_cs = models.FloatField(blank=True, null=True)
-    total_value_cs = models.FloatField(blank=True, null=True)
-    currency_cs = models.CharField(max_length=30, blank=True, null=True)
-    tag_price_cs = models.FloatField(null=True)
-    rate_cs = models.FloatField(blank=True, null=True)
+    amount_cs = models.FloatField()
+    DIS_cs = models.FloatField()
+    DIS_amount_cs = models.FloatField()
+    total_value_cs = models.FloatField()
+    currency_cs = models.CharField(max_length=30)
+    tag_price_cs = models.FloatField()
+    rate_cs = models.FloatField()
     salesapprovalstatus_cs = models.BooleanField(default=False)
 
 
@@ -721,10 +721,11 @@ class cloneInvofcolorstones(models.Model):
     DIS_cs = models.FloatField(blank=True, null=True)
     DIS_amount_cs = models.FloatField(blank=True, null=True)
     total_value_cs = models.FloatField(blank=True, null=True)
-    currency_cs = models.CharField(max_length=30, blank=True, null=True)
+    currency_cs = models.ForeignKey(currencies, on_delete=models.PROTECT, null=True, blank=True)
     tag_price_cs = models.FloatField(null=True)
     rate_cs = models.FloatField(blank=True, null=True)
     salesapprovalstatus_cs = models.BooleanField(default=False)
+
 
     def save(self, *args, **kwargs):
 

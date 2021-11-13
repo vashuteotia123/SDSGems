@@ -13,6 +13,7 @@ class POJForm(forms.ModelForm):
     class Meta:
         model = POJ
         fields = "__all__"
+        labels = {'purchaseapv': 'Bought Jewell'}
 
 
 
@@ -23,6 +24,8 @@ class POCSForm(forms.ModelForm):
     class Meta:
         model = PurchaseOfColorStones
         fields = "__all__"
+        labels = {'purchaseapv': 'Bought Color Stone'}
+
 
 
 POCSFormSet = modelformset_factory(PurchaseOfColorStones, form=POCSForm)
@@ -32,6 +35,7 @@ class PODForm(forms.ModelForm):
     class Meta:
         model = POD
         fields = "__all__"
+        labels={'purchaseapv_d': 'Bought Diamond'}
     class DateForm(forms.Form):
         date = forms.DateTimeField(
             input_formats=['%m-%d-%Y'],
@@ -92,15 +96,18 @@ class ADCForm_cs(forms.ModelForm):
     class Meta:
         model = cloneInvofcolorstones
         fields = '__all__'
+        labels = {'salesapprovalstatus_cs' : 'Sold Item',}
 
-    # def __init__(self, *args, **kwargs):
-    #     super(ADCForm_cs, self).__init__(*args, **kwargs)
-    #     for field in self.disabled_fields:
-    #         self.fields[field].disabled = True
+    def __init__(self, *args, **kwargs):
+        super(ADCForm_cs, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            print(self.fields[field].label)
+            if self.fields[field].label == 'Sold Item':
+                continue
+            self.fields[field].required = True
 
 
-ADCFormSet_cs = modelformset_factory(
-    cloneInvofcolorstones, form=ADCForm_cs, extra=0)
+ADCFormSet_cs = modelformset_factory(cloneInvofcolorstones, form=ADCForm_cs, extra=0)
 
 
 class ADCForm_d(forms.ModelForm):
