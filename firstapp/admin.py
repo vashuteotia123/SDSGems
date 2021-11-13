@@ -135,8 +135,9 @@ if development_mode:
         pass
 
     @admin.register(Salesofjewellery)
-    class salesofjewadmin(admin.ModelAdmin):
-        pass
+    class salesofjewadmin(ImportExportModelAdmin):
+        search_fields = ['company_name']
+        list_display = [f.name for f in Salesofjewellery._meta.fields]
 
     @admin.register(cloneInvofjewellery)
     class cloneInvofjewadmin(admin.ModelAdmin):

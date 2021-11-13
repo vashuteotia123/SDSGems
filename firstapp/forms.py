@@ -30,7 +30,8 @@ class POCSForm(forms.ModelForm):
         model = PurchaseOfColorStones
         fields = "__all__"
         labels = {'purchaseapv': 'Bought Color Stone'}
-        widgets = {'date': DateInput(format=["%m-%d-%Y"],)}
+        widgets = {'date': DateInput(format=["%mm-%dd-%YYYY"],),
+        'comment': forms.Textarea(attrs={'size': '40'})}
 
 
 

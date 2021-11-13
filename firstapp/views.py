@@ -643,10 +643,10 @@ def retobj_cs(request):
 @login_required
 def backtoinvcs1(request, id):
     myobj = Inventoryofcolorstones.objects.get(id=id)
-    myobj.appvreturnstatus_cs = False
+    myobj.appvreturnstatus = False
     myobj.save()
     totalobjs = Inventoryofcolorstones.objects.filter(
-        appvreturnstatus_cs=True)
+        appvreturnstatus=True)
     return redirect('/retobj_cs')
 
 
@@ -791,14 +791,9 @@ class CSAddView(TemplateView):
 
 class colorstone_view(View):
     method_decorator(login_required)
-
     def get(self, request):
         allproduct = Inventoryofcolorstones.objects.all().order_by('stockid')
-        # allclone_cs = cloneInvofcolorstones.objects.all()
-        context = {
-            "products_cs": allproduct.order_by('stockid'),
-
-        }
+        context = {"products_cs": allproduct.order_by('stockid')}
         return render(request, "showinvcs.html", context=context)
 
     def post(self, request, *args, **kwargs):
@@ -1472,7 +1467,7 @@ def colorstone_upload(request):
             raise e
         print(f.origin)
         try:
-            f.Treatment,clsobj=Treatment_cs.objects.get_or_create(treat=column[7].lower())
+            f.Treatment,clsobj=Treatment_cs.objects.get_or_create(treatment=column[7].lower())
             if clsobj :
                 f.Treatment.save()
         except Exception as e:

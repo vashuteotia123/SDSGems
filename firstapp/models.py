@@ -249,7 +249,9 @@ class Salesofjewellery(models.Model):
     rate = models.FloatField()
     salesapprovalstatus = models.BooleanField(default=False)
 
-
+    def __str__(self):
+        return self.company_name
+        
 class cloneInvofjewellery(models.Model):
 
     stockid = models.CharField(max_length=30)
@@ -633,6 +635,9 @@ class PurchaseOfColorStones(models.Model):
     currency = models.ForeignKey('currencies', on_delete=models.PROTECT)
     tag_price = models.FloatField()
     rate = models.FloatField(null=True,blank=True)
+
+    #comment Field
+    comment = models.TextField(max_length=3000, blank=True, null=True, default="")
 
     def __str__(self):
         return str(self.id)
