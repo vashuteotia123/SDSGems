@@ -1,31 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends 'index.html' %}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
     <title>Document</title>
-</head>
-<body>
+    {% block content %}
     <h1><center>
         Sales Records
     </center></h1>
     <br>
     <br>
-    <table border="1">
+    <table  class="table">
+        <thead class="thead-dark">
         <tr>
-            <th>Date</th>
-            <th>Stockid</th>
-            <th>Company Name</th>
-            <th>Gem type</th>
-            <th>Country</th>
-            <th>origin</th>
-            <th>Sales Status</th>
+            <th scope="col">Date</th>
+            <th scope="col">Stockid</th>
+            <th scope="col">Company Name</th>
+            <th scope="col">Gem type</th>
+            <th scope="col">Country</th>
+            <th scope="col">origin</th>
+            <th scope="col">Sales Status</th>
             <th></th>
             <th></th>
         </tr>
+    </thead>
     {%for item in sold_items%}
-        <tr>
+    <tbody>
+        <tr class="something">
             <td>{{item.date}}</td>
         <td>{{item.stockid}}</td>
         <td>{{item.company_name}}</td>
@@ -34,13 +37,15 @@
         <td>{{item.origin}}</td>
         <td>{{item.salesapprovalstatus_cs}}</td>
         {% if item.salesapprovalstatus_cs is False %}
-        <td><a href="{% url 'return_colorstone_Inventory' item.id %}" target=""> Return back to Inventory</a></td>
+        <td><a class="btn btn-primary" href="{% url 'return_colorstone_Inventory' item.id %}" target=""> Return back to Inventory</a></td>
         {% endif%}
     </tr>
-
+    </tbody>
     {%endfor%}
 
     <button><a href="{% url 'displaysalesreturn_cs' %}" target=""> View Sales Return</a></button>
 </table>
-</body>
-</html>
+{% endblock content %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>

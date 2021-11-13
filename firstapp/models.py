@@ -30,7 +30,7 @@ class countries(models.Model):
         return self.country
 
 
-class loc(models.Model):
+class location(models.Model):
     place = models.CharField(max_length=30)
 
     def __str__(self):
@@ -38,7 +38,7 @@ class loc(models.Model):
 
     def save(self, *args, **kwargs):
         self.place = self.place.lower()
-        super(loc, self).save(*args, **kwargs)
+        super(location, self).save(*args, **kwargs)
 
 
 class gemtype(models.Model):
@@ -68,7 +68,9 @@ class companyinfo(models.Model):
 
     def __str__(self):
          return self.company_name
-
+    def save(self, *args, **kwargs):
+        self.company_name = self.company_name.lower()
+        super(companyinfo, self).save(*args, **kwargs)
 
 class jewell(models.Model):
     jewel = models.CharField(max_length=30)
@@ -148,7 +150,7 @@ class POJ(models.Model):
     company_name = models.ForeignKey(
         'companyinfo', on_delete=PROTECT, blank=True)
     location = models.ForeignKey(
-        'loc', on_delete=models.PROTECT, null=True, blank=True)
+        'location', on_delete=models.PROTECT, null=True, blank=True)
     jewellery = models.ForeignKey(
         'jewell', on_delete=models.PROTECT, null=True, blank=True)
     center_stone = models.ForeignKey(
@@ -375,7 +377,7 @@ class POD(models.Model):
     date = models.DateField(auto_now_add=True)
     # stockid_d = models.CharField(max_length=30)
     company_name = models.ForeignKey('CompanyInfo', on_delete=PROTECT)
-    location = models.ForeignKey('loc', on_delete=models.PROTECT, null=True)
+    location = models.ForeignKey('location', on_delete=models.PROTECT, null=True)
     shape = models.ForeignKey('shape_d', on_delete=models.PROTECT, null=True)
     clarity = models.ForeignKey('clarity', on_delete=models.PROTECT)
     color_origin1 = models.ForeignKey('color_origin', on_delete=models.PROTECT)
@@ -556,40 +558,50 @@ class Origin_cs(models.Model):
 
     def __str__(self):
         return self.org
-
+    def save(self, *args, **kwargs):
+        self.org = self.org.lower()
+        super(Origin_cs, self).save(*args, **kwargs)
 
 class Lab_cs(models.Model):
     lab = models.CharField(max_length=20)
     def __str__(self):
         return self.lab
-
+    def save(self, *args, **kwargs):
+        self.lab= self.lab.lower()
+        super(Lab_cs, self).save(*args, **kwargs)
 
 class Treatment_cs(models.Model):
-    treat = models.CharField(max_length=30)
+    treatment = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.treat
-
+        return self.treatment
+    def save(self, *args, **kwargs):
+        self.treatment = self.treatment.lower()
+        super(Treatment_cs, self).save(*args, **kwargs)
 
 class shape_cs(models.Model):
     shape = models.CharField(max_length=30)
 
     def __str__(self):
         return self.shape
-
+    def save(self, *args, **kwargs):
+        self.shape = self.shape.lower()
+        super(shape_cs, self).save(*args, **kwargs)
 
 class cert_no_cs(models.Model):
     cert = models.CharField(max_length=30)
 
     def __str__(self):
         return self.cert
-
+    def save(self, *args, **kwargs):
+        self.cert = self.cert.lower()
+        super(cert_no_cs, self).save(*args, **kwargs)
 
 class PurchaseOfColorStones(models.Model):
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField()
     # stockid = models.CharField(max_length=30, blank=True)
     company_name = models.ForeignKey('CompanyInfo', on_delete=PROTECT)
-    location = models.ForeignKey('loc', on_delete=models.PROTECT, null=True)
+    location = models.ForeignKey('location', on_delete=models.PROTECT, null=True)
     shape = models.ForeignKey(
         'shape_cs', on_delete=models.PROTECT, blank=True)
     gem_type = models.ForeignKey(
@@ -601,6 +613,8 @@ class PurchaseOfColorStones(models.Model):
     Clarity = models.CharField(max_length=30,null=True,blank=True)
     certificate_no = models.ForeignKey(
         'cert_no_cs', on_delete=models.PROTECT, blank=True)
+    cert = models.ForeignKey(
+        'certificate', on_delete=models.PROTECT, null=True, blank=True)
     colour = models.CharField(max_length=30)
     measurements = models.CharField(max_length=30,blank=True,null=True)
     lab = models.ForeignKey('Lab_cs', on_delete=models.PROTECT, blank=True)
@@ -728,6 +742,8 @@ class Salesreturn_cs(models.Model):
     company_name = models.CharField(max_length=30)
     location = models.CharField(max_length=30)
     gem_type = models.CharField(max_length=30)
+    weight = models.FloatField(null=True)
+    tag_price_cs = models.FloatField(null=True)
 
 
 class Jewel_media(models.Model):

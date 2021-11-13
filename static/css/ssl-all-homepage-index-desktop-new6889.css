@@ -1,0 +1,1174 @@
+@charset "utf-8";
+
+/* @fileRef hp.css */
+.main-content {
+  overflow: hidden;
+}
+.homepage_notice {
+  background: #fbfbfb;
+  z-index: -9;
+}
+.clients_img {
+  background: #fdfdfd;
+  z-index: -9;
+}
+.clients_img ul {
+  margin-bottom: 0;
+}
+.brands-diamond-colors {
+  min-height: 180px;
+  padding-bottom: 40px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 2fr;
+}
+.brands-diamond-colors a {
+  border: 1px solid #fff;
+  color: var(--font-color);
+  text-transform: uppercase;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  display: inline-block;
+  top: auto;
+  left: auto;
+  right: auto;
+  position: relative;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.brands-diamond-colors a:hover {
+  text-decoration: none;
+  color: var(--main-color);
+  opacity: 0.9;
+}
+.brands-diamond-colors i {
+  display: block;
+  width: 130px;
+  height: 155px;
+  position: relative;
+  padding: 0px;
+  margin: 0 auto;
+}
+.brands-diamond-colors i.lb-lazy-bg-loaded {
+  background: url("https://cdn.leibish.com/assets/images/new_frontend/hp/diamonds-sprite.png")
+    left top no-repeat;
+}
+.brands-diamond-colors div:last-child a i {
+  width: 310px;
+}
+.brands-diamond-colors i.iconpink {
+  background-position: 0px 0px;
+  transform: rotate(-1deg);
+}
+.brands-diamond-colors i.iconyellow {
+  background-position: -250px 0px;
+}
+.brands-diamond-colors i.iconchampagne {
+  background-position: -497px 0px;
+}
+.brands-diamond-colors i.iconargyle {
+  background-position: -730px 0px;
+}
+.brands-diamond-colors i.iconall {
+  background-position: -955px 0px;
+}
+.brands-gemstone-colors {
+  min-height: 180px;
+  padding-bottom: 0px;
+  display: block;
+  margin: 10px 0 0 0;
+  text-align: center;
+}
+.brands-gemstone-colors a {
+  border: 1px solid #fff;
+  color: var(--font-color);
+  text-transform: uppercase;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  display: inline-block;
+  _width: 230px;
+  _height: 155px;
+  top: auto;
+  left: auto;
+  right: auto;
+  position: relative;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.brands-gemstone-colors a:hover {
+  text-decoration: none;
+  color: var(--main-color);
+  opacity: 0.9;
+}
+.brands-gemstone-colors i {
+  display: block;
+  width: 130px;
+  height: 155px;
+  position: relative;
+  padding: 0px;
+  margin: 0 auto;
+}
+.brands-gemstone-colors i.lb-lazy-bg-loaded {
+  background: url("https://cdn.leibish.com/assets/images/new_frontend/hp/gemstones-sprite.png")
+    left top no-repeat;
+}
+.brands-gemstone-colors div:last-child a i {
+  width: 230px;
+}
+.brands-gemstone-colors i.iconruby {
+  background-position: 0px 0px;
+}
+.brands-gemstone-colors i.iconsapphire {
+  background-position: -240px 0px;
+}
+.brands-gemstone-colors i.iconemerald {
+  background-position: -490px 0px;
+}
+.brands-gemstone-colors i.icontanzanite {
+  background-position: -730px 0px;
+  transform: rotate(-3deg);
+}
+.brands-gemstone-colors i.iconall {
+  background-position: -980px 0px;
+}
+.loyalty_box,
+.dyo_box,
+.tender_box,
+.engagement,
+.colored_diamonds_jewelry,
+.gemstones_jewelry,
+.commitment {
+  width: 100%;
+  height: 475px;
+  margin-top: 40px;
+  padding-top: 5%;
+  background-position: center center;
+}
+@media (min-width: 769px) {
+  .loyalty_box {
+    background: url(https://cdn.leibish.com/assets/images/new_frontend/hp/loyalty.jpg)
+      no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+  .loyalty_box_double_desktop {
+    background: url(https://cdn.leibish.com/assets/images/new_frontend/hp/loyalty_double.jpg)
+      no-repeat;
+  }
+  .loyalty_box_tablet {
+    background: url(https://cdn.leibish.com/assets/images/new_frontend/hp/loyalty_tablet.jpg)
+      no-repeat;
+    background-position: center;
+  }
+  .loyalty_box_double_tablet {
+    background: url(https://cdn.leibish.com/assets/images/new_frontend/hp/loyalty_double_tablet.jpg)
+      no-repeat;
+  }
+  .loyalty_box_mobile {
+    background: url(https://cdn.leibish.com/assets/images/new_frontend/hp/loyalty_mobile.jpg)
+      no-repeat;
+    background-position: center;
+  }
+  .loyalty_box_double_mobile {
+    background: url(https://cdn.leibish.com/assets/images/new_frontend/hp/loyalty_double_mobile.jpg)
+      no-repeat;
+  }
+  .dyo_box {
+    background: url(https://cdn.leibish.com/assets/images/new_frontend/hp/dyo-banner.jpg)
+      no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+  .dyo_box h2 a {
+    color: #5d5852;
+    text-decoration: none;
+  }
+  .tender_box {
+    background: url(https://cdn.leibish.com/assets/images/new_frontend/hp/tender-2020.jpg)
+      no-repeat;
+    background-size: cover;
+    background-position: left;
+    min-height: 525px;
+  }
+  .tennis_box-big {
+    background: url(https://cdn.leibish.com/assets/images/new_frontend/hp/hp-tennis.jpg?v=1)
+      no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 475px;
+  }
+  .tennis_box-big .trans_box_wrapper {
+    top: 15%;
+  }
+}
+.tender_box h2 a {
+  color: #742841;
+  font-size: 2.6rem;
+  font-family: 'Poppins', sans-serif;
+  text-decoration: none;
+}
+.tender_box .tender-title2 {
+  font-size: 2.3rem;
+  font-family: 'Poppins', sans-serif;
+}
+.tender_box .white_box_wrapper {
+  position: absolute;
+  right: 100px;
+}
+.tender_box h2,
+.tender_box p,
+.dyo_box h2,
+.dyo_box p,
+.colored_diamonds_jewelry p,
+.slider_section h2,
+.slider_section1 h2 {
+  text-align: center;
+}
+.tender_box p,
+.dyo_box p,
+.engagement p,
+.colored_diamonds_jewelry p,
+.gemstones_jewelry p,
+.slider_section p,
+.slider_section1 p,
+.commitment p {
+  color: #5d5852;
+  margin-top: 30px;
+  line-height: 30px;
+  font-size: 20px;
+}
+.tender_box p {
+  font-size: 1rem;
+  margin-top: 1.6rem;
+  line-height: 1.6rem;
+  color: #000;
+}
+.trans_box_wrapper {
+  position: absolute;
+  right: 20px;
+}
+.tennis_box-big .trans_box_wrapper {
+  right: 10%;
+}
+.slider_section p {
+  font-size: 18px;
+  margin-top: 10px;
+}
+.pos_box {
+  position: relative;
+  height: 100%;
+}
+.img_box {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-right: 250px;
+  margin-top: -70px;
+  zoom: 110%;
+}
+.img_box_engagement {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: -60px;
+  _border: 1px solid #f00;
+}
+.img_box_diam_jewelry {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: -80px;
+  margin-right: -80px;
+  _border: 1px solid #f00;
+  zoom: 80%;
+}
+.img_box_colored_balance {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: -100px;
+  margin-right: -320px;
+  _border: 1px solid #f00;
+}
+@media (min-width: 769px) {
+  .engagement {
+    background: url(https://cdn.leibish.com/assets/images/new_frontend/hp/engagement-rings-banner.jpg)
+      no-repeat;
+    background-size: cover;
+    padding-top: 3%;
+    background-position: center;
+  }
+}
+.white_box {
+  background-color: #ffffff;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  width: 410px;
+  opacity: 0.9;
+}
+.trans_box {
+  background-color: none;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  width: 410px;
+  opacity: 0.9;
+}
+.tennis_box-big .trans_box {
+  width: 600px;
+}
+.trans_box p {
+  font-size: 1.1rem;
+}
+.trans_box a.btn {
+  font-size: 1.1rem;
+}
+.tender_box .white_box {
+  width: 730px;
+  background: transparent;
+  opacity: 1;
+}
+.engagement .h3,
+.colored_diamonds_jewelry .h3,
+.gemstones_jewelry .h3,
+.commitment .h3 {
+  font-size: 28px;
+  color: #5d5852;
+  letter-spacing: 2px;
+  line-height: 35px;
+}
+.btn_shop2 {
+  width: 80%;
+  border: 2px solid var(--main-color);
+  color: var(--main-color);
+  background-color: transparent;
+  margin: 20px;
+  font-size: 16px;
+  padding: 17px 0;
+  border-radius: 0;
+  text-transform: uppercase;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+.btn_shop2:hover {
+  color: #ffffff;
+  background-color: var(--main-color);
+}
+.tennis_box hr {
+  width: 50px;
+  background-color: #a6a6a7;
+}
+.btn_bundle {
+  border: 2px solid #000;
+  width: 80%;
+  color: #000;
+  background-color: #e0be9c;
+  margin: 20px;
+  font-size: 16px;
+  padding: 17px 0px;
+  border-radius: 0;
+  text-transform: uppercase;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+.btn_bundle:hover {
+  border-color: #554839;
+  background-color: #554839;
+  color: #fff;
+}
+.btn_tennis {
+  border: 2px solid #060606;
+  width: 80%;
+  color: #060606;
+  background-color: #d0d0d5;
+  margin: 20px;
+  font-size: 16px;
+  padding: 17px 0px;
+  border-radius: 0;
+  text-transform: uppercase;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+.btn_tennis:hover {
+  border-color: #060606;
+  background-color: #060606;
+  color: #fff;
+}
+@media (min-width: 1000px) and (max-width: 1600px) {
+  .trans_box {
+    width: 300px;
+  }
+  .tennis_box-big .trans_box_wrapper {
+    right: 10%;
+  }
+  .tennis_box-big .trans_box {
+    width: 450px;
+  }
+}
+@media (max-width: 800px) {
+  .trans_box {
+    width: 100%;
+  }
+}
+@media (min-width: 975px) and (max-width: 1360px) {
+  .trans_box p {
+    display: none;
+  }
+  .trans_box hr {
+    display: none;
+  }
+  .tennis_box-big .trans_box p {
+    display: block;
+  }
+  .tennis_box-big .trans_box hr {
+    display: block;
+  }
+}
+@media (min-width: 650px) and (max-width: 975px) {
+  .trans_box_wrapper {
+    width: 50%;
+  }
+  .tennis_box-big .trans_box_wrapper {
+    width: 90%;
+    right: 0;
+    top: 20%;
+  }
+  .tennis_box-big .trans_box {
+    background: white;
+    opacity: 0.8;
+  }
+  .trans_box p {
+    display: block;
+  }
+  .trans_box hr {
+    display: block;
+  }
+  .trans_box {
+    width: 90%;
+  }
+}
+@media (min-width: 576px) and (max-width: 649px) {
+  .trans_box_wrapper {
+    width: 50%;
+  }
+  .tennis_box-big .trans_box_wrapper {
+    width: 100%;
+  }
+  .tennis_box-big .trans_box {
+    background: white;
+    opacity: 0.8;
+  }
+  .trans_box p {
+    display: none;
+  }
+  .trans_box hr {
+    display: none;
+  }
+  .tennis_box-big .trans_box p {
+    display: block;
+  }
+  .tennis_box-big .trans_box hr {
+    display: block;
+  }
+}
+@media (max-width: 575px) {
+  .trans_box_wrapper {
+    width: 90%;
+  }
+  .tennis_box-big .trans_box_wrapper {
+    width: 100%;
+  }
+  .trans_box_wrapper {
+    position: inherit;
+  }
+  .trans_box p {
+    display: none;
+  }
+  .trans_box hr {
+    display: none;
+  }
+  .tennis_box-big .trans_box p {
+    display: block;
+  }
+  .tennis_box-big .trans_box hr {
+    display: block;
+  }
+}
+@media (min-width: 769px) {
+  .colored_diamonds_jewelry {
+    background: url(https://cdn.leibish.com/assets/images/new_frontend/hp/colored-diamonds-banner.jpg)
+      no-repeat;
+    background-size: cover;
+    padding-top: 3%;
+    background-position: center;
+  }
+  .gemstones_jewelry {
+    background: url(https://cdn.leibish.com/assets/images/new_frontend/hp/gemestone-jewelry-banner.jpg)
+      no-repeat;
+    background-size: cover;
+    padding-top: 3%;
+    background-position: center;
+  }
+}
+.gemstones_jewelry .gold_white {
+  margin-top: -67px;
+}
+.slider_section {
+  padding: 33px 0 0 0;
+  background-color: #e9e6e3;
+  margin-top: 50px;
+}
+.slider_section h2.h2 {
+  font-size: 30px;
+  text-transform: uppercase;
+  color: #5d5852;
+}
+.slider_section1 {
+  padding: 33px 0 10px 0;
+  background-color: #e9e6e3;
+  margin-top: 50px;
+}
+.slider_section1 h2.h2 {
+  font-size: 30px;
+  text-transform: uppercase;
+  color: #5d5852;
+  position: absolute;
+  top: 0;
+  margin-top: 0;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+}
+.carousel-indicators {
+  left: 50%;
+  z-index: 15;
+  width: 60%;
+  padding-left: 0;
+  margin-left: -30%;
+  text-align: center;
+  list-style: none;
+  margin-top: 12px;
+  margin-bottom: 17px;
+}
+#carousel-hp-banner .carousel-indicators {
+  margin-bottom: 5px;
+  margin-top: -20px;
+}
+.btn_shop3 {
+  border: 2px solid var(--main-color);
+  color: var(--main-color);
+  background-color: transparent;
+  margin: 20px;
+  font-size: 16px;
+  padding: 15px 50px;
+  border-radius: 0;
+  text-transform: uppercase;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+.btn_shop3:hover {
+  color: #ffffff;
+  background-color: var(--main-color);
+}
+.carousel-control {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4%;
+  font-size: 20px;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0);
+  filter: alpha(opacity=50);
+  padding-top: 13%;
+  opacity: 0.5;
+}
+.carousel-indicators .active {
+  width: 12px;
+  height: 12px;
+  margin: 0;
+  background-color: transparent;
+  border: 1px solid #5d5852;
+}
+.carousel-indicators li {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 1px;
+  text-indent: -999px;
+  cursor: pointer;
+  background-color: #5d5852;
+  border: 1px solid #5d5852;
+  border-radius: 10px;
+}
+.slider_section1 .carousel-indicators {
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  right: 43%;
+  z-index: 15;
+  width: 100%;
+  padding-left: 0;
+  margin-left: -50%;
+  text-align: center;
+  list-style: none;
+  margin-top: 0px;
+  margin-bottom: 37px;
+}
+.carousel-control.left,
+.carousel-control.right {
+  background-image: none;
+}
+.carousel-control.left {
+  left: -20px;
+}
+.carousel-control.right {
+  right: -20px;
+}
+@media (min-width: 769px) {
+  .commitment {
+    background: url(https://cdn.leibish.com/assets/images/new_frontend/hp/commitment.jpg)
+      no-repeat;
+    background-size: cover;
+    padding-top: 50px;
+    background-position: center;
+  }
+}
+.commitment .h3 {
+  font-size: 25px;
+}
+.commitment p {
+  margin-top: 15px;
+  padding-left: 54px;
+}
+.how-recive {
+  text-align: left;
+}
+.how-recive li {
+  margin-top: 15px;
+  font-size: 20px;
+  font-family: 'Poppins', sans-serif;
+  line-height: 25px;
+  list-style: none;
+}
+.dyo_box .btn_shop2 {
+  width: auto;
+  padding: 15px 30px;
+}
+.tender_box .btn_shop2 {
+  width: auto;
+  padding: 15px 30px;
+}
+@media (max-width: 1750px) {
+  .tender_box .white_box {
+    background: white;
+    opacity: 0.9;
+  }
+  .tender_box .white_box_wrapper {
+    right: 30px;
+  }
+}
+@media (max-width: 767px) {
+  .earing_txt a {
+    top: 0;
+  }
+  .earing_txt {
+    margin-top: 0;
+    padding: 0px 10px;
+  }
+  .slider_section {
+    padding: 30px 0;
+  }
+  .carousel-control {
+    width: 5%;
+  }
+  .tender_box,
+  .dyo_box,
+  .engagement,
+  .colored_diamonds_jewelry,
+  .gemstones_jewelry,
+  .commitment {
+    background: none;
+    padding-top: 0;
+    margin-top: 0;
+    height: auto;
+  }
+  .dyo_box {
+    margin-top: 30px;
+  }
+  .tender_box {
+    margin-top: 30px;
+  }
+  .tender_box .white_box {
+    width: 100%;
+  }
+  .tender_box h2 a {
+    font-size: 2rem;
+  }
+  .tender_box .tender-title2 {
+    font-size: 1.5rem;
+  }
+  .tender_box .white_box_wrapper {
+    position: inherit;
+    width: 100%;
+  }
+  h1 {
+    font-size: 35px;
+    margin: 5px 0 0 0;
+    text-align: center;
+  }
+  h1 span.line2 {
+    font-size: 95px;
+    line-height: 70px;
+  }
+  h1 span.line3 {
+    line-height: 50px;
+  }
+  .main_section .sub_txt {
+    font-size: 22.4px;
+    margin-bottom: 21px;
+    text-align: center;
+  }
+  h2.upper_link {
+    font-size: 23px;
+    text-align: center;
+  }
+  .white_box {
+    background: transparent;
+    padding: 20px;
+  }
+  .gold_white {
+    display: none;
+  }
+  .main_section_text {
+    margin-left: 0;
+    text-align: center;
+  }
+  .main_section {
+    height: auto;
+  }
+  .white_box {
+    width: 100%;
+  }
+  .btn_shop2 {
+    width: 64%;
+    margin: 10px 0 20px 0;
+    font-size: 15px;
+  }
+  .tender_box h2,
+  .dyo_box h2,
+  .engagement .h3,
+  .colored_diamonds_jewelry .h3,
+  .gemstones_jewelry .h3,
+  .commitment .h3 {
+    font-size: 23px;
+  }
+  .tender_box p,
+  .dyo_box p,
+  .engagement p,
+  .colored_diamonds_jewelry p,
+  .gemstones_jewelry p,
+  .slider_section p,
+  .slider_section1 p,
+  .commitment p {
+    color: #5d5852;
+    margin-top: 0px;
+    line-height: 30px;
+  }
+  .carousel-indicators {
+    margin-top: 25px;
+    margin-bottom: 27px;
+  }
+  .slider_section1 h2.h2 {
+    font-size: 30px;
+  }
+  .img_box {
+    margin: 49% 0 0 0;
+  }
+  .gemstones_jewelry .gold_white {
+    margin-top: -21px;
+    width: 65%;
+  }
+  .gold_white {
+    margin-top: 4px;
+  }
+  .btn_shop3 {
+    margin-left: 0;
+  }
+  .main_section {
+    background: none;
+  }
+  .collection_section {
+    margin-top: 20px;
+  }
+  .carousel-control.right {
+    right: 0;
+  }
+  .carousel-control.left {
+    left: 0;
+  }
+  .box_shadow {
+    text-align: center;
+  }
+  .carousel-control {
+    padding-top: 45%;
+  }
+  .slider_section1 .carousel-control {
+    padding-top: 45%;
+    display: block;
+    z-index: 9999999;
+  }
+  .btn_shop3 {
+    margin: 0;
+  }
+  .white_box {
+    text-align: center;
+  }
+  .mb_center {
+    text-align: center;
+  }
+  .commitment {
+    background-color: #e9e6e3;
+    margin-top: 30px;
+  }
+  .slider_section1 {
+    padding-bottom: 30px;
+  }
+  .brands-gemstone-colors a,
+  .brands-diamond-colors a {
+    font-size: 0.75rem !important;
+  }
+  #hp-promoted-carousel .carousel-inner,
+  #hp-testimonials-carousel .carousel-inner {
+    height: 530px;
+    overflow: hidden;
+  }
+}
+@media (max-width: 450px) {
+  #hp-testimonials-carousel .carousel-inner {
+    height: 800px;
+  }
+  .tender_box h2 a {
+    font-size: 1.3rem;
+  }
+  .tender_box .tender-title2 {
+    font-size: 1.3rem;
+  }
+  .tender_box .btn_shop2 {
+    font-size: 0.8rem;
+  }
+}
+@media (max-width: 375px) {
+  .white_box {
+    padding: 10px 0;
+  }
+  .white_box .h3 {
+    font-size: 22px;
+  }
+  .how-recive {
+    padding: 0;
+    margin-bottom: 20px;
+  }
+  .commitment {
+    padding: 24px 0;
+  }
+  .gemstones_jewelry .gold_white {
+    margin-top: -20px;
+    width: 65%;
+  }
+  .slider_section,
+  .slider_section1 {
+    padding: 29px 0;
+    margin-top: 5%;
+  }
+  .slider_section1 {
+    padding: 29px 0;
+    margin-top: 0;
+  }
+  .slider_section1 .carousel-control {
+    padding-top: 10%;
+  }
+}
+@media (max-width: 320px) {
+  .btn_shop,
+  .btn_shop.active,
+  .btn_shop:focus,
+  .btn_shop:hover {
+    font-size: 16px;
+    background-position: 113px -1px;
+    width: 100%;
+  }
+  .btn_shop span {
+    margin-left: 14%;
+    color: #bc8b4e;
+  }
+  .tender_box p,
+  .dyo_box p,
+  .engagement p,
+  .colored_diamonds_jewelry p,
+  .gemstones_jewelry p,
+  .slider_section p,
+  .slider_section1 p,
+  .commitment p {
+    margin-top: 0px;
+    line-height: 22px;
+  }
+  .carousel-control {
+    padding-top: 56%;
+  }
+  .btn_shop2 {
+    width: 72%;
+    padding: 12px;
+    margin-bottom: 0;
+  }
+}
+@media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) {
+  .slider_section1 .carousel-control {
+    padding-top: 41%;
+  }
+  .carousel-control {
+    padding-top: 24%;
+  }
+  .btn_shop,
+  .btn_shop.active,
+  .btn_shop:focus,
+  .btn_shop:hover {
+    font-size: 20px;
+    background-position: 102%;
+    width: 65%;
+  }
+}
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+  .btn_shop,
+  .btn_shop.active,
+  .btn_shop:focus,
+  .btn_shop:hover {
+    font-size: 20px;
+    background-position: 102%;
+    width: 65%;
+  }
+  .slider_section1 .carousel-control,
+  .carousel-control {
+    padding-top: 37%;
+  }
+}
+@media screen and (device-width: 360px) and (device-height: 640px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape) {
+  .slider_section1 .carousel-control,
+  .carousel-control {
+    padding-top: 37%;
+  }
+}
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+  .btn_shop,
+  .btn_shop.active,
+  .btn_shop:focus,
+  .btn_shop:hover {
+    font-size: 20px;
+    background-position: 174%;
+    width: 65%;
+  }
+}
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+  .slider_section1 .carousel-control,
+  .carousel-control {
+    padding-top: 37%;
+  }
+}
+@media (min-width: 769px) {
+  .partners {
+    background: url(https://cdn.leibish.com/assets/images/new_frontend/hp/partners.png)
+      no-repeat;
+    width: 135px;
+    height: 59px;
+    __border: 1px solid #f00;
+  }
+  .partners.partner-01 {
+    background-position: -23px 0px;
+  }
+  .partners.partner-02 {
+    background-position: -256px 0px;
+  }
+  .partners.partner-03 {
+    background-position: -489px 0px;
+  }
+  .partners.partner-04 {
+    background-position: -726px 0px;
+  }
+  .partners.partner-05 {
+    background-position: -959px 0px;
+  }
+  .partners.partner-06 {
+    background-position: -1193px 0px;
+  }
+  .partners.partner-07 {
+    background-position: -1429px 0px;
+  }
+  .partners.partner-08 {
+    background-position: -1666px 0px;
+  }
+}
+.HP_banner {
+  width: 100%;
+  position: relative;
+  text-align: center;
+}
+.HP_banner:not(.HP_banner_height_auto) {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.HP_banner_height_auto {
+  height: auto !important;
+}
+.HP_banner_mapping img,
+map area {
+  outline: none;
+}
+.banner-text {
+  position: absolute;
+  right: 1%;
+  left: 1%;
+  z-index: 10;
+  top: 1%;
+  height: 100%;
+  font-family: "Brown-Light";
+}
+.banner-text-mobile {
+  font-family: "Brown-Light";
+}
+.banner-text-mobile .title-1,
+.banner-text .title-1 {
+  font-size: 2.1rem;
+}
+.banner-text-mobile .title-2,
+.banner-text .title-2 {
+  font-size: 1.9rem;
+}
+.banner-text-mobile p,
+.banner-text p {
+  font-size: 1.5rem;
+}
+.banner-btn {
+  border: 1px solid black;
+  color: white;
+  background-color: black;
+  font-size: 1.1rem;
+  padding: 0.875rem 0;
+  border-radius: 0;
+  text-transform: uppercase;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  opacity: 1;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+}
+.banner-btn:hover {
+  opacity: 0.8;
+  color: #eee;
+  text-decoration: none;
+}
+.banner-btn2 {
+  border: none;
+  color: black;
+  background-color: transparent;
+  font-size: 1.1rem;
+  padding: 0.875rem 0;
+  border-radius: 0;
+  text-transform: uppercase;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  opacity: 1;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+}
+.banner-btn2:hover {
+  opacity: 0.8;
+  color: #eee;
+  text-decoration: none;
+}
+.banner-btn-white {
+  background-color: white;
+}
+.banner-btn-white:hover {
+  color: black;
+}
+@media (min-width: 2100px) {
+  .HP_banner {
+    background-size: inherit;
+  }
+  .HP_banner_mapping img {
+    max-width: 1920px;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1450px) {
+  .HP_banner_mapping img {
+    max-width: 130%;
+    margin-left: -15%;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .HP_banner:not(.HP_banner_mapping) {
+    height: 400px;
+    background-size: 130%;
+    background-position-y: 5px;
+  }
+  .HP_banner_mapping img {
+    max-width: 140%;
+    margin-left: -20%;
+  }
+}
+@media (min-width: 851px) and (max-width: 991px) {
+  .HP_banner:not(.HP_banner_mapping) {
+    height: 360px;
+    background-size: 140%;
+    background-position-y: 5px;
+  }
+  .HP_banner_mapping img {
+    max-width: 150%;
+    margin-left: -25%;
+  }
+}
+@media (min-width: 769px) and (max-width: 850px) {
+  .HP_banner:not(.HP_banner_mapping) {
+    height: 290px;
+    background-size: 140%;
+    background-position-y: 5px;
+  }
+  .HP_banner_mapping img {
+    max-width: 160%;
+    margin-left: -30%;
+  }
+}
+@media (max-width: 768px) {
+  .HP_banner_mobile {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .banner-text {
+    padding: 20px 0;
+    position: relative;
+    right: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+  }
+  .banner-text div {
+    color: black;
+  }
+}

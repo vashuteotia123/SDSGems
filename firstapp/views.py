@@ -330,6 +330,7 @@ class Jewellery_view(View):
         x = re.findall("[0-9]+", z)
         idj = int(x[0])
         j_obj2 = POJ.objects.filter(id=idj)
+        j_obj3 = POJ.objects.get(id=idj)
         if j_obj.purchaseapv is False:
             j_obj2.update(purchase_approval=True)
         j_obj.cartstatus = True
@@ -337,7 +338,8 @@ class Jewellery_view(View):
         print(j_obj.cartstatus)
         new_object = cloneInvofjewellery.objects.create(stockid=j_obj.stockid, location=j_obj.location, jewellery_type=j_obj.jewellery_type, center_stone=j_obj.center_stone,
                                                         shape=j_obj.shape, metal=j_obj.metal, gross_wt=j_obj.grosswt, certificate=j_obj.cert,
-                                                        PCS=j_obj.pcs, tag_price=j_obj.tag_price)
+                                                        PCS=j_obj.pcs, tag_price=j_obj.tag_price,
+                                                        amount=j_obj3.amount,DIS=j_obj3.discount,DIS_amount=j_obj3.discount_amount,total_value=j_obj3.total,currency=j_obj3.currencyid)
         return redirect('/delete')
 
 
@@ -732,7 +734,8 @@ def return_colorstone_Inventory(request, id):
         stockid=object.stockid,
         location=object.location,
         gem_type=object.gem_type,
-
+        weight=object.Weight_cs,
+        tag_price_cs=object.tag_price_cs,
     )
     Salesofcolorstones.objects.filter(pk=id).delete()
     context = {
@@ -807,6 +810,7 @@ class colorstone_view(View):
         x = re.findall("[0-9]+", z)
         idcs = int(x[0])
         j_obj2 = PurchaseOfColorStones.objects.filter(id=idcs)
+        j_obj3 = PurchaseOfColorStones.objects.get(id=idcs)
         if j_obj.purchaseapv is False:
             j_obj2.update(purchaseapv=True)
         j_obj.cartstatus = True
@@ -815,7 +819,8 @@ class colorstone_view(View):
         new_object = cloneInvofcolorstones.objects.create(stockid=j_obj.stockid, location=j_obj.location, shape=j_obj.shape, gem_type=j_obj.gem_type,
                                                           origin=j_obj.origin, treatment=j_obj.treatment, certificate_no=j_obj. certificate_no,
                                                           color=j_obj.color, measurements=j_obj.measurements, lab=j_obj.lab, PCS=j_obj.PCS,
-                                                          Weight_cs=j_obj.Weight, tag_price_cs=j_obj.tag_price, Clarity=j_obj.Clarity)
+                                                          Weight_cs=j_obj.Weight, tag_price_cs=j_obj.tag_price, Clarity=j_obj.Clarity,
+                                                          amount_cs=j_obj3.amount,DIS_cs=j_obj3.discount,DIS_amount_cs=j_obj3.discount_amount,total_value_cs=j_obj3.total_val,currency_cs=j_obj3.currency)
         return redirect('/delete_cs')
 
 #  extra function cs
@@ -1031,6 +1036,8 @@ class Diamond_view(View):
         x = re.findall("[0-9]+", z)
         id_d = int(x[0])
         j_obj2 = POD.objects.filter(id=id_d)
+        j_obj3 = POD.objects.get(id=id_d)
+
         if j_obj.purchaseapv_d is False:
             j_obj2.update(purchaseapv_d=True)
         j_obj.cartstatus = True
@@ -1040,7 +1047,8 @@ class Diamond_view(View):
                                                       white_color_grade1=j_obj.white_color_grade1, fancy_color_intensity1=j_obj.fancy_color_intensity1, fancycolor_grade=j_obj.fancycolor_grade,
                                                       cut=j_obj.cut, polish=j_obj.polish, symmetry=j_obj.symmetry, measurements=j_obj.measurements, depth=j_obj.depth, table=j_obj.table,
                                                       fluorescence_intensity=j_obj.fluorescence_intensity, fluorescence_color=j_obj.fluorescence_color, certificate_no_d=j_obj. certificate_no_d,
-                                                      certificate_d=j_obj.certificate_d, laser_inscription=j_obj.laser_inscription, PCS_d=j_obj.PCS_d, weight_d=j_obj.weight_d, units=j_obj.units, tag_price_d=j_obj.tag_price_d)
+                                                      certificate_d=j_obj.certificate_d, laser_inscription=j_obj.laser_inscription, PCS_d=j_obj.PCS_d, weight_d=j_obj.weight_d, units=j_obj.units, tag_price_d=j_obj.tag_price_d,
+                                                      amount_d=j_obj3.amount_d,DIS_d=j_obj3.DIS_d,DIS_Amount_d=j_obj3.DIS_Amount_d,total_value_d=j_obj3.total_val_d,currency=j_obj3.currency)
         return redirect('/delete_d')
 
 
@@ -1224,7 +1232,7 @@ def jewellery_upload(request):
             return HttpResponse(html)
         print(f.company_name)
         try:
-            f.location, lcobj = loc.objects.get_or_create(
+            f.location, lcobj = location.objects.get_or_create(
                 place=column[3].lower())
             if lcobj:
                 f.location.save()
@@ -1333,40 +1341,45 @@ def itemsearch(request):
         query_name = request.POST.get('Stockid', None)
         if query_name:
             h=re.findall("[0-9]+",query_name)
+            id=int(h[0])
             if len(h) == 0:
                 return render(request, 'itemsearch.html',{"message": "Does not exist"})
-            id=int(h[0])
-            if  query_name.startswith("j") or query_name.startswith("J"):
-                purchaseJobj=POJ.objects.filter(id=id)
-                if len(purchaseJobj) == 0:
-                    return render(request, 'itemsearch.html',{"message": "Does not exist"})
-                salesJobj=Salesofjewellery.objects.filter(stockid=str("J-")+str(id))
-                context={
-                    "purjobj":purchaseJobj,
-                    "salesJewelleryObj":salesJobj
-
-                }
-                return render(request,"itemsearch.html",context=context)
-            elif query_name.startswith("d") or query_name.startswith("D"):
-                purchaseddobj=POD.objects.filter(id=id)
-                salesdobj=Salesofdiamond.objects.filter(stockid=str("D-")+str(id))
-                
-                context={
-                    "purdobj":purchaseddobj,
-                    "salesdobj":salesdobj
-
-                }
-                return render(request,"itemsearch.html",context=context)
-
+            
             elif query_name.startswith("C") or query_name.startswith("c"):
                 purchasecsobj=PurchaseOfColorStones.objects.filter(id=id)
                 salescsobj=Salesofcolorstones.objects.filter(stockid=str("C-")+str(id))
-                context={
+                if(len(purchasecsobj)==0 and len(salescsobj)==0):
+                    context={
                     "purcsobj":purchasecsobj,
-                    "salescsobj":salescsobj
+                    "salescsobj":salescsobj,
+                    "message":"No Records Found",
 
-                }
-                return render(request,"itemsearch.html",context=context)
+                    }
+                    return render(request,"itemsearch.html",context=context)
+                elif (len(purchasecsobj)==0 and len(salescsobj)>0):
+                    context={
+                    "purcsobj":purchasecsobj,
+                    "salescsobj":salescsobj,
+                    "message":"No Purchase Records Found",
+
+                    }
+                    return render(request,"itemsearch.html",context=context)
+
+                elif(len(purchasecsobj)>0 and len(salescsobj)==0):
+                    context={
+                    "purcsobj":purchasecsobj,
+                    "salescsobj":salescsobj,
+                    "message":"No Sales Records Found",
+
+                    }
+                    return render(request,"itemsearch.html",context=context)
+                else:
+                    context={
+                    "purcsobj":purchasecsobj,
+                    "salescsobj":salescsobj,
+
+                    }
+                    return render(request,"itemsearch.html",context=context)
             else:
                 return render(request, 'itemsearch.html',{"message": "Does not exist"})
         
@@ -1425,7 +1438,7 @@ def colorstone_upload(request):
             return HttpResponse(html)
         print(f.company_name)
         try:
-            f.location,lcobj = loc.objects.get_or_create(place=column[3].lower())
+            f.location,lcobj = location.objects.get_or_create(place=column[3].lower())
             if lcobj :
                 f.location.save()
         except Exception as e:

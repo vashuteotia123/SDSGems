@@ -1,0 +1,148 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Company Info Form */
+#company_info {
+  background-color: #f7f8fa;
+  color: #252627;
+}
+
+#company_form {
+  display: grid;
+  grid-template-rows: 10% 10% 30% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 5%;
+  grid-row-gap: 10px;
+  grid-template-columns: 16.75% 20% 10% 36.5% 16.75%;
+  list-style-type: none;
+  font-size: 21px;
+  font-family: "Roboto Condensed", sans-serif;
+  padding-top: 10vh;
+}
+
+#label_company_name {
+  grid-column: 2;
+}
+
+#company_name {
+  grid-column: 4;
+}
+#label_contact {
+  grid-column: 2;
+}
+
+#contact {
+  grid-column: 4;
+}
+#label_address {
+  grid-column: 2;
+}
+#address {
+  grid-column: 4;
+}
+#label_country {
+  grid-column: 2;
+}
+#country {
+  grid-column: 4;
+}
+#id_country {
+  width: 200px;
+  font-size: 18px;
+  border: 1.4px solid #1b4965;
+}
+#label_mobile_no {
+  grid-column: 2;
+}
+
+.mobile_no {
+  display: flex;
+  grid-column: 4;
+}
+#mobile_no {
+  align-self: flex-end;
+}
+#label_tel_no {
+  grid-column: 2;
+}
+#tel_no {
+  grid-column: 4;
+}
+#label_email {
+  grid-column: 2;
+}
+#email {
+  grid-column: 4;
+}
+#label_website {
+  grid-column: 2;
+}
+#website {
+  grid-column: 4;
+}
+#label_pan_no {
+  grid-column: 2;
+}
+#pan_no {
+  grid-column: 4;
+}
+#label_GST_no {
+  grid-column: 2;
+}
+#GST_no {
+  grid-column: 4;
+}
+#label_line_id {
+  grid-column: 2;
+}
+#line_id {
+  grid-column: 4;
+}
+#label_wechat_id {
+  grid-column: 2;
+}
+#wechat_id {
+  grid-column: 4;
+}
+/* Changing Font Style */
+textarea,
+input {
+  border-radius: 5px;
+  padding: 2px;
+  padding-left: 4px;
+  font-size: 18px;
+  border: 1.4px solid #1b4965;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+  background-color: #f1f4f7e7;
+}
+
+.submit_button {
+  display: flex;
+  grid-column: 4;
+  justify-content: right;
+}
+
+#submit {
+  grid-column: 4;
+  margin: 2% 0;
+  font-size: 16px;
+  width: 58px;
+  color: white;
+  background-color: #252627;
+  padding: 2px;
+  border-radius: 4px;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+#submit:hover {
+  padding: 2px;
+  padding-right: 4px;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  background-position: right center;
+}

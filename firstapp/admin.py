@@ -185,7 +185,7 @@ class symmetryadmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(loc)
+@admin.register(location)
 class LocAdmin(admin.ModelAdmin):
     pass
 
@@ -196,4 +196,8 @@ class mediaJ(admin.ModelAdmin):
 
 @admin.register(Blog)
 class blogadmin(admin.ModelAdmin):
+    pass
+
+@admin.register(Salesreturn_cs)
+class slreturncsadmin(admin.ModelAdmin):
     pass

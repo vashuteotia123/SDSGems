@@ -15,6 +15,10 @@
             <thead>
                 <th>Stock ID</th>
                 <th>Location</th>
+                <th>Gem Type</th>
+                <th>Treatment</th>
+                <th>Lab</th>
+                <th>Weight</th>
                 <th>certificate_no</th>
                 <th>Add to Cart</th>
                 <th>Check</th>
@@ -26,8 +30,12 @@
                 <tr id="{{p.id}}">
                     <td>{{p.stockid}}</td>
                     <td>{{p.location}}</td>
+                    <td>{{p.gem_type}}</td>
+                    <td>{{p.treatment}}</td>
+                    <td>{{p.lab}}</td>
+                    <td>{{p.Weight}}</td>
                     <td>{{p.certificate_no}}</td>
-                  
+                                      
                     {% if p.cartstatus is False %}
                     <td><a class="btn btn-primary" href="{% url 'addtocart_cs' id=p.id %}">ADD TO CART</a></td>
                     {% endif %}

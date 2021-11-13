@@ -1,0 +1,257 @@
+/* Common */
+* {
+  margin: 0;
+  padding: 0;
+}
+textarea,
+input {
+  border-radius: 5px;
+  padding: 2px;
+  padding-left: 4px;
+  font-size: 18px;
+  border: 1.4px solid #1b4965;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+  background-color: #f1f4f7e7;
+}
+
+
+/* Purchase of Jewellary */
+#PurchaseJewellary {
+  list-style: none;
+  display: grid;
+  grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% 5%;
+  grid-row-gap: 10px;
+  grid-template-columns: 20% 35% 5% 20% 20%;
+  list-style-type: none;
+  font-size: 21px;
+  font-family: "Roboto Condensed", sans-serif;
+  padding-top: 10vh;
+}
+#label_stock_id {
+  text-align: center;
+}
+#stock_id {
+  grid-row: 2;
+  display: flex;
+  justify-content: center;
+}
+#id_stock_id {
+  width: 62px;
+}
+#label_company_name {
+  grid-row: 3;
+  grid-column: 2;
+}
+#company_name {
+  grid-row: 3;
+  grid-column: 4;
+  justify-self: center;
+}
+#label_location {
+  grid-row: 4;
+  grid-column: 2;
+}
+#location {
+  grid-row: 4;
+  grid-column: 4;
+  justify-self: center;
+}
+#label_jewellary {
+  grid-row: 5;
+  grid-column: 2;
+}
+#jewellary {
+  grid-row: 5;
+  grid-column: 4;
+  justify-self: center;
+}
+#label_c_stone {
+  grid-row: 6;
+  grid-column: 2;
+}
+#c_stone {
+  grid-row: 6;
+  grid-column: 4;
+  justify-self: center;
+}
+#label_colour_c {
+  grid-row: 7;
+  grid-column: 2;
+}
+#colour_c {
+  grid-row: 7;
+  grid-column: 4;
+  justify-self: center;
+}
+
+#label_shape {
+  grid-row: 8;
+  grid-column: 2;
+}
+#shape {
+  grid-row: 8;
+  grid-column: 4;
+  justify-self: center;
+}
+#label_metal {
+  grid-row: 9;
+  grid-column: 2;
+}
+#metal {
+  grid-row: 9;
+  grid-column: 4;
+  justify-self: center;
+}
+
+#label_gross {
+  grid-row: 10;
+  grid-column: 2;
+}
+#gross {
+  grid-row: 10;
+  grid-column: 4;
+  justify-self: center;
+}
+#label_phone_number{
+  grid-row: 11;
+  grid-column: 2;
+}
+#phone_number {
+  grid-row: 11;
+  grid-column: 4;
+  justify-self: center;
+}
+
+#label_certifications {
+  grid-row: 12;
+  grid-column: 2;
+}
+#certifications {
+  grid-row: 12;
+  grid-column: 4;
+  justify-self: center;
+}
+#label_pieces {
+  grid-row: 13;
+  grid-column: 2;
+}
+#pieces {
+  grid-row: 13;
+  grid-column: 4;
+  justify-self: center;
+}
+#label_amount{
+  grid-row: 14;
+  grid-column:2;
+}
+#amount{
+   grid-row: 14;
+   grid-column:4;
+}
+#label_disamount {
+  grid-row: 15;
+  grid-column: 2;
+}
+#disamount {
+  grid-row: 15;
+  grid-column: 4;
+  justify-self: center;
+}
+#label_discount {
+  grid-row: 16;
+  grid-column: 2;
+}
+#discount {
+  grid-row: 16;
+  grid-column: 4;
+  justify-self: center;
+}
+
+#label_total_val{
+  grid-row: 17;
+  grid-column:2;
+}
+#total_val{
+   grid-row: 17;
+   grid-column:4;
+}
+
+#label_purchaseapv {
+  grid-row: 18;
+  grid-column: 2;
+}
+#purchaseapv{
+  grid-row: 18;
+  grid-column: 4;
+  justify-self: center;
+}
+
+#label_currency {
+  grid-row: 19;
+  grid-column: 2;
+}
+#currency {
+  grid-row: 19;
+  grid-column: 4;
+  justify-self: center;
+}
+#label_tag_price {
+  grid-row: 20;
+  grid-column: 2;
+}
+#tag_price {
+  grid-row: 20;
+  grid-column: 4;
+  justify-self: center;
+}
+#label_rate {
+  grid-row: 21;
+  grid-column: 2;
+}
+#rate {
+  grid-row: 21;
+  grid-column: 4;
+  justify-self: center;
+}
+
+
+/* #label_purchase_approval {
+  grid-row: 18;
+  grid-column: 2;
+}
+#purchase_approval {
+  grid-row: 18;
+  grid-column: 4;
+  justify-self: center;
+} */
+.submit_button {
+  display: flex;
+  grid-row: 22;
+  grid-column: 5;
+  justify-content: center;
+  
+}
+#submit {
+  grid-column: 4;
+  margin: 2% 0;
+  font-size: 16px;
+  width: 58px;
+  color: white;
+  background-color: #252627;
+  padding: 2px;
+  border-radius: 4px;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+#submit:hover {
+  padding: 2px;
+  padding-right: 4px;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  background-position: right center;
+}
