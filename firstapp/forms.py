@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.widgets import Widget
 from .models import *
 from django.forms import formset_factory, modelformset_factory
 from django.contrib.admin.widgets import AdminDateWidget
@@ -21,17 +22,14 @@ POJFormSet = modelformset_factory(POJ, form=POJForm)
 
 class DateInput(forms.DateInput):
     input_type = "date"
-    def __init__(self, **kwargs):
-        kwargs["format"] = "%m-%d-%Y"
-        super().__init__(**kwargs)
+
 
 class POCSForm(forms.ModelForm):
     class Meta:
         model = PurchaseOfColorStones
         fields = "__all__"
         labels = {'purchaseapv': 'Bought Color Stone'}
-        widgets = {'date': DateInput(format=["%mm-%dd-%YYYY"],),
-        'comment': forms.Textarea(attrs={'size': '40'})}
+        widgets = {'date': DateInput(), 'comment': forms.Textarea(attrs={'size': '40'})}
 
 
 

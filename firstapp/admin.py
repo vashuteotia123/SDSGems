@@ -20,6 +20,7 @@ if development_mode:
     class CompanyAdmin(admin.ModelAdmin):
         actions = ['change_name']
         search_fields = ['company_name']
+        list_editable = ['company_name']
         list_display = [f.name for f in companyinfo._meta.fields]
 
         def change_name(self, request, queryset):
@@ -27,6 +28,8 @@ if development_mode:
 
     @admin.register(POJ)
     class PurchaseOFJewell(admin.ModelAdmin):
+        list_editable = ['company_name']
+        list_display = [f.name for f in POJ._meta.fields]
         readonly_fields = ['total', 'discount_amount']
 
     @admin.register(Inventoryofjewellery)
@@ -137,6 +140,7 @@ if development_mode:
     @admin.register(Salesofjewellery)
     class salesofjewadmin(ImportExportModelAdmin):
         search_fields = ['company_name']
+        list_editable = ['company_name']
         list_display = [f.name for f in Salesofjewellery._meta.fields]
 
     @admin.register(cloneInvofjewellery)
