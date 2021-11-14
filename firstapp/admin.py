@@ -9,7 +9,7 @@ from import_export.widgets import ForeignKeyWidget
 from django.shortcuts import redirect
 from django_object_actions import DjangoObjectActions
 from django.forms import TextInput, Textarea
-
+from django.contrib import messages
 #Dev mode
 development_mode = True
 
@@ -197,6 +197,18 @@ if development_mode:
     @admin.register(Salesofdiamond)
     class salesofdadmin(admin.ModelAdmin):
         pass
+
+    @admin.register(ColorStone_media)
+    class ColorStone_media_admin(admin.ModelAdmin):
+        list_display = [entry.name for entry in ColorStone_media._meta.fields]
+
+        def response_change(self, request, obj=None):
+            messages.success(request, "Media successfully changed!")
+            return redirect('/')
+        
+        def response_add(self, request, obj=None):
+            messages.success(request, "Media successfully added!")
+            return redirect('/')
 
     # @admin.register(Salesreturn)
     # class salesofdadmin(admin.ModelAdmin):

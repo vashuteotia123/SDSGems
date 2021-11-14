@@ -16,9 +16,34 @@
     <title>SDS Gems</title>
     {% block css %}{% endblock css %}
     <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"> -->
+    <style>
+        .alert {
+  padding: 20px;
+  background-color: #6659db;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+    </style>
 </head>
 
 <body>
+    
+    
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">SDS Gems</a>
@@ -103,6 +128,15 @@
             </div>
         </div>
     </nav>
+    {% if messages%}
+    {% for message in messages%}
+    
+    <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+        <strong>Message: </strong> {{message}}
+      </div>
+    {%endfor%}
+    {%endif%}
   
     </div>
     <br>

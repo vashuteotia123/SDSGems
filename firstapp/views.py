@@ -668,12 +668,13 @@ def saving_colorstone_cart(request):
         print(len(curr_formset))
         if(curr_formset.is_valid()):
             curr_formset.save()
-            return render(request, 'showcart_cs.html',{"totalitems_cs": curr_formset,'is_valid':True})
+            return render(request, 'showcart_cs.html',{"totalitems_cs": curr_formset,'is_valid':True, 'itemcount': len(curr_formset)})
         else:
-            context = {"totalitems_cs": curr_formset, 'is_valid': False}
+            context = {"totalitems_cs": curr_formset, 'is_valid': False, 'itemcount': len(curr_formset)}
             return render(request, 'showcart_cs.html', context)
     context = {
         "totalitems_cs": colorstone_formset,
+         'itemcount': len(total),
     }
     return render(request, "showcart_cs.html", context=context)
 
@@ -681,9 +682,10 @@ def saving_colorstone_cart(request):
 @login_required
 def sell_cs(request):
     cs_objects = cloneInvofcolorstones.objects.all()
-    # try:
+
     for object in cs_objects:
         Salesofcolorstones.objects.create(
+            date = object.date,
             stockid=object.stockid,
             company_name=object.company_name,
             location=object.location,
@@ -698,8 +700,8 @@ def sell_cs(request):
             lab=object.lab,
             PCS=object.PCS,
             Weight_cs=object.Weight_cs,
-            # price=object.price,
-            # units_cs=object.units_cs,
+            price=object.price,
+            units_cs=object.units_cs,
             amount_cs=object.amount_cs,
             DIS_cs=object.DIS_cs,
             DIS_amount_cs=object.DIS_amount_cs,

@@ -2,10 +2,11 @@
 from typing import Sequence
 from django.db import models
 from django.db.models.deletion import PROTECT
+from django.db.models.fields import DateTimeCheckMixin
 from django.db.models.fields.related import ForeignKey
 from django.core.validators import RegexValidator
 from tinymce.models import HTMLField
-
+import datetime
 
 class Blog(models.Model):
     date = models.DateField(auto_now_add=True)
@@ -125,9 +126,9 @@ class metal1(models.Model):
 
 class certificate(models.Model):
 
+    class Meta:
+        verbose_name_plural = "ColorStone Certificates Types"
     cert = models.CharField(max_length=30)
-    file = models.FileField(upload_to="certificate/")
-
     def __str__(self):
         return self.cert
     def save(self, *args, **kwargs):
@@ -697,26 +698,28 @@ class Salesofcolorstones(models.Model):
     color = models.CharField(max_length=30, verbose_name="Color")
     measurements = models.CharField(max_length=30,blank=True,null=True, verbose_name="Measurement")
     lab = models.CharField(max_length=30, verbose_name="Lab")
-    PCS = models.IntegerField(null=True, verbose_name="Pieces")
-    Weight_cs = models.FloatField(null=True, verbose_name="Weight")
-    # price=models.FloatField(null=True)
-    # units_cs=models.IntegerField(null=True)
+    PCS = models.IntegerField(verbose_name="Pieces")
+    Weight_cs = models.FloatField(verbose_name="Weight")
+    price=models.FloatField(default=0)
+    units_cs=models.CharField(max_length=30,default="")
     amount_cs = models.FloatField(verbose_name="Amount")
     DIS_cs = models.FloatField(verbose_name="Discount Percentage")
     DIS_amount_cs = models.FloatField(verbose_name="Discount Amount")
     total_value_cs = models.FloatField(verbose_name="Total Value")
     currency_cs = models.CharField(max_length=30, verbose_name="Currency")
     tag_price_cs = models.FloatField(verbose_name="Tag Price")
-    rate_cs = models.FloatField(verbose_name="Rate")
+    rate_cs = models.FloatField(verbose_name="Rate", default=1)
     salesapprovalstatus_cs = models.BooleanField(default=False, verbose_name="Sold")
     comment = models.TextField(max_length=3000, blank=True,null=True, verbose_name="Comment")
 
 
+    
 class cloneInvofcolorstones(models.Model):
-    stockid = models.CharField(max_length=30, blank=True)
-    company_name = models.CharField(max_length=30)
-    location = models.CharField(max_length=30)
-    shape = models.CharField(max_length=30)
+    date = models.DateField(auto_now_add=True)
+    stockid = models.CharField(max_length=30, blank=True,verbose_name="Stock ID")
+    company_name = models.CharField(max_length=30,verbose_name="Company Name")
+    location = models.CharField(max_length=30,verbose_name="Location")
+    shape = models.CharField(max_length=30,verbose_name="Shape")
     gem_type = models.CharField(max_length=30)
     # weight = models.IntegerField()
     origin = models.CharField(max_length=30)
@@ -726,17 +729,17 @@ class cloneInvofcolorstones(models.Model):
     color = models.CharField(max_length=30)
     measurements = models.CharField(max_length=30,blank=True,null=True)
     lab = models.CharField(max_length=30)
-    PCS = models.IntegerField(null=True)
-    Weight_cs = models.FloatField(null=True)
-    # price=models.FloatField(null=True)
-    # units_cs=models.IntegerField(null=True)
-    amount_cs = models.FloatField(blank=True, null=True)
-    DIS_cs = models.FloatField(blank=True, null=True)
-    DIS_amount_cs = models.FloatField(blank=True, null=True)
-    total_value_cs = models.FloatField(blank=True, null=True)
-    currency_cs = models.ForeignKey(currencies, on_delete=models.PROTECT, null=True, blank=True)
-    tag_price_cs = models.FloatField(null=True)
-    rate_cs = models.FloatField(blank=True, null=True)
+    PCS = models.IntegerField(null=True,verbose_name="Pieces")
+    Weight_cs = models.FloatField(null=True,verbose_name="Weight")
+    price=models.FloatField(null=True, blank=True)
+    units_cs=models.CharField(max_length=30,null=True, blank=True,verbose_name="Units")
+    amount_cs = models.FloatField(blank=True, null=True,verbose_name="Amount Per CTS")
+    DIS_cs = models.FloatField(blank=True, null=True,verbose_name="Discount in %")
+    DIS_amount_cs = models.FloatField(blank=True, null=True,verbose_name="Discounted Amount")
+    total_value_cs = models.FloatField(blank=True, null=True,verbose_name="Total Value")
+    currency_cs = models.ForeignKey(currencies, on_delete=models.PROTECT, null=True, blank=True,verbose_name="Currency")
+    tag_price_cs = models.FloatField(null=True,verbose_name="Tag Price")
+    rate_cs = models.FloatField(blank=True, null=True,verbose_name="Rate",default=1)
     salesapprovalstatus_cs = models.BooleanField(default=False)
 
 
@@ -762,12 +765,36 @@ class Salesreturn_cs(models.Model):
 
 
 class Jewel_media(models.Model):
-    jewel_object = models.ForeignKey(
-        Inventoryofjewellery, on_delete=models.CASCADE)
-    image1 = models.ImageField(
-        upload_to="JewelleryMedia/", blank=True, null=True)
-    image2 = models.ImageField(
-        upload_to="JewelleryMedia/", blank=True, null=True)
-    image3 = models.ImageField(
-        upload_to="JewelleryMedia/", blank=True, null=True)
+    jewel_object = models.ForeignKey(Inventoryofjewellery, on_delete=models.CASCADE)
+    image1 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
+    image2 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
+    image3 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
+    image4 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
+    image5 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
+    image6 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
+    image7 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
+    image8 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
+    image9 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
+    image10 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
     video_embed_link = models.TextField(null=True, blank=True)
+    certificate  = models.FileField(upload_to="Certificates/Jewellery/", blank =True, null=True)
+
+
+
+class ColorStone_media(models.Model):
+    class Meta:
+        verbose_name_plural = "ColorStone Media"
+    jewel_object = models.ForeignKey(Inventoryofcolorstones, on_delete=models.CASCADE)
+    image1 = models.ImageField(upload_to="ColorStoneMedia/", blank=True, null=True)
+    image2 = models.ImageField(upload_to="ColorStoneMedia/", blank=True, null=True)
+    image3 = models.ImageField(upload_to="ColorStoneMedia/", blank=True, null=True)
+    image4 = models.ImageField(upload_to="ColorStoneMedia/", blank=True, null=True)
+    image5 = models.ImageField(upload_to="ColorStoneMedia/", blank=True, null=True)
+    image6 = models.ImageField(upload_to="ColorStoneMedia/", blank=True, null=True)
+    image7 = models.ImageField(upload_to="ColorStoneMedia/", blank=True, null=True)
+    image8 = models.ImageField(upload_to="ColorStoneMedia/", blank=True, null=True)
+    image9 = models.ImageField(upload_to="ColorStoneMedia/", blank=True, null=True)
+    image10 = models.ImageField(upload_to="ColorStoneMedia/", blank=True, null=True)
+    video_embed_link = models.TextField(null=True, blank=True)
+    certificate  = models.FileField(upload_to="Certificates/ColorStone/", blank =True, null=True)
+
