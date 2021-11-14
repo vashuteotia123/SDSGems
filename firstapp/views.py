@@ -1,3 +1,4 @@
+from django.core import paginator
 from django.views.generic import View
 from django.db.models import Q
 from django.http.response import HttpResponse, JsonResponse
@@ -19,6 +20,7 @@ from SDSDiamonds import settings
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.core.mail import send_mail
+from django.core.paginator import Paginator
 # Create your views here.
 
 
@@ -307,9 +309,14 @@ class Jewellery_view(View):
 
     def get(self, request):
         allproduct = Inventoryofjewellery.objects.all().order_by('stockid')
+        allproduct_paginator=Paginator(allproduct,3)
+        page_num = request.GET.get("page")
+        page=allproduct_paginator.get_page(page_num)
+
         # allclonej = cloneInvofjewellery.objects.all()
         context = {
-            "productsj": allproduct,
+            "productsj": allproduct_paginator.count,
+            "page":page
 
         }
         return render(request, "showinvj.html", context=context)
@@ -340,7 +347,7 @@ class Jewellery_view(View):
                                                         shape=j_obj.shape, metal=j_obj.metal, gross_wt=j_obj.grosswt, certificate=j_obj.cert,
                                                         PCS=j_obj.pcs, tag_price=j_obj.tag_price,
                                                         amount=j_obj3.amount,DIS=j_obj3.discount,DIS_amount=j_obj3.discount_amount,total_value=j_obj3.total,currency=j_obj3.currencyid)
-        return redirect('/delete')
+        return redirect('delete-jewell')
 
 
 @login_required
@@ -746,11 +753,7 @@ def return_colorstone_Inventory(request, id):
         tag_price_cs=object.tag_price_cs,
     )
     Salesofcolorstones.objects.filter(pk=id).delete()
-    context = {
-        "products_cs": Inventoryofcolorstones.objects.all(),
-
-    }
-    return render(request, "showinvcs.html", context=context)
+    return redirect('delete-cs')
 
 
 @login_required
@@ -792,8 +795,22 @@ class CSAddView(TemplateView):
 class colorstone_view(View):
     method_decorator(login_required)
     def get(self, request):
-        allproduct = Inventoryofcolorstones.objects.all().order_by('stockid')
-        context = {"products_cs": allproduct.order_by('stockid')}
+        z=[]
+        y=list()
+        jewel_types = set(Inventoryofcolorstones.objects.values_list('stockid', flat=True))
+        for sentence in jewel_types:
+            sentence=sentence.replace("C-","")
+            z.append(int(sentence))
+        z.sort()
+        z=map(str,z)
+        for i in z:
+            i="C-"+i
+            y.append(i)
+        allproduct=[]
+        for j in y:
+            product=Inventoryofcolorstones.objects.get(stockid=j)
+            allproduct.append(product)
+        context = {"products_cs": allproduct}
         return render(request, "showinvcs.html", context=context)
 
     def post(self, request, *args, **kwargs):
@@ -1150,6 +1167,7 @@ def return_diamond_Inventory(request, id):
 
     )
     Salesofdiamond.objects.filter(pk=id).delete()
+    
     context = {
         "products_d": Inventoryofdiamond.objects.all(),
 
