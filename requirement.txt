@@ -6,6 +6,7 @@ Django==3.2.5
 django-crispy-forms==1.13.0
 django-import-export==2.6.1
 django-jazzmin==2.4.8
+django-object-actions==3.0.2
 django-tinymce==3.3.0
 et-xmlfile==1.1.0
 MarkupPy==1.14

@@ -179,6 +179,8 @@ class POJ(models.Model):
     total = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True)
     purchase_approval = models.BooleanField(default=False)
+    comment = models.TextField(max_length=3000, blank=True, null=True)
+
 
     def save(self, *args, **kwargs):
 
@@ -239,7 +241,7 @@ class Salesofjewellery(models.Model):
     metal = models.CharField(max_length=30)
     gross_wt = models.FloatField()
     certificate = models.CharField(max_length=30)
-    PCS = models.IntegerField()
+    PCS = models.IntegerField(verbose_name="Pieces")
     amount = models.FloatField()
     DIS = models.FloatField()
     DIS_amount = models.FloatField()
@@ -248,6 +250,7 @@ class Salesofjewellery(models.Model):
     tag_price = models.FloatField()
     rate = models.FloatField()
     salesapprovalstatus = models.BooleanField(default=False)
+    comment = models.TextField(max_length=3000, blank=True, null=True)
 
     def __str__(self):
         return self.company_name
@@ -417,6 +420,8 @@ class POD(models.Model):
     total_val_d = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True)
     purchaseapv_d = models.BooleanField(default=False)
+    comment = models.TextField(max_length=3000, blank=True, null=True)
+
 
     def save(self, *args, **kwargs):
         # self.amount_d = (self.price * self.units * self.PCS_d)
@@ -506,6 +511,8 @@ class Salesofdiamond(models.Model):
     tag_price_d = models.FloatField()
     rate_d = models.FloatField(blank=True, null=True)
     salesapprovalstatus_d = models.BooleanField(default=False)
+    comment = models.TextField(max_length=3000, blank=True, null=True)
+
 
 
 class cloneInvofdiamond(models.Model):
@@ -677,31 +684,32 @@ class Inventoryofcolorstones(models.Model):
 
 
 class Salesofcolorstones(models.Model):
-    date = models.DateField(auto_now_add=True)
-    stockid = models.CharField(max_length=30)
-    company_name = models.CharField(max_length=30)
-    location = models.CharField(max_length=30)
-    shape = models.CharField(max_length=30)
-    gem_type = models.CharField(max_length=30)
-    origin = models.CharField(max_length=30)
-    treatment = models.CharField(max_length=30)
-    Clarity = models.CharField(max_length=30,null=True,blank=True)
-    certificate_no = models.CharField(max_length=30)
-    color = models.CharField(max_length=30)
-    measurements = models.CharField(max_length=30,blank=True,null=True)
-    lab = models.CharField(max_length=30)
-    PCS = models.IntegerField(null=True)
-    Weight_cs = models.FloatField(null=True)
+    date = models.DateField(auto_now_add=False, verbose_name="Date of transaction")
+    stockid = models.CharField(max_length=30, verbose_name="Stock ID")
+    company_name = models.CharField(max_length=30, verbose_name="Company name")
+    location = models.CharField(max_length=30, verbose_name="Location")
+    shape = models.CharField(max_length=30, verbose_name="Shape")
+    gem_type = models.CharField(max_length=30,verbose_name="Gem Type")
+    origin = models.CharField(max_length=30, verbose_name="Origin")
+    treatment = models.CharField(max_length=30, verbose_name="Treatment")
+    Clarity = models.CharField(max_length=30,null=True,blank=True, verbose_name="Clarity")
+    certificate_no = models.CharField(max_length=30, verbose_name="Certificate No.")
+    color = models.CharField(max_length=30, verbose_name="Color")
+    measurements = models.CharField(max_length=30,blank=True,null=True, verbose_name="Measurement")
+    lab = models.CharField(max_length=30, verbose_name="Lab")
+    PCS = models.IntegerField(null=True, verbose_name="Pieces")
+    Weight_cs = models.FloatField(null=True, verbose_name="Weight")
     # price=models.FloatField(null=True)
     # units_cs=models.IntegerField(null=True)
-    amount_cs = models.FloatField()
-    DIS_cs = models.FloatField()
-    DIS_amount_cs = models.FloatField()
-    total_value_cs = models.FloatField()
-    currency_cs = models.CharField(max_length=30)
-    tag_price_cs = models.FloatField()
-    rate_cs = models.FloatField()
-    salesapprovalstatus_cs = models.BooleanField(default=False)
+    amount_cs = models.FloatField(verbose_name="Amount")
+    DIS_cs = models.FloatField(verbose_name="Discount Percentage")
+    DIS_amount_cs = models.FloatField(verbose_name="Discount Amount")
+    total_value_cs = models.FloatField(verbose_name="Total Value")
+    currency_cs = models.CharField(max_length=30, verbose_name="Currency")
+    tag_price_cs = models.FloatField(verbose_name="Tag Price")
+    rate_cs = models.FloatField(verbose_name="Rate")
+    salesapprovalstatus_cs = models.BooleanField(default=False, verbose_name="Sold")
+    comment = models.TextField(max_length=3000, blank=True,null=True, verbose_name="Comment")
 
 
 class cloneInvofcolorstones(models.Model):

@@ -1,10 +1,16 @@
+from typing import Optional
 from django.contrib import admin
+from django.http.request import HttpRequest
 from import_export.admin import ImportExportModelAdmin
 from .models import *
 from import_export import fields, resources
 from import_export.widgets import ForeignKeyWidget
 # Register your models here.
+from django.shortcuts import redirect
+from django_object_actions import DjangoObjectActions
+from django.forms import TextInput, Textarea
 
+#Dev mode
 development_mode = True
 
 if development_mode:
@@ -17,14 +23,22 @@ if development_mode:
         pass
 
     @admin.register(companyinfo)
-    class CompanyAdmin(admin.ModelAdmin):
+    class CompanyAdmin(DjangoObjectActions,admin.ModelAdmin):
+        def HomePage(modeladmin, request, queryset):
+            return redirect('/')
+
+        HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
         actions = ['change_name']
-        search_fields = ['company_name']
-        list_editable = ['company_name']
+        changelist_actions = ('HomePage',)
+        search_fields = ['company_name', 'email']
+        # list_editable = ['company_name']
         list_display = [f.name for f in companyinfo._meta.fields]
 
-        def change_name(self, request, queryset):
-            queryset.update(company_name="tanishq")
+        def response_change(self, request, obj):
+            return redirect('/')
+
+        def response_add(self, request, obj, post_url_continue=None):
+            return redirect('/')
 
     @admin.register(POJ)
     class PurchaseOFJewell(admin.ModelAdmin):
@@ -140,8 +154,15 @@ if development_mode:
     @admin.register(Salesofjewellery)
     class salesofjewadmin(ImportExportModelAdmin):
         search_fields = ['company_name']
-        list_editable = ['company_name']
+
+        list_editable = ['company_name',]
         list_display = [f.name for f in Salesofjewellery._meta.fields]
+        def has_add_permission(self, request, obj=None):
+            return False
+        def has_change_permission(self, request, obj=None):
+            return True
+        def has_delete_permission(self, request, obj=None):
+            return False
 
     @admin.register(cloneInvofjewellery)
     class cloneInvofjewadmin(admin.ModelAdmin):
@@ -157,7 +178,16 @@ if development_mode:
 
     @admin.register(Salesofcolorstones)
     class salesofcsadmin(admin.ModelAdmin):
-        pass
+        formfield_overrides = {models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},}
+        search_fields = ['date', 'company_name', 'stockid']
+        list_editable = ['date','company_name', 'amount_cs','DIS_cs','DIS_amount_cs', 'total_value_cs', 'tag_price_cs', 'rate_cs', 'salesapprovalstatus_cs', 'comment']
+        list_display = [f.name for f in Salesofcolorstones._meta.fields]
+        def has_add_permission(self, request, obj=None):
+            return False
+        def has_change_permission(self, request, obj=None):
+            return True
+        def has_delete_permission(self, request, obj=None):
+            return False
 
     @admin.register(cloneInvofdiamond)
     class cloneInvofdadmin(admin.ModelAdmin):
