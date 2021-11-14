@@ -619,14 +619,20 @@ def update_cs(request, ck):
 
 
 @login_required
-def deleteid_cs(request, idno):
+def deleteid_cs( request, idno):
+    
     current = PurchaseOfColorStones.objects.get(id=idno)
     c_str = "C-"+str(idno)
     print(c_str)
-    current_invcs = Inventoryofcolorstones.objects.get(stockid=c_str)
+    try:
+        current_invcs = Inventoryofcolorstones.objects.get(stockid=c_str)
+        current_invcs.delete()
+    except:
+        messages.success(request, "Data record not found in Inventory!")
+        return redirect(request.META.get('HTTP_REFERER'))
     current.delete()
-    current_invcs.delete()
-    return render(request, "delete_cs.html")
+    messages.success(request, "Deleted Successfully")
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required

@@ -24,13 +24,14 @@ if development_mode:
 
     @admin.register(companyinfo)
     class CompanyAdmin(DjangoObjectActions,admin.ModelAdmin):
-        def HomePage(modeladmin, request, queryset):
+        def HomePage(CompanyAdmin, request, queryset):
             return redirect('/')
 
         HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
         actions = ['change_name']
         changelist_actions = ('HomePage',)
         search_fields = ['company_name', 'email']
+        list_display_links =['company_name']
         # list_editable = ['company_name']
         list_display = [f.name for f in companyinfo._meta.fields]
 
@@ -177,7 +178,13 @@ if development_mode:
         list_editable = ["tag_price_cs", "rate_cs"]
 
     @admin.register(Salesofcolorstones)
-    class salesofcsadmin(admin.ModelAdmin):
+    class salesofcsadmin(DjangoObjectActions,admin.ModelAdmin):
+        def HomePage(salesofcsadmin, request, queryset):
+            return redirect('/')
+
+        HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
+        changelist_actions = ('HomePage',)
+
         formfield_overrides = {models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},}
         search_fields = ['date', 'company_name', 'stockid']
         list_editable = ['date','company_name', 'amount_cs','DIS_cs','DIS_amount_cs', 'total_value_cs', 'tag_price_cs', 'rate_cs', 'salesapprovalstatus_cs', 'comment']
