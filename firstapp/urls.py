@@ -41,8 +41,8 @@ urlpatterns = [
     # path(r'^delete/(?P<idno>\d+)/$',views.deleteid, name='deleteid')
     # path('returnj<str:id>',Jewellery_view.returnj,name="returnj"),
     # path('displayinv',views.displayinv,name="displayinv"),
-    path('show_on_frontend_jewel<int:id>', views.show_on_frontend_jewel, name="show_on_frontend_jewel"),
-    path('hide_from_frontend_jewel<int:id>', views.hide_from_frontend_jewel, name="hide_from_frontend_jewel"),
+    path('show_on_frontend_cs<int:id>', views.show_on_frontend_cs, name="show_on_frontend_cs"),
+    path('hide_from_frontend_cs<int:id>', views.hide_from_frontend_cs, name="hide_from_frontend_cs"),
     path('get_company_details', views.get_company_details,name="get_company_details"),
     # ////////////colorstones url////////////
 
@@ -109,4 +109,5 @@ urlpatterns = [
     path('diamond_listing',views.diamond_listing, name='diamond_listing'),
 
     path("contact", views.contactsendmail, name="contact"), 
+    path("allsellcsrecords", views.allsellcsrecords, name="allsellcsrecords"), 
 ]

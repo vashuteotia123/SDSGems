@@ -1,51 +1,68 @@
-{% extends 'index.html' %}
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-    <title>Document</title>
-    {% block content %}
-    <h1><center>
-        Sales Records
-    </center></h1>
-    <br>
-    <br>
-    <table  class="table">
-        <thead class="thead-dark">
-        <tr>
-            <th scope="col">Date</th>
-            <th scope="col">Stockid</th>
-            <th scope="col">Company Name</th>
-            <th scope="col">Gem type</th>
-            <th scope="col">Country</th>
-            <th scope="col">origin</th>
-            <th scope="col">Sales Status</th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    {%for item in sold_items%}
-    <tbody>
-        <tr class="something">
-            <td>{{item.date}}</td>
-        <td>{{item.stockid}}</td>
-        <td>{{item.company_name}}</td>
-        <td>{{item.gem_type}}</td>
-        <td>{{item.location}}</td>
-        <td>{{item.origin}}</td>
-        <td>{{item.salesapprovalstatus_cs}}</td>
-        {% if item.salesapprovalstatus_cs is False %}
-        <td><a class="btn btn-primary" href="{% url 'return_colorstone_Inventory' item.id %}" target=""> Return back to Inventory</a></td>
+{% extends 'common_table.html' %}
+<!-- Colour Stone Sell Record -->
+{% block table %}
+<table class="table table-responsive">
+    <tr class="bg-primary bg-opacity-50" id="table-heading">
+        <th class="bg-primary">STOCK ID</th>
+        <th class="bg-primary" >LOCATION</th>
+        <th class="bg-primary" style="text-align:center;">SHAPE</th>
+        <th class="bg-primary" style="text-align:center;">GEM TYPE</th>
+        <th class="bg-primary">ORIGIN</th>
+        <th class="bg-primary" style="text-align:center;">TREATMENT</th>
+        <th class="bg-primary">CLARITY</th>
+        <th class="bg-primary">CERTIFICATE NUMBER</th>
+        <th class="bg-primary">COLOURS</th>
+        <th class="bg-primary">MEASUREMENTS</th>
+        <th class="bg-primary">LAB</th>
+        <th class="bg-primary">PIECES</th>
+        <th class="bg-primary">WEIGHT</th>
+        <th class="bg-primary">PRICE</th>
+        <th class="bg-primary">UNITS</th>
+        <th class="bg-primary">AMOUNT</th>
+        <th class="bg-primary">DISCOUNT</th>
+        <th class="bg-primary">DISCOUNTED AMOUNT</th>
+        <th class="bg-primary">TOTAL VALUE</th>
+        <th class="bg-primary">CURRENCY</th>
+        <th class="bg-primary">TAG PRICE</th>
+        <th class="bg-primary">RATE</th>
+        <th class="bg-primary">COMMENTS</th>
+        <th class="bg-primary" style="text-align:center;">SALES STATUS</th>
+    </tr>
+    {% for obj in sold_items %} 
+    <tr>
+        <td style="text-align:center;">{{obj.stockid}}</td>
+        <td>{{obj.location.capitalize}}</td>
+        <td>{{obj.shape.capitalize}}</td>
+        <td>{{obj.gem_type.capitalize}}</td>
+        <td>{{obj.origin.capitalize}}</td>
+        <td>{{obj.treatment.capitalize}}</td>
+        <td>{{obj.Clarity.capitalize}}</td>
+        <td>{{obj.certificate_no}}</th>
+        <td>{{obj.color}}</td>
+        <td>{{obj.measurements}}</td>
+        <td>{{obj.lab}}</td>
+        <td>{{obj.PCS}}</td>
+        <td>{{obj.Weight_cs}}</td>
+        <td>{{obj.price}}</td>
+        <td>{{obj.units_cs}}</td>
+        <td>{{obj.amount_cs}}</td>
+        <td>{{obj.DIS_cs}}</td>
+        <td>{{obj.DIS_amount_cs}}</td>
+        <td>{{obj.total_value_cs}}</td>
+        <td>{{obj.currency_cs}}</td>
+        <td>{{obj.tag_price_cs}}</td>
+        <td>{{obj.rate_cs}}</td>
+        {% if obj.comment %}
+        <td>{{obj.comment}}</td>
+        {% endif %}
+        <td>{{obj.salesapprovalstatus_cs}}</td>
+        {% if obj.salesapprovalstatus_cs is False %}
+        <td><a class="btn btn-primary" style="text-decoration:none;" href="{% url 'return_colorstone_Inventory' obj.id %}" target=""> Return back to Inventory</a></td>
         {% endif%}
     </tr>
-    </tbody>
-    {%endfor%}
-
-    <button><a href="{% url 'displaysalesreturn_cs' %}" target=""> View Sales Return</a></button>
+    {% endfor %}
 </table>
-{% endblock content %}
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
+
+{% endblock  %}
+{% block container1 %}
+<div id="allign_sell_btn_right"><a class="btn btn-primary btn-sm" style ="text-decoration: none" href="{% url 'displaysalesreturn_cs' %}" target=""> View Sales Return</a></div>{% endblock %}

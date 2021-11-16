@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+<!-- Layout For Common For All Table -->
+{% block style %}
+ <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    #table_view {
+      display: flex;
+      margin: 0 1%;
+      height: 72.9vh;
+      overflow: scroll;
+      white-space: nowrap;
+      border: 2px solid black;
+    }
+    .table_title{
+      font-size: 30px;
+      font-weight: bolder;
+      text-align: center;
+      padding-top: 10px;
+    }
+    table{
+      height: 100%;
+      position: relative;
+    }
+    table,tr,th,td{
+      border: 1px solid rgb(133, 88, 88);
+      border-collapse: collapse;
+      padding: 3px;
+    }
+    th{
+      position: sticky;
+      top: 0;
+      font-size: 16px;
+      background-clip: padding-box;
+      color:white;
+    }
+    /* For  */
+  #allign_sell_btn_right{
+    display:flex;
+    justify-content:end;
+    width: 90%;
+    margin:13px 5%;
+  }
+  </style>
+  <!-- Style for Responsive -->
+  <style>
+      @media only screen and (min-width:720px) and (max-width:900px) {
+      .table_title{
+      font-size: 27px;
+    }
+    th{
+      font-size: 14.5px;
+    }
+    td{
+      font-size: 12.5px;
+    }
+  }
+    @media only screen and (min-width:400px) and (max-width:720px) {
+      .table_title{
+      font-size: 18px;
+    }
+    th{
+      font-size: 11.5px;
+    }
+    td{
+      font-size: 9.5px;
+    }
+    }
+    @media only screen and (max-width:400px){
+      .table_title{
+      font-size: 15px;
+    }
+    th{
+      font-size: 10.5px;
+    }
+    td{
+      font-size: 8.5px;
+    }
+    }
+  </style>
+{% if css_adjust %}
+<style>
+    #table_view {
+      all:unset;
+      display: flex;
+      overflow: scroll;
+      white-space: nowrap;
+      margin: 0 1%;
+    }
+</style>
+{% endif %}
+<!-- CSS for Inventory Table Layout -->
+{% block Inventory_Css %}{% endblock  %}
+{% endblock  %}
+{% block container %}
+ <div class="table_title">{{table_type}}</div>
+ <div id="table_view">
+   {% block table %}{% endblock  %}
+ </div>
+ {% block container1 %}{% endblock %}
+{% endblock  %}

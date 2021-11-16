@@ -1,0 +1,86 @@
+{% extends 'common_table.html' %}
+<!-- Layout For Common For All Inventory Table -->
+{% block Inventory_Css %}
+<style>
+    @media only screen and (min-width:321px) and (max-width:435px) {
+        .btnedit{
+            font-size: 12px;
+        }
+    }
+    @media only screen and (max-width:321px){
+        .btnedit{
+            font-size: 10px;
+        }
+    }
+    #buttonstyle{
+        position: absolute;
+        display: flex;
+        top: 90vh;
+        
+    }
+    #button-allignment {
+        display: flex;
+position: absolute;
+
+justify-content: space-evenly;
+top: 92vh;
+width: 100%;
+    }
+</style>
+{% endblock  %}
+{% block script %} 
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<script>
+    if (!$) {
+        $ = django.jQuery;
+    }
+    $(document).ready(function () {
+        $('#delete_btn').click(function () {
+            if (confirm("You want to return selected items")) {
+                var id = [];
+                var csrf = $('input[name=csrfmiddlewaretoken').val()
+                $(':checkbox:checked').each(function (i) {
+
+                    id[i] = $(this).val()
+                    console.log("ajax called")
+                    console.log(id[0])
+                })
+                if (id.length == 0) {
+                    alert("No items Selected Please Select Again");
+
+                }
+                else {
+                    $.ajax({
+                        url: '.',
+                        method: "POST",
+                        data: {
+                            id,
+                            csrfmiddlewaretoken: csrf,
+                        },
+
+                        success: function (response) {
+                            window.location.reload();
+                            for (var i = 0; i < id.length; i++) {
+
+                                $('tr#' + id[i] + '').css('background-color', '#ccc');
+                                $('tr#' + id[i] + '').fadeOut('slow');
+
+                            }
+
+                        }
+
+                    });
+                }
+
+
+            }
+
+
+
+
+        });
+
+    });
+</script>
+{% endblock  %}

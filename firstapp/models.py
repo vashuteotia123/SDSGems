@@ -679,7 +679,7 @@ class Inventoryofcolorstones(models.Model):
     purchaseapv = models.BooleanField(blank=True)
     appvreturnstatus = models.BooleanField(default=False)
     cartstatus = models.BooleanField(default=False)
-
+    frontend = models.BooleanField(default=False)
     def __str__(self):
         return str(self.stockid)
 

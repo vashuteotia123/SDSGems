@@ -21,6 +21,8 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
+from django.http import HttpResponseRedirect
+
 # Create your views here.
 
 
@@ -575,8 +577,20 @@ def return_jewel_cart(request, id):
 @login_required
 def showcs(request):
     cs_obj = PurchaseOfColorStones.objects.all()
+    invobj=list(Inventoryofcolorstones.objects.values_list('stockid', flat=True))
+    invobjectscs=[]
+    for i in invobj:
+        z=i.replace("C-","")
+        invobjectscs.append(int(z))
+    if len(cs_obj)<=7:
+       change =True
+    else:  
+       change = False 
     context = {
         "show_cs": cs_obj,
+        "invobjectscs":invobjectscs,
+        "css_adjust": change,
+        "table_type": "Edit Purchased Items of Colourstone",
     }
     return render(request, "showcs.html", context=context)
 
@@ -605,6 +619,7 @@ def update_cs(request, ck):
                 stockid=str("C-")+str(ck)).delete()
         # print("3")
             form5.save()
+            messages.success(request, "{}Modified  Successfully".format(str("C-")+str(ck)))
             return redirect('/showcs')
 
     context = {'form5': form5}
@@ -638,6 +653,7 @@ def deleteid_cs( request, idno):
 @login_required
 def showinv_cs(request):
     inv_csobj = Inventoryofcolorstones.objects.all()
+
     context = {
         "showinv_cs": inv_csobj,
     }
@@ -720,6 +736,18 @@ def sell_cs(request):
     cloneInvofcolorstones.objects.all().delete()
     context = {
         "sold_items": Salesofcolorstones.objects.all(),
+    }
+    return render(request, "show_sell_cs_table.html", context=context)
+def allsellcsrecords(request):
+    sold_items = Salesofcolorstones.objects.all()
+    if len(sold_items)<=7:
+       change =True
+    else:  
+       change = False 
+    context = {
+        "sold_items": Salesofcolorstones.objects.all(),
+        "css_adjust": change,
+        "table_type": "Sales Record of Colourstone",
     }
     return render(request, "show_sell_cs_table.html", context=context)
     # except:
@@ -818,7 +846,13 @@ class colorstone_view(View):
         for j in y:
             product=Inventoryofcolorstones.objects.get(stockid=j)
             allproduct.append(product)
-        context = {"products_cs": allproduct}
+        product_cs = Inventoryofcolorstones.objects.all()
+        if len(product_cs )<=7:
+           change =True
+        else:  
+           change = False 
+        context = {"products_cs": allproduct,"css_adjust": change,
+        "table_type": "Inventory of Colourstone"}
         return render(request, "showinvcs.html", context=context)
 
     def post(self, request, *args, **kwargs):
@@ -1736,25 +1770,20 @@ def colorstone_upload(request):
 #     return HttpResponse('Hi')
 
 
-def show_on_frontend_jewel(request, id):
-    obj = Inventoryofjewellery.objects.get(id = id)
+def show_on_frontend_cs(request, id):
+    obj = Inventoryofcolorstones.objects.get(id = id)
     obj.frontend = True
     obj.save()
-    allproduct = Inventoryofjewellery.objects.all().order_by('stockid')
-    context = {
-        "productsj": allproduct,
-        }
-    return render(request, "showinvj.html", context=context)
+    return redirect('delete-cs')
 
-def hide_from_frontend_jewel(request, id):
-    obj = Inventoryofjewellery.objects.get(id = id)
+
+def hide_from_frontend_cs(request, id):
+    obj = Inventoryofcolorstones.objects.get(id = id)
     obj.frontend = False
     obj.save()
-    allproduct = Inventoryofjewellery.objects.all().order_by('stockid')
-    context = {
-        "productsj": allproduct,
-        }
-    return render(request, "showinvj.html", context=context)
+    return redirect('delete-cs')
+
+   
 
 def get_company_details(request):
     if request.is_ajax:

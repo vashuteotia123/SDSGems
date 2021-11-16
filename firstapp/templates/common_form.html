@@ -1,0 +1,16 @@
+{% extends 'common_table.html' %}
+{% block table %}
+<form id="form-container" method="POST">
+  {% csrf_token %}
+  {% block commonform %}{% endblock %}
+  <div id="newFormadded">
+    <div class="display"></div>
+  </div>
+</form>
+{% endblock  %}
+{% block container1 %}
+<div id="allign-btn-right">
+  <button id="add-form" type="button" class="btn btn-sm btn-success">Add Another Form</button>
+  <button type="submit" class="btn btn-sm btn-danger" id="btn-danger">Submit</button>
+</div>
+{% endblock %}

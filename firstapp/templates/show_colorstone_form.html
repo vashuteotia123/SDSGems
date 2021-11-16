@@ -1,23 +1,80 @@
-{% extends 'index.html' %}
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Conditionals</title>
-
-    {% block content %}
+{% extends 'common_table.html' %}
+{% block Inventory_Css %}
+table tr{
+    line-height: 10px;
+}
+{% endblock  %}
+{% block table %}
     <form id="form-container" method="POST">
         {% csrf_token %}
-        {{totalitems_cs.management_form}}
-        {% for form in totalitems_cs %}
-        <div class="bird-form">
-        {{form.as_p}}
-        </div>
-        {% endfor %}
-        <button id="add-form" type="button">Add Another Form</button>
-        <button type="submit">Submit</button>
-    </form>
-    
+    <table class="table table-responsive">
+           <tr class="bg-primary bg-opacity-50" id="table-heading">
+           <th class="bg-primary">DATE</th>
+           <th class="bg-primary">COMPANY NAME</th>
+           <th class="bg-primary" >PHONE NO.</th>
+           <th class="bg-primary" >ADDRESS</th>
+           <th class="bg-primary" >LOCATION</th>
+           <th class="bg-primary" style="text-align:center;">SHAPE</th>
+           <th class="bg-primary" style="text-align:center;">GEM TYPE</th>
+           <th class="bg-primary">ORIGIN</th>
+           <th class="bg-primary" style="text-align:center;">TREATMENT</th>
+           <th class="bg-primary">CLARITY</th>
+           <th class="bg-primary">CERTIFICATE NUMBER</th>
+           <th class="bg-primary">CERT</th>
+           <th class="bg-primary">COLOURS</th>
+           <th class="bg-primary">MEASUREMENTS</th>
+           <th class="bg-primary">LAB</th>
+           <th class="bg-primary">PIECES</th>
+           <th class="bg-primary">WEIGHT</th>
+           <th class="bg-primary">PRICE</th>
+           <th class="bg-primary">UNITS</th>
+           <th class="bg-primary">AMOUNT</th>
+           <th class="bg-primary">DISCOUNT</th>
+           <th class="bg-primary">DISCOUNTED AMOUNT</th>
+           <th class="bg-primary">Total val</th>
+           <th class="bg-primary">Bought Color Stone</th>
+           <th class="bg-primary">CURRENCY</th>
+           <th class="bg-primary">TAG PRICE</th>
+           <th class="bg-primary">RATE</th>
+           <th class="bg-primary">COMMENTS</th>
+    </tr>
+           {{totalitems_cs.management_form}}
+          {% for obj in totalitems_cs %} 
+          <tr class="bird-form">
+              <td>{{obj.date}}</td>
+              <td>{{obj.company_name}}</td>
+              <td>{{obj.mobile_no}}</td>
+              <td>{{obj.address}}</td>
+              <td>{{obj.location}}</td>
+              <td>{{obj.shape}}</td>
+              <td>{{obj.gem_type}}</td>
+              <td>{{obj.origin}}</td>
+              <td>{{obj.treatment}}</td>
+              <td>{{obj.Clarity}}</td>
+              <td>{{obj.certificate_no}}</th>
+              <td>{{obj.color}}</td>
+              <td>{{obj.measurements}}</td>
+              <td>{{obj.lab}}</td>
+              <td>{{obj.PCS}}</td>
+              <td>{{obj.Weight_cs}}</td>
+              <td>{{obj.price}}</td>
+              <td>{{obj.units_cs}}</td>
+              <td>{{obj.amount_cs}}</td>
+              <td>{{obj.DIS_cs}}</td>
+              <td>{{obj.DIS_amount_cs}}</td>
+              <td>{{obj.total_value_cs}}</td>
+              <td>{{obj.currency_cs}}</td>
+              <td>{{obj.tag_price_cs}}</td>
+              <td>{{obj.rate_cs}}</td>
+              <td>{{obj.comment}}</td>
+             {% endfor %}
+              </tr>
+        </table>
+        <button id="add-form" type="button" class="btn btn-sm btn-success">Add Another Form</button>
+        <button type="submit" class="btn btn-sm btn-danger" id="btn-danger">Submit</button>
+    </form> 
+{% endblock  %}
+   {% block script %}
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
         let birdForm = document.querySelectorAll(".bird-form")
@@ -64,4 +121,4 @@
 
       
     </script>
-  {% endblock content %}
+     {% endblock%}

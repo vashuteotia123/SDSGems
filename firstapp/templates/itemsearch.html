@@ -1,15 +1,45 @@
-{% extends 'index.html' %}
-    <title>Django Search</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  {% block content %}
-    <form action="{% url 'itemsearch' %}" method="POST">
-        {% csrf_token %}
-        <input type="text" name="Stockid">
-        <input type="submit" name="submit" value="Search">
+{% extends 'base.html' %}
+{% block style %}
+<style>
+  body{
+    width: 100%;
+    height: 100vh;
+    background-color: #f2f2f2;
+  }
+  #quick_search{
+    margin-top: 20px;
+    font-size: 30px;
+    text-align: center;
+  }
+  .lightning{
+    height: 27px;
+    width: 27px;
+    fill: #3ceee6;
+  }
+  input:hover{
+    background-color:  #3ceee6;
+  }
+  .allign_center{
+    text-align: center;
+  }
+</style>
+{% endblock  %}
+  {% block container %}
+
+  <div id="quick_search">
+    <svg class="lightning" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lightning" viewBox="0 0 16 16">
+    <path d="M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641l2.5-8.5zM6.374 1 4.168 8.5H7.5a.5.5 0 0 1 .478.647L6.78 13.04 11.478 7H8a.5.5 0 0 1-.474-.658L9.306 1H6.374z"/></svg>
+    Quick Search
+    <svg class="lightning" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lightning" viewBox="0 0 16 16">
+    <path d="M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641l2.5-8.5zM6.374 1 4.168 8.5H7.5a.5.5 0 0 1 .478.647L6.78 13.04 11.478 7H8a.5.5 0 0 1-.474-.658L9.306 1H6.374z"/></svg>
+</div>
+    <form class="d-flex" style="width: 60%;margin: 2% 20%;" action="{% url 'itemsearch' %}" method="POST" id="quick_searchbar">
+      {% csrf_token %}
+      <input class="form-control form-control-sm me-2" style="border-radius: 10px;outline: none;"type="search" name="Stockid" placeholder="Search" aria-label="Search">
+      <button class="btn btn-sm btn-outline-success" type="submit" name="submit" value="Search">Search</button>
     </form>
     {% if purcsobj %}
-    <h2 align="center">Purchase Records</h2>
+    <h2 class="allign_center">Purchase Records</h2>
     <table class="table">
         <thead class="thead-dark">
           <tr>
@@ -41,7 +71,7 @@
   <br><br><br>
    {% endif %}
    {% if salescsobj %}
-   <h2 align="center">Sales Records</h2>
+   <h2 class="allign_center">Sales Records</h2>
     <table class="table">
         <thead class="thead-dark">
           <tr>
@@ -72,11 +102,7 @@
         </table>
         <br><br><br>
    {% endif %}
-  {% if message %} <center><b>{{message}}</b></center>{%endif%}
-  
+  {% if message %}<div class="allign_center"><b>{{message}}</b></div>{%endif%}
+{% endblock %}
 
-{% endblock content %}
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-crossorigin="anonymous"></script>
 
