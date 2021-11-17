@@ -256,5 +256,5 @@ class blogadmin(admin.ModelAdmin):
     pass
 
 @admin.register(Salesreturn_cs)
-class slreturncsadmin(admin.ModelAdmin):
+class slreturncsadmin(ImportExportModelAdmin):
     pass

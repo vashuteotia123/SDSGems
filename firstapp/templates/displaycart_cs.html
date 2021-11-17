@@ -1,38 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-</head>
-<body>
-    <table class="table table-dark table-striped">
-        <thead>
-          <tr>
-            <th scope="col">Location</th>
-            <th scope="col">Stock ID</th>
-          </tr>
-        </thead>
+{% extends 'common_table.html' %}
+{% block table %}
+<table class="table table-responsive" >
+    <tr class="bg-primary bg-opacity-50" >
+        <th class="bg-primary">STOCK ID</th>
+        <th class="bg-primary" >LOCATION</th>
+        <th class="bg-primary" style="text-align:center;">SHAPE</th>
+        <th class="bg-primary" style="text-align:center;">GEM TYPE</th>
+        <th class="bg-primary">ORIGIN</th>
+         <th class="bg-primary">Colour</th>
+        <th class="bg-primary" style="text-align:center;">TREATMENT</th>
+         <th class="bg-primary">Edit Cart</th>
+    </tr>
     {% for p in tcscart %}
-    <tbody>
     <tr>
-    <td>{{ p.location }}</td>
-    <td>{{p.stockid}}</td>
+    <td>{{ p.stockid }}</td>
+    <td>{{p.location.capitalize}}</td>
+    <td>{{p.shape.capitalize}}</td>
+     <td>{{p.gem_type.capitalize}}</td>
+    <td>{{p.origin.capitalize}}</td>
+    <td>{{p.color.capitalize}}</td>
+    <td>{{p.treatment.capitalize}}</td>
     <td><a class="btn btn-primary" href="{% url 'return_colorstone_cart' id=p.id %}">Return from Cart</a></td>
     </tr>
-    </tbody>
     {% endfor %}
     </table>
-    <a class="btn btn-primary" href="{% url 'show_colorstone_cart' %}">Sell Cart</a>
-
-</body>
-</html>
+{% endblock  %}
+{% block container1 %}
+<a class="btn btn-primary" href="{% url 'show_colorstone_cart' %}">Sell Cart</a>
+{% endblock  %}

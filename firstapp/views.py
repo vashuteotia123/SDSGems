@@ -893,9 +893,14 @@ def returncart2_cs(request, id):
     invobj = Inventoryofcolorstones.objects.get(stockid=myobject.stockid)
     invobj.cartstatus = False
     invobj.save()
-    tcscart = cloneInvofcolorstones.objects.all()
+    tcscart= cloneInvofcolorstones.objects.all()
+    if len( tcscart)<=7:
+       change =True
+    else:  
+       change = False 
     context = {
         "tcscart": tcscart,
+        "css_adjust": change,
 
     }
     return render(request, "displaycart_cs.html", context=context)

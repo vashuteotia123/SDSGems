@@ -1,18 +1,11 @@
-{% extends 'common_table.html' %}
-{% block Inventory_Css %}
-table tr{
-    line-height: 10px;
-}
-{% endblock  %}
+{% extends 'common_table_inv.html' %}
 {% block table %}
     <form id="form-container" method="POST">
         {% csrf_token %}
-    <table class="table table-responsive">
+    <table id="all_forms"class="table table-responsive">
            <tr class="bg-primary bg-opacity-50" id="table-heading">
            <th class="bg-primary">DATE</th>
            <th class="bg-primary">COMPANY NAME</th>
-           <th class="bg-primary" >PHONE NO.</th>
-           <th class="bg-primary" >ADDRESS</th>
            <th class="bg-primary" >LOCATION</th>
            <th class="bg-primary" style="text-align:center;">SHAPE</th>
            <th class="bg-primary" style="text-align:center;">GEM TYPE</th>
@@ -43,35 +36,38 @@ table tr{
           <tr class="bird-form">
               <td>{{obj.date}}</td>
               <td>{{obj.company_name}}</td>
-              <td>{{obj.mobile_no}}</td>
-              <td>{{obj.address}}</td>
               <td>{{obj.location}}</td>
               <td>{{obj.shape}}</td>
               <td>{{obj.gem_type}}</td>
               <td>{{obj.origin}}</td>
-              <td>{{obj.treatment}}</td>
+              <td>{{obj.Treatment}}</td>
               <td>{{obj.Clarity}}</td>
-              <td>{{obj.certificate_no}}</th>
-              <td>{{obj.color}}</td>
+              <td>{{obj.certificate_no}}</td>
+              <td>{{obj.cert}}</td>
+              <td>{{obj.colour}}</td>
               <td>{{obj.measurements}}</td>
               <td>{{obj.lab}}</td>
               <td>{{obj.PCS}}</td>
-              <td>{{obj.Weight_cs}}</td>
-              <td>{{obj.price}}</td>
-              <td>{{obj.units_cs}}</td>
-              <td>{{obj.amount_cs}}</td>
-              <td>{{obj.DIS_cs}}</td>
-              <td>{{obj.DIS_amount_cs}}</td>
-              <td>{{obj.total_value_cs}}</td>
-              <td>{{obj.currency_cs}}</td>
-              <td>{{obj.tag_price_cs}}</td>
-              <td>{{obj.rate_cs}}</td>
+              <td>{{obj.Weight}}</td>
+              <td>{{obj.Price}}</td>
+              <td>{{obj.units}}</td>
+              <td>{{obj.amount}}</td>
+              <td>{{obj.discount}}</td>
+              <td>{{obj.discount_amount}}</td>
+              <td>{{obj.total_val}}</td>
+              <td>{{obj.purchaseapv}}</td>
+              <td>{{obj.currency}}</td>
+              <td>{{obj.tag_price}}</td>
+              <td>{{obj.rate}}</td>
               <td>{{obj.comment}}</td>
-             {% endfor %}
               </tr>
+              {% endfor %}
         </table>
-        <button id="add-form" type="button" class="btn btn-sm btn-success">Add Another Form</button>
-        <button type="submit" class="btn btn-sm btn-danger" id="btn-danger">Submit</button>
+    <div id="button-allignment" style="top: 88vh;">
+        <button id="add-form" type="button" class="btn btn-sm btn-success btnedit">Add Another Form</button>
+        <button id="remove-form" type="button" class="btn btn-sm btn-warning btnedit">Remove</button>
+        <button type="submit" class="btn btn-sm btn-danger btnedit" id="btn-danger">Submit</button>
+    </div>   
     </form> 
 {% endblock  %}
    {% block script %}
@@ -80,6 +76,7 @@ table tr{
         let birdForm = document.querySelectorAll(".bird-form")
         let container = document.querySelector("#form-container")
         let addButton = document.querySelector("#add-form")
+        let removeButton = document.querySelector("#remove-form")
         document.querySelector("#id_form-0-company_name").insertAdjacentHTML("afterend", "<br><h6><strong>Phone No.: </strong></h6><span id='company_contact_number-0'></span><br><br><h6><strong>Address.: </strong></h6><span id='company_address-0'><span>")
         let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
         var s = "$('#id_form-" + 0 + "-discount').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + 0 + "-amount').value; var disc = document.getElementById('id_form-" + 0 + "-discount').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" + 0 + "-discount_amount').value = discamt.toFixed(2); document.getElementById('id_form-" + 0 + "-total_val').value=(amount- discamt).toFixed(2);  });  "
@@ -90,6 +87,7 @@ table tr{
         "document.getElementById('company_address-0').innerHTML = data['location'];} }) });" 
         let formNum = birdForm.length-1
         addButton.addEventListener('click', addForm)
+        removeButton.addEventListener('click', RemoveForm)
         function addForm(e){
             e.preventDefault()
 
@@ -106,13 +104,21 @@ table tr{
             amt += "$('#id_form-" +(formNum) + "-Price, #id_form-" +(formNum)+"-Weight').on('change keyup blur', function () { var weight = document.getElementById('id_form-" + (formNum) + "-Weight').value; var price = document.getElementById('id_form-" + (formNum)+ "-Price').value; var amount_value = (price * weight); document.getElementById('id_form-" + (formNum) + "-amount').value = amount_value.toFixed(2);  });  "
             company_detail_call += "$('#id_form-"+(formNum) +"-company_name').change(function(){var company_name = $(this).find(':selected')[0].text;$.ajax({type: 'GET',url: '{% url 'get_company_details' %}',data: {'name': company_name,},success: function(data) {document.getElementById('company_contact_number-"+formNum+"').innerHTML = data['contact_no']; " +"document.getElementById('company_address-"+formNum+"').innerHTML = data['location']; } }) });"
             newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
-            container.insertBefore(newForm, addButton)
-            
+            document.getElementById("all_forms").innerHTML+=newForm.innerHTML;
             totalForms.setAttribute('value', `${formNum+1}`)
             eval(s);
             eval(amt);
             eval(company_detail_call);
             // eval(add_span_tags);
+        }
+        function RemoveForm(e){
+            e.preventDefault();
+            if(formNum>=0){
+                formNum--;
+                var formcontainer = document.getElementById("all_forms")
+                formcontainer.removeChild(formcontainer.lastChild);
+            }
+            console.log(formNum);
         }
         eval(s);
         eval(amt);

@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Conditionals</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    {% if messages%}
+{% extends 'base.html' %}
+{% block container %}
+{% if messages%}
     {% for message in messages%}
     {{message}}
     {%endfor%}
@@ -26,7 +18,9 @@
      <a href='{% url 'sell_cs' %}'>Sell</a>
      {%endif%}
     </form>
-  </body>
+{% endblock  %}
+    
+  {% block script %}
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script>
 
@@ -56,5 +50,6 @@
     eval(total_amount+total_amount1);
     console.log(total_amount+total_amount1);
   </script>
-</html>
+  {% endblock  %}
+
 
