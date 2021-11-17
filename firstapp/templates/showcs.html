@@ -33,7 +33,7 @@
     </tr>
     {% for obj in show_cs %}   
     <tr>
-        <td>{{obj.id}}</td>
+        <td>C-{{obj.id}}</td>
         <td>{{obj.date}}</td>
         <td>{{obj.company_name}}</td>
         <td>{{obj.location}}</td>
@@ -42,9 +42,9 @@
         <td>{{obj.origin}}</td>
         <td>{{obj.Treatment}}</td>
         <td>{{obj.Clarity}}</td>
-        <td>{{obj.colour.capitalize}}</td>
+        <td>{{obj.colour}}</td>
         <td>{{obj.measurements}}</th>
-        <td>{{obj.lab.capitalize}}</td>
+        <td>{{obj.lab}}</td>
         <td>{{obj.PCS}}</td>
         <td>{{obj.Weight}}</td>
         <td>{{obj.Price}}</td>

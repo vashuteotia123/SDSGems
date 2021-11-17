@@ -1,5 +1,5 @@
 {% extends 'common_table.html' %}
-{% block container %}
+{% block table %}
 {% if messages%}
     {% for message in messages%}
     {{message}}
@@ -36,12 +36,12 @@
         {% for obj in totalitems_cs %}
         <tr>
             <td style="text-align:center;">{{obj.stockid}}</td>
-            <td>{{obj.location.capitalize}}</td>
-            <td>{{obj.shape.capitalize}}</td>
-            <td>{{obj.gem_type.capitalize}}</td>
-            <td>{{obj.origin.capitalize}}</td>
-            <td>{{obj.treatment.capitalize}}</td>
-            <td>{{obj.Clarity.capitalize}}</td>
+            <td>{{obj.location}}</td>
+            <td>{{obj.shape}}</td>
+            <td>{{obj.gem_type}}</td>
+            <td>{{obj.origin}}</td>
+            <td>{{obj.treatment}}</td>
+            <td>{{obj.Clarity}}</td>
             <td>{{obj.certificate_no}}</th>
             <td>{{obj.color}}</td>
             <td>{{obj.measurements}}</td>
@@ -58,16 +58,13 @@
             <td>{{obj.tag_price_cs}}</td>
             <td>{{obj.rate_cs}}</td>
             <td>{{obj.sold_items}}</td>
-            {% endif%}
         </tr>
         {% endfor %}
     </table>
-      <div>
       <h5>Total Value of all items: </h5><span id="total_amount_cum">0</span><br>
-    </div>
       <button type="submit" class="btn btn-3" onclick=''>Submit</button>
       {% if is_valid%}
-     <a href='{% url 'sell_cs' %}'>Sell</a>
+       <a href='{% url 'sell_cs' %}'>Sell</a>
      {%endif%}
     </form>
 {% endblock  %}

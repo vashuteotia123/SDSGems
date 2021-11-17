@@ -113,11 +113,9 @@
         }
         function RemoveForm(e){
             e.preventDefault();
-            if(formNum>=0){
-                formNum--;
-                var formcontainer = document.getElementById("all_forms")
-                formcontainer.removeChild(formcontainer.lastChild);
-            }
+            formNum--;
+            var formcontainer = document.getElementById("all_forms")
+            formcontainer.removeChild(formcontainer.lastChild);
             console.log(formNum);
         }
         eval(s);

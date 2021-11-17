@@ -1,3 +1,4 @@
+from django.contrib.messages.api import MessageFailure
 from django.core import paginator
 from django.views.generic import View
 from django.db.models import Q
@@ -850,9 +851,10 @@ class colorstone_view(View):
         if len(product_cs )<=7:
            change =True
         else:  
-           change = False 
+           change = False
+        length_cs = len(allproduct);
         context = {"products_cs": allproduct,"css_adjust": change,
-        "table_type": "Inventory of Colourstone"}
+        "table_type": "Inventory of Colourstone", "length_cs": length_cs}
         return render(request, "showinvcs.html", context=context)
 
     def post(self, request, *args, **kwargs):
@@ -927,6 +929,7 @@ def displaycart2_cs(request):
 @login_required
 def return_colorstone_cart(request, id):
     rjc = cloneInvofcolorstones.objects.get(id=id)
+    print(rjc.stockid)
     rjc2 = Inventoryofcolorstones.objects.get(stockid=rjc.stockid)
     if rjc2.purchaseapv is False:
         x = re.findall("[0-9]+", rjc2.stockid)
@@ -1499,10 +1502,10 @@ def colorstone_upload(request):
         # print(final_date)
         f=PurchaseOfColorStones
         try:
-            f.company_name = companyinfo.objects.get(company_name=column[2])
+            f.company_name = companyinfo.objects.get(company_name=column[2].lower())
         except ObjectDoesNotExist:
-            html="Company Name does not exist " + '<a href="/cform">Create Company details</a>'
-            return HttpResponse(html)
+            messages.error(request, "Company Name does not exist, Add company from top bar!")
+            return redirect(request.META.get('HTTP_REFERER'))
         print(f.company_name)
         try:
             f.location,lcobj = location.objects.get_or_create(place=column[3].lower())
@@ -1510,7 +1513,6 @@ def colorstone_upload(request):
                 f.location.save()
         except Exception as e:
             raise e
-        print(f.location)
         try:
           f.shape,sobj=shape_cs.objects.get_or_create(shape=column[4].lower())
           if sobj :
@@ -1541,14 +1543,14 @@ def colorstone_upload(request):
         # print(f.Treatment)
 
 
-        try:
-            f.certificate_no,cerobj = cert_no_cs.objects.get_or_create(cert=column[9].lower())
-            if cerobj :
-                f.certificate_no.save()
-        except Exception as e:
-            raise e
+        # try:
+        #     f.certificate_no,cerobj = cert_no_cs.objects.get_or_create(cert=column[9].lower())
+        #     if cerobj :
+        #         f.certificate_no.save()
+        # except Exception as e:
+        #     raise e
 
-        print(f.certificate_no)
+        # print(f.certificate_no)
 
         try:
             f.lab,mobj = Lab_cs.objects.get_or_create(lab=column[12].lower())
@@ -1574,13 +1576,8 @@ def colorstone_upload(request):
         else:
             y=True
 
-        print("Called1234")
 
-        try:
-            if float(column[17]):
-                pass
-        except:
-            return HttpResponse("enter float ")
+        
 
         myibj=PurchaseOfColorStones.objects.create(date=temp_date,
         company_name_id=f.company_name.id,
@@ -1590,7 +1587,7 @@ def colorstone_upload(request):
         origin_id=f.origin.id,
         Treatment_id=f.Treatment.id,
         Clarity=column[8],
-        certificate_no_id=f.certificate_no.id,
+        certificate_no=column[9].lower(),
         colour=column[10],
         measurements=column[11],
         lab_id=f.lab.id,
@@ -1607,7 +1604,8 @@ def colorstone_upload(request):
         tag_price=float(column[23]),
         rate=float(column[24]),
         )
-    return HttpResponse('Hi')
+    messages.success(request, "Successfully uploaded records")
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
 # @login_required
@@ -2170,3 +2168,25 @@ def ExportSalesofcolorstones(request):
     writer.writerows(output)
     return response
 
+def get_certificate_of_colorstone(request):
+    stockid  = request.GET.get('stockid', None)
+    try:
+        id_used = Inventoryofcolorstones.objects.get(stockid=stockid)
+        data = ColorStone_media.objects.get(stockid = id_used.id)
+        return JsonResponse({'certificate': str(data.certificate)}, status=200)
+    except:
+        data  = {}
+    return JsonResponse({'certificate': '0'}, status = 200)
+
+def ExportSalesreturncolorstones(request):
+    objects = Salesreturn_cs.objects.all()
+    output = []
+    response = HttpResponse(content_type='text/csv')
+    filename = "Salesreturncolorstones.csv"
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    writer = csv.writer(response)
+    writer.writerow(['Date','Stock id', 'Company Name','Location', 'Gem Type','Weight ','Tag Price'])
+    for item in objects:
+        output.append([item.date, 'C-' + str(item.id), item.company_name, item.location,item.gem_type,item.weight,item.tag_price_cs])
+    writer.writerows(output)
+    return response

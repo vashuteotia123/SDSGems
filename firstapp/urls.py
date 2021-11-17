@@ -64,7 +64,8 @@ urlpatterns = [
     path('export_purchase_of_color_stones', views.ExportPurcahseOfColorStones, name="export_purchase_of_color_stones"),
     path('export_inventory_of_color_stones', views.ExportInventoryofcolorstones, name="export_inventory_of_color_stones"),
     path('export_sales_of_color_stones', views.ExportSalesofcolorstones, name="export_sales_of_color_stones"),
-
+    path('get_certificate_of_colorstone', views.get_certificate_of_colorstone, name='get_certificate_of_colorstone'),
+    path('ExportSalesreturncolorstones', views.ExportSalesreturncolorstones, name='ExportSalesreturncolorstones'),
 
     # ///////diamond url/////////
 

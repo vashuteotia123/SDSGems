@@ -35,7 +35,7 @@ class location(models.Model):
     place = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.place
+        return self.place.title()
 
     def save(self, *args, **kwargs):
         self.place = self.place.lower()
@@ -46,7 +46,7 @@ class gemtype(models.Model):
     gem = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.gem
+        return self.gem.title()
     def save(self, *args, **kwargs):
         self.gem = self.gem.lower()
         super(gemtype, self).save(*args, **kwargs)
@@ -60,15 +60,15 @@ class companyinfo(models.Model):
     country = models.ForeignKey(countries, on_delete=models.PROTECT)
     mobile_no = models.CharField(max_length=20)
     tel_no = models.CharField(max_length=20, null=True)
-    email = models.EmailField()
-    website = models.EmailField(max_length=150)
-    pan_no = models.CharField(max_length=20)
-    GST_no = models.CharField(max_length=20)
-    line_id = models.CharField(max_length=20)
-    wechat_id = models.CharField(max_length=50)
+    email = models.EmailField(blank=True,null=True)
+    website = models.EmailField(max_length=150,blank=True,null=True)
+    pan_no = models.CharField(max_length=20,blank=True,null=True)
+    GST_no = models.CharField(max_length=20,blank=True,null=True)
+    line_id = models.CharField(max_length=20,blank=True,null=True)
+    wechat_id = models.CharField(max_length=5,blank=True,null=True)
 
     def __str__(self):
-         return self.company_name
+         return self.company_name.title()
          
     def save(self, *args, **kwargs):
         self.company_name = self.company_name.lower()
@@ -140,7 +140,7 @@ class currencies(models.Model):
     currency = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.currency
+        return self.currency.title()
     def save(self, *args, **kwargs):
         self.currency = self.currency.lower()
         super(currencies, self).save(*args, **kwargs)
@@ -513,6 +513,8 @@ class Salesofdiamond(models.Model):
     rate_d = models.FloatField(blank=True, null=True)
     salesapprovalstatus_d = models.BooleanField(default=False)
     comment = models.TextField(max_length=3000, blank=True, null=True)
+    def __str__(self):
+        return self.stockid
 
 
 
@@ -568,7 +570,7 @@ class Origin_cs(models.Model):
     org = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.org
+        return self.org.title()
     def save(self, *args, **kwargs):
         self.org = self.org.lower()
         super(Origin_cs, self).save(*args, **kwargs)
@@ -576,7 +578,7 @@ class Origin_cs(models.Model):
 class Lab_cs(models.Model):
     lab = models.CharField(max_length=20)
     def __str__(self):
-        return self.lab
+        return self.lab.title()
     def save(self, *args, **kwargs):
         self.lab= self.lab.lower()
         super(Lab_cs, self).save(*args, **kwargs)
@@ -585,7 +587,7 @@ class Treatment_cs(models.Model):
     treatment = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.treatment
+        return self.treatment.title()
     def save(self, *args, **kwargs):
         self.treatment = self.treatment.lower()
         super(Treatment_cs, self).save(*args, **kwargs)
@@ -594,7 +596,7 @@ class shape_cs(models.Model):
     shape = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.shape
+        return self.shape.title()
     def save(self, *args, **kwargs):
         self.shape = self.shape.lower()
         super(shape_cs, self).save(*args, **kwargs)
@@ -623,8 +625,6 @@ class PurchaseOfColorStones(models.Model):
         'Treatment_cs', on_delete=models.PROTECT, blank=True)
     Clarity = models.CharField(max_length=30,null=True,blank=True)
     certificate_no = models.CharField(max_length=30,null=True,blank=True,verbose_name="Certificate Number")
-    cert = models.ForeignKey(
-        'certificate', on_delete=models.PROTECT, null=True, blank=True,verbose_name="Certificate Type")
     colour = models.CharField(max_length=30)
     measurements = models.CharField(max_length=30,blank=True,null=True)
     lab = models.ForeignKey('Lab_cs', on_delete=models.PROTECT, blank=True)
