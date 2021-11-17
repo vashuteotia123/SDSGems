@@ -27,6 +27,7 @@
         <th class="bg-primary">Currency</th>
         <th class="bg-primary">TAG PRICE</th>
         <th class="bg-primary">RATE</th>
+        <th class="bg-primary">CERTIFICATE</th>
         <th class="bg-primary">CERTIFICATE NUMBER</th>
         <th class="bg-primary" colspan="2" style="text-align: center;">Action</th>
     </tr>
@@ -56,11 +57,12 @@
         <td>{{obj.currency}}</td>
         <td>{{obj.tag_price}}</td>
         <td>{{obj.rate}}</td>
-        {% if obj.cert.file %}
-        <td><a href="/media/{{ obj.cert.file }}"> Certficate Details</a></td>
+        {% if obj.cert.certificate %}
+        <td><a href="/media/{{ obj.cert.certificate}}"> Certficate Details</a></td>
         {% else %}
         <td> Not Available</td>
         {%endif%}
+        <td>{{obj.certificate_no}}</td>
         <td style="padding: 10px 10px;"><a class="btn btn-danger" style="text-decoration: none;padding: 6px 35px;" href="{% url 'deleteid_cs' idno=obj.id %}" >Delete</a></td>
         {% if obj.id in invobjectscs %}
         <td style="padding: 10px 10px;"><a class="btn btn-warning"style="text-decoration: none;padding: 6px 44px;" href="{% url 'update_cs' ck=obj.id %}">Edit</a></td>

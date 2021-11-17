@@ -622,10 +622,9 @@ class PurchaseOfColorStones(models.Model):
     Treatment = models.ForeignKey(
         'Treatment_cs', on_delete=models.PROTECT, blank=True)
     Clarity = models.CharField(max_length=30,null=True,blank=True)
-    certificate_no = models.ForeignKey(
-        'cert_no_cs', on_delete=models.PROTECT, blank=True)
+    certificate_no = models.CharField(max_length=30,null=True,blank=True,verbose_name="Certificate Number")
     cert = models.ForeignKey(
-        'certificate', on_delete=models.PROTECT, null=True, blank=True)
+        'certificate', on_delete=models.PROTECT, null=True, blank=True,verbose_name="Certificate Type")
     colour = models.CharField(max_length=30)
     measurements = models.CharField(max_length=30,blank=True,null=True)
     lab = models.ForeignKey('Lab_cs', on_delete=models.PROTECT, blank=True)
@@ -784,7 +783,7 @@ class Jewel_media(models.Model):
 class ColorStone_media(models.Model):
     class Meta:
         verbose_name_plural = "ColorStone Media"
-    jewel_object = models.ForeignKey(Inventoryofcolorstones, on_delete=models.CASCADE)
+    stockid = models.ForeignKey(Inventoryofcolorstones, on_delete=models.CASCADE)
     image1 = models.ImageField(upload_to="ColorStoneMedia/", blank=True, null=True)
     image2 = models.ImageField(upload_to="ColorStoneMedia/", blank=True, null=True)
     image3 = models.ImageField(upload_to="ColorStoneMedia/", blank=True, null=True)

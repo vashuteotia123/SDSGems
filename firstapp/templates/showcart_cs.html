@@ -1,15 +1,67 @@
-{% extends 'base.html' %}
+{% extends 'common_table.html' %}
 {% block container %}
 {% if messages%}
     {% for message in messages%}
     {{message}}
     {%endfor%}
     {%endif%}
-    <form method="post" action="">
-      {%csrf_token%} {{totalitems_cs.management_form }}
-      <table>
-        {% for form in totalitems_cs %} {{ form }} {% endfor %}
-      </table>
+  <table class="table table-responsive">
+        <tr class="bg-primary bg-opacity-50" id="table-heading">
+            <th class="bg-primary">STOCK ID</th>
+            <th class="bg-primary" >LOCATION</th>
+            <th class="bg-primary" style="text-align:center;">SHAPE</th>
+            <th class="bg-primary" style="text-align:center;">GEM TYPE</th>
+            <th class="bg-primary">ORIGIN</th>
+            <th class="bg-primary" style="text-align:center;">TREATMENT</th>
+            <th class="bg-primary">CLARITY</th>
+            <th class="bg-primary">CERTIFICATE NUMBER</th>
+            <th class="bg-primary">COLOURS</th>
+            <th class="bg-primary">MEASUREMENTS</th>
+            <th class="bg-primary">LAB</th>
+            <th class="bg-primary">PIECES</th>
+            <th class="bg-primary">WEIGHT</th>
+            <th class="bg-primary">PRICE</th>
+            <th class="bg-primary">UNITS</th>
+            <th class="bg-primary">AMOUNT</th>
+            <th class="bg-primary">DISCOUNT</th>
+            <th class="bg-primary">DISCOUNTED AMOUNT</th>
+            <th class="bg-primary">TOTAL VALUE</th>
+            <th class="bg-primary">CURRENCY</th>
+            <th class="bg-primary">TAG PRICE</th>
+            <th class="bg-primary">RATE</th>
+            <th class="bg-primary">SOLD ITEM</th>
+        </tr>
+  <form method="post" action="">
+          {%csrf_token%} {{totalitems_cs.management_form }}
+        {% for obj in totalitems_cs %}
+        <tr>
+            <td style="text-align:center;">{{obj.stockid}}</td>
+            <td>{{obj.location.capitalize}}</td>
+            <td>{{obj.shape.capitalize}}</td>
+            <td>{{obj.gem_type.capitalize}}</td>
+            <td>{{obj.origin.capitalize}}</td>
+            <td>{{obj.treatment.capitalize}}</td>
+            <td>{{obj.Clarity.capitalize}}</td>
+            <td>{{obj.certificate_no}}</th>
+            <td>{{obj.color}}</td>
+            <td>{{obj.measurements}}</td>
+            <td>{{obj.lab}}</td>
+            <td>{{obj.PCS}}</td>
+            <td>{{obj.Weight_cs}}</td>
+            <td>{{obj.price}}</td>
+            <td>{{obj.units_cs}}</td>
+            <td>{{obj.amount_cs}}</td>
+            <td>{{obj.DIS_cs}}</td>
+            <td>{{obj.DIS_amount_cs}}</td>
+            <td>{{obj.total_value_cs}}</td>
+            <td>{{obj.currency_cs}}</td>
+            <td>{{obj.tag_price_cs}}</td>
+            <td>{{obj.rate_cs}}</td>
+            <td>{{obj.sold_items}}</td>
+            {% endif%}
+        </tr>
+        {% endfor %}
+    </table>
       <div>
       <h5>Total Value of all items: </h5><span id="total_amount_cum">0</span><br>
     </div>
