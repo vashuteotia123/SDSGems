@@ -61,11 +61,16 @@
         </tr>
         {% endfor %}
     </table>
-      <h5>Total Value of all items: </h5><span id="total_amount_cum">0</span><br>
-      <button type="submit" class="btn btn-3" onclick=''>Submit</button>
-      {% if is_valid%}
-       <a href='{% url 'sell_cs' %}'>Sell</a>
-     {%endif%}
+    {% if is_valid%}
+    {%endif%}
+    <div id="sell_cart">
+    <span id="total_header">Total Value of all items: </span><span id="total_amount_cum">0</span>
+    </div> 
+    <div id="allign_btn">
+      <button class="btn btn-3 btn-success" type="submit" onclick=''>Submit</button>
+      <a class="btn btn-3 btn-warning" style="margin-right: 80px;" href="{% url 'sell_cs' %}">Sell</a>
+    </div>
+
     </form>
 {% endblock  %}
     

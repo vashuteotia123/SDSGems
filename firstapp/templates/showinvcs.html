@@ -25,7 +25,7 @@
         <th class="bg-primary">PIECES</th>
         <th class="bg-primary">WEIGHT</th>
         <th class="bg-primary">TAG PRICE</th>
-        <th class="bg-primary">STATUS</th>
+        <th class="bg-primary">BOUGHT COLOURSTONE</th>
         <th class="bg-primary" style="text-align:center;">CART</th>
         <th class="bg-primary" style="text-align:center;">Home Page</th>
         <th class="bg-primary" style="text-align:center;">CHECK</th>
@@ -49,7 +49,11 @@
         <td>{{obj.PCS}}</td>
         <td>{{obj.Weight}}</td>
         <td>{{obj.tag_price}}</td>
-        <td>{{obj.status}}</td>
+        {% if obj.status %}
+        <td>YES</td>
+        {% else %}
+        <td>NO</td>
+        {%endif%}
         {% if obj.cartstatus is False %}
         <td style="padding: 10px 20px;"><a class="btn btn-primary"style="text-decoration: none;" href="{% url 'addtocart_cs' id=obj.id %}">ADD TO CART</a></td>
         

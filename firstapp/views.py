@@ -545,11 +545,9 @@ def displaysalesreturn(request):
 @login_required
 def displaycart2(request):
     tjcart = cloneInvofjewellery.objects.all()
-    if tjcart is None:
-        context = {
-            "Cart is Empty": tjcart,
-        }
-        return render(request, "displaycart.html", context=context)
+    if len(tjcart) == 0:
+        messages.success(request,"Cart is empty")
+        return redirect(request.META.get('HTTP_REFERER'))
 
     else:
         context = {
@@ -686,18 +684,24 @@ def saving_colorstone_cart(request):
     total = cloneInvofcolorstones.objects.all()
     total_colorstones = list(total.values())
     colorstone_formset = ADCFormSet_cs(initial=total_colorstones)
+    if len(total)<=7:
+       change =True   
+    else:  
+       change = False 
     if request.method == "POST":
         curr_formset = ADCFormSet_cs(data=request.POST)
         print(len(curr_formset))
         if(curr_formset.is_valid()):
             curr_formset.save()
-            return render(request, 'showcart_cs.html',{"totalitems_cs": curr_formset,'is_valid':True, 'itemcount': len(curr_formset)})
+            return render(request, 'showcart_cs.html',{"totalitems_cs": curr_formset, "table_type": "Cart Items" ,"css_adjust_sellcart": change,'is_valid':True, 'itemcount': len(curr_formset)})
         else:
-            context = {"totalitems_cs": curr_formset, 'is_valid': False, 'itemcount': len(curr_formset)}
+            context = {"totalitems_cs": curr_formset,"css_adjust_sellcart": change, "table_type": "Cart Items" , 'is_valid': False, 'itemcount': len(curr_formset)}
             return render(request, 'showcart_cs.html', context)
     context = {
         "totalitems_cs": colorstone_formset,
-         'itemcount': len(total),
+        "table_type": "Cart Items" ,
+        "css_adjust_sellcart": change,
+        'itemcount': len(total),
     }
     return render(request, "showcart_cs.html", context=context)
 
@@ -852,7 +856,7 @@ class colorstone_view(View):
            change =True
         else:  
            change = False
-        length_cs = len(allproduct);
+        length_cs = len(allproduct)
         context = {"products_cs": allproduct,"css_adjust": change,
         "table_type": "Inventory of Colourstone", "length_cs": length_cs}
         return render(request, "showinvcs.html", context=context)
@@ -896,14 +900,8 @@ def returncart2_cs(request, id):
     invobj.cartstatus = False
     invobj.save()
     tcscart= cloneInvofcolorstones.objects.all()
-    if len( tcscart)<=7:
-       change =True
-    else:  
-       change = False 
     context = {
         "tcscart": tcscart,
-        "css_adjust": change,
-
     }
     return render(request, "displaycart_cs.html", context=context)
 
@@ -920,7 +918,15 @@ def displaysalesreturn_cs(request):
 @login_required
 def displaycart2_cs(request):
     tcscart = cloneInvofcolorstones.objects.all()
+    # if len(tcscart)==0:
+    #     messages.success(request,"Cart is empty")
+    #     return redirect(request.META.get('HTTP_REFERER'))
+    if len( tcscart)<=7:
+       change =True   
+    else:  
+       change = False 
     context = {
+        "css_adjust": change,
         "tcscart": tcscart,
     }
     return render(request, "displaycart_cs.html", context=context)

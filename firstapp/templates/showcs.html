@@ -23,11 +23,10 @@
         <th class="bg-primary">DISCOUNT</th>
         <th class="bg-primary">DISCOUNTED AMOUNT</th>
         <th class="bg-primary">TOTAL</th>
-        <th class="bg-primary">Purchase Approval</th>
+        <th class="bg-primary">BOUGHT COLOURSTONE</th>
         <th class="bg-primary">Currency</th>
         <th class="bg-primary">TAG PRICE</th>
         <th class="bg-primary">RATE</th>
-        <th class="bg-primary">CERTIFICATE</th>
         <th class="bg-primary">CERTIFICATE NUMBER</th>
         <th class="bg-primary" colspan="2" style="text-align: center;">Action</th>
     </tr>
@@ -41,8 +40,8 @@
         <td>{{obj.gem_type}}</td>
         <td>{{obj.origin}}</td>
         <td>{{obj.Treatment}}</td>
-        <td>{{obj.Clarity}}</td>
-        <td>{{obj.colour}}</td>
+        <td>{{obj.Clarity.capitalize}}</td>
+        <td>{{obj.colour.capitalize}}</td>
         <td>{{obj.measurements}}</th>
         <td>{{obj.lab}}</td>
         <td>{{obj.PCS}}</td>
@@ -53,15 +52,15 @@
         <td>{{obj.discount}}</td>
         <td>{{obj.discount_amount}}</td>
         <td>{{obj.total_val}}</td>
-        <td>{{obj.purchaseapv}}</td>
+        {% if obj.purchaseapv %}
+        <td>YES</td>
+        {% else %}
+        <td>NO</td>
+        {%endif%}
         <td>{{obj.currency}}</td>
         <td>{{obj.tag_price}}</td>
         <td>{{obj.rate}}</td>
-        {% if obj.cert.certificate %}
-        <td><a href="/media/{{ obj.cert.certificate}}"> Certficate Details</a></td>
-        {% else %}
-        <td> Not Available</td>
-        {%endif%}
+       
         <td>{{obj.certificate_no}}</td>
         <td style="padding: 10px 10px;"><a class="btn btn-danger" style="text-decoration: none;padding: 6px 35px;" href="{% url 'deleteid_cs' idno=obj.id %}" >Delete</a></td>
         {% if obj.id in invobjectscs %}

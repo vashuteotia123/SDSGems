@@ -140,7 +140,7 @@ class currencies(models.Model):
     currency = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.currency.title()
+        return self.currency.upper()
     def save(self, *args, **kwargs):
         self.currency = self.currency.lower()
         super(currencies, self).save(*args, **kwargs)
@@ -716,7 +716,7 @@ class Salesofcolorstones(models.Model):
 class cloneInvofcolorstones(models.Model):
     date = models.DateField(auto_now_add=True)
     stockid = models.CharField(max_length=30, blank=True,verbose_name="Stock ID")
-    company_name = models.CharField(max_length=30,verbose_name="Company Name")
+    company_name = models.ForeignKey(companyinfo, on_delete=models.PROTECT, null=True, blank=True,verbose_name="Company")
     location = models.CharField(max_length=30,verbose_name="Location")
     shape = models.CharField(max_length=30,verbose_name="Shape")
     gem_type = models.CharField(max_length=30)

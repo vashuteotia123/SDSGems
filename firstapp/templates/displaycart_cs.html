@@ -1,7 +1,8 @@
 {% extends 'common_table.html' %}
+{% if tcscart %}
 {% block table %}
 <table class="table table-responsive" >
-    <tr class="bg-primary bg-opacity-50" >
+    <tr class="bg-primary bg-opacity-50">
         <th class="bg-primary">STOCK ID</th>
         <th class="bg-primary" >LOCATION</th>
         <th class="bg-primary" style="text-align:center;">SHAPE</th>
@@ -27,4 +28,13 @@
 {% endblock  %}
 {% block container1 %}
 <a class="btn btn-primary" href="{% url 'show_colorstone_cart' %}">Sell Cart</a>
-{% endblock  %}
+{% endblock  %} 
+{% endif %}
+
+{% if messages%}
+  <div class="alert alert-info" role="alert">
+    {% for message in messages%}
+    {{message}}
+    {% endfor %}
+</div>
+{% endif %} 
