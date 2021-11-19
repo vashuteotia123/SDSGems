@@ -705,7 +705,7 @@ class Salesofcolorstones(models.Model):
     DIS_cs = models.DecimalField(verbose_name="Discount Percentage",null=True,blank=True,decimal_places=2, max_digits=9)
     DIS_amount_cs = models.DecimalField(verbose_name="Discount Amount",null=True,blank=True,decimal_places=2, max_digits=9)
     total_value_cs = models.DecimalField(verbose_name="Total Value",null=True,blank=True,decimal_places=2, max_digits=9)
-    currency_cs = models.CharField(max_length=30, verbose_name="Currency")
+    currency_cs = models.ForeignKey(currencies, on_delete=models.PROTECT, null=True, blank=True,verbose_name="Currency")
     tag_price_cs = models.DecimalField(verbose_name="Tag Price",decimal_places=2, max_digits=9)
     rate_cs = models.DecimalField(verbose_name="Rate", default=1,decimal_places=2, max_digits=9)
     salesapprovalstatus_cs = models.BooleanField(default=False, verbose_name="Sold")
