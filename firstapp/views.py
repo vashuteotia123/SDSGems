@@ -916,11 +916,6 @@ def displaysalesreturn_cs(request):
 @login_required
 def displaycart2_cs(request):
     tcscart = cloneInvofcolorstones.objects.all()
-    if len(tcscart)==0:
-        context = {
-            'messages': "Cart is empty",
-        }
-        return render(request, "displaycart_cs.html", context=context)
     if len( tcscart)<=7:
        change =True   
     else:  

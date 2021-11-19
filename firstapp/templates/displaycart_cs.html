@@ -9,6 +9,7 @@
 {% if tcscart %}
 
 {% block table %}
+{% if tcscart.count %}
 <table class="table table-responsive" >
     <tr class="bg-primary bg-opacity-50">
         <th class="bg-primary">STOCK ID</th>
@@ -20,6 +21,7 @@
         <th class="bg-primary" style="text-align:center;">TREATMENT</th>
          <th class="bg-primary">Edit Cart</th>
     </tr>
+    
     {% for p in tcscart %}
     <tr>
     <td>{{ p.stockid }}</td>
@@ -32,10 +34,16 @@
     <td><a class="btn btn-primary" href="{% url 'return_colorstone_cart' id=p.id %}">Return from Cart</a></td>
     </tr>
     {% endfor %}
+    
     </table>
+    {% else %}
+    <h1 align="center">Cart is empty</h1>
+    {% endif %}
 {% endblock  %}
 {% block container1 %}
+{% if tcscart.count %}
 <a class="btn btn-primary" href="{% url 'show_colorstone_cart' %}">Sell Cart</a>
+{% endif %}
 {% endblock  %} 
 {% endif %}
 
