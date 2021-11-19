@@ -111,4 +111,5 @@ urlpatterns = [
     path("ExportInventoryofcolorstones", views.ExportInventoryofcolorstones, name="ExportInventoryofcolorstones"),
     path("ExportPurchaseOfColorStones", views.ExportPurchaseOfColorStones, name="ExportPurchaseOfColorStones"), 
     path("ExportSalesofcolorstones", views.ExportSalesofcolorstones, name="ExportSalesofcolorstones"),  
+    path("ExportSalesReturnCS", views.ExportSalesReturnCS, name="ExportSalesReturnCS"),  
 ]

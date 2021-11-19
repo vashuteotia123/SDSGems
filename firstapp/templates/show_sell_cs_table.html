@@ -26,7 +26,8 @@
         <th class="bg-primary">TAG PRICE</th>
         <th class="bg-primary">RATE</th>
         <th class="bg-primary">COMMENTS</th>
-        <th class="bg-primary" style="text-align:center;">SALES STATUS</th>
+        <th class="bg-primary">SALES STATUS</th>
+        <th class="bg-primary" style="text-align:center;">ACTION</th>
     </tr>
     {% for obj in sold_items %} 
     <tr>
@@ -52,12 +53,17 @@
         <td>{{obj.currency_cs.upper}}</td>
         <td>{{obj.tag_price_cs}}</td>
         <td>{{obj.rate_cs}}</td>
-        {% if obj.comment %}
         <td>{{obj.comment}}</td>
+        {% if obj.salesapprovalstatus_cs %}
+        <td>YES</td>
+        {% else %}
+        <td>NO</td>
         {% endif %}
-        <td>{{obj.salesapprovalstatus_cs}}</td>
+    
         {% if obj.salesapprovalstatus_cs is False %}
         <td><a class="btn btn-primary" style="text-decoration:none;" href="{% url 'return_colorstone_Inventory' obj.id %}" target=""> Return back to Inventory</a></td>
+        {% else %}
+        <td><a class="btn btn-primary" style="text-decoration:none;" target="">ALREADY SOLD</a></td>
         {% endif%}
     </tr>
     {% endfor %}
