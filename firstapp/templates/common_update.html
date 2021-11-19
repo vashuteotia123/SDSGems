@@ -1,4 +1,48 @@
 {% extends 'base.html' %}
+{% block style %}
+  <style>
+    .update_title{
+    font-size: 30px;
+    font-weight: bolder;
+    text-align: center;
+    padding-top: 10px;
+  }
+  select{
+    width:160px;
+  }
+  input{
+    width: 161px;
+  }
+  /*  Style for Responsive  */
+    @media only screen and (min-width:720px) and (max-width:900px) {
+    .update_title{
+    font-size: 27px;
+  }
+}
+  @media only screen and (min-width:400px) and (max-width:720px) {
+    .update_title{
+    font-size: 18px;
+  }
+  }
+  @media only screen and (max-width:400px){
+    .update_title{
+    font-size: 15px;
+  }
+}
+</style>
+<!--  For Chrome & Edge & Brave  -->
+{% if b_s_c %}
+<style>
+  @media only screen and (min-width:438px){
+    .bird-form p{
+    margin-bottom: 6rem;
+}
+}
+</style>
+{% endif  %}
+<!-- Customized CSS for different update form -->
+{% block different %}{% endblock  %}
+{% endblock  %}
 <!-- Layout Common For all Updating Operation -->
 {% block container %}
 <div class="update_title">{{update_type}} Form Update</div>

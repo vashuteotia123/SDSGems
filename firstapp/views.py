@@ -609,6 +609,10 @@ def update_cs(request, ck):
 
     cs_obj = PurchaseOfColorStones.objects.get(id=ck)
     form5 = POCSForm(instance=cs_obj)
+    change_css = False
+    browser_type = request.user_agent.browser.family 
+    if (browser_type == 'Edge'or browser_type == 'Chrome' or browser_type == 'Brave'):
+        change_css = True
     # print("7")
     if request.method == 'POST':
         # print("2")
@@ -621,7 +625,7 @@ def update_cs(request, ck):
             messages.success(request, "{}Modified  Successfully".format(str("C-")+str(ck)))
             return redirect('/showcs')
 
-    context = {'form5': form5}
+    context = {'form5': form5,"b_s_c": change_css,"update_type":"POCS"}
     return render(request, 'update_cs.html', context)
 
 
@@ -691,7 +695,7 @@ def saving_colorstone_cart(request):
         curr_formset = ADCFormSet_cs(data=request.POST)
         if(curr_formset.is_valid()):
             curr_formset.save()
-            return render(request, 'showcart_cs.html',{"totalitems_cs": curr_formset, "table_type": "Cart Items" ,"css_adjust_sellcar": change,'is_valid':True, 'itemcount': len(curr_formset)})
+            return render(request, 'showcart_cs.html',{"totalitems_cs": curr_formset, "table_type": "Cart Items" ,"css_adjust": change,'is_valid':True, 'itemcount': len(curr_formset)})
         else:
             context = {"totalitems_cs": curr_formset,"css_adjust": change, "table_type": "Cart Items" , 'is_valid': False, 'itemcount': len(curr_formset)}
             return render(request, 'showcart_cs.html', context)
@@ -737,8 +741,15 @@ def sell_cs(request):
             salesapprovalstatus_cs=object.salesapprovalstatus_cs)
         Inventoryofcolorstones.objects.filter(stockid=object.stockid).delete()
     cloneInvofcolorstones.objects.all().delete()
+    if len(cs_objects)<=7:
+       change =True
+    else:  
+       change = False 
+    print(len(cs_objects))
     context = {
         "sold_items": Salesofcolorstones.objects.all(),
+        "css_adjust": change,
+        "table_type":"Sell Items",
     }
     return render(request, "show_sell_cs_table.html", context=context)
 def allsellcsrecords(request):
@@ -917,11 +928,15 @@ def displaysalesreturn_cs(request):
 def displaycart2_cs(request):
     tcscart = cloneInvofcolorstones.objects.all()
     if len( tcscart)<=7:
+       initial_change = False
        change =True   
     else:  
+       initial_change = True
        change = False 
     context = {
-        "css_adjust": change,
+        "css_adjust_displaycart2_cs": change,
+        "displaycart2_cs": initial_change,
+        "table_type": "Cart",
         "tcscart": tcscart,
     }
     return render(request, "displaycart_cs.html", context=context)

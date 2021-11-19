@@ -1,4 +1,43 @@
 {% extends 'common_table.html' %}
+{% block different %}
+<style>
+  #sell_cart {
+    display: flex;
+    position: absolute;
+    top: 10vh;
+    width: 80%;
+    margin: 0 10%;
+    margin-top: 40px;
+    justify-content: end;
+  }
+  #total_amount_cum{
+    display: flex;
+    align-items: center;
+    margin-top: 1px;
+    font-size: 16px;
+  }
+  #total_header{
+    font-size: 16px;
+  }
+  #allign_btn{
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    top: 92vh;
+    width: 100%;
+  }
+  #total_display-allignment{
+    display: flex;
+    justify-content: center;
+    background: #f7ff7f;
+    width: 40%;
+    margin: 0 30%;
+    border-radius: 7px;
+    border: 2px solid black;
+    margin-top: 20px;
+  }
+</style>
+{% endblock  %}
 {% block table %}
 {% if messages%}
     {% for message in messages%}
@@ -45,19 +84,17 @@
     
     
     <div id="allign_btn">
-      <button class="btn btn-3 btn-success" type="submit" onclick=''>Submit</button>
-      
-
+      {% if is_valid%}
+      <a class="uk-button uk-button-primary"  href="{% url 'sell_cs' %}" style="text-decoration: none;margin-right: 10px;border-radius: 3px;">Sell</a>
+      {% endif%}
+      <button class="btn btn-success" type="submit" onclick=''>Submit</button>
     </div>
 
     </form>
 {% endblock  %}
 {% block container1 %}
-<div id="button-allignment">
-    {% if is_valid%}
-    <a class="btn btn-primary btn-sm btnedit"  href="{% url 'sell_cs' %}" style="text-decoration: none;">Sell</a>
-    {% endif%}
-    <span id="total_header">Total Value of all items: </span><span id="total_amount_cum">0</span>
+<div id="total_display-allignment">
+    <span id="total_header">Total Value of all items&nbsp;:&nbsp;</span><span id="total_amount_cum">0</span>
 </div>
 {% endblock %}
     

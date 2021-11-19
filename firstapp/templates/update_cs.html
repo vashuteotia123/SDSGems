@@ -1,84 +1,88 @@
 {% extends 'common_update.html' %}
-{% block style %}
+{% block different %}
 <style>
 
+  @media only screen and (min-width:1072px){
+     #form-container { 
+       font-size: 18px;
+     }
+  }
+   @media only screen and (min-width:833px) and (max-width:1071px){
+     #form-container { 
+       font-size: 14px;
+     }
+  }
+  @media only screen and (min-width:714px) and (max-width:832px){
+     #form-container { 
+       font-size: 12px;
+     }
+  }
+  @media only screen and (min-width:438px) and (max-width:714px){
+    #grid-form{
+       grid-template-rows: 10% 10% 10% 10% 10% 10%;
+       grid-template-columns: 30% 20% 20% 27%;
+       grid-column-gap: 1%;
+    }
+     #form-container { 
+       font-size: 11px;
+     }
+  }
+  @media only screen and (max-width:438px){
+    #grid-form{
+      grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10%;
+      grid-template-columns: 40% 40%;
+      grid-column-gap: 20%;
+    }
+     #form-container { 
+       font-size: 11px;
+     }
+  }
+
+  #form-container {
+    margin: 0 10%;
+  }
+  #newFormadded,.bird-form{
+    display: grid;
+    grid-template-rows: 10% 10% 10% 10% 10%;
+    grid-template-columns: 18% 18% 18% 18% 20%;
+    grid-column-gap: 2%;
+  }
+  #allign-btn-right{
+    display: flex;
+    justify-content:right;
+  }
+  #btn-danger{
+    margin-left: 10px;
+  }
 </style>
-{% endblock  %}
+{% endblock %}
+
 {% block update_form %}
-{{form5.as_p}}
-<!-- <form action="" class="Purchasecolourstone">
-   {% csrf_token %}
-  <ul id="Purchasecolourstone">
-     <label for="stock_id" id="label_stock_id">DATE</label>
-      <li id="stock_id">{{form5.date}}</li>
-    <label for="company_name" id="label_company_name">Company Name</label>
-      <li id="company_name">{{form5.company_name}}</li>
-  <label for="location" id="label_location">Location</label>
-      <li id="location">{{form5.location}}</li>
-  <label for="shape" id="label_shape">Shape</label>
-      <li id="shape"><input id="id_shape" type="text" name="shape">
-      </li>
-  
-  <label for="gem_type" id="label_gem_type">Gem Type</label>
-      <li id="gem_type"><input id="id_gem_type" type="text" name="gem_type">
-      </li>
-  
-  <label for="origin" id="label_origin">Origin</label>
-      <li id="origin"><input id="id_origin" type="text" name="origin">
-      </li>
-  <label for="treatment" id="label_treatment">Treatment</label>
-      <li id="treatment"><input id="id_treatment" type="text" name="treatment">
-      </li>
-  <label for="clarity" id="label_clarity">Clarity</label>
-      <li id="clarity"><input id="id_clarity" type="text" name="clarity">
-      </li>
-  <label for="certificate_no" id="label_certificate_no">Certificate Number</label>
-      <li id="certificate_no"><input id="id_certificate_no" type="text" name="certificate_no">
-      </li>
-  <label for="colour" id="label_colour">Colour</label>
-      <li id="colour"><input id="id_colour" type="text" name="colour">
-      </li>
-  <label for="measurements" id="label_measurements">Measurements</label>
-      <li id="measurements"><input id="id_measurements" type="text" name="measurements">
-      </li>
-  <label for="lab" id="label_lab">Lab</label>
-      <li id="lab"><input id="id_lab" type="text" name="lab"></li>
-  <label for="pieces" id="label_pieces">Pieces</label>
-      <li id="pieces"><input id="id_pieces" type="text" name="pieces">
-      </li>
-  <label for="weight" id="label_weight">Weight</label>
-      <li id="weight"><input id="id_weight" type="text" name="weight">
-      </li>
-  <label for="price" id="label_price">Price</label>
-      <li id="price"><input id="id_price" type="text" name="price">
-      </li>
-  <label for="units" id="label_units">Units</label>
-      <li id="units"><input id="id_units" type="text" name="units">
-      </li>
-  <label for="amount" id="label_amount">Amount</label>
-      <li id="amount"><input id="id_amount" type="text" name="amount">
-      </li>
-  <label for="discount" id="label_discount">Discount</label>
-      <li id="discount"><input id="id_discount" type="text" name="discount">
-      </li>
-  <label for="disamount" id="label_disamount">Discounted Amount</label>
-      <li id="disamount"><input id="id_disamount" type="text" name="disamount">
-      </li>
-  
-  <label for="currency" id="label_currency">Currency</label>
-      <li id="currency"><input id="id_currency" type="text" name="currency">
-      </li>
-  <label for="tag_price" id="label_tag_price">Tag Price</label>
-      <li id="tag_price"><input id="id_tag_price" type="text" name="tag_price">
-      </li>
-  <label for="rate" id="label_rate">Rate</label>
-      <li id="rate"><input id="id_rate" type="text" name="rate">
-      </li>
-  <div class="submit_button">
-          <button type="submit" id="submit">Submit</button>
-  </div>
-  </ul>
-</form> -->
+<p style="margin-top: 18px;"><label for="id_date">Date:</label>{{form5.date}}</p>
+<p><label for="id_company_name">Company name:</label>{{form5.company_name}}</p>
+<p><label for="id_location">Location:</label>{{form5.location}}</p>
+<p><label for="id_shape">Shape:</label>{{form5.shape}}</p>
+<p><label for="id_gem_type">Gem type:</label>{{form5.gem_type}}</p>
+<p><label for="id_origin">Origin:</label>{{form5.origin}}</p>
+<p><label for="id_Treatment">Treatment:</label>{{form5.Treatment}}</p>
+<p><label for="id_Clarity">Clarity:</label>{{form5.Clarity}}</p>
+<p><label for="id_certificate_no">Certificate Number:</label>{{form5.certificate_no}}</p>
+<p><label for="id_colour">Colour:</label>{{form5.colour}}</p>
+<p><label for="id_measurements">Measurements:</label>{{form5.measurements}}</p>
+<p><label for="id_lab">Lab:</label>{{form5.lab}}</p>
+<p><label for="id_PCS">PCS:</label>{{form5.PCS}}</p>
+<p><label for="id_Weight">Weight:</label>{{form5.Weight}}</p>
+<p><label for="id_Price">Price:</label>{{form5.Price}}</p>
+<p><label for="id_units">Units:</label>{{form5.units}}</p>
+<p><label for="id_amount">Amount:</label>{{form5.amount}}</p>
+<p><label for="id_discount">Discount:</label>{{form5.discount}}</p>
+<p><label for="id_discount_amount">Discount amount:</label>{{form5.discount_amount}}</p>
+<p><label for="id_total_val">Total val:</label>{{form5.total_val}}</p>
+<p><label for="id_purchaseapv">Bought Color Stone:</label>{{form5.purchaseapv}}</p>
+<p><label for="id_currency">Currency:</label>{{form5.currency}}</p>
+<p><label for="id_tag_price">Tag price:</label>{{form5.tag_price}}</p>
+<p><label for="id_rate">Rate:</label>{{form5.rate}}</p>
+<p><label for="id_comment">Comment:</label>{{form5.comment}}</p>
 {% endblock  %}
 {% block script %}
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

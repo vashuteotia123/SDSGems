@@ -1,13 +1,39 @@
 {% extends 'common_table.html' %}
-{% if messages%}
-  <div class="alert alert-info" role="alert">
-    {% for message in messages%}
-    {{message}}
-    {% endfor %}
-</div>
-{% endif %} 
+{% block different %}
+{% if tcscart.count  %}
+{% else %}
+<style>
+  #table_view {
+    padding-top: 30px;
+  }
+</style>
+{% endif %}
+<style>
+  .allign-centre{
+  display: flex;width: 100%;justify-content: center;margin-top: 50px;
+}
+</style>
+{% if displaycart2_cs %}
+<style>
+  #table_view {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+</style>
+{% endif %}
+{% if css_adjust_displaycart2_cs %}
+<style>
+  #table_view {
+    all:unset;
+    display: flex;
+    white-space: nowrap;
+    margin: 0 1%;
+    justify-content: center;
+  }
+</style>
+{% endif %}
+{% endblock  %}
 {% if tcscart %}
-
 {% block table %}
 {% if tcscart.count %}
 <table class="table table-responsive" >
@@ -31,18 +57,22 @@
     <td>{{p.origin.capitalize}}</td>
     <td>{{p.color.capitalize}}</td>
     <td>{{p.treatment.capitalize}}</td>
-    <td><a class="btn btn-primary" href="{% url 'return_colorstone_cart' id=p.id %}">Return from Cart</a></td>
+    <td><a class="btn btn-sm btn-primary" style="text-decoration: none" href="{% url 'return_colorstone_cart' id=p.id %}">Return from Cart</a></td>
     </tr>
     {% endfor %}
     
     </table>
     {% else %}
-    <h1 align="center">Cart is empty</h1>
+    <h1>Cart is empty</h1>
     {% endif %}
 {% endblock  %}
 {% block container1 %}
 {% if tcscart.count %}
-<a class="btn btn-primary" href="{% url 'show_colorstone_cart' %}">Sell Cart</a>
+<div class="allign-centre">
+  <a class="btn btn-sm btn-primary" style="text-decoration: none" href="{% url 'show_colorstone_cart' %}">Sell Cart</a>
+</div>
+{% else %}
+   <div class="allign-centre"><a href="/delete_cs" class="uk-button  uk-button-small uk-button-primary">Move Previous</a></div>
 {% endif %}
 {% endblock  %} 
 {% endif %}

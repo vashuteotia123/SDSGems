@@ -85,51 +85,17 @@
     #table_view {
       all:unset;
       display: flex;
-      overflow: scroll;
+      overflow-x: scroll;
+      overflow-y: hidden;
       white-space: nowrap;
       margin: 0 1%;
     }
 </style>
 {% endif %}
-{% if css_adjust_sellcart %}
-<style>
-    #table_view {
-      all:unset;
-      display: flex;
-      overflow: scroll;
-      white-space: nowrap;
-      margin: 0 1%;
-      margin-top: 40px;
-    }
-    #sell_cart {
-      display: flex;
-      position: absolute;
-      top: 10vh;
-      width: 80%;
-      margin: 0 10%;
-      margin-top: 40px;
-      justify-content: end;
-    }
-    #total_amount_cum{
-      display: flex;
-      align-items: center;
-      margin-top: 2px;
-      font-size: 21px;
-    }
-    #total_header{
-      font-size: 21px;
-    }
-    #allign_btn{
-      display: flex;
-      position: absolute;
-      justify-content: end;
-      top: 92vh;
-      width: 100%;
-    }
-</style>
-{% endif %}
-<!-- CSS for Inventory Table Layout -->
+<!-- Additional CSS for Inventory Table Layout -->
 {% block Inventory_Css %}{% endblock  %}
+<!-- Additional CSS for Different Table  Layout -->
+{% block different %}{% endblock  %}
 {% endblock  %}
 {% block container %}
 <!-- Messages -->

@@ -31,8 +31,6 @@ class POCSForm(forms.ModelForm):
         labels = {'purchaseapv': 'Bought Color Stone'}
         widgets = {'date': DateInput(), 'comment': forms.Textarea(attrs={'rows':4, 'cols':15})}
 
-
-
 POCSFormSet = modelformset_factory(PurchaseOfColorStones, form=POCSForm)
 
 

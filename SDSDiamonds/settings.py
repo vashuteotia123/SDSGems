@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'import_export',
     'crispy_forms',
     'django_object_actions',
+    'django_user_agents',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 ROOT_URLCONF = 'SDSDiamonds.urls'
