@@ -26,7 +26,7 @@ from django.http import HttpResponseRedirect
 
 # Create your views here.
 
-
+@login_required
 def index(request):
     cscolors = colorofcstone.objects.all()
     context={
@@ -35,7 +35,7 @@ def index(request):
     return render(request, 'index.html',context=context)
 
 
-
+@login_required
 def home(request):
     jewel_colors = colorofcstone.objects.all()
     jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
@@ -95,37 +95,7 @@ def showform(request):
     return render(request, "form.html", context=context)
 
 
-def formsubmit(request):
-    return render(request, "index.html")
 
-
-def showform1(request):
-    form1 = POCSForm(request.POST)
-    if(form1.is_valid()):
-        #   new_object = invrt(jeweltype=form.cleaned_data['jeweltpye'], pieces=form.cleaned_data['pieces'])
-        #     obj1=Inventoryofcolorstones.objects.create(location=form.cleaned_data['location'],shape=form.cleaned_data['shape'],gem_type=form.cleaned_data['gem_type']
-        #     ,weight=form.cleaned_data['weight'],origin=form.cleaned_data['origin'],treatment=form.cleaned_data['treatment']
-        #     ,certificate_no_cs=form.cleaned_data['certificate_no_cs'],color=form.cleaned_data['color'],measurements=form.cleaned_data['measurements']
-        #     ,lab=form.cleaned_data['lab'],tag_price_cs=form.cleaned_data['tag_price_cs'])
-
-        form1.save()
-        return render(request, "index.html")
-    context = {
-        "formshow1": form1,
-    }
-    return render(request, "form1.html", context=context)
-
-
-def showform2(request):
-    form2 = PODForm(request.POST)
-    if(form2.is_valid()):
-
-        form2.save()
-        return render(request, "index.html")
-    context = {
-        "formshow2": form2,
-    }
-    return render(request, "form2.html", context=context)
 
 # def load_currency(request):
 #     country_id = request.POST.get("country_id")
@@ -752,6 +722,7 @@ def sell_cs(request):
         "table_type":"Sell Items",
     }
     return render(request, "show_sell_cs_table.html", context=context)
+@login_required
 def allsellcsrecords(request):
     sold_items = Salesofcolorstones.objects.all()
     if len(sold_items)<=7:
@@ -1421,7 +1392,8 @@ def jewellery_upload(request):
                                    rate=float(column[19]),
                                    )
     return HttpResponse('Hi')
-
+    
+@login_required
 def itemsearch(request):
     if request.method == "POST":
         query_name = request.POST.get('Stockid', None)
@@ -1788,14 +1760,14 @@ def colorstone_upload(request):
 #         )
 #     return HttpResponse('Hi')
 
-
+@login_required
 def show_on_frontend_cs(request, id):
     obj = Inventoryofcolorstones.objects.get(id = id)
     obj.frontend = True
     obj.save()
     return redirect('delete-cs')
 
-
+@login_required
 def hide_from_frontend_cs(request, id):
     obj = Inventoryofcolorstones.objects.get(id = id)
     obj.frontend = False
@@ -1803,7 +1775,7 @@ def hide_from_frontend_cs(request, id):
     return redirect('delete-cs')
 
    
-
+@login_required
 def get_company_details(request):
     if request.is_ajax:
         name = request.GET.get('name', 'None')
@@ -1814,6 +1786,7 @@ def get_company_details(request):
             return JsonResponse({"contact_no": company.contact, "location": company.address}, status=200)
     return JsonResponse({}, status=200)
 
+@login_required
 def jewel_metal_filter(request,value,category):
     print(category)
     if category == "color_of_center_stone":
@@ -1915,11 +1888,11 @@ def jewel_metal_filter(request,value,category):
         return render(request,"filtered.html",context=context)    
     else:
         pass
-
+@login_required
 def jewel_listing(request):
     return render(request,"jewel_listing.html")
     
-
+@login_required
 def contactsendmail(request):
     if request.method=="GET":
         form=contactformemail()
@@ -1932,6 +1905,7 @@ def contactsendmail(request):
             send_mail(subject,message,fromemail,['krgconnect86@gmail.com',fromemail])
     return render(request,'contact.html',{'form':form})    
 
+@login_required
 def diamond_filter(request,value,category):
     print(category)
     if category == "fancy_color_intensity1":
@@ -2034,9 +2008,11 @@ def diamond_filter(request,value,category):
     else:
         pass
 
+@login_required
 def diamond_listing(request):
     return render(request,"diamond_listing.html")  
 
+@login_required
 def cs_filter(request,value,category):
     print(category)
     if category == "origin":
@@ -2139,11 +2115,12 @@ def cs_filter(request,value,category):
     else:
         pass
 
+@login_required
 def cstone_listing(request):
     return render(request,"cstone_listing.html")  
 
 
-
+@login_required
 def ExportPurchaseOfColorStones(request):
     objects = PurchaseOfColorStones.objects.all()
     output = []
@@ -2158,6 +2135,7 @@ def ExportPurchaseOfColorStones(request):
     writer.writerows(output)
     return response
 
+@login_required
 def ExportInventoryofcolorstones(request):
     objects = Inventoryofcolorstones.objects.all()
     output = []
@@ -2172,6 +2150,7 @@ def ExportInventoryofcolorstones(request):
     writer.writerows(output)
     return response
 
+@login_required
 def ExportSalesofcolorstones(request):
     objects = Salesofcolorstones.objects.all()
     output = []
@@ -2186,6 +2165,7 @@ def ExportSalesofcolorstones(request):
     writer.writerows(output)
     return response
 
+@login_required
 def get_certificate_of_colorstone(request):
     stockid  = request.GET.get('stockid', None)
     try:
@@ -2196,6 +2176,7 @@ def get_certificate_of_colorstone(request):
         data  = {}
     return JsonResponse({'certificate': '0'}, status = 200)
 
+@login_required
 def ExportSalesreturncolorstones(request):
     objects = Salesreturn_cs.objects.all()
     output = []
@@ -2209,6 +2190,7 @@ def ExportSalesreturncolorstones(request):
     writer.writerows(output)
     return response
 
+@login_required
 def ExportSalesReturnCS(request):
     objects = Salesreturn_cs.objects.all()
     output = []

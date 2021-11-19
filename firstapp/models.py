@@ -18,13 +18,10 @@ class Blog(models.Model):
         return (self.title)
 
 
-# Create your models here.
-class Database(models.Model):
-    username = models.CharField(max_length=30)
-    email = models.EmailField(max_length=30)
-
 
 class countries(models.Model):
+    class Meta:
+        verbose_name_plural = "Countries"
     country = models.CharField(max_length=50)
 
     def __str__(self):
@@ -47,6 +44,9 @@ class location(models.Model):
 
 
 class gemtype(models.Model):
+    class Meta:
+        verbose_name_plural = "ColorStone - Gem"
+
     gem = models.CharField(max_length=50)
 
     def __str__(self):
@@ -58,6 +58,8 @@ class gemtype(models.Model):
 
 
 class companyinfo(models.Model):
+    class Meta:
+        verbose_name_plural = "Company Details"
     date = models.DateField(auto_now_add=True)
     company_name = models.CharField(max_length=100)
     contact = models.CharField(max_length=20)
@@ -146,6 +148,8 @@ class certificate(models.Model):
 
 
 class currencies(models.Model):
+    class Meta:
+        verbose_name_plural = "Currencies"
     currency = models.CharField(max_length=30)
 
     def __str__(self):
@@ -303,6 +307,24 @@ class Salesreturn(models.Model):
     jewellery_type = models.CharField(max_length=30)
 
 
+class Jewel_media(models.Model):
+    jewel_object = models.ForeignKey(Inventoryofjewellery, on_delete=models.CASCADE)
+    image1 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
+    image2 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
+    image3 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
+    image4 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
+    image5 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
+    image6 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
+    image7 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
+    image8 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
+    image9 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
+    image10 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
+    video_embed_link = models.TextField(null=True, blank=True)
+    certificate  = models.FileField(upload_to="Certificates/Jewellery/", blank =True, null=True)
+
+
+
+
 # purchase of diamonds
 
 class certificate_d(models.Model):
@@ -320,7 +342,12 @@ class clarity(models.Model):
 
 
 class color_origin(models.Model):
+    class Meta:
+        verbose_name_plural = "ColorStone - Origin"
+
     c_o = models.CharField(max_length=30)
+
+    
 
     def __str__(self):
         return self.c_o.title()
@@ -576,6 +603,8 @@ class Salesreturn_d(models.Model):
 # purchase of Colour Stones
 
 class Origin_cs(models.Model):
+    class Meta:
+        verbose_name_plural = "ColorStone - Origin"
     org = models.CharField(max_length=30)
 
     def __str__(self):
@@ -585,6 +614,8 @@ class Origin_cs(models.Model):
         super(Origin_cs, self).save(*args, **kwargs)
 
 class Lab_cs(models.Model):
+    class Meta:
+        verbose_name_plural = "ColorStone - Labs"
     lab = models.CharField(max_length=20)
     def __str__(self):
         return self.lab.upper()
@@ -594,6 +625,8 @@ class Lab_cs(models.Model):
         super(Lab_cs, self).save(*args, **kwargs)
 
 class Treatment_cs(models.Model):
+    class Meta:
+        verbose_name_plural = "ColorStone - Treatment"
     treatment = models.CharField(max_length=30)
 
     def __str__(self):
@@ -604,6 +637,8 @@ class Treatment_cs(models.Model):
         super(Treatment_cs, self).save(*args, **kwargs)
 
 class shape_cs(models.Model):
+    class Meta:
+        verbose_name_plural = "ColorStone - Shape"
     shape = models.CharField(max_length=30)
     
     
@@ -613,15 +648,6 @@ class shape_cs(models.Model):
     def save(self, *args, **kwargs):
         self.shape = self.shape.lower()
         super(shape_cs, self).save(*args, **kwargs)
-
-class cert_no_cs(models.Model):
-    cert = models.CharField(max_length=30)
-
-    def __str__(self):
-        return self.cert
-    def save(self, *args, **kwargs):
-        self.cert = self.cert.lower()
-        super(cert_no_cs, self).save(*args, **kwargs)
 
 class PurchaseOfColorStones(models.Model):
     date = models.DateField()
@@ -701,6 +727,8 @@ class Inventoryofcolorstones(models.Model):
 
 
 class Salesofcolorstones(models.Model):
+    class Meta:
+        verbose_name_plural = "ColorStone - Sales"
     date = models.DateField(auto_now_add=False, verbose_name="Date of transaction")
     stockid = models.CharField(max_length=30)
     company_name = models.ForeignKey('CompanyInfo', on_delete=PROTECT)
@@ -793,26 +821,11 @@ class Salesreturn_cs(models.Model):
     tag_price_cs = models.FloatField(null=True)
 
 
-class Jewel_media(models.Model):
-    jewel_object = models.ForeignKey(Inventoryofjewellery, on_delete=models.CASCADE)
-    image1 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
-    image2 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
-    image3 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
-    image4 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
-    image5 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
-    image6 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
-    image7 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
-    image8 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
-    image9 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
-    image10 = models.ImageField(upload_to="JewelleryMedia/", blank=True, null=True)
-    video_embed_link = models.TextField(null=True, blank=True)
-    certificate  = models.FileField(upload_to="Certificates/Jewellery/", blank =True, null=True)
-
 
 
 class ColorStone_media(models.Model):
     class Meta:
-        verbose_name_plural = "ColorStone Media"
+        verbose_name_plural = "ColorStone - Media"
     stockid = models.ForeignKey(Inventoryofcolorstones, on_delete=models.CASCADE)
     image1 = models.ImageField(upload_to="ColorStoneMedia/", blank=True, null=True)
     image2 = models.ImageField(upload_to="ColorStoneMedia/", blank=True, null=True)
