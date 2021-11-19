@@ -691,7 +691,6 @@ def saving_colorstone_cart(request):
         curr_formset = ADCFormSet_cs(data=request.POST)
         if(curr_formset.is_valid()):
             curr_formset.save()
-            print("sahi h")
             return render(request, 'showcart_cs.html',{"totalitems_cs": curr_formset, "table_type": "Cart Items" ,"css_adjust_sellcar": change,'is_valid':True, 'itemcount': len(curr_formset)})
         else:
             context = {"totalitems_cs": curr_formset,"css_adjust": change, "table_type": "Cart Items" , 'is_valid': False, 'itemcount': len(curr_formset)}
