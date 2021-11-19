@@ -462,7 +462,7 @@ def save_jewel_forms(request):
 
 class BirdAddView(TemplateView):
     template_name = "show_jewel_form.html"
-    method_decorator(login_required)
+    @method_decorator(login_required)
 
     def get(self, *args, **kwargs):
         formset = POJFormSet(queryset=POJ.objects.none())
@@ -794,7 +794,7 @@ def save_colorstone_forms(request):
 class CSAddView(TemplateView):
 
     template_name = "show_colorstone_form.html"
-    method_decorator(login_required)
+    @method_decorator(login_required)
 
   
     def get(self, *args, **kwargs):
@@ -815,7 +815,7 @@ class CSAddView(TemplateView):
 
 
 class colorstone_view(View):
-    method_decorator(login_required)
+    @method_decorator(login_required)
     def get(self, request):
         z=[]
         y=list()
@@ -869,7 +869,7 @@ class colorstone_view(View):
                                                           )
         if j_obj.purchaseapv is False:
             j_obj2.update(purchaseapv=True)
-        return redirect('/delete_cs')
+        return redirect('/inventory_color_stone')
 
 #  extra function cs
 

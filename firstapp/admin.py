@@ -97,15 +97,15 @@ if deploy_color_stone:
             return redirect('/')
 
     @admin.register(Salesofcolorstones)
-    class salesofcsadmin(DjangoObjectActions,admin.ModelAdmin):
-        def HomePage(salesofcsadmin, request, queryset):
-            return redirect('/')
+    class salesofcsadmin(admin.ModelAdmin):
+        # def HomePage(salesofcsadmin, request, queryset):
+        #     return redirect('/')
 
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
-        changelist_actions = ('HomePage',)
+        # HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
+        # changelist_actions = ('HomePage',)
 
         formfield_overrides = {models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},}
-        search_fields = ['date', 'company_name', 'stockid']
+        search_fields = ['company_name__company_name', 'stockid', 'location__place', 'gem_type__gem', 'shape__shape']
         list_editable = ['date','company_name', 'amount_cs','DIS_cs','DIS_amount_cs', 'total_value_cs', 'tag_price_cs','price','Weight_cs', 'rate_cs', 'salesapprovalstatus_cs', 'comment']
         list_display = [f.name for f in Salesofcolorstones._meta.fields]
         def has_add_permission(self, request, obj=None):
