@@ -2191,3 +2191,17 @@ def ExportSalesreturncolorstones(request):
         output.append([item.date, 'C-' + str(item.id), item.company_name, item.location,item.gem_type,item.weight,item.tag_price_cs])
     writer.writerows(output)
     return response
+
+def ExportSalesReturnCS(request):
+    objects = Salesreturn_cs.objects.all()
+    output = []
+    response = HttpResponse(content_type='text/csv')
+    filename = "SalesReturnofColourStones.csv"
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    writer = csv.writer(response)
+    writer.writerow(['Date','Stock ID','Company','Location','Gem Type','Weight','Tag Price'])
+    for item in objects:
+        output.append([item.date,item.stockid,item.company_name,item.location,item.gem_type,item.weight,item.tag_price_cs])
+
+    writer.writerows(output)
+    return response

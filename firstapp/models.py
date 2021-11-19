@@ -2,12 +2,12 @@
 from typing import Sequence
 from django.db import models
 from django.db.models.deletion import PROTECT
-from django.db.models.fields import DateTimeCheckMixin
+from django.db.models.fields import DateTimeCheckMixin, DecimalField
 from django.db.models.fields.related import ForeignKey
-from django.core.validators import RegexValidator
+from django.core.validators import DecimalValidator, RegexValidator
 from tinymce.models import HTMLField
 import datetime
-
+from decimal import Decimal
 class Blog(models.Model):
     date = models.DateField(auto_now_add=True)
     image = models.ImageField(upload_to="profile/", blank=True, null=True)
@@ -672,7 +672,7 @@ class Inventoryofcolorstones(models.Model):
     measurements = models.CharField(max_length=30,blank=True,null=True)
     lab = models.CharField(max_length=30)
     PCS = models.IntegerField(null=True)
-    Weight = models.FloatField(null=True)
+    Weight = models.DecimalField(decimal_places=2, max_digits=9, blank=True, null=True,verbose_name="Weight")
     tag_price = models.FloatField(null=True)
     status = models.BooleanField(default=False)
     purchaseapv = models.BooleanField(blank=True)
@@ -698,20 +698,20 @@ class Salesofcolorstones(models.Model):
     measurements = models.CharField(max_length=30,blank=True,null=True, verbose_name="Measurement")
     lab = models.CharField(max_length=30, verbose_name="Lab")
     PCS = models.IntegerField(verbose_name="Pieces")
-    Weight_cs = models.FloatField(verbose_name="Weight")
-    price=models.FloatField(default=0)
+    Weight_cs = models.DecimalField(decimal_places=2, max_digits=9, blank=True, null=True,verbose_name="Weight")
+    price=models.DecimalField(decimal_places=2, max_digits=9, blank=True, null=True)
     units_cs=models.CharField(max_length=30,default="")
-    amount_cs = models.FloatField(verbose_name="Amount",null=True,blank=True)
-    DIS_cs = models.FloatField(verbose_name="Discount Percentage",null=True,blank=True)
-    DIS_amount_cs = models.FloatField(verbose_name="Discount Amount",null=True,blank=True)
-    total_value_cs = models.FloatField(verbose_name="Total Value",null=True,blank=True)
+    amount_cs = models.DecimalField(verbose_name="Amount",null=True,blank=True,decimal_places=2, max_digits=9)
+    DIS_cs = models.DecimalField(verbose_name="Discount Percentage",null=True,blank=True,decimal_places=2, max_digits=9)
+    DIS_amount_cs = models.DecimalField(verbose_name="Discount Amount",null=True,blank=True,decimal_places=2, max_digits=9)
+    total_value_cs = models.DecimalField(verbose_name="Total Value",null=True,blank=True,decimal_places=2, max_digits=9)
     currency_cs = models.CharField(max_length=30, verbose_name="Currency")
-    tag_price_cs = models.FloatField(verbose_name="Tag Price")
-    rate_cs = models.FloatField(verbose_name="Rate", default=1)
+    tag_price_cs = models.DecimalField(verbose_name="Tag Price",decimal_places=2, max_digits=9)
+    rate_cs = models.DecimalField(verbose_name="Rate", default=1,decimal_places=2, max_digits=9)
     salesapprovalstatus_cs = models.BooleanField(default=False, verbose_name="Sold")
     comment = models.TextField(max_length=3000, blank=True,null=True, verbose_name="Comment")
     def save(self, *args, **kwargs):
-        self.amount_cs = self.Weight_cs * self.price
+        self.amount_cs = Decimal(self.Weight_cs) * self.price
         self.DIS_amount_cs = (self.amount_cs * self.DIS_cs)//100
         self.total_value_cs= self.amount_cs - self.DIS_amount_cs
         super(Salesofcolorstones, self).save(*args, **kwargs)
@@ -733,15 +733,15 @@ class cloneInvofcolorstones(models.Model):
     lab = models.CharField(max_length=30)
     PCS = models.IntegerField(null=True,verbose_name="Pieces")
     Weight_cs = models.FloatField(null=True,verbose_name="Weight")
-    price=models.FloatField(null=True, blank=True)
+    price=models.DecimalField(null=True, blank=True,decimal_places=2, max_digits=9)
     units_cs=models.CharField(max_length=30,null=True, blank=True,verbose_name="Units")
-    amount_cs = models.FloatField(blank=True, null=True,verbose_name="Amount Per CTS")
-    DIS_cs = models.FloatField(blank=True, null=True,verbose_name="Discount in %")
-    DIS_amount_cs = models.FloatField(blank=True, null=True,verbose_name="Discounted Amount")
-    total_value_cs = models.FloatField(blank=True, null=True,verbose_name="Total Value")
+    amount_cs = models.DecimalField(blank=True, null=True,verbose_name="Amount Per CTS",decimal_places=2, max_digits=9)
+    DIS_cs = models.DecimalField(decimal_places=2, max_digits=9,blank=True, null=True,verbose_name="Discount in %")
+    DIS_amount_cs = models.DecimalField(decimal_places=2, max_digits=9,blank=True, null=True,verbose_name="Discounted Amount")
+    total_value_cs = models.DecimalField(decimal_places=2, max_digits=9,blank=True, null=True,verbose_name="Total Value")
     currency_cs = models.ForeignKey(currencies, on_delete=models.PROTECT, null=True, blank=True,verbose_name="Currency")
-    tag_price_cs = models.FloatField(null=True,verbose_name="Tag Price")
-    rate_cs = models.FloatField(blank=True, null=True,verbose_name="Rate",default=1)
+    tag_price_cs = models.DecimalField(decimal_places=2, max_digits=9,null=True,verbose_name="Tag Price")
+    rate_cs = models.DecimalField(blank=True, null=True,verbose_name="Rate",default=1,decimal_places=2, max_digits=9)
     salesapprovalstatus_cs = models.BooleanField(default=False)
 
 
