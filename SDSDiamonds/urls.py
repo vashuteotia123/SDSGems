@@ -20,6 +20,8 @@ from django.conf.urls.static import static
 from django.views.static import serve
 from firstapp import views as dash_views
 from  django.contrib.auth import views as auth_views
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('firstapp.urls')),

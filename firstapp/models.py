@@ -45,7 +45,7 @@ class location(models.Model):
 
 class gemtype(models.Model):
     class Meta:
-        verbose_name_plural = "ColorStone - Gem"
+        verbose_name_plural = "ColourStone - Gem"
 
     gem = models.CharField(max_length=50)
 
@@ -138,7 +138,7 @@ class metal1(models.Model):
 class certificate(models.Model):
 
     class Meta:
-        verbose_name_plural = "ColorStone Certificates Types"
+        verbose_name_plural = "ColourStone Certificates Types"
     cert = models.CharField(max_length=30)
     def __str__(self):
         return self.cert.title()
@@ -343,7 +343,7 @@ class clarity(models.Model):
 
 class color_origin(models.Model):
     class Meta:
-        verbose_name_plural = "ColorStone - Origin"
+        verbose_name_plural = "ColourStone - Origin"
 
     c_o = models.CharField(max_length=30)
 
@@ -604,7 +604,7 @@ class Salesreturn_d(models.Model):
 
 class Origin_cs(models.Model):
     class Meta:
-        verbose_name_plural = "ColorStone - Origin"
+        verbose_name_plural = "ColourStone - Origin"
     org = models.CharField(max_length=30)
 
     def __str__(self):
@@ -615,7 +615,7 @@ class Origin_cs(models.Model):
 
 class Lab_cs(models.Model):
     class Meta:
-        verbose_name_plural = "ColorStone - Labs"
+        verbose_name_plural = "ColourStone - Labs"
     lab = models.CharField(max_length=20)
     def __str__(self):
         return self.lab.upper()
@@ -626,7 +626,7 @@ class Lab_cs(models.Model):
 
 class Treatment_cs(models.Model):
     class Meta:
-        verbose_name_plural = "ColorStone - Treatment"
+        verbose_name_plural = "ColourStone - Treatment"
     treatment = models.CharField(max_length=30)
 
     def __str__(self):
@@ -638,7 +638,7 @@ class Treatment_cs(models.Model):
 
 class shape_cs(models.Model):
     class Meta:
-        verbose_name_plural = "ColorStone - Shape"
+        verbose_name_plural = "ColourStone - Shape"
     shape = models.CharField(max_length=30)
     
     
@@ -728,7 +728,7 @@ class Inventoryofcolorstones(models.Model):
 
 class Salesofcolorstones(models.Model):
     class Meta:
-        verbose_name_plural = "ColorStone - Sales"
+        verbose_name_plural = "ColourStone - Sales"
     date = models.DateField(auto_now_add=False, verbose_name="Date of transaction")
     stockid = models.CharField(max_length=30)
     company_name = models.ForeignKey('CompanyInfo', on_delete=PROTECT)
@@ -825,7 +825,7 @@ class Salesreturn_cs(models.Model):
 
 class ColorStone_media(models.Model):
     class Meta:
-        verbose_name_plural = "ColorStone - Media"
+        verbose_name_plural = "ColourStone - Media"
     stockid = models.ForeignKey(Inventoryofcolorstones, on_delete=models.CASCADE)
     image1 = models.ImageField(upload_to="ColorStoneMedia/", blank=True, null=True)
     image2 = models.ImageField(upload_to="ColorStoneMedia/", blank=True, null=True)
