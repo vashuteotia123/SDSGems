@@ -35,17 +35,17 @@
                 {% if obj.appvreturnstatus is False  %}
     <tr  id="{{obj.id}}">
         <td style="text-align:center;" id="stock_id{{ forloop.counter }}">{{obj.stockid}}</td>
-        <td>{{obj.location.capitalize}}</td>
-        <td>{{obj.shape.capitalize}}</td>
-        <td>{{obj.gem_type.capitalize}}</td>
-        <td>{{obj.origin.capitalize}}</td>
-        <td>{{obj.treatment.capitalize}}</td>
+        <td>{{obj.location.place.capitalize}}</td>
+        <td>{{obj.shape.shape.capitalize}}</td>
+        <td>{{obj.gem_type.gem.capitalize}}</td>
+        <td>{{obj.origin.org.capitalize}}</td>
+        <td>{{obj.treatment.treatment.capitalize}}</td>
         <td>{{obj.Clarity.capitalize}}</td>
         <td>{{obj.certificate_no}}</td>
         <td><a href="" id="stock_id{{ forloop.counter }}_cert">See Certificate</a></td>
-        <td>{{obj.colors.capitalize}}</td>
+        <td>{{obj.color.capitalize}}</td>
         <td>{{obj.measurements}}</td>
-        <td>{{obj.lab.capitalize}}</td>
+        <td>{{obj.lab.lab.capitalize}}</td>
         <td>{{obj.PCS}}</td>
         <td>{{obj.Weight}}</td>
         <td>{{obj.tag_price}}</td>
@@ -88,20 +88,24 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     var length_cs = "{{length_cs}}";
-    for(var i=1;i<length_cs;i++){
+    console.log(length_cs);
+    for(var i=1;i<=length_cs;i++){
         var query=document.getElementById("stock_id"+i);
         if(query){
             var stockid=document.getElementById("stock_id"+i).innerHTML;
             $.ajax({type: 'GET',async:false,url: '{% url "get_certificate_of_colorstone" %}',
             data: {'stockid': stockid},success: function(data) {
+                
                 var query2=document.getElementById("stock_id"+i+"_cert");
                 if(data!="" && query2){
                     console.log(data,i);
                     if(data.certificate!="0"){
                         document.getElementById("stock_id"+i+"_cert").href="/media/"+data.certificate;
+                        
                     }
                     else{
                         document.getElementById("stock_id"+i+"_cert").innerHTML="Not Available";
+                        console.log(data.certificate);
                     }
                 }
             }});

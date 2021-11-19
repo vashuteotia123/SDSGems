@@ -32,16 +32,16 @@
     {% for obj in sold_items %} 
     <tr>
         <td style="text-align:center;">{{obj.stockid}}</td>
-        <td>{{obj.location.capitalize}}</td>
-        <td>{{obj.shape.capitalize}}</td>
-        <td>{{obj.gem_type.capitalize}}</td>
-        <td>{{obj.origin.capitalize}}</td>
-        <td>{{obj.treatment.capitalize}}</td>
+        <td>{{obj.location.place.capitalize}}</td>
+        <td>{{obj.shape.shape.capitalize}}</td>
+        <td>{{obj.gem_type.gem.capitalize}}</td>
+        <td>{{obj.origin.org.capitalize}}</td>
+        <td>{{obj.treatment.treatment.capitalize}}</td>
         <td>{{obj.Clarity.capitalize}}</td>
         <td>{{obj.certificate_no}}</th>
         <td>{{obj.color}}</td>
         <td>{{obj.measurements}}</td>
-        <td>{{obj.lab}}</td>
+        <td>{{obj.lab.lab}}</td>
         <td>{{obj.PCS}}</td>
         <td>{{obj.Weight_cs}}</td>
         <td>{{obj.price}}</td>
@@ -50,7 +50,7 @@
         <td>{{obj.DIS_cs}}</td>
         <td>{{obj.DIS_amount_cs}}</td>
         <td>{{obj.total_value_cs}}</td>
-        <td>{{obj.currency_cs.upper}}</td>
+        <td>{{obj.currency_cs.currency}}</td>
         <td>{{obj.tag_price_cs}}</td>
         <td>{{obj.rate_cs}}</td>
         <td>{{obj.comment}}</td>

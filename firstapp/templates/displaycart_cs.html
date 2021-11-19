@@ -51,12 +51,12 @@
     {% for p in tcscart %}
     <tr>
     <td>{{ p.stockid }}</td>
-    <td>{{p.location.capitalize}}</td>
-    <td>{{p.shape.capitalize}}</td>
-     <td>{{p.gem_type.capitalize}}</td>
-    <td>{{p.origin.capitalize}}</td>
+    <td>{{p.location.place.capitalize}}</td>
+    <td>{{p.shape.shape.capitalize}}</td>
+     <td>{{p.gem_type.gem.capitalize}}</td>
+    <td>{{p.origin.org.capitalize}}</td>
     <td>{{p.color.capitalize}}</td>
-    <td>{{p.treatment.capitalize}}</td>
+    <td>{{p.treatment.treatment.capitalize}}</td>
     <td><a class="btn btn-sm btn-primary" style="text-decoration: none" href="{% url 'return_colorstone_cart' id=p.id %}">Return from Cart</a></td>
     </tr>
     {% endfor %}

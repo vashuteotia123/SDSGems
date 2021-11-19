@@ -228,7 +228,7 @@ if development_mode:
 
 
 @admin.register(gemtype)
-class gemtypeadmin(DjangoObjectActions,admin.ModelAdmin):
+class gemtypeadmin(ImportExportModelAdmin):
     def HomePage(gemtypeadmin, request, queryset):
             return redirect('/')
 
@@ -252,7 +252,7 @@ class gemtypeadmin(DjangoObjectActions,admin.ModelAdmin):
 
 
 @admin.register(location)
-class LocAdmin(DjangoObjectActions,admin.ModelAdmin):
+class LocAdmin(ImportExportModelAdmin):
     def HomePage(LocAdmin, request, queryset):
             return redirect('/')
 
@@ -272,15 +272,16 @@ class LocAdmin(DjangoObjectActions,admin.ModelAdmin):
 # class slreturncsadmin(ImportExportModelAdmin):
 #     pass
 @admin.register(Treatment_cs)
-class treatcsadmin(DjangoObjectActions,admin.ModelAdmin):
-    def HomePage(treatcsadmin, request, queryset):
-            return redirect('/')
+class treatcsadmin(ImportExportModelAdmin):
+    # def HomePage(treatcsadmin, request, queryset):
+    #         return redirect('/')
 
-    HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
-    changelist_actions = ('HomePage',)
+    # HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
+    # changelist_actions = ('HomePage',)
+    pass
 
 @admin.register(Origin_cs)
-class originadmin(DjangoObjectActions,admin.ModelAdmin):
+class originadmin(ImportExportModelAdmin):
     def HomePage(originadmin, request, queryset):
             return redirect('/')
 
@@ -291,7 +292,7 @@ class originadmin(DjangoObjectActions,admin.ModelAdmin):
 #     pass
 
 @admin.register(Lab_cs)
-class labadmin(DjangoObjectActions,admin.ModelAdmin):
+class labadmin(ImportExportModelAdmin):
     def HomePage(labadmin, request, queryset):
             return redirect('/')
 
@@ -299,7 +300,7 @@ class labadmin(DjangoObjectActions,admin.ModelAdmin):
     changelist_actions = ('HomePage',)
 
 @admin.register(shape_cs)
-class shapeadmin(DjangoObjectActions,admin.ModelAdmin):
+class shapeadmin(ImportExportModelAdmin):
     def HomePage(shapeadmin, request, queryset):
             return redirect('/')
 
@@ -359,7 +360,7 @@ class ColorStone_media_admin(DjangoObjectActions,admin.ModelAdmin):
         def has_delete_permission(self, request, obj=None):
             return False
 @admin.register(currencies)
-class curradmin(DjangoObjectActions,admin.ModelAdmin):
+class curradmin(ImportExportModelAdmin):
     def HomePage(curradmin, request, queryset):
             return redirect('/')
 

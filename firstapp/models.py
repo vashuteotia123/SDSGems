@@ -28,14 +28,18 @@ class countries(models.Model):
     country = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.country
+        return self.country.title()
+
+    def save(self, *args, **kwargs):
+        self.place = self.country.lower()
+        super(countries, self).save(*args, **kwargs)
 
 
 class location(models.Model):
     place = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.place
+        return self.place.title()
 
     def save(self, *args, **kwargs):
         self.place = self.place.lower()
@@ -46,7 +50,8 @@ class gemtype(models.Model):
     gem = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.gem
+        return self.gem.title()
+
     def save(self, *args, **kwargs):
         self.gem = self.gem.lower()
         super(gemtype, self).save(*args, **kwargs)
@@ -68,7 +73,7 @@ class companyinfo(models.Model):
     wechat_id = models.CharField(max_length=5,blank=True,null=True)
 
     def __str__(self):
-         return self.company_name
+         return self.company_name.title()
          
     def save(self, *args, **kwargs):
         self.company_name = self.company_name.lower()
@@ -78,7 +83,8 @@ class jewell(models.Model):
     jewel = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.jewel
+        return self.jewel.title()
+
     def save(self, *args, **kwargs):
         self.jewel = self.jewel.lower()
         super(jewell, self).save(*args, **kwargs)
@@ -88,7 +94,8 @@ class centerstone(models.Model):
     stone = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.stone
+        return self.stone.title()
+
     def save(self, *args, **kwargs):
         self.stone = self.stone.lower()
         super(centerstone, self).save(*args, **kwargs)
@@ -98,7 +105,8 @@ class colorofcstone(models.Model):
     color = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.color
+        return self.color.title()
+
     def save(self, *args, **kwargs):
         self.color = self.color.lower()
         super(colorofcstone, self).save(*args, **kwargs)
@@ -108,7 +116,8 @@ class shape1(models.Model):
     shape = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.shape
+        return self.shape.title()
+        
     def save(self, *args, **kwargs):
         self.shape = self.shape.lower()
         super(shape1, self).save(*args, **kwargs)
@@ -118,7 +127,7 @@ class metal1(models.Model):
     metal = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.metal
+        return self.metal.title()
     def save(self, *args, **kwargs):
         self.metal= self.metal.lower()
         super(metal1, self).save(*args, **kwargs)
@@ -130,7 +139,7 @@ class certificate(models.Model):
         verbose_name_plural = "ColorStone Certificates Types"
     cert = models.CharField(max_length=30)
     def __str__(self):
-        return self.cert
+        return self.cert.title()
     def save(self, *args, **kwargs):
         self.cert = self.cert.lower()
         super(certificate, self).save(*args, **kwargs)
@@ -140,7 +149,7 @@ class currencies(models.Model):
     currency = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.currency
+        return self.currency.upper()
     def save(self, *args, **kwargs):
         self.currency = self.currency.lower()
         super(currencies, self).save(*args, **kwargs)
@@ -228,7 +237,7 @@ class Inventoryofjewellery(models.Model):
     frontend = models.BooleanField(default=False)
 
     def __str__(self):
-        return str(self.stockid)
+        return str(self.stockid).title()
 
 
 class Salesofjewellery(models.Model):
@@ -254,7 +263,7 @@ class Salesofjewellery(models.Model):
     comment = models.TextField(max_length=3000, blank=True, null=True)
 
     def __str__(self):
-        return self.company_name
+        return self.company_name.title()
         
 class cloneInvofjewellery(models.Model):
 
@@ -300,77 +309,77 @@ class certificate_d(models.Model):
     certd = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.certd
+        return self.certd.title()
 
 
 class clarity(models.Model):
     clarity = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.clarity
+        return self.clarity.title()
 
 
 class color_origin(models.Model):
     c_o = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.c_o
+        return self.c_o.title()
 
 
 class white_color_grade(models.Model):
     w_c_g = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.w_c_g
+        return self.w_c_g.title()
 
 
 class fancy_color_intensity(models.Model):
     f_c_i = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.f_c_i
+        return self.f_c_i.title()
 
 
 class fancycolor_grade(models.Model):
     f_c_grade = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.f_c_grade
+        return self.f_c_grade.title()
 
 
 class cut(models.Model):
     cut = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.cut
+        return self.cut.title()
 
 
 class polish(models.Model):
     polish = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.polish
+        return self.polish.title()
 
 
 class symmetry(models.Model):
     symmetry = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.symmetry
+        return self.symmetry.title()
 
 
 class fluorescence_intensity(models.Model):
     f_intensity = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.f_intensity
+        return self.f_intensity.title()
 
 
 class fluorescence_color(models.Model):
     f_color = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.f_color
+        return self.f_color.title()
 
 
 class shape_d(models.Model):
@@ -570,7 +579,7 @@ class Origin_cs(models.Model):
     org = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.org
+        return self.org.title()
     def save(self, *args, **kwargs):
         self.org = self.org.lower()
         super(Origin_cs, self).save(*args, **kwargs)
@@ -578,7 +587,8 @@ class Origin_cs(models.Model):
 class Lab_cs(models.Model):
     lab = models.CharField(max_length=20)
     def __str__(self):
-        return self.lab
+        return self.lab.upper()
+
     def save(self, *args, **kwargs):
         self.lab= self.lab.lower()
         super(Lab_cs, self).save(*args, **kwargs)
@@ -587,16 +597,19 @@ class Treatment_cs(models.Model):
     treatment = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.treatment
+        return self.treatment.title()
+        
     def save(self, *args, **kwargs):
         self.treatment = self.treatment.lower()
         super(Treatment_cs, self).save(*args, **kwargs)
 
 class shape_cs(models.Model):
     shape = models.CharField(max_length=30)
-
+    
+    
     def __str__(self):
-        return self.shape
+        return self.shape.title()
+
     def save(self, *args, **kwargs):
         self.shape = self.shape.lower()
         super(shape_cs, self).save(*args, **kwargs)
@@ -647,7 +660,7 @@ class PurchaseOfColorStones(models.Model):
     comment = models.TextField(max_length=3000, blank=True, null=True, default="")
 
     def __str__(self):
-        return str(self.id)
+        return str("C-" + str(self.id))
 
     def save(self, *args, **kwargs):
         # self.amount = (self.Price * self.Weight)
@@ -656,21 +669,25 @@ class PurchaseOfColorStones(models.Model):
         # self.total_value_c_s = self.amount-self.discount_amount
         super(PurchaseOfColorStones, self).save(*args, **kwargs)
         obj1 = Inventoryofcolorstones.objects.create(stockid=str('C-')+str(self.id), location=self.location, shape=self.shape,
-                                                     Clarity=self.Clarity, PCS=self.PCS, gem_type=self.gem_type, Weight=self.Weight, origin=self.origin, treatment=self.Treatment, certificate_no=self.certificate_no, color=self.colour, measurements=self.measurements, lab=self.lab.lab, tag_price=self.tag_price, purchaseapv=self.purchaseapv)
+                                                     Clarity=self.Clarity, PCS=self.PCS, gem_type=self.gem_type, Weight=self.Weight, origin=self.origin, treatment=self.Treatment, certificate_no=self.certificate_no, color=self.colour, measurements=self.measurements, lab=self.lab, tag_price=self.tag_price, purchaseapv=self.purchaseapv)
 
 
 class Inventoryofcolorstones(models.Model):
-    stockid = models.CharField(max_length=30, blank=True)
-    location = models.CharField(max_length=30)
-    shape = models.CharField(max_length=30)
-    gem_type = models.CharField(max_length=30)
-    origin = models.CharField(max_length=30)
-    treatment = models.CharField(max_length=30)
+    stockid = models.CharField(max_length=30)
+    location = models.ForeignKey('location', on_delete=models.PROTECT, null=True)
+    shape = models.ForeignKey(
+        'shape_cs', on_delete=models.PROTECT, blank=True)
+    gem_type = models.ForeignKey(
+        'gemtype', on_delete=models.PROTECT, blank=True)
+    origin = models.ForeignKey(
+        'Origin_cs', on_delete=models.PROTECT, blank=True)
+    treatment =  models.ForeignKey(
+        'Treatment_cs', on_delete=models.PROTECT, blank=True)
     Clarity = models.CharField(max_length=30,null=True,blank=True)
     certificate_no = models.CharField(max_length=30)
     color = models.CharField(max_length=30)
     measurements = models.CharField(max_length=30,blank=True,null=True)
-    lab = models.CharField(max_length=30)
+    lab = models.ForeignKey('Lab_cs', on_delete=models.PROTECT, blank=True)
     PCS = models.IntegerField(null=True)
     Weight = models.DecimalField(decimal_places=2, max_digits=9, blank=True, null=True,verbose_name="Weight")
     tag_price = models.FloatField(null=True)
@@ -685,18 +702,22 @@ class Inventoryofcolorstones(models.Model):
 
 class Salesofcolorstones(models.Model):
     date = models.DateField(auto_now_add=False, verbose_name="Date of transaction")
-    stockid = models.CharField(max_length=30, verbose_name="Stock ID")
-    company_name = models.CharField(max_length=30, verbose_name="Company name")
-    location = models.CharField(max_length=30, verbose_name="Location")
-    shape = models.CharField(max_length=30, verbose_name="Shape")
-    gem_type = models.CharField(max_length=30,verbose_name="Gem Type")
-    origin = models.CharField(max_length=30, verbose_name="Origin")
-    treatment = models.CharField(max_length=30, verbose_name="Treatment")
+    stockid = models.CharField(max_length=30)
+    company_name = models.ForeignKey('CompanyInfo', on_delete=PROTECT)
+    location = models.ForeignKey('location', on_delete=models.PROTECT, null=True)
+    shape = models.ForeignKey(
+        'shape_cs', on_delete=models.PROTECT, blank=True)
+    gem_type = models.ForeignKey(
+        'gemtype', on_delete=models.PROTECT, blank=True)
+    origin = models.ForeignKey(
+        'Origin_cs', on_delete=models.PROTECT, blank=True)
+    treatment = models.ForeignKey(
+        'Treatment_cs', on_delete=models.PROTECT, blank=True)
     Clarity = models.CharField(max_length=30,null=True,blank=True, verbose_name="Clarity")
     certificate_no = models.CharField(max_length=30, verbose_name="Certificate No.")
     color = models.CharField(max_length=30, verbose_name="Color")
     measurements = models.CharField(max_length=30,blank=True,null=True, verbose_name="Measurement")
-    lab = models.CharField(max_length=30, verbose_name="Lab")
+    lab = models.ForeignKey('Lab_cs', on_delete=models.PROTECT, blank=True)
     PCS = models.IntegerField(verbose_name="Pieces")
     Weight_cs = models.DecimalField(decimal_places=2, max_digits=9, blank=True, null=True,verbose_name="Weight")
     price=models.DecimalField(decimal_places=2, max_digits=9, blank=True, null=True)
@@ -719,18 +740,22 @@ class Salesofcolorstones(models.Model):
     
 class cloneInvofcolorstones(models.Model):
     date = models.DateField(auto_now_add=True)
-    stockid = models.CharField(max_length=30, blank=True,verbose_name="Stock ID")
+    stockid = models.CharField(max_length=30)
     company_name = models.ForeignKey(companyinfo, on_delete=models.PROTECT, null=True, blank=True,verbose_name="Company")
-    location = models.CharField(max_length=30,verbose_name="Location")
-    shape = models.CharField(max_length=30,verbose_name="Shape")
-    gem_type = models.CharField(max_length=30)
-    origin = models.CharField(max_length=30)
-    treatment = models.CharField(max_length=30)
+    location = models.ForeignKey('location', on_delete=models.PROTECT, null=True)
+    shape = models.ForeignKey(
+        'shape_cs', on_delete=models.PROTECT, blank=True)
+    gem_type = models.ForeignKey(
+        'gemtype', on_delete=models.PROTECT, blank=True)
+    origin = models.ForeignKey(
+        'Origin_cs', on_delete=models.PROTECT, blank=True)
+    treatment =  models.ForeignKey(
+        'Treatment_cs', on_delete=models.PROTECT, blank=True)
     Clarity = models.CharField(max_length=30,null=True,blank=True)
     certificate_no = models.CharField(max_length=30)
     color = models.CharField(max_length=30)
     measurements = models.CharField(max_length=30,blank=True,null=True)
-    lab = models.CharField(max_length=30)
+    lab = models.ForeignKey('Lab_cs', on_delete=models.PROTECT, blank=True)
     PCS = models.IntegerField(null=True,verbose_name="Pieces")
     Weight_cs = models.FloatField(null=True,verbose_name="Weight")
     price=models.DecimalField(null=True, blank=True,decimal_places=2, max_digits=9)
@@ -760,8 +785,10 @@ class Salesreturn_cs(models.Model):
     date = models.DateField(auto_now_add=True)
     stockid = models.CharField(max_length=30)
     company_name = models.CharField(max_length=30)
-    location = models.CharField(max_length=30)
-    gem_type = models.CharField(max_length=30)
+    location = models.ForeignKey(
+        'location', on_delete=models.PROTECT, null=True, blank=True)
+    gem_type = models.ForeignKey(
+        'gemtype', on_delete=models.PROTECT, blank=True)
     weight = models.FloatField(null=True)
     tag_price_cs = models.FloatField(null=True)
 
