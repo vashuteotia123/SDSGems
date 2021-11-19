@@ -3,7 +3,7 @@
     <form id="form-container" method="POST">
         {% csrf_token %}
     <table id="all_forms"class="table table-responsive">
-           <tr class="bg-primary bg-opacity-50" id="table-heading">
+           <tr class="bg-primary bg-opacity-50" id="table-heading" height="30px">
            <th class="bg-primary">DATE</th>
            <th class="bg-primary">COMPANY NAME</th>
            <th class="bg-primary" >LOCATION</th>
@@ -33,31 +33,9 @@
            {{totalitems_cs.management_form}}
           {% for obj in totalitems_cs %} 
           <tr class="bird-form">
-              <td>{{obj.date}}</td>
-              <td>{{obj.company_name}}</td>
-              <td>{{obj.location}}</td>
-              <td>{{obj.shape}}</td>
-              <td>{{obj.gem_type}}</td>
-              <td>{{obj.origin}}</td>
-              <td>{{obj.Treatment}}</td>
-              <td>{{obj.Clarity}}</td>
-              <td>{{obj.certificate_no}}</td>
-              <td>{{obj.colour}}</td>
-              <td>{{obj.measurements}}</td>
-              <td>{{obj.lab}}</td>
-              <td>{{obj.PCS}}</td>
-              <td>{{obj.Weight}}</td>
-              <td>{{obj.Price}}</td>
-              <td>{{obj.units}}</td>
-              <td>{{obj.amount}}</td>
-              <td>{{obj.discount}}</td>
-              <td>{{obj.discount_amount}}</td>
-              <td>{{obj.total_val}}</td>
-              <td>{{obj.purchaseapv}}</td>
-              <td>{{obj.currency}}</td>
-              <td>{{obj.tag_price}}</td>
-              <td>{{obj.rate}}</td>
-              <td>{{obj.comment}}</td>
+              {% for field in obj%}
+              <td>{{field}} <br> {{field.errors}}</td>
+              {% endfor %}
               </tr>
               {% endfor %}
         </table>

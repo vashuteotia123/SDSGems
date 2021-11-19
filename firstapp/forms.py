@@ -29,8 +29,16 @@ class POCSForm(forms.ModelForm):
         model = PurchaseOfColorStones
         fields = "__all__"
         labels = {'purchaseapv': 'Bought Color Stone'}
-        widgets = {'date': DateInput(), 'comment': forms.Textarea(attrs={'rows':4, 'cols':30})}
+        widgets = {'date': DateInput(), 'comment': forms.Textarea(attrs={'rows':4, 'cols':30}), 'purchaseapv': forms.CheckboxInput(attrs={'style':'width:20px;height:20px;'})}
 
+        def __init__(self, *args, **kwargs):
+            super(POCSForm, self).__init__(*args, **kwargs)
+            for field in self.disabled_fields:
+                self.fields[field].disabled = True
+            for field in self.fields:
+                if self.fields[field].label == 'Bought Color Stone':
+                    continue
+                self.fields[field].required = True
 POCSFormSet = modelformset_factory(PurchaseOfColorStones, form=POCSForm)
 
 

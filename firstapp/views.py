@@ -592,7 +592,7 @@ def update_cs(request, ck):
                 stockid=str("C-")+str(ck)).delete()
         # print("3")
             form5.save()
-            messages.success(request, "{}Modified  Successfully".format(str("C-")+str(ck)))
+            messages.success(request, "Stock ID->{} is Modified  Successfully".format(str("C-")+str(ck)))
             return redirect('/showcs')
 
     context = {'form5': form5,"b_s_c": change_css,"update_type":"POCS"}
@@ -784,6 +784,7 @@ def save_colorstone_forms(request):
         curr_formset = POCSFormSet(data=request.POST)
         if(curr_formset.is_valid()):
             curr_formset.save()
+
     context = {
         "totalitems_cs": pocs_formset,
     }
@@ -801,7 +802,7 @@ class CSAddView(TemplateView):
         return self.render_to_response({'totalitems_cs': formset})
 
   
-    def post(self, *args, **kwargs):
+    def post(self, request,*args, **kwargs):
 
         formset = POCSFormSet(data=self.request.POST)
 

@@ -1,6 +1,7 @@
 {% extends 'common_table.html' %}
 <!-- Colour Stone Purchase Table -->
 {% block table %}
+
 <table class="table table-responsive">
     <tr class="bg-primary bg-opacity-50" id="table-heading">
         <th class="bg-primary">STOCK ID</th>
@@ -61,7 +62,7 @@
         <td>{{obj.tag_price}}</td>
         <td>{{obj.rate}}</td>
         <td>{{obj.certificate_no}}</td>
-        <td style="padding: 10px 10px;"><a class="btn btn-danger" style="text-decoration: none;padding: 6px 35px;" href="{% url 'deleteid_cs' idno=obj.id %}" >Delete</a></td>
+        <td style="padding: 10px 10px;"><a class="btn btn-danger" id="delete-btn" style="text-decoration: none;padding: 6px 35px;" href="{% url 'deleteid_cs' idno=obj.id %}" >Delete</a></td>
         {% if obj.id in invobjectscs %}
         <td style="padding: 10px 10px;"><a class="btn btn-warning"style="text-decoration: none;padding: 6px 44px;" href="{% url 'update_cs' ck=obj.id %}">Edit</a></td>
         {%  else  %}
@@ -75,7 +76,6 @@
 {% block container1 %}
 <br><br>
 <div align="center">
-<a class="btn btn-primary btn-sm btnedit"  href="{% url 'ExportPurchaseOfColorStones' %}" style="text-decoration: none;">Export Purchase Items</a>
+<a class="btn btn-primary btn-sm btnedit"   href="{% url 'ExportPurchaseOfColorStones' %}" style="text-decoration: none;">Export Purchase Items</a>
 </div>
 {% endblock %}
-  
