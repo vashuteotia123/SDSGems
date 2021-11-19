@@ -1,5 +1,13 @@
 {% extends 'common_table.html' %}
+{% if messages%}
+  <div class="alert alert-info" role="alert">
+    {% for message in messages%}
+    {{message}}
+    {% endfor %}
+</div>
+{% endif %} 
 {% if tcscart %}
+
 {% block table %}
 <table class="table table-responsive" >
     <tr class="bg-primary bg-opacity-50">
@@ -31,10 +39,3 @@
 {% endblock  %} 
 {% endif %}
 
-{% if messages%}
-  <div class="alert alert-info" role="alert">
-    {% for message in messages%}
-    {{message}}
-    {% endfor %}
-</div>
-{% endif %} 

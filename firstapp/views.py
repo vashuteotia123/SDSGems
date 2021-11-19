@@ -680,7 +680,6 @@ def backtoinvcs1(request, id):
 
 @login_required
 def saving_colorstone_cart(request):
-    print("saving")
     total = cloneInvofcolorstones.objects.all()
     total_colorstones = list(total.values())
     colorstone_formset = ADCFormSet_cs(initial=total_colorstones)
@@ -690,17 +689,17 @@ def saving_colorstone_cart(request):
        change = False 
     if request.method == "POST":
         curr_formset = ADCFormSet_cs(data=request.POST)
-        print(len(curr_formset))
         if(curr_formset.is_valid()):
             curr_formset.save()
-            return render(request, 'showcart_cs.html',{"totalitems_cs": curr_formset, "table_type": "Cart Items" ,"css_adjust_sellcart": change,'is_valid':True, 'itemcount': len(curr_formset)})
+            print("sahi h")
+            return render(request, 'showcart_cs.html',{"totalitems_cs": curr_formset, "table_type": "Cart Items" ,"css_adjust_sellcar": change,'is_valid':True, 'itemcount': len(curr_formset)})
         else:
-            context = {"totalitems_cs": curr_formset,"css_adjust_sellcart": change, "table_type": "Cart Items" , 'is_valid': False, 'itemcount': len(curr_formset)}
+            context = {"totalitems_cs": curr_formset,"css_adjust": change, "table_type": "Cart Items" , 'is_valid': False, 'itemcount': len(curr_formset)}
             return render(request, 'showcart_cs.html', context)
     context = {
         "totalitems_cs": colorstone_formset,
         "table_type": "Cart Items" ,
-        "css_adjust_sellcart": change,
+        "css_adjust": change,
         'itemcount': len(total),
     }
     return render(request, "showcart_cs.html", context=context)
@@ -918,9 +917,11 @@ def displaysalesreturn_cs(request):
 @login_required
 def displaycart2_cs(request):
     tcscart = cloneInvofcolorstones.objects.all()
-    # if len(tcscart)==0:
-    #     messages.success(request,"Cart is empty")
-    #     return redirect(request.META.get('HTTP_REFERER'))
+    if len(tcscart)==0:
+        context = {
+            'messages': "Cart is empty",
+        }
+        return render(request, "displaycart_cs.html", context=context)
     if len( tcscart)<=7:
        change =True   
     else:  
@@ -2132,7 +2133,7 @@ def cstone_listing(request):
 
 
 
-def ExportPurcahseOfColorStones(request):
+def ExportPurchaseOfColorStones(request):
     objects = PurchaseOfColorStones.objects.all()
     output = []
     response = HttpResponse(content_type='text/csv')
@@ -2141,7 +2142,7 @@ def ExportPurcahseOfColorStones(request):
     writer = csv.writer(response)
     writer.writerow(['Date','Stock id', 'Company Name','Location', 'Shape', 'Gem Type', 'Origin', 'Treatment', 'Clarity', 'Certificate', 'Colour', 'Measurement', 'Lab', 'PCS', 'Weight', 'Price', 'Units', 'Amount', 'Dicount Amount', 'Discount', 'Total Value', 'Bought', 'Currency', 'Tag Price', 'Rate'])
     for item in objects:
-        output.append([item.date, 'C-' + str(item.id), item.company_name, item.location.place, item.shape.shape, item.gem_type.gem, item.origin.org, item.Treatment.treatment, item.Clarity, item.certificate_no.cert, item.colour, item.measurements, item.lab, item.PCS, item.Weight, item.Price, item.units, item.amount, item.discount_amount ,str(item.discount)+"%", item.total_val, item.purchaseapv, item.currency.currency, item.tag_price, item.rate])
+        output.append([item.date, 'C-' + str(item.id), item.company_name, item.location.place, item.shape.shape, item.gem_type.gem, item.origin.org, item.Treatment.treatment, item.Clarity, item.certificate_no, item.colour, item.measurements, item.lab, item.PCS, item.Weight, item.Price, item.units, item.amount, item.discount_amount ,str(item.discount)+"%", item.total_val, item.purchaseapv, item.currency.currency, item.tag_price, item.rate])
     
     writer.writerows(output)
     return response
@@ -2155,7 +2156,7 @@ def ExportInventoryofcolorstones(request):
     writer = csv.writer(response)
     writer.writerow(['Stock id','Location', 'Shape', 'Gem Type', 'Origin', 'Treatment', 'Clarity', 'Certificate', 'Colour', 'Measurement', 'Lab', 'PCS', 'Weight','Tag Price'])
     for item in objects:
-        output.append(['C-' + str(item.id),item.location, item.shape, item.gem_type, item.origin, item.treatment, item.Clarity, item.certificate_no, item.color, item.measurements, item.lab, item.PCS, item.Weight, item.tag_price])
+        output.append([item.stockid,item.location, item.shape, item.gem_type, item.origin, item.treatment, item.Clarity, item.certificate_no, item.color, item.measurements, item.lab, item.PCS, item.Weight, item.tag_price])
 
     writer.writerows(output)
     return response

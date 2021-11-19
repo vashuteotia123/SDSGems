@@ -61,11 +61,8 @@ urlpatterns = [
     path('return_colorstone_Inventory<int:id>', views.return_colorstone_Inventory, name="return_colorstone_Inventory"),
     path('return_colorstone_cart<str:id>',views.return_colorstone_cart, name='return_colorstone_cart'),
     # path('upload-csv',colorstone_upload,name="colorstone_upload"),
-    path('export_purchase_of_color_stones', views.ExportPurcahseOfColorStones, name="export_purchase_of_color_stones"),
-    path('export_inventory_of_color_stones', views.ExportInventoryofcolorstones, name="export_inventory_of_color_stones"),
     path('export_sales_of_color_stones', views.ExportSalesofcolorstones, name="export_sales_of_color_stones"),
     path('get_certificate_of_colorstone', views.get_certificate_of_colorstone, name='get_certificate_of_colorstone'),
-    path('ExportSalesreturncolorstones', views.ExportSalesreturncolorstones, name='ExportSalesreturncolorstones'),
 
     # ///////diamond url/////////
 
@@ -111,4 +108,7 @@ urlpatterns = [
 
     path("contact", views.contactsendmail, name="contact"), 
     path("allsellcsrecords", views.allsellcsrecords, name="allsellcsrecords"), 
+    path("ExportInventoryofcolorstones", views.ExportInventoryofcolorstones, name="ExportInventoryofcolorstones"),
+    path("ExportPurchaseOfColorStones", views.ExportPurchaseOfColorStones, name="ExportPurchaseOfColorStones"), 
+    path("ExportSalesofcolorstones", views.ExportSalesofcolorstones, name="ExportSalesofcolorstones"),  
 ]

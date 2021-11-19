@@ -54,13 +54,12 @@
         <td>{{obj.total_val}}</td>
         {% if obj.purchaseapv %}
         <td>YES</td>
-        {% else %}
+        {%else%}
         <td>NO</td>
-        {%endif%}
+        {% endif %}
         <td>{{obj.currency}}</td>
         <td>{{obj.tag_price}}</td>
         <td>{{obj.rate}}</td>
-       
         <td>{{obj.certificate_no}}</td>
         <td style="padding: 10px 10px;"><a class="btn btn-danger" style="text-decoration: none;padding: 6px 35px;" href="{% url 'deleteid_cs' idno=obj.id %}" >Delete</a></td>
         {% if obj.id in invobjectscs %}
@@ -73,7 +72,10 @@
     {% endfor %}
 </table>
 {% endblock  %}
-
-
-    
+{% block container1 %}
+<br><br>
+<div align="center">
+<a class="btn btn-primary btn-sm btnedit"  href="{% url 'ExportPurchaseOfColorStones' %}" style="text-decoration: none;">Export Purchase Items</a>
+</div>
+{% endblock %}
   

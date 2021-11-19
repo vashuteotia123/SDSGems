@@ -35,7 +35,7 @@ class location(models.Model):
     place = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.place.title()
+        return self.place
 
     def save(self, *args, **kwargs):
         self.place = self.place.lower()
@@ -46,7 +46,7 @@ class gemtype(models.Model):
     gem = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.gem.title()
+        return self.gem
     def save(self, *args, **kwargs):
         self.gem = self.gem.lower()
         super(gemtype, self).save(*args, **kwargs)
@@ -68,7 +68,7 @@ class companyinfo(models.Model):
     wechat_id = models.CharField(max_length=5,blank=True,null=True)
 
     def __str__(self):
-         return self.company_name.title()
+         return self.company_name
          
     def save(self, *args, **kwargs):
         self.company_name = self.company_name.lower()
@@ -140,7 +140,7 @@ class currencies(models.Model):
     currency = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.currency.upper()
+        return self.currency
     def save(self, *args, **kwargs):
         self.currency = self.currency.lower()
         super(currencies, self).save(*args, **kwargs)
@@ -570,7 +570,7 @@ class Origin_cs(models.Model):
     org = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.org.title()
+        return self.org
     def save(self, *args, **kwargs):
         self.org = self.org.lower()
         super(Origin_cs, self).save(*args, **kwargs)
@@ -578,7 +578,7 @@ class Origin_cs(models.Model):
 class Lab_cs(models.Model):
     lab = models.CharField(max_length=20)
     def __str__(self):
-        return self.lab.title()
+        return self.lab
     def save(self, *args, **kwargs):
         self.lab= self.lab.lower()
         super(Lab_cs, self).save(*args, **kwargs)
@@ -587,7 +587,7 @@ class Treatment_cs(models.Model):
     treatment = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.treatment.title()
+        return self.treatment
     def save(self, *args, **kwargs):
         self.treatment = self.treatment.lower()
         super(Treatment_cs, self).save(*args, **kwargs)
@@ -596,7 +596,7 @@ class shape_cs(models.Model):
     shape = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.shape.title()
+        return self.shape
     def save(self, *args, **kwargs):
         self.shape = self.shape.lower()
         super(shape_cs, self).save(*args, **kwargs)
@@ -701,16 +701,20 @@ class Salesofcolorstones(models.Model):
     Weight_cs = models.FloatField(verbose_name="Weight")
     price=models.FloatField(default=0)
     units_cs=models.CharField(max_length=30,default="")
-    amount_cs = models.FloatField(verbose_name="Amount")
-    DIS_cs = models.FloatField(verbose_name="Discount Percentage")
-    DIS_amount_cs = models.FloatField(verbose_name="Discount Amount")
-    total_value_cs = models.FloatField(verbose_name="Total Value")
+    amount_cs = models.FloatField(verbose_name="Amount",null=True,blank=True)
+    DIS_cs = models.FloatField(verbose_name="Discount Percentage",null=True,blank=True)
+    DIS_amount_cs = models.FloatField(verbose_name="Discount Amount",null=True,blank=True)
+    total_value_cs = models.FloatField(verbose_name="Total Value",null=True,blank=True)
     currency_cs = models.CharField(max_length=30, verbose_name="Currency")
     tag_price_cs = models.FloatField(verbose_name="Tag Price")
     rate_cs = models.FloatField(verbose_name="Rate", default=1)
     salesapprovalstatus_cs = models.BooleanField(default=False, verbose_name="Sold")
     comment = models.TextField(max_length=3000, blank=True,null=True, verbose_name="Comment")
-
+    def save(self, *args, **kwargs):
+        self.amount_cs = self.Weight_cs * self.price
+        self.DIS_amount_cs = (self.amount_cs * self.DIS_cs)//100
+        self.total_value_cs= self.amount_cs - self.DIS_amount_cs
+        super(Salesofcolorstones, self).save(*args, **kwargs)
 
     
 class cloneInvofcolorstones(models.Model):
@@ -720,7 +724,6 @@ class cloneInvofcolorstones(models.Model):
     location = models.CharField(max_length=30,verbose_name="Location")
     shape = models.CharField(max_length=30,verbose_name="Shape")
     gem_type = models.CharField(max_length=30)
-    # weight = models.IntegerField()
     origin = models.CharField(max_length=30)
     treatment = models.CharField(max_length=30)
     Clarity = models.CharField(max_length=30,null=True,blank=True)

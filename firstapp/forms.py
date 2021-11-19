@@ -107,7 +107,6 @@ class ADCForm_cs(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ADCForm_cs, self).__init__(*args, **kwargs)
         for field in self.fields:
-            print(self.fields[field].label)
             if self.fields[field].label == 'Sold Item':
                 continue
             self.fields[field].required = True
