@@ -4,10 +4,13 @@ from django.urls.resolvers import URLPattern
 from firstapp.views import *
 
 urlpatterns = [
-    path('', views.index, name="index"),
-    path('home', views.home, name="home"),
-    path('takeinput', views.take_input, name="takeinput"),
-    path('show_data', views.show_data, name="show_data"),
+    #user model 
+    path('user_register', views.SignUpView.as_view(), name="user_register"),
+    path('user_login', views.user_login, name="user_login"),
+    path('user_logout', views.user_Logout, name="user_logout"),
+
+    path('index', views.index, name="index"),
+    path('', views.home, name="home"),
     path('showform', views.showform, name="showdform"),
     # path('ajax/load-currency/',views.load_currency,name="ajax/load-currency/")
     path('showj', views.showjewell, name="showjewell"),

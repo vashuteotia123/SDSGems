@@ -23,60 +23,50 @@ from django.utils.decorators import method_decorator
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
+from django.views.generic.edit import CreateView
 
 # Create your views here.
+
 
 @login_required
 def index(request):
     cscolors = colorofcstone.objects.all()
-    context={
+    context = {
         'cscolor': cscolors,
     }
-    return render(request, 'index.html',context=context)
+    return render(request, 'index.html', context=context)
 
 
-@login_required
 def home(request):
     jewel_colors = colorofcstone.objects.all()
-    jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
-    center_stone_types = set(Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-    diam_fci = set(Inventoryofdiamond.objects.values_list('fancy_color_intensity1', flat=True))
+    jewel_types = set(Inventoryofjewellery.objects.values_list(
+        'jewellery_type', flat=True))
+    center_stone_types = set(
+        Inventoryofjewellery.objects.values_list('center_stone', flat=True))
+    diam_fci = set(Inventoryofdiamond.objects.values_list(
+        'fancy_color_intensity1', flat=True))
     diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
-    diam_wcg1 = set(Inventoryofdiamond.objects.values_list('white_color_grade1',flat=True))
-    cs_treatment=set(Inventoryofcolorstones.objects.values_list('treatment',flat=True))
-    cs_origin=set(Inventoryofcolorstones.objects.values_list('origin',flat=True))
-    cs_shape=set(Inventoryofcolorstones.objects.values_list('shape',flat=True))
-    
+    diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
+        'white_color_grade1', flat=True))
+    cs_treatment = set(
+        Inventoryofcolorstones.objects.values_list('treatment', flat=True))
+    cs_origin = set(
+        Inventoryofcolorstones.objects.values_list('origin', flat=True))
+    cs_shape = set(
+        Inventoryofcolorstones.objects.values_list('shape', flat=True))
+
     context = {
         'gemstones': jewel_colors,
         'jewel_types': jewel_types,
-        'center_stone_types':center_stone_types,
-        'diam_fancy_color_intensity1':diam_fci,
-        'diam_polish':diam_pol,
-        'diamwcg':diam_wcg1,
-        'cs_tr':cs_treatment,
-        'cs_org':cs_origin,
-        'cs_shpe':cs_shape,
+        'center_stone_types': center_stone_types,
+        'diam_fancy_color_intensity1': diam_fci,
+        'diam_polish': diam_pol,
+        'diamwcg': diam_wcg1,
+        'cs_tr': cs_treatment,
+        'cs_org': cs_origin,
+        'cs_shpe': cs_shape,
     }
     return render(request, 'home.html', context)
-
-
-@login_required
-def take_input(request):
-    user_name = request.POST.get("user_name")
-    email_id = request.POST.get("email_id")
-    newinput = Database(username=user_name, email=email_id)
-    newinput.save()
-    return render(request, 'second.html')
-
-
-@login_required
-def show_data(request):
-    context = {
-        "all_data": Database.objects.all(),
-        "countone": Database.objects.all().count(),
-    }
-    return render(request, "show_data.html", context=context)
 
 
 @login_required
@@ -93,8 +83,6 @@ def showform(request):
         "latest": POJ.objects.last()
     }
     return render(request, "form.html", context=context)
-
-
 
 
 # def load_currency(request):
@@ -189,7 +177,7 @@ def cform(request):
 #     now = Inventoryofjewellery.objects.get(id=id)
 #     if now.appvreturnstatus is False:
 #         now.appvreturnstatus==True
-#     return redirect("/")
+#     return redirect("/index")
 
 
 @login_required
@@ -282,14 +270,14 @@ class Jewellery_view(View):
 
     def get(self, request):
         allproduct = Inventoryofjewellery.objects.all().order_by('stockid')
-        allproduct_paginator=Paginator(allproduct,3)
+        allproduct_paginator = Paginator(allproduct, 3)
         page_num = request.GET.get("page")
-        page=allproduct_paginator.get_page(page_num)
+        page = allproduct_paginator.get_page(page_num)
 
         # allclonej = cloneInvofjewellery.objects.all()
         context = {
             "productsj": allproduct_paginator.count,
-            "page":page
+            "page": page
 
         }
         return render(request, "showinvj.html", context=context)
@@ -319,7 +307,7 @@ class Jewellery_view(View):
         new_object = cloneInvofjewellery.objects.create(stockid=j_obj.stockid, location=j_obj.location, jewellery_type=j_obj.jewellery_type, center_stone=j_obj.center_stone,
                                                         shape=j_obj.shape, metal=j_obj.metal, gross_wt=j_obj.grosswt, certificate=j_obj.cert,
                                                         PCS=j_obj.pcs, tag_price=j_obj.tag_price,
-                                                        amount=j_obj3.amount,DIS=j_obj3.discount,DIS_amount=j_obj3.discount_amount,total_value=j_obj3.total,currency=j_obj3.currencyid)
+                                                        amount=j_obj3.amount, DIS=j_obj3.discount, DIS_amount=j_obj3.discount_amount, total_value=j_obj3.total, currency=j_obj3.currencyid)
         return redirect('delete-jewell')
 
 
@@ -462,8 +450,8 @@ def save_jewel_forms(request):
 
 class BirdAddView(TemplateView):
     template_name = "show_jewel_form.html"
-    @method_decorator(login_required)
 
+    @method_decorator(login_required)
     def get(self, *args, **kwargs):
         formset = POJFormSet(queryset=POJ.objects.none())
         return self.render_to_response({'totalitems': formset})
@@ -478,7 +466,7 @@ class BirdAddView(TemplateView):
         # Check if submitted forms are valid
         if formset.is_valid():
             formset.save()
-            return redirect("/")
+            return redirect("/index")
 
         return self.render_to_response({'totalitems': formset})
 
@@ -516,7 +504,7 @@ def displaysalesreturn(request):
 def displaycart2(request):
     tjcart = cloneInvofjewellery.objects.all()
     if len(tjcart) == 0:
-        messages.success(request,"Cart is empty")
+        messages.success(request, "Cart is empty")
         return redirect(request.META.get('HTTP_REFERER'))
 
     else:
@@ -546,18 +534,19 @@ def return_jewel_cart(request, id):
 @login_required
 def showcs(request):
     cs_obj = PurchaseOfColorStones.objects.all()
-    invobj=list(Inventoryofcolorstones.objects.values_list('stockid', flat=True))
-    invobjectscs=[]
+    invobj = list(Inventoryofcolorstones.objects.values_list(
+        'stockid', flat=True))
+    invobjectscs = []
     for i in invobj:
-        z=i.replace("C-","")
+        z = i.replace("C-", "")
         invobjectscs.append(int(z))
-    if len(cs_obj)<=7:
-       change =True
-    else:  
-       change = False 
+    if len(cs_obj) <= 7:
+        change = True
+    else:
+        change = False
     context = {
         "show_cs": cs_obj,
-        "invobjectscs":invobjectscs,
+        "invobjectscs": invobjectscs,
         "css_adjust": change,
         "table_type": "Edit Purchased Items of Colourstone",
     }
@@ -580,8 +569,8 @@ def update_cs(request, ck):
     cs_obj = PurchaseOfColorStones.objects.get(id=ck)
     form5 = POCSForm(instance=cs_obj)
     change_css = False
-    browser_type = request.user_agent.browser.family 
-    if (browser_type == 'Edge'or browser_type == 'Chrome' or browser_type == 'Brave'):
+    browser_type = request.user_agent.browser.family
+    if (browser_type == 'Edge' or browser_type == 'Chrome' or browser_type == 'Brave'):
         change_css = True
     # print("7")
     if request.method == 'POST':
@@ -592,10 +581,11 @@ def update_cs(request, ck):
                 stockid=str("C-")+str(ck)).delete()
         # print("3")
             form5.save()
-            messages.success(request, "Stock ID->{} is Modified  Successfully".format(str("C-")+str(ck)))
+            messages.success(
+                request, "Stock ID->{} is Modified  Successfully".format(str("C-")+str(ck)))
             return redirect('/showcs')
 
-    context = {'form5': form5,"b_s_c": change_css,"update_type":"POCS"}
+    context = {'form5': form5, "b_s_c": change_css, "update_type": "POCS"}
     return render(request, 'update_cs.html', context)
 
 
@@ -607,8 +597,8 @@ def update_cs(request, ck):
 
 
 @login_required
-def deleteid_cs( request, idno):
-    
+def deleteid_cs(request, idno):
+
     current = PurchaseOfColorStones.objects.get(id=idno)
     c_str = "C-"+str(idno)
     print(c_str)
@@ -657,21 +647,22 @@ def saving_colorstone_cart(request):
     total = cloneInvofcolorstones.objects.all()
     total_colorstones = list(total.values())
     colorstone_formset = ADCFormSet_cs(initial=total_colorstones)
-    if len(total)<=7:
-       change =True   
-    else:  
-       change = False 
+    if len(total) <= 7:
+        change = True
+    else:
+        change = False
     if request.method == "POST":
         curr_formset = ADCFormSet_cs(data=request.POST)
         if(curr_formset.is_valid()):
             curr_formset.save()
-            return render(request, 'showcart_cs.html',{"totalitems_cs": curr_formset, "table_type": "Cart Items" ,"css_adjust": change,'is_valid':True, 'itemcount': len(curr_formset)})
+            return render(request, 'showcart_cs.html', {"totalitems_cs": curr_formset, "table_type": "Cart Items", "css_adjust": change, 'is_valid': True, 'itemcount': len(curr_formset)})
         else:
-            context = {"totalitems_cs": curr_formset,"css_adjust": change, "table_type": "Cart Items" , 'is_valid': False, 'itemcount': len(curr_formset)}
+            context = {"totalitems_cs": curr_formset, "css_adjust": change,
+                       "table_type": "Cart Items", 'is_valid': False, 'itemcount': len(curr_formset)}
             return render(request, 'showcart_cs.html', context)
     context = {
         "totalitems_cs": colorstone_formset,
-        "table_type": "Cart Items" ,
+        "table_type": "Cart Items",
         "css_adjust": change,
         'itemcount': len(total),
     }
@@ -684,7 +675,7 @@ def sell_cs(request):
 
     for object in cs_objects:
         Salesofcolorstones.objects.create(
-            date = object.date,
+            date=object.date,
             stockid=object.stockid,
             company_name=object.company_name,
             location=object.location,
@@ -711,24 +702,26 @@ def sell_cs(request):
             salesapprovalstatus_cs=object.salesapprovalstatus_cs)
         Inventoryofcolorstones.objects.filter(stockid=object.stockid).delete()
     cloneInvofcolorstones.objects.all().delete()
-    if len(cs_objects)<=7:
-       change =True
-    else:  
-       change = False 
+    if len(cs_objects) <= 7:
+        change = True
+    else:
+        change = False
     print(len(cs_objects))
     context = {
         "sold_items": Salesofcolorstones.objects.all(),
         "css_adjust": change,
-        "table_type":"Sell Items",
+        "table_type": "Sell Items",
     }
     return render(request, "show_sell_cs_table.html", context=context)
+
+
 @login_required
 def allsellcsrecords(request):
     sold_items = Salesofcolorstones.objects.all()
-    if len(sold_items)<=7:
-       change =True
-    else:  
-       change = False 
+    if len(sold_items) <= 7:
+        change = True
+    else:
+        change = False
     context = {
         "sold_items": Salesofcolorstones.objects.all(),
         "css_adjust": change,
@@ -794,22 +787,20 @@ def save_colorstone_forms(request):
 class CSAddView(TemplateView):
 
     template_name = "show_colorstone_form.html"
-    @method_decorator(login_required)
 
-  
+    @method_decorator(login_required)
     def get(self, *args, **kwargs):
         formset = POCSFormSet(queryset=PurchaseOfColorStones.objects.none())
         return self.render_to_response({'totalitems_cs': formset})
 
-  
-    def post(self, request,*args, **kwargs):
+    def post(self, request, *args, **kwargs):
 
         formset = POCSFormSet(data=self.request.POST)
 
         # Check if submitted forms are valid
         if formset.is_valid():
             formset.save()
-            return redirect("/")
+            return redirect("/index")
 
         return self.render_to_response({'totalitems_cs': formset})
 
@@ -817,29 +808,30 @@ class CSAddView(TemplateView):
 class colorstone_view(View):
     @method_decorator(login_required)
     def get(self, request):
-        z=[]
-        y=list()
-        jewel_types = set(Inventoryofcolorstones.objects.values_list('stockid', flat=True))
+        z = []
+        y = list()
+        jewel_types = set(
+            Inventoryofcolorstones.objects.values_list('stockid', flat=True))
         for sentence in jewel_types:
-            sentence=sentence.replace("C-","")
+            sentence = sentence.replace("C-", "")
             z.append(int(sentence))
         z.sort()
-        z=map(str,z)
+        z = map(str, z)
         for i in z:
-            i="C-"+i
+            i = "C-"+i
             y.append(i)
-        allproduct=[]
+        allproduct = []
         for j in y:
-            product=Inventoryofcolorstones.objects.get(stockid=j)
+            product = Inventoryofcolorstones.objects.get(stockid=j)
             allproduct.append(product)
         product_cs = Inventoryofcolorstones.objects.all()
-        if len(product_cs )<=7:
-           change =True
-        else:  
-           change = False
+        if len(product_cs) <= 7:
+            change = True
+        else:
+            change = False
         length_cs = len(allproduct)
-        context = {"products_cs": allproduct,"css_adjust": change,
-        "table_type": "Inventory of Colourstone", "length_cs": length_cs}
+        context = {"products_cs": allproduct, "css_adjust": change,
+                   "table_type": "Inventory of Colourstone", "length_cs": length_cs}
         return render(request, "showinvcs.html", context=context)
 
     def post(self, request, *args, **kwargs):
@@ -880,7 +872,7 @@ def returncart2_cs(request, id):
     invobj = Inventoryofcolorstones.objects.get(stockid=myobject.stockid)
     invobj.cartstatus = False
     invobj.save()
-    tcscart= cloneInvofcolorstones.objects.all()
+    tcscart = cloneInvofcolorstones.objects.all()
     context = {
         "tcscart": tcscart,
     }
@@ -899,12 +891,12 @@ def displaysalesreturn_cs(request):
 @login_required
 def displaycart2_cs(request):
     tcscart = cloneInvofcolorstones.objects.all()
-    if len( tcscart)<=7:
-       initial_change = False
-       change =True   
-    else:  
-       initial_change = True
-       change = False 
+    if len(tcscart) <= 7:
+        initial_change = False
+        change = True
+    else:
+        initial_change = True
+        change = False
     context = {
         "css_adjust_displaycart2_cs": change,
         "displaycart2_cs": initial_change,
@@ -952,15 +944,13 @@ def update_d(request, dk):
         form4 = PODForm(request.POST, instance=diamond_obj)
         if(form4.is_valid()):
             Inventoryofdiamond.objects.filter(
-            stockid=str("D-")+str(dk)).delete()
+                stockid=str("D-")+str(dk)).delete()
             # print("3")
             form4.save()
-            return redirect('/showd')   
+            return redirect('/showd')
 
     context = {'form4': form4}
     return render(request, 'update_diamond.html', context)
-
-
 
 
 @login_required
@@ -1051,7 +1041,7 @@ class DiamondAddView(TemplateView):
         # Check if submitted forms are valid
         if formset.is_valid():
             formset.save()
-            return redirect("/")
+            return redirect("/index")
 
         return self.render_to_response({'totalitems_d': formset})
 
@@ -1105,7 +1095,7 @@ class Diamond_view(View):
                                                       cut=j_obj.cut, polish=j_obj.polish, symmetry=j_obj.symmetry, measurements=j_obj.measurements, depth=j_obj.depth, table=j_obj.table,
                                                       fluorescence_intensity=j_obj.fluorescence_intensity, fluorescence_color=j_obj.fluorescence_color, certificate_no_d=j_obj. certificate_no_d,
                                                       certificate_d=j_obj.certificate_d, laser_inscription=j_obj.laser_inscription, PCS_d=j_obj.PCS_d, weight_d=j_obj.weight_d, units=j_obj.units, tag_price_d=j_obj.tag_price_d,
-                                                      amount_d=j_obj3.amount_d,DIS_d=j_obj3.DIS_d,DIS_Amount_d=j_obj3.DIS_Amount_d,total_value_d=j_obj3.total_val_d,currency=j_obj3.currency)
+                                                      amount_d=j_obj3.amount_d, DIS_d=j_obj3.DIS_d, DIS_Amount_d=j_obj3.DIS_Amount_d, total_value_d=j_obj3.total_val_d, currency=j_obj3.currency)
         return redirect('/delete_d')
 
 
@@ -1205,7 +1195,7 @@ def return_diamond_Inventory(request, id):
 
     )
     Salesofdiamond.objects.filter(pk=id).delete()
-    
+
     context = {
         "products_d": Inventoryofdiamond.objects.all(),
 
@@ -1393,144 +1383,144 @@ def jewellery_upload(request):
                                    rate=float(column[19]),
                                    )
     return HttpResponse('Hi')
-    
+
+
 @login_required
 def itemsearch(request):
     if request.method == "POST":
         query_name = request.POST.get('Stockid', None)
         if query_name:
-            h=re.findall("[0-9]+",query_name)
-            id=int(h[0])
+            h = re.findall("[0-9]+", query_name)
+            id = int(h[0])
             if len(h) == 0:
-                return render(request, 'itemsearch.html',{"message": "Does not exist"})
-            
+                return render(request, 'itemsearch.html', {"message": "Does not exist"})
+
             elif query_name.startswith("C") or query_name.startswith("c"):
-                purchasecsobj=PurchaseOfColorStones.objects.filter(id=id)
-                salescsobj=Salesofcolorstones.objects.filter(stockid=str("C-")+str(id))
-                if(len(purchasecsobj)==0 and len(salescsobj)==0):
-                    context={
-                    "purcsobj":purchasecsobj,
-                    "salescsobj":salescsobj,
-                    "message":"No Records Found",
+                purchasecsobj = PurchaseOfColorStones.objects.filter(id=id)
+                salescsobj = Salesofcolorstones.objects.filter(
+                    stockid=str("C-")+str(id))
+                if(len(purchasecsobj) == 0 and len(salescsobj) == 0):
+                    context = {
+                        "purcsobj": purchasecsobj,
+                        "salescsobj": salescsobj,
+                        "message": "No Records Found",
 
                     }
-                    return render(request,"itemsearch.html",context=context)
-                elif (len(purchasecsobj)==0 and len(salescsobj)>0):
-                    context={
-                    "purcsobj":purchasecsobj,
-                    "salescsobj":salescsobj,
-                    "message":"No Purchase Records Found",
+                    return render(request, "itemsearch.html", context=context)
+                elif (len(purchasecsobj) == 0 and len(salescsobj) > 0):
+                    context = {
+                        "purcsobj": purchasecsobj,
+                        "salescsobj": salescsobj,
+                        "message": "No Purchase Records Found",
 
                     }
-                    return render(request,"itemsearch.html",context=context)
+                    return render(request, "itemsearch.html", context=context)
 
-                elif(len(purchasecsobj)>0 and len(salescsobj)==0):
-                    context={
-                    "purcsobj":purchasecsobj,
-                    "salescsobj":salescsobj,
-                    "message":"No Sales Records Found",
+                elif(len(purchasecsobj) > 0 and len(salescsobj) == 0):
+                    context = {
+                        "purcsobj": purchasecsobj,
+                        "salescsobj": salescsobj,
+                        "message": "No Sales Records Found",
 
                     }
-                    return render(request,"itemsearch.html",context=context)
+                    return render(request, "itemsearch.html", context=context)
                 else:
-                    context={
-                    "purcsobj":purchasecsobj,
-                    "salescsobj":salescsobj,
+                    context = {
+                        "purcsobj": purchasecsobj,
+                        "salescsobj": salescsobj,
 
                     }
-                    return render(request,"itemsearch.html",context=context)
+                    return render(request, "itemsearch.html", context=context)
             else:
-                return render(request, 'itemsearch.html',{"message": "Does not exist"})
-        
-    return render(request,"itemsearch.html")
+                return render(request, 'itemsearch.html', {"message": "Does not exist"})
 
-            
-            
+    return render(request, "itemsearch.html")
 
+    # h=re.findall("[0-9]+",query_name)
+    # query_name.startswith("J")
+    # isj= int(h[0])
 
+    # results =  POJ.objects.filter(id=isj)
+    # salesres = Salesofjewellery.objects.filter(stockid=query_name)
+    # if len(salesres)!=0 or len(results)!=0:
 
-
-
-                # h=re.findall("[0-9]+",query_name)
-                # query_name.startswith("J")
-                # isj= int(h[0])
-
-                # results =  POJ.objects.filter(id=isj)
-                # salesres = Salesofjewellery.objects.filter(stockid=query_name)
-                # if len(salesres)!=0 or len(results)!=0:
-
-                #          context = {
-                #             "results":results,
-                #             "salesres":salesres,
-                #              }
-                #          return render(request, 'itemsearchj.html', context=context)
-                # else:
-                #         
-
+    #          context = {
+    #             "results":results,
+    #             "salesres":salesres,
+    #              }
+    #          return render(request, 'itemsearchj.html', context=context)
+    # else:
+    #
 
 
 @login_required
 def colorstone_upload(request):
-    template="colorstoneupload.html"
-    if request.method=="GET":
-        return render(request,template)
+    template = "colorstoneupload.html"
+    if request.method == "GET":
+        return render(request, template)
 
-    csv_file=request.FILES['file']
+    csv_file = request.FILES['file']
     if not csv_file.name.endswith('.csv'):
-        messages.error(request,"This is not a CSV file")
-    dataset=csv_file.read().decode('UTF-8')
-    io_string=io.StringIO(dataset)
+        messages.error(request, "This is not a CSV file")
+    dataset = csv_file.read().decode('UTF-8')
+    io_string = io.StringIO(dataset)
     next(io_string)
-    for column in csv.reader(io_string,delimiter=','):
-        z=re.findall("[0-9]+",column[19])
+    for column in csv.reader(io_string, delimiter=','):
+        z = re.findall("[0-9]+", column[19])
         # datere=re.findall(r'\d{2}/\d{2}/\d{4}',column[0])
         # date_value=list(datere[0])
         # final_date=datetime.date(int(''.join(date_value[6:])),int(''.join(date_value[3:4])),int(''.join(date_value[0:2])))
         temp_date = datetime.strptime(str(column[0]), "%m-%d-%Y").date()
         print(temp_date)
         # print(final_date)
-        f=PurchaseOfColorStones
+        f = PurchaseOfColorStones
         try:
-            f.company_name = companyinfo.objects.get(company_name=column[2].lower())
+            f.company_name = companyinfo.objects.get(
+                company_name=column[2].lower())
         except ObjectDoesNotExist:
-            messages.error(request, "Company Name does not exist, Add company from top bar!")
+            messages.error(
+                request, "Company Name does not exist, Add company from top bar!")
             return redirect(request.META.get('HTTP_REFERER'))
         print(f.company_name)
         try:
-            f.location,lcobj = location.objects.get_or_create(place=column[3].lower())
-            if lcobj :
+            f.location, lcobj = location.objects.get_or_create(
+                place=column[3].lower())
+            if lcobj:
                 f.location.save()
         except Exception as e:
             raise e
         try:
-          f.shape,sobj=shape_cs.objects.get_or_create(shape=column[4].lower())
-          if sobj :
-              f.shape.save()
+            f.shape, sobj = shape_cs.objects.get_or_create(
+                shape=column[4].lower())
+            if sobj:
+                f.shape.save()
         except Exception as e:
-          raise e
+            raise e
         try:
-          f.gem_type,jlobj = gemtype.objects.get_or_create(gem=column[5].lower())
-          if jlobj :
+            f.gem_type, jlobj = gemtype.objects.get_or_create(
+                gem=column[5].lower())
+            if jlobj:
                 f.gem_type.save()
         except Exception as e:
             raise e
         print(f.gem_type)
         try:
-            f.origin,clobj = Origin_cs.objects.get_or_create(org=column[6].lower())
-            if clobj :
+            f.origin, clobj = Origin_cs.objects.get_or_create(
+                org=column[6].lower())
+            if clobj:
                 f.origin.save()
         except Exception as e:
             raise e
         print(f.origin)
         try:
-            f.Treatment,clsobj=Treatment_cs.objects.get_or_create(treatment=column[7].lower())
-            if clsobj :
+            f.Treatment, clsobj = Treatment_cs.objects.get_or_create(
+                treatment=column[7].lower())
+            if clsobj:
                 f.Treatment.save()
         except Exception as e:
             raise e
         # f.Treatment=Treatment_cs.objects.get(Treatment=column[7])
         # print(f.Treatment)
-
 
         # try:
         #     f.certificate_no,cerobj = cert_no_cs.objects.get_or_create(cert=column[9].lower())
@@ -1542,8 +1532,8 @@ def colorstone_upload(request):
         # print(f.certificate_no)
 
         try:
-            f.lab,mobj = Lab_cs.objects.get_or_create(lab=column[12].lower())
-            if mobj :
+            f.lab, mobj = Lab_cs.objects.get_or_create(lab=column[12].lower())
+            if mobj:
                 f.lab.save()
         except Exception as e:
             raise e
@@ -1551,48 +1541,50 @@ def colorstone_upload(request):
         print(f.lab)
 
         try:
-            f.currency,crobj = currencies.objects.get_or_create(currency=column[22].lower())
-            if crobj :
+            f.currency, crobj = currencies.objects.get_or_create(
+                currency=column[22].lower())
+            if crobj:
                 f.currency.save()
         except Exception as e:
             raise e
         print(f.currency)
-         
+
         print(f.currency)
-        if(column[21]=="NO"):
-            y=False
+        if(column[21] == "NO"):
+            y = False
             print(y)
         else:
-            y=True
+            y = True
 
-
-        
-
-        myibj=PurchaseOfColorStones.objects.create(date=temp_date,
-        company_name_id=f.company_name.id,
-        location_id=f.location.id,
-        shape_id=f.shape.id,
-        gem_type_id=f.gem_type.id,
-        origin_id=f.origin.id,
-        Treatment_id=f.Treatment.id,
-        Clarity=column[8],
-        certificate_no=column[9].lower(),
-        colour=column[10],
-        measurements=column[11],
-        lab_id=f.lab.id,
-        PCS=column[13],
-        Weight=column[14],
-        Price=column[15],
-        units=column[16],
-        amount=float(column[17]),
-        discount_amount=float(column[18]),
-        discount=float(z[0]),
-        total_val=float(column[20]),
-        purchaseapv=y,
-        currency_id=f.currency.id,
-        tag_price=float(column[23]),
-        rate=float(column[24]),
-        )
+        myibj = PurchaseOfColorStones.objects.create(date=temp_date,
+                                                     company_name_id=f.company_name.id,
+                                                     location_id=f.location.id,
+                                                     shape_id=f.shape.id,
+                                                     gem_type_id=f.gem_type.id,
+                                                     origin_id=f.origin.id,
+                                                     Treatment_id=f.Treatment.id,
+                                                     Clarity=column[8],
+                                                     certificate_no=column[9].lower(
+                                                     ),
+                                                     colour=column[10],
+                                                     measurements=column[11],
+                                                     lab_id=f.lab.id,
+                                                     PCS=column[13],
+                                                     Weight=column[14],
+                                                     Price=column[15],
+                                                     units=column[16],
+                                                     amount=float(column[17]),
+                                                     discount_amount=float(
+                                                         column[18]),
+                                                     discount=float(z[0]),
+                                                     total_val=float(
+                                                         column[20]),
+                                                     purchaseapv=y,
+                                                     currency_id=f.currency.id,
+                                                     tag_price=float(
+                                                         column[23]),
+                                                     rate=float(column[24]),
+                                                     )
     messages.success(request, "Successfully uploaded records")
     return redirect(request.META.get('HTTP_REFERER'))
 
@@ -1763,362 +1755,447 @@ def colorstone_upload(request):
 
 @login_required
 def show_on_frontend_cs(request, id):
-    obj = Inventoryofcolorstones.objects.get(id = id)
+    obj = Inventoryofcolorstones.objects.get(id=id)
     obj.frontend = True
     obj.save()
     return redirect('delete-cs')
 
+
 @login_required
 def hide_from_frontend_cs(request, id):
-    obj = Inventoryofcolorstones.objects.get(id = id)
+    obj = Inventoryofcolorstones.objects.get(id=id)
     obj.frontend = False
     obj.save()
     return redirect('delete-cs')
 
-   
+
 @login_required
 def get_company_details(request):
     if request.is_ajax:
         name = request.GET.get('name', 'None')
         name = name.lower()
         print(name)
-        if companyinfo.objects.filter(company_name =name).exists():
+        if companyinfo.objects.filter(company_name=name).exists():
             company = companyinfo.objects.get(company_name=name)
             return JsonResponse({"contact_no": company.contact, "location": company.address}, status=200)
     return JsonResponse({}, status=200)
 
+
 @login_required
-def jewel_metal_filter(request,value,category):
+def jewel_metal_filter(request, value, category):
     print(category)
     if category == "color_of_center_stone":
         print(value)
-        jw = Inventoryofjewellery.objects.filter(Q(color_of_center_stone=value) & Q(frontend =True))
+        jw = Inventoryofjewellery.objects.filter(
+            Q(color_of_center_stone=value) & Q(frontend=True))
         print(jw)
         if len(jw) == 0:
-            message ="No records found"
+            message = "No records found"
             context = {
-                'message':message,
+                'message': message,
             }
         else:
             jewel_colors = colorofcstone.objects.all()
-            jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
-            center_stone_types = set(Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-            diam_fci = set(Inventoryofdiamond.objects.values_list('fancy_color_intensity1', flat=True))
-            diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
-            diam_wcg1 = set(Inventoryofdiamond.objects.values_list('white_color_grade1',flat=True))
-            cs_treatment=set(Inventoryofcolorstones.objects.values_list('treatment',flat=True))
-            cs_origin=set(Inventoryofcolorstones.objects.values_list('origin',flat=True))
-            cs_shape=set(Inventoryofcolorstones.objects.values_list('shape',flat=True))
-            
+            jewel_types = set(Inventoryofjewellery.objects.values_list(
+                'jewellery_type', flat=True))
+            center_stone_types = set(
+                Inventoryofjewellery.objects.values_list('center_stone', flat=True))
+            diam_fci = set(Inventoryofdiamond.objects.values_list(
+                'fancy_color_intensity1', flat=True))
+            diam_pol = set(
+                Inventoryofdiamond.objects.values_list('polish', flat=True))
+            diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
+                'white_color_grade1', flat=True))
+            cs_treatment = set(
+                Inventoryofcolorstones.objects.values_list('treatment', flat=True))
+            cs_origin = set(
+                Inventoryofcolorstones.objects.values_list('origin', flat=True))
+            cs_shape = set(
+                Inventoryofcolorstones.objects.values_list('shape', flat=True))
+
             context = {
                 'gemstones': jewel_colors,
                 'jewel_types': jewel_types,
-                'center_stone_types':center_stone_types,
-                'diam_fancy_color_intensity1':diam_fci,
-                'diam_polish':diam_pol,
-                'diamwcg':diam_wcg1,
-                'cs_tr':cs_treatment,
-                'cs_org':cs_origin,
-                'cs_shpe':cs_shape,
-                "metalcat" : jw,
+                'center_stone_types': center_stone_types,
+                'diam_fancy_color_intensity1': diam_fci,
+                'diam_polish': diam_pol,
+                'diamwcg': diam_wcg1,
+                'cs_tr': cs_treatment,
+                'cs_org': cs_origin,
+                'cs_shpe': cs_shape,
+                "metalcat": jw,
             }
-        
-        print(jw)    
-        return render(request,"filtered.html",context=context)    
+
+        print(jw)
+        return render(request, "filtered.html", context=context)
     elif category == "jewellery_type":
-        jw = Inventoryofjewellery.objects.filter(Q(jewellery_type=value) & Q(frontend =True))
+        jw = Inventoryofjewellery.objects.filter(
+            Q(jewellery_type=value) & Q(frontend=True))
         if jw is None:
-            message ="No records found"
+            message = "No records found"
             context = {
-                'message':message,
+                'message': message,
             }
         else:
             jewel_colors = colorofcstone.objects.all()
-            jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
-            center_stone_types = set(Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-            diam_fci = set(Inventoryofdiamond.objects.values_list('fancy_color_intensity1', flat=True))
-            diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
-            diam_wcg1 = set(Inventoryofdiamond.objects.values_list('white_color_grade1',flat=True))
-            cs_treatment=set(Inventoryofcolorstones.objects.values_list('treatment',flat=True))
-            cs_origin=set(Inventoryofcolorstones.objects.values_list('origin',flat=True))
-            cs_shape=set(Inventoryofcolorstones.objects.values_list('shape',flat=True))
-            
+            jewel_types = set(Inventoryofjewellery.objects.values_list(
+                'jewellery_type', flat=True))
+            center_stone_types = set(
+                Inventoryofjewellery.objects.values_list('center_stone', flat=True))
+            diam_fci = set(Inventoryofdiamond.objects.values_list(
+                'fancy_color_intensity1', flat=True))
+            diam_pol = set(
+                Inventoryofdiamond.objects.values_list('polish', flat=True))
+            diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
+                'white_color_grade1', flat=True))
+            cs_treatment = set(
+                Inventoryofcolorstones.objects.values_list('treatment', flat=True))
+            cs_origin = set(
+                Inventoryofcolorstones.objects.values_list('origin', flat=True))
+            cs_shape = set(
+                Inventoryofcolorstones.objects.values_list('shape', flat=True))
+
             context = {
                 'gemstones': jewel_colors,
                 'jewel_types': jewel_types,
-                'center_stone_types':center_stone_types,
-                'diam_fancy_color_intensity1':diam_fci,
-                'diam_polish':diam_pol,
-                'diamwcg':diam_wcg1,
-                'cs_tr':cs_treatment,
-                'cs_org':cs_origin,
-                'cs_shpe':cs_shape,
-                "metalcat" : jw,
+                'center_stone_types': center_stone_types,
+                'diam_fancy_color_intensity1': diam_fci,
+                'diam_polish': diam_pol,
+                'diamwcg': diam_wcg1,
+                'cs_tr': cs_treatment,
+                'cs_org': cs_origin,
+                'cs_shpe': cs_shape,
+                "metalcat": jw,
             }
-        return render(request,"filtered.html",context=context)    
+        return render(request, "filtered.html", context=context)
     elif category == "center_stone":
-        jw = Inventoryofjewellery.objects.filter(Q(center_stone=value) & Q(frontend =True))
+        jw = Inventoryofjewellery.objects.filter(
+            Q(center_stone=value) & Q(frontend=True))
         if jw is None:
-            message ="No records found"
+            message = "No records found"
             context = {
-                'message':message,
+                'message': message,
             }
         else:
             jewel_colors = colorofcstone.objects.all()
-            jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
-            center_stone_types = set(Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-            diam_fci = set(Inventoryofdiamond.objects.values_list('fancy_color_intensity1', flat=True))
-            diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
-            diam_wcg1 = set(Inventoryofdiamond.objects.values_list('white_color_grade1',flat=True))
-            cs_treatment=set(Inventoryofcolorstones.objects.values_list('treatment',flat=True))
-            cs_origin=set(Inventoryofcolorstones.objects.values_list('origin',flat=True))
-            cs_shape=set(Inventoryofcolorstones.objects.values_list('shape',flat=True))
-            
+            jewel_types = set(Inventoryofjewellery.objects.values_list(
+                'jewellery_type', flat=True))
+            center_stone_types = set(
+                Inventoryofjewellery.objects.values_list('center_stone', flat=True))
+            diam_fci = set(Inventoryofdiamond.objects.values_list(
+                'fancy_color_intensity1', flat=True))
+            diam_pol = set(
+                Inventoryofdiamond.objects.values_list('polish', flat=True))
+            diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
+                'white_color_grade1', flat=True))
+            cs_treatment = set(
+                Inventoryofcolorstones.objects.values_list('treatment', flat=True))
+            cs_origin = set(
+                Inventoryofcolorstones.objects.values_list('origin', flat=True))
+            cs_shape = set(
+                Inventoryofcolorstones.objects.values_list('shape', flat=True))
+
             context = {
                 'gemstones': jewel_colors,
                 'jewel_types': jewel_types,
-                'center_stone_types':center_stone_types,
-                'diam_fancy_color_intensity1':diam_fci,
-                'diam_polish':diam_pol,
-                'diamwcg':diam_wcg1,
-                'cs_tr':cs_treatment,
-                'cs_org':cs_origin,
-                'cs_shpe':cs_shape,
-                "metalcat" : jw,
+                'center_stone_types': center_stone_types,
+                'diam_fancy_color_intensity1': diam_fci,
+                'diam_polish': diam_pol,
+                'diamwcg': diam_wcg1,
+                'cs_tr': cs_treatment,
+                'cs_org': cs_origin,
+                'cs_shpe': cs_shape,
+                "metalcat": jw,
             }
-        return render(request,"filtered.html",context=context)    
+        return render(request, "filtered.html", context=context)
     else:
         pass
+
+
 @login_required
 def jewel_listing(request):
-    return render(request,"jewel_listing.html")
-    
+    return render(request, "jewel_listing.html")
+
+
 @login_required
 def contactsendmail(request):
-    if request.method=="GET":
-        form=contactformemail()
+    if request.method == "GET":
+        form = contactformemail()
     else:
-        form=contactformemail(request.POST) 
+        form = contactformemail(request.POST)
         if form.is_valid():
             fromemail = form.cleaned_data["fromemail"]
             subject = form.cleaned_data["subject"]
             message = form.cleaned_data["message"]
-            send_mail(subject,message,fromemail,['krgconnect86@gmail.com',fromemail])
-    return render(request,'contact.html',{'form':form})    
+            send_mail(subject, message, fromemail, [
+                      'krgconnect86@gmail.com', fromemail])
+    return render(request, 'contact.html', {'form': form})
+
 
 @login_required
-def diamond_filter(request,value,category):
+def diamond_filter(request, value, category):
     print(category)
     if category == "fancy_color_intensity1":
         print(value)
         dm = Inventoryofdiamond.objects.filter(Q(fancy_color_intensity1=value))
         print(dm)
         if len(dm) == 0:
-            message ="No records found"
+            message = "No records found"
             context = {
-                'message':message,
+                'message': message,
             }
         else:
             jewel_colors = colorofcstone.objects.all()
-            jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
-            center_stone_types = set(Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-            diam_fci = set(Inventoryofdiamond.objects.values_list('fancy_color_intensity1', flat=True))
-            diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
-            diam_wcg1 = set(Inventoryofdiamond.objects.values_list('white_color_grade1',flat=True))
-            cs_treatment=set(Inventoryofcolorstones.objects.values_list('treatment',flat=True))
-            cs_origin=set(Inventoryofcolorstones.objects.values_list('origin',flat=True))
-            cs_shape=set(Inventoryofcolorstones.objects.values_list('shape',flat=True))
-            
+            jewel_types = set(Inventoryofjewellery.objects.values_list(
+                'jewellery_type', flat=True))
+            center_stone_types = set(
+                Inventoryofjewellery.objects.values_list('center_stone', flat=True))
+            diam_fci = set(Inventoryofdiamond.objects.values_list(
+                'fancy_color_intensity1', flat=True))
+            diam_pol = set(
+                Inventoryofdiamond.objects.values_list('polish', flat=True))
+            diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
+                'white_color_grade1', flat=True))
+            cs_treatment = set(
+                Inventoryofcolorstones.objects.values_list('treatment', flat=True))
+            cs_origin = set(
+                Inventoryofcolorstones.objects.values_list('origin', flat=True))
+            cs_shape = set(
+                Inventoryofcolorstones.objects.values_list('shape', flat=True))
+
             context = {
                 'gemstones': jewel_colors,
                 'jewel_types': jewel_types,
-                'center_stone_types':center_stone_types,
-                'diam_fancy_color_intensity1':diam_fci,
-                'diam_polish':diam_pol,
-                'diamwcg':diam_wcg1,
-                'cs_tr':cs_treatment,
-                'cs_org':cs_origin,
-                'cs_shpe':cs_shape,
-                "diamcat" : dm,
+                'center_stone_types': center_stone_types,
+                'diam_fancy_color_intensity1': diam_fci,
+                'diam_polish': diam_pol,
+                'diamwcg': diam_wcg1,
+                'cs_tr': cs_treatment,
+                'cs_org': cs_origin,
+                'cs_shpe': cs_shape,
+                "diamcat": dm,
             }
-        print(dm)    
-        return render(request,"filtered_d.html",context=context)    
+        print(dm)
+        return render(request, "filtered_d.html", context=context)
     elif category == "polish":
-        dm= Inventoryofdiamond.objects.filter(Q(polish=value))
+        dm = Inventoryofdiamond.objects.filter(Q(polish=value))
         if dm is None:
-            message ="No records found"
+            message = "No records found"
             context = {
-                'message':message,
+                'message': message,
             }
         else:
             jewel_colors = colorofcstone.objects.all()
-            jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
-            center_stone_types = set(Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-            diam_fci = set(Inventoryofdiamond.objects.values_list('fancy_color_intensity1', flat=True))
-            diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
-            diam_wcg1 = set(Inventoryofdiamond.objects.values_list('white_color_grade1',flat=True))
-            cs_treatment=set(Inventoryofcolorstones.objects.values_list('treatment',flat=True))
-            cs_origin=set(Inventoryofcolorstones.objects.values_list('origin',flat=True))
-            cs_shape=set(Inventoryofcolorstones.objects.values_list('shape',flat=True))
-            
+            jewel_types = set(Inventoryofjewellery.objects.values_list(
+                'jewellery_type', flat=True))
+            center_stone_types = set(
+                Inventoryofjewellery.objects.values_list('center_stone', flat=True))
+            diam_fci = set(Inventoryofdiamond.objects.values_list(
+                'fancy_color_intensity1', flat=True))
+            diam_pol = set(
+                Inventoryofdiamond.objects.values_list('polish', flat=True))
+            diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
+                'white_color_grade1', flat=True))
+            cs_treatment = set(
+                Inventoryofcolorstones.objects.values_list('treatment', flat=True))
+            cs_origin = set(
+                Inventoryofcolorstones.objects.values_list('origin', flat=True))
+            cs_shape = set(
+                Inventoryofcolorstones.objects.values_list('shape', flat=True))
+
             context = {
                 'gemstones': jewel_colors,
                 'jewel_types': jewel_types,
-                'center_stone_types':center_stone_types,
-                'diam_fancy_color_intensity1':diam_fci,
-                'diam_polish':diam_pol,
-                'diamwcg':diam_wcg1,
-                'cs_tr':cs_treatment,
-                'cs_org':cs_origin,
-                'cs_shpe':cs_shape,
-                "diamcat" : dm,
+                'center_stone_types': center_stone_types,
+                'diam_fancy_color_intensity1': diam_fci,
+                'diam_polish': diam_pol,
+                'diamwcg': diam_wcg1,
+                'cs_tr': cs_treatment,
+                'cs_org': cs_origin,
+                'cs_shpe': cs_shape,
+                "diamcat": dm,
             }
-        return render(request,"filtered_d.html",context=context)    
+        return render(request, "filtered_d.html", context=context)
     elif category == "white_color_grade1":
         dm = Inventoryofdiamond.objects.filter(Q(white_color_grade1=value))
         if dm is None:
-            message ="No records found"
+            message = "No records found"
             context = {
-                'message':message,
+                'message': message,
             }
         else:
             jewel_colors = colorofcstone.objects.all()
-            jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
-            center_stone_types = set(Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-            diam_fci = set(Inventoryofdiamond.objects.values_list('fancy_color_intensity1', flat=True))
-            diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
-            diam_wcg1 = set(Inventoryofdiamond.objects.values_list('white_color_grade1',flat=True))
-            cs_treatment=set(Inventoryofcolorstones.objects.values_list('treatment',flat=True))
-            cs_origin=set(Inventoryofcolorstones.objects.values_list('origin',flat=True))
-            cs_shape=set(Inventoryofcolorstones.objects.values_list('shape',flat=True))
-            
+            jewel_types = set(Inventoryofjewellery.objects.values_list(
+                'jewellery_type', flat=True))
+            center_stone_types = set(
+                Inventoryofjewellery.objects.values_list('center_stone', flat=True))
+            diam_fci = set(Inventoryofdiamond.objects.values_list(
+                'fancy_color_intensity1', flat=True))
+            diam_pol = set(
+                Inventoryofdiamond.objects.values_list('polish', flat=True))
+            diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
+                'white_color_grade1', flat=True))
+            cs_treatment = set(
+                Inventoryofcolorstones.objects.values_list('treatment', flat=True))
+            cs_origin = set(
+                Inventoryofcolorstones.objects.values_list('origin', flat=True))
+            cs_shape = set(
+                Inventoryofcolorstones.objects.values_list('shape', flat=True))
+
             context = {
                 'gemstones': jewel_colors,
                 'jewel_types': jewel_types,
-                'center_stone_types':center_stone_types,
-                'diam_fancy_color_intensity1':diam_fci,
-                'diam_polish':diam_pol,
-                'diamwcg':diam_wcg1,
-                'cs_tr':cs_treatment,
-                'cs_org':cs_origin,
-                'cs_shpe':cs_shape,
-                "diamcat" : dm,
+                'center_stone_types': center_stone_types,
+                'diam_fancy_color_intensity1': diam_fci,
+                'diam_polish': diam_pol,
+                'diamwcg': diam_wcg1,
+                'cs_tr': cs_treatment,
+                'cs_org': cs_origin,
+                'cs_shpe': cs_shape,
+                "diamcat": dm,
             }
-           
-        return render(request,"filtered_d.html",context=context)        
+
+        return render(request, "filtered_d.html", context=context)
     else:
         pass
 
-@login_required
-def diamond_listing(request):
-    return render(request,"diamond_listing.html")  
 
 @login_required
-def cs_filter(request,value,category):
+def diamond_listing(request):
+    return render(request, "diamond_listing.html")
+
+
+@login_required
+def cs_filter(request, value, category):
     print(category)
     if category == "origin":
         print(value)
         clst = Inventoryofcolorstones.objects.filter(Q(origin=value))
         print(clst)
         if len(clst) == 0:
-            message ="No records found"
+            message = "No records found"
             context = {
-                'message':message,
+                'message': message,
             }
         else:
             jewel_colors = colorofcstone.objects.all()
-            jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
-            center_stone_types = set(Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-            diam_fci = set(Inventoryofdiamond.objects.values_list('fancy_color_intensity1', flat=True))
-            diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
-            diam_wcg1 = set(Inventoryofdiamond.objects.values_list('white_color_grade1',flat=True))
-            cs_treatment=set(Inventoryofcolorstones.objects.values_list('treatment',flat=True))
-            cs_origin=set(Inventoryofcolorstones.objects.values_list('origin',flat=True))
-            cs_shape=set(Inventoryofcolorstones.objects.values_list('shape',flat=True))
-            
+            jewel_types = set(Inventoryofjewellery.objects.values_list(
+                'jewellery_type', flat=True))
+            center_stone_types = set(
+                Inventoryofjewellery.objects.values_list('center_stone', flat=True))
+            diam_fci = set(Inventoryofdiamond.objects.values_list(
+                'fancy_color_intensity1', flat=True))
+            diam_pol = set(
+                Inventoryofdiamond.objects.values_list('polish', flat=True))
+            diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
+                'white_color_grade1', flat=True))
+            cs_treatment = set(
+                Inventoryofcolorstones.objects.values_list('treatment', flat=True))
+            cs_origin = set(
+                Inventoryofcolorstones.objects.values_list('origin', flat=True))
+            cs_shape = set(
+                Inventoryofcolorstones.objects.values_list('shape', flat=True))
+
             context = {
                 'gemstones': jewel_colors,
                 'jewel_types': jewel_types,
-                'center_stone_types':center_stone_types,
-                'diam_fancy_color_intensity1':diam_fci,
-                'diam_polish':diam_pol,
-                'diamwcg':diam_wcg1,
-                'cs_tr':cs_treatment,
-                'cs_org':cs_origin,
-                'cs_shpe':cs_shape,
-                "cscat" : clst,
+                'center_stone_types': center_stone_types,
+                'diam_fancy_color_intensity1': diam_fci,
+                'diam_polish': diam_pol,
+                'diamwcg': diam_wcg1,
+                'cs_tr': cs_treatment,
+                'cs_org': cs_origin,
+                'cs_shpe': cs_shape,
+                "cscat": clst,
             }
-           
-        return render(request,"filtered_cs.html",context=context)    
+
+        return render(request, "filtered_cs.html", context=context)
     elif category == "treatment":
-        clst= Inventoryofcolorstones.objects.filter(Q(treatment=value))
-        if len(clst) ==0:
-            message ="No records found"
+        clst = Inventoryofcolorstones.objects.filter(Q(treatment=value))
+        if len(clst) == 0:
+            message = "No records found"
             context = {
-                'message':message,
+                'message': message,
             }
         else:
             jewel_colors = colorofcstone.objects.all()
-            jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
-            center_stone_types = set(Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-            diam_fci = set(Inventoryofdiamond.objects.values_list('fancy_color_intensity1', flat=True))
-            diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
-            diam_wcg1 = set(Inventoryofdiamond.objects.values_list('white_color_grade1',flat=True))
-            cs_treatment=set(Inventoryofcolorstones.objects.values_list('treatment',flat=True))
-            cs_origin=set(Inventoryofcolorstones.objects.values_list('origin',flat=True))
-            cs_shape=set(Inventoryofcolorstones.objects.values_list('shape',flat=True))
-            
+            jewel_types = set(Inventoryofjewellery.objects.values_list(
+                'jewellery_type', flat=True))
+            center_stone_types = set(
+                Inventoryofjewellery.objects.values_list('center_stone', flat=True))
+            diam_fci = set(Inventoryofdiamond.objects.values_list(
+                'fancy_color_intensity1', flat=True))
+            diam_pol = set(
+                Inventoryofdiamond.objects.values_list('polish', flat=True))
+            diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
+                'white_color_grade1', flat=True))
+            cs_treatment = set(
+                Inventoryofcolorstones.objects.values_list('treatment', flat=True))
+            cs_origin = set(
+                Inventoryofcolorstones.objects.values_list('origin', flat=True))
+            cs_shape = set(
+                Inventoryofcolorstones.objects.values_list('shape', flat=True))
+
             context = {
                 'gemstones': jewel_colors,
                 'jewel_types': jewel_types,
-                'center_stone_types':center_stone_types,
-                'diam_fancy_color_intensity1':diam_fci,
-                'diam_polish':diam_pol,
-                'diamwcg':diam_wcg1,
-                'cs_tr':cs_treatment,
-                'cs_org':cs_origin,
-                'cs_shpe':cs_shape,
-                "cscat" : clst,
+                'center_stone_types': center_stone_types,
+                'diam_fancy_color_intensity1': diam_fci,
+                'diam_polish': diam_pol,
+                'diamwcg': diam_wcg1,
+                'cs_tr': cs_treatment,
+                'cs_org': cs_origin,
+                'cs_shpe': cs_shape,
+                "cscat": clst,
             }
-        return render(request,"filtered_cs.html",context=context)    
+        return render(request, "filtered_cs.html", context=context)
     elif category == "shape":
         clst = Inventoryofcolorstones.objects.filter(Q(shape=value))
-        if len(clst) ==0:
-            message ="No records found"
+        if len(clst) == 0:
+            message = "No records found"
             context = {
-                'message':message,
+                'message': message,
             }
         else:
             jewel_colors = colorofcstone.objects.all()
-            jewel_types = set(Inventoryofjewellery.objects.values_list('jewellery_type', flat=True))
-            center_stone_types = set(Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-            diam_fci = set(Inventoryofdiamond.objects.values_list('fancy_color_intensity1', flat=True))
-            diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
-            diam_wcg1 = set(Inventoryofdiamond.objects.values_list('white_color_grade1',flat=True))
-            cs_treatment=set(Inventoryofcolorstones.objects.values_list('treatment',flat=True))
-            cs_origin=set(Inventoryofcolorstones.objects.values_list('origin',flat=True))
-            cs_shape=set(Inventoryofcolorstones.objects.values_list('shape',flat=True))
-            
+            jewel_types = set(Inventoryofjewellery.objects.values_list(
+                'jewellery_type', flat=True))
+            center_stone_types = set(
+                Inventoryofjewellery.objects.values_list('center_stone', flat=True))
+            diam_fci = set(Inventoryofdiamond.objects.values_list(
+                'fancy_color_intensity1', flat=True))
+            diam_pol = set(
+                Inventoryofdiamond.objects.values_list('polish', flat=True))
+            diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
+                'white_color_grade1', flat=True))
+            cs_treatment = set(
+                Inventoryofcolorstones.objects.values_list('treatment', flat=True))
+            cs_origin = set(
+                Inventoryofcolorstones.objects.values_list('origin', flat=True))
+            cs_shape = set(
+                Inventoryofcolorstones.objects.values_list('shape', flat=True))
+
             context = {
                 'gemstones': jewel_colors,
                 'jewel_types': jewel_types,
-                'center_stone_types':center_stone_types,
-                'diam_fancy_color_intensity1':diam_fci,
-                'diam_polish':diam_pol,
-                'diamwcg':diam_wcg1,
-                'cs_tr':cs_treatment,
-                'cs_org':cs_origin,
-                'cs_shpe':cs_shape,
-                "cscat" : clst,
+                'center_stone_types': center_stone_types,
+                'diam_fancy_color_intensity1': diam_fci,
+                'diam_polish': diam_pol,
+                'diamwcg': diam_wcg1,
+                'cs_tr': cs_treatment,
+                'cs_org': cs_origin,
+                'cs_shpe': cs_shape,
+                "cscat": clst,
             }
-            
-        return render(request,"filtered_cs.html",context=context)        
+
+        return render(request, "filtered_cs.html", context=context)
     else:
         pass
 
+
 @login_required
 def cstone_listing(request):
-    return render(request,"cstone_listing.html")  
+    return render(request, "cstone_listing.html")
 
 
 @login_required
@@ -2127,14 +2204,18 @@ def ExportPurchaseOfColorStones(request):
     output = []
     response = HttpResponse(content_type='text/csv')
     filename = "PurchaseOfColorStones.csv"
-    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
+        filename)
     writer = csv.writer(response)
-    writer.writerow(['Date','Stock id', 'Company Name','Location', 'Shape', 'Gem Type', 'Origin', 'Treatment', 'Clarity', 'Certificate', 'Colour', 'Measurement', 'Lab', 'PCS', 'Weight', 'Price', 'Units', 'Amount', 'Dicount Amount', 'Discount', 'Total Value', 'Bought', 'Currency', 'Tag Price', 'Rate'])
+    writer.writerow(['Date', 'Stock id', 'Company Name', 'Location', 'Shape', 'Gem Type', 'Origin', 'Treatment', 'Clarity', 'Certificate', 'Colour', 'Measurement',
+                    'Lab', 'PCS', 'Weight', 'Price', 'Units', 'Amount', 'Dicount Amount', 'Discount', 'Total Value', 'Bought', 'Currency', 'Tag Price', 'Rate'])
     for item in objects:
-        output.append([item.date, 'C-' + str(item.id), item.company_name, item.location.place, item.shape.shape, item.gem_type.gem, item.origin.org, item.Treatment.treatment, item.Clarity, item.certificate_no, item.colour, item.measurements, item.lab, item.PCS, item.Weight, item.Price, item.units, item.amount, item.discount_amount ,str(item.discount)+"%", item.total_val, item.purchaseapv, item.currency.currency, item.tag_price, item.rate])
-    
+        output.append([item.date, 'C-' + str(item.id), item.company_name, item.location.place, item.shape.shape, item.gem_type.gem, item.origin.org, item.Treatment.treatment, item.Clarity, item.certificate_no, item.colour,
+                      item.measurements, item.lab, item.PCS, item.Weight, item.Price, item.units, item.amount, item.discount_amount, str(item.discount)+"%", item.total_val, item.purchaseapv, item.currency.currency, item.tag_price, item.rate])
+
     writer.writerows(output)
     return response
+
 
 @login_required
 def ExportInventoryofcolorstones(request):
@@ -2142,14 +2223,18 @@ def ExportInventoryofcolorstones(request):
     output = []
     response = HttpResponse(content_type='text/csv')
     filename = "Inventoryofcolorstones.csv"
-    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
+        filename)
     writer = csv.writer(response)
-    writer.writerow(['Stock id','Location', 'Shape', 'Gem Type', 'Origin', 'Treatment', 'Clarity', 'Certificate', 'Colour', 'Measurement', 'Lab', 'PCS', 'Weight','Tag Price'])
+    writer.writerow(['Stock id', 'Location', 'Shape', 'Gem Type', 'Origin', 'Treatment',
+                    'Clarity', 'Certificate', 'Colour', 'Measurement', 'Lab', 'PCS', 'Weight', 'Tag Price'])
     for item in objects:
-        output.append([item.stockid,item.location, item.shape, item.gem_type, item.origin, item.treatment, item.Clarity, item.certificate_no, item.color, item.measurements, item.lab, item.PCS, item.Weight, item.tag_price])
+        output.append([item.stockid, item.location, item.shape, item.gem_type, item.origin, item.treatment, item.Clarity,
+                      item.certificate_no, item.color, item.measurements, item.lab, item.PCS, item.Weight, item.tag_price])
 
     writer.writerows(output)
     return response
+
 
 @login_required
 def ExportSalesofcolorstones(request):
@@ -2157,25 +2242,30 @@ def ExportSalesofcolorstones(request):
     output = []
     response = HttpResponse(content_type='text/csv')
     filename = "Salesofcolorstones.csv"
-    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
+        filename)
     writer = csv.writer(response)
-    writer.writerow(['Date','Stock id', 'Company Name','Location', 'Shape', 'Gem Type', 'Origin', 'Treatment', 'Clarity', 'Certificate', 'Colour', 'Measurement', 'Lab', 'PCS', 'Weight','Amount','Discount','Dicount Amount','Total Value','Currency','Tag Price', 'Rate'])
+    writer.writerow(['Date', 'Stock id', 'Company Name', 'Location', 'Shape', 'Gem Type', 'Origin', 'Treatment', 'Clarity', 'Certificate',
+                    'Colour', 'Measurement', 'Lab', 'PCS', 'Weight', 'Amount', 'Discount', 'Dicount Amount', 'Total Value', 'Currency', 'Tag Price', 'Rate'])
     for item in objects:
-        output.append([item.date, 'C-' + str(item.id), item.company_name, item.location, item.shape, item.gem_type, item.origin, item.treatment, item.Clarity, item.certificate_no, item.color, item.measurements, item.lab, item.PCS, item.Weight_cs,item.amount_cs,str(item.DIS_cs)+"%",item.DIS_amount_cs ,item.total_value_cs, item.currency_cs, item.tag_price_cs, item.rate_cs])
+        output.append([item.date, 'C-' + str(item.id), item.company_name, item.location, item.shape, item.gem_type, item.origin, item.treatment, item.Clarity, item.certificate_no, item.color,
+                      item.measurements, item.lab, item.PCS, item.Weight_cs, item.amount_cs, str(item.DIS_cs)+"%", item.DIS_amount_cs, item.total_value_cs, item.currency_cs, item.tag_price_cs, item.rate_cs])
 
     writer.writerows(output)
     return response
 
+
 @login_required
 def get_certificate_of_colorstone(request):
-    stockid  = request.GET.get('stockid', None)
+    stockid = request.GET.get('stockid', None)
     try:
         id_used = Inventoryofcolorstones.objects.get(stockid=stockid)
-        data = ColorStone_media.objects.get(stockid = id_used.id)
+        data = ColorStone_media.objects.get(stockid=id_used.id)
         return JsonResponse({'certificate': str(data.certificate)}, status=200)
     except:
-        data  = {}
-    return JsonResponse({'certificate': '0'}, status = 200)
+        data = {}
+    return JsonResponse({'certificate': '0'}, status=200)
+
 
 @login_required
 def ExportSalesreturncolorstones(request):
@@ -2183,13 +2273,17 @@ def ExportSalesreturncolorstones(request):
     output = []
     response = HttpResponse(content_type='text/csv')
     filename = "Salesreturncolorstones.csv"
-    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
+        filename)
     writer = csv.writer(response)
-    writer.writerow(['Date','Stock id', 'Company Name','Location', 'Gem Type','Weight ','Tag Price'])
+    writer.writerow(['Date', 'Stock id', 'Company Name',
+                    'Location', 'Gem Type', 'Weight ', 'Tag Price'])
     for item in objects:
-        output.append([item.date, 'C-' + str(item.id), item.company_name, item.location,item.gem_type,item.weight,item.tag_price_cs])
+        output.append([item.date, 'C-' + str(item.id), item.company_name,
+                      item.location, item.gem_type, item.weight, item.tag_price_cs])
     writer.writerows(output)
     return response
+
 
 @login_required
 def ExportSalesReturnCS(request):
@@ -2197,11 +2291,60 @@ def ExportSalesReturnCS(request):
     output = []
     response = HttpResponse(content_type='text/csv')
     filename = "SalesReturnofColourStones.csv"
-    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
+        filename)
     writer = csv.writer(response)
-    writer.writerow(['Date','Stock ID','Company','Location','Gem Type','Weight','Tag Price'])
+    writer.writerow(['Date', 'Stock ID', 'Company', 'Location',
+                    'Gem Type', 'Weight', 'Tag Price'])
     for item in objects:
-        output.append([item.date,item.stockid,item.company_name,item.location,item.gem_type,item.weight,item.tag_price_cs])
+        output.append([item.date, item.stockid, item.company_name,
+                      item.location, item.gem_type, item.weight, item.tag_price_cs])
 
     writer.writerows(output)
     return response
+
+
+class SignUpView(CreateView):
+    template_name = 'user_register.html'
+    success_url = reverse_lazy('user_login')
+    form_class = UserForm
+
+
+def user_login(request):
+    message = None
+
+    if 'is_logedin' not in request.session and request.method != 'POST':
+        message = "Please Enter your Email  and password "
+        return render(request, 'user_login.html', {'message': message})
+    elif request.method == 'POST':
+
+        user_email = request.POST.get('email')
+        user_email = user_email.lower()
+        user_password = request.POST.get('password')
+        try:
+            user_details = (User_table.objects.get(pk=user_email))
+            if(user_details.password == user_password):
+                if(user_details.permit_user):
+                    request.session['is_logedin'] = True
+                    request.session['logdin_time'] = str(datetime.now())
+                    request.session['user_email'] = user_details.email_id
+                    request.session['business_type'] = user_details.Businesstype
+                    return redirect('/')
+                else:
+                    message = "You are not permitted to view the content. Contact the administrator."
+            else:
+                message = "Please check your credentials."
+        except User_table.DoesNotExist:
+            message = "No user found...!!"
+
+        return render(request, 'user_login.html', {'message': message})
+
+    return redirect("/")
+
+
+def user_Logout(request):
+    if 'is_logedin' in request.session:
+        del request.session['is_logedin']
+        request.session.clear()
+        return redirect('user_login')
+    return redirect("/")

@@ -12,15 +12,23 @@ from django.forms import TextInput, Textarea
 from django.contrib import messages
 
 
-#Dev mode
+# Dev mode
 development_mode = False
 
-#doploy variables
+# doploy variables
 deploy_color_stone = True
 deploy_jewellery = False
 deploy_diamond = False
 
 
+@admin.register(State)
+class stateadmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(User_table)
+class usertableadmin(admin.ModelAdmin):
+    pass
 
 
 if deploy_color_stone:
@@ -31,7 +39,7 @@ if deploy_color_stone:
     @admin.register(Treatment_cs)
     class treatcsadmin(ImportExportModelAdmin):
         # def HomePage(treatcsadmin, request, queryset):
-        #         return redirect('/')
+        #         return redirect('/index')
 
         # HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
         # changelist_actions = ('HomePage',)
@@ -40,100 +48,103 @@ if deploy_color_stone:
     @admin.register(Origin_cs)
     class originadmin(ImportExportModelAdmin):
         def HomePage(originadmin, request, queryset):
-                return redirect('/')
+            return redirect('/index')
 
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
+        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
-
 
     @admin.register(Lab_cs)
     class labadmin(ImportExportModelAdmin):
         def HomePage(labadmin, request, queryset):
-                return redirect('/')
+            return redirect('/index')
 
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
+        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
 
     @admin.register(shape_cs)
     class shapeadmin(ImportExportModelAdmin):
         def HomePage(shapeadmin, request, queryset):
-                return redirect('/')
+            return redirect('/index')
 
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
+        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
-    @admin.register(companyinfo)
-    class CompanyAdmin(DjangoObjectActions,admin.ModelAdmin):
-        def HomePage(CompanyAdmin, request, queryset):
-            return redirect('/')
 
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
+    @admin.register(companyinfo)
+    class CompanyAdmin(DjangoObjectActions, admin.ModelAdmin):
+        def HomePage(CompanyAdmin, request, queryset):
+            return redirect('/index')
+
+        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         actions = ['change_name']
         changelist_actions = ('HomePage',)
         search_fields = ['company_name', 'email']
-        list_display_links =['company_name']
+        list_display_links = ['company_name']
         # list_editable = ['company_name']
         list_display = [f.name for f in companyinfo._meta.fields]
 
         def response_change(self, request, obj):
-            return redirect('/')
+            return redirect('/index')
 
         def response_add(self, request, obj, post_url_continue=None):
-            return redirect('/')
-    @admin.register(ColorStone_media)
-    class ColorStone_media_admin(DjangoObjectActions,admin.ModelAdmin):
-        def HomePage(ColorStone_media_admin, request, queryset):
-                return redirect('/')
+            return redirect('/index')
 
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
+    @admin.register(ColorStone_media)
+    class ColorStone_media_admin(DjangoObjectActions, admin.ModelAdmin):
+        def HomePage(ColorStone_media_admin, request, queryset):
+            return redirect('/index')
+
+        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
         list_display = [entry.name for entry in ColorStone_media._meta.fields]
 
         def response_change(self, request, obj=None):
             messages.success(request, "Media successfully changed!")
-            return redirect('/')
-        
+            return redirect('/index')
+
         def response_add(self, request, obj=None):
             messages.success(request, "Media successfully added!")
-            return redirect('/')
+            return redirect('/index')
 
     @admin.register(Salesofcolorstones)
     class salesofcsadmin(admin.ModelAdmin):
         # def HomePage(salesofcsadmin, request, queryset):
-        #     return redirect('/')
+        #     return redirect('/index')
 
         # HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
         # changelist_actions = ('HomePage',)
 
-        formfield_overrides = {models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},}
-        search_fields = ['company_name__company_name', 'stockid', 'location__place', 'gem_type__gem', 'shape__shape']
-        list_editable = ['date','company_name', 'amount_cs','DIS_cs','DIS_amount_cs', 'total_value_cs', 'tag_price_cs','price','Weight_cs', 'rate_cs', 'salesapprovalstatus_cs', 'comment']
+        formfield_overrides = {models.TextField: {
+            'widget': Textarea(attrs={'rows': 4, 'cols': 40})}, }
+        search_fields = ['company_name__company_name', 'stockid',
+                         'location__place', 'gem_type__gem', 'shape__shape']
+        list_editable = ['date', 'company_name', 'amount_cs', 'DIS_cs', 'DIS_amount_cs', 'total_value_cs',
+                         'tag_price_cs', 'price', 'Weight_cs', 'rate_cs', 'salesapprovalstatus_cs', 'comment']
         list_display = [f.name for f in Salesofcolorstones._meta.fields]
+
         def has_add_permission(self, request, obj=None):
             return False
+
         def has_change_permission(self, request, obj=None):
             return True
+
         def has_delete_permission(self, request, obj=None):
             return False
 
     @admin.register(currencies)
     class curradmin(ImportExportModelAdmin):
         def HomePage(curradmin, request, queryset):
-                return redirect('/')
+            return redirect('/index')
 
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
-        changelist_actions = ('HomePage',)        
-    
-
+        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
+        changelist_actions = ('HomePage',)
 
 
 if development_mode:
-   
-    
 
     # @admin.register(companyinfo)
     # class CompanyAdmin(DjangoObjectActions,admin.ModelAdmin):
     #     def HomePage(CompanyAdmin, request, queryset):
-    #         return redirect('/')
+    #         return redirect('/index')
 
     #     HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
     #     actions = ['change_name']
@@ -144,10 +155,10 @@ if development_mode:
     #     list_display = [f.name for f in companyinfo._meta.fields]
 
     #     def response_change(self, request, obj):
-    #         return redirect('/')
+    #         return redirect('/index')
 
     #     def response_add(self, request, obj, post_url_continue=None):
-    #         return redirect('/')
+    #         return redirect('/index')
 
     @admin.register(POJ)
     class PurchaseOFJewell(admin.ModelAdmin):
@@ -176,13 +187,12 @@ if development_mode:
         pass
 
     @admin.register(certificate)
-    class certadmin(DjangoObjectActions,admin.ModelAdmin):
+    class certadmin(DjangoObjectActions, admin.ModelAdmin):
         def HomePage(certadmin, request, queryset):
-            return redirect('/')
+            return redirect('/index')
 
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
+        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
-    
 
     # @admin.register(currencies)
     # class curradmin(admin.ModelAdmin):
@@ -192,7 +202,6 @@ if development_mode:
     class pcosadmin(admin.ModelAdmin):
         pass
 
- 
     # @admin.register(Treatment_cs)
     # class treatcsadmin(admin.ModelAdmin):
     #     pass
@@ -265,12 +274,15 @@ if development_mode:
     class salesofjewadmin(ImportExportModelAdmin):
         search_fields = ['company_name']
 
-        list_editable = ['company_name',]
+        list_editable = ['company_name', ]
         list_display = [f.name for f in Salesofjewellery._meta.fields]
+
         def has_add_permission(self, request, obj=None):
             return False
+
         def has_change_permission(self, request, obj=None):
             return True
+
         def has_delete_permission(self, request, obj=None):
             return False
 
@@ -289,7 +301,7 @@ if development_mode:
     # @admin.register(Salesofcolorstones)
     # class salesofcsadmin(DjangoObjectActions,admin.ModelAdmin):
     #     def HomePage(salesofcsadmin, request, queryset):
-    #         return redirect('/')
+    #         return redirect('/index')
 
     #     HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
     #     changelist_actions = ('HomePage',)
@@ -320,11 +332,11 @@ if development_mode:
 
     #     def response_change(self, request, obj=None):
     #         messages.success(request, "Media successfully changed!")
-    #         return redirect('/')
-        
+    #         return redirect('/index')
+
     #     def response_add(self, request, obj=None):
     #         messages.success(request, "Media successfully added!")
-    #         return redirect('/')
+    #         return redirect('/index')
 
     # @admin.register(Salesreturn)
     # class salesofdadmin(admin.ModelAdmin):
@@ -334,9 +346,9 @@ if development_mode:
 @admin.register(gemtype)
 class gemtypeadmin(ImportExportModelAdmin):
     def HomePage(gemtypeadmin, request, queryset):
-            return redirect('/')
+        return redirect('/index')
 
-    HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
+    HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
     changelist_actions = ('HomePage',)
 
 
@@ -358,9 +370,9 @@ class gemtypeadmin(ImportExportModelAdmin):
 @admin.register(location)
 class LocAdmin(ImportExportModelAdmin):
     def HomePage(LocAdmin, request, queryset):
-            return redirect('/')
+        return redirect('/index')
 
-    HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
+    HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
     changelist_actions = ('HomePage',)
 
 

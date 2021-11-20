@@ -4,6 +4,38 @@ from .models import *
 from django.forms import formset_factory, modelformset_factory
 from django.contrib.admin.widgets import AdminDateWidget
 
+
+class UserForm(forms.ModelForm):
+    confirm_password = forms.CharField(widget=forms.PasswordInput())
+    disabled_fields = ['permit_user']
+
+    class Meta:
+        model = User_table
+        fields = "__all__"
+        widgets = {
+            'password': forms.PasswordInput(),
+            'permit_user': forms.HiddenInput(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
+        for field in self.disabled_fields:
+            self.fields[field].disabled = True
+
+    def clean(self):
+        cleaned_data = super(UserForm, self).clean()
+
+        password = cleaned_data.get('password')
+        confirm_password = cleaned_data.get('confirm_password')
+
+        if password and confirm_password:
+            if password != confirm_password:
+                self.add_error(
+                    'password', "The two password fields must match.")
+                raise forms.ValidationError("")
+        return cleaned_data
+
+
 class CompanyForm(forms.ModelForm):
     class Meta:
         model = companyinfo
@@ -17,8 +49,8 @@ class POJForm(forms.ModelForm):
         labels = {'purchaseapv': 'Bought Jewell'}
 
 
-
 POJFormSet = modelformset_factory(POJ, form=POJForm)
+
 
 class DateInput(forms.DateInput):
     input_type = "date"
@@ -29,7 +61,8 @@ class POCSForm(forms.ModelForm):
         model = PurchaseOfColorStones
         fields = "__all__"
         labels = {'purchaseapv': 'Bought Color Stone'}
-        widgets = {'date': DateInput(), 'comment': forms.Textarea(attrs={'rows':4, 'cols':30}), 'purchaseapv': forms.CheckboxInput(attrs={'style':'width:20px;height:20px;'})}
+        widgets = {'date': DateInput(), 'comment': forms.Textarea(attrs={'rows': 4, 'cols': 30}),
+                   'purchaseapv': forms.CheckboxInput(attrs={'style': 'width:20px;height:20px;'})}
 
         def __init__(self, *args, **kwargs):
             super(POCSForm, self).__init__(*args, **kwargs)
@@ -39,15 +72,17 @@ class POCSForm(forms.ModelForm):
                 if self.fields[field].label == 'Bought Color Stone':
                     continue
                 self.fields[field].required = True
-POCSFormSet = modelformset_factory(PurchaseOfColorStones, form=POCSForm)
 
+
+POCSFormSet = modelformset_factory(PurchaseOfColorStones, form=POCSForm)
 
 
 class PODForm(forms.ModelForm):
     class Meta:
         model = POD
         fields = "__all__"
-        labels={'purchaseapv_d': 'Bought Diamond'}
+        labels = {'purchaseapv_d': 'Bought Diamond'}
+
     class DateForm(forms.Form):
         date = forms.DateTimeField(
             input_formats=['%m-%d-%Y'],
@@ -56,6 +91,7 @@ class PODForm(forms.ModelForm):
                 'data-target': '#datetimepicker1'
             })
         )
+
 
 PODFormSet = modelformset_factory(POD, form=PODForm)
 
@@ -70,7 +106,6 @@ class ADCForm(forms.ModelForm):
     class Meta:
         model = cloneInvofjewellery
         fields = '__all__'
-
 
     # def save(self, *args, **kwargs):
     #     new_obj = Salesofjewellery.objects.create(stockid=self.stockid, company_name=self.company_name, location=self.location, jewellery_type=self.jewellery_type,
@@ -103,12 +138,12 @@ ADCFormSet = modelformset_factory(cloneInvofjewellery, form=ADCForm, extra=0)
 
 class ADCForm_cs(forms.ModelForm):
     disabled_fields = ['stockid', 'location', 'shape', 'gem_type', 'origin', 'treatment',
-                        'certificate_no', 'color', 'measurements', 'lab', 'Weight_cs']
-    
+                       'certificate_no', 'color', 'measurements', 'lab', 'Weight_cs']
+
     class Meta:
         model = cloneInvofcolorstones
         fields = '__all__'
-        labels = {'salesapprovalstatus_cs' : 'Sold Item',}
+        labels = {'salesapprovalstatus_cs': 'Sold Item', }
 
     def __init__(self, *args, **kwargs):
         super(ADCForm_cs, self).__init__(*args, **kwargs)
@@ -120,7 +155,8 @@ class ADCForm_cs(forms.ModelForm):
             self.fields[field].required = True
 
 
-ADCFormSet_cs = modelformset_factory(cloneInvofcolorstones, form=ADCForm_cs, extra=0)
+ADCFormSet_cs = modelformset_factory(
+    cloneInvofcolorstones, form=ADCForm_cs, extra=0)
 
 
 class ADCForm_d(forms.ModelForm):
@@ -140,7 +176,9 @@ class ADCForm_d(forms.ModelForm):
 
 ADCFormSet_d = modelformset_factory(cloneInvofdiamond, form=ADCForm_d, extra=0)
 
+
 class contactformemail(forms.Form):
-    fromemail = forms.EmailField(max_length = 150,required=True)
-    subject= forms.CharField(required=True)
-    message = forms.CharField(widget = forms.Textarea, max_length = 2000,required=True)
+    fromemail = forms.EmailField(max_length=150, required=True)
+    subject = forms.CharField(required=True)
+    message = forms.CharField(widget=forms.Textarea,
+                              max_length=2000, required=True)
