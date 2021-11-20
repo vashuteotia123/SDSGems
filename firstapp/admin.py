@@ -37,7 +37,7 @@ if deploy_color_stone:
         pass
 
     @admin.register(color_of_colorstone)
-    class ColorOfColorstoneAdmin(admin.ModelAdmin):
+    class ColorOfColorstoneAdmin(ImportExportModelAdmin):
         pass
 
     @admin.register(Treatment_cs)
