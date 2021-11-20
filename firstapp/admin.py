@@ -13,7 +13,7 @@ from django.contrib import messages
 
 
 # Dev mode
-development_mode = False
+development_mode = True
 
 # doploy variables
 deploy_color_stone = True
@@ -107,11 +107,11 @@ if deploy_color_stone:
 
     @admin.register(Salesofcolorstones)
     class salesofcsadmin(admin.ModelAdmin):
-        # def HomePage(salesofcsadmin, request, queryset):
-        #     return redirect('/index')
+        def HomePage(salesofcsadmin, request, queryset):
+            return redirect('/index')
 
-        # HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
-        # changelist_actions = ('HomePage',)
+        HomePage.attrs = {'class': 'btn btn-outline-success float-right',}
+        changelist_actions = ('HomePage',)
 
         formfield_overrides = {models.TextField: {
             'widget': Textarea(attrs={'rows': 4, 'cols': 40})}, }
@@ -129,6 +129,7 @@ if deploy_color_stone:
 
         def has_delete_permission(self, request, obj=None):
             return False
+        # pass
 
     @admin.register(currencies)
     class curradmin(ImportExportModelAdmin):
