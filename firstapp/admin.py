@@ -129,7 +129,6 @@ if deploy_color_stone:
 
         def has_delete_permission(self, request, obj=None):
             return False
-        # pass
 
     @admin.register(currencies)
     class curradmin(ImportExportModelAdmin):
