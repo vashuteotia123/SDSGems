@@ -398,7 +398,7 @@ class clarity(models.Model):
 
 class color_origin(models.Model):
     class Meta:
-        verbose_name_plural = "ColourStone - Origin"
+        verbose_name_plural = "Diamonds - Color Origin"
 
     c_o = models.CharField(max_length=30)
 
@@ -655,6 +655,19 @@ class Salesreturn_d(models.Model):
 
 # purchase of Colour Stones
 
+class color_of_colorstone(models.Model):
+    class Meta:
+        verbose_name_plural = "ColourStone - Color"
+
+    color = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.color.title()
+
+    def save(self, *args, **kwargs):
+        self.color = self.color.lower()
+        super(color_of_colorstone, self).save(*args, **kwargs)        
+
 
 class Origin_cs(models.Model):
     class Meta:
@@ -725,7 +738,7 @@ class PurchaseOfColorStones(models.Model):
     Clarity = models.CharField(max_length=30, null=True, blank=True)
     certificate_no = models.CharField(
         max_length=30, null=True, blank=True, verbose_name="Certificate Number")
-    colour = models.CharField(max_length=30)
+    colour = models.ForeignKey('color_of_colorstone', on_delete=models.PROTECT)
     measurements = models.CharField(max_length=30, blank=True, null=True)
     lab = models.ForeignKey('Lab_cs', on_delete=models.PROTECT, blank=True)
     PCS = models.IntegerField()
@@ -757,7 +770,7 @@ class PurchaseOfColorStones(models.Model):
         # self.total_value_c_s = self.amount-self.discount_amount
         super(PurchaseOfColorStones, self).save(*args, **kwargs)
         obj1 = Inventoryofcolorstones.objects.create(stockid=str('C-')+str(self.id), location=self.location, shape=self.shape,
-                                                     Clarity=self.Clarity, PCS=self.PCS, gem_type=self.gem_type, Weight=self.Weight, origin=self.origin, treatment=self.Treatment, certificate_no=self.certificate_no, color=self.colour, measurements=self.measurements, lab=self.lab, tag_price=self.tag_price, purchaseapv=self.purchaseapv)
+                                                     Clarity=self.Clarity, PCS=self.PCS, gem_type=self.gem_type, Weight=self.Weight, origin=self.origin, treatment=self.Treatment, certificate_no=self.certificate_no, color=self.colour.color, measurements=self.measurements, lab=self.lab, tag_price=self.tag_price, purchaseapv=self.purchaseapv)
 
 
 class Inventoryofcolorstones(models.Model):
@@ -774,7 +787,7 @@ class Inventoryofcolorstones(models.Model):
         'Treatment_cs', on_delete=models.PROTECT, blank=True)
     Clarity = models.CharField(max_length=30, null=True, blank=True)
     certificate_no = models.CharField(max_length=30)
-    color = models.CharField(max_length=30)
+    color = models.ForeignKey('color_of_colorstone', on_delete=models.PROTECT)
     measurements = models.CharField(max_length=30, blank=True, null=True)
     lab = models.ForeignKey('Lab_cs', on_delete=models.PROTECT, blank=True)
     PCS = models.IntegerField(null=True)
@@ -812,7 +825,7 @@ class Salesofcolorstones(models.Model):
         max_length=30, null=True, blank=True, verbose_name="Clarity")
     certificate_no = models.CharField(
         max_length=30, verbose_name="Certificate No.")
-    color = models.CharField(max_length=30, verbose_name="Color")
+    color = models.ForeignKey('color_of_colorstone', on_delete=models.PROTECT)
     measurements = models.CharField(
         max_length=30, blank=True, null=True, verbose_name="Measurement")
     lab = models.ForeignKey('Lab_cs', on_delete=models.PROTECT, blank=True)
@@ -865,7 +878,7 @@ class cloneInvofcolorstones(models.Model):
         'Treatment_cs', on_delete=models.PROTECT, blank=True)
     Clarity = models.CharField(max_length=30, null=True, blank=True)
     certificate_no = models.CharField(max_length=30)
-    color = models.CharField(max_length=30)
+    color = models.ForeignKey('color_of_colorstone', on_delete=models.PROTECT)
     measurements = models.CharField(max_length=30, blank=True, null=True)
     lab = models.ForeignKey('Lab_cs', on_delete=models.PROTECT, blank=True)
     PCS = models.IntegerField(null=True, verbose_name="Pieces")

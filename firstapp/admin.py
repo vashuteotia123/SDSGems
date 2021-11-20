@@ -36,6 +36,10 @@ if deploy_color_stone:
     class CountryAdmin(ImportExportModelAdmin):
         pass
 
+    @admin.register(color_of_colorstone)
+    class ColorOfColorstoneAdmin(admin.ModelAdmin):
+        pass
+
     @admin.register(Treatment_cs)
     class treatcsadmin(ImportExportModelAdmin):
         # def HomePage(treatcsadmin, request, queryset):
