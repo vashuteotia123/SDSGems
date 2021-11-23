@@ -270,14 +270,11 @@ class Jewellery_view(View):
 
     def get(self, request):
         allproduct = Inventoryofjewellery.objects.all().order_by('stockid')
-        allproduct_paginator = Paginator(allproduct, 3)
-        page_num = request.GET.get("page")
-        page = allproduct_paginator.get_page(page_num)
+      
 
         # allclonej = cloneInvofjewellery.objects.all()
         context = {
-            "productsj": allproduct_paginator.count,
-            "page": page
+            "productsj": allproduct,
 
         }
         return render(request, "showinvj.html", context=context)
@@ -299,15 +296,17 @@ class Jewellery_view(View):
         idj = int(x[0])
         j_obj2 = POJ.objects.filter(id=idj)
         j_obj3 = POJ.objects.get(id=idj)
-        if j_obj.purchaseapv is False:
-            j_obj2.update(purchase_approval=True)
         j_obj.cartstatus = True
         j_obj.save()
         print(j_obj.cartstatus)
         new_object = cloneInvofjewellery.objects.create(stockid=j_obj.stockid, location=j_obj.location, jewellery_type=j_obj.jewellery_type, center_stone=j_obj.center_stone,
-                                                        shape=j_obj.shape, metal=j_obj.metal, gross_wt=j_obj.grosswt, certificate=j_obj.cert,
-                                                        PCS=j_obj.pcs, tag_price=j_obj.tag_price,
-                                                        amount=j_obj3.amount, DIS=j_obj3.discount, DIS_amount=j_obj3.discount_amount, total_value=j_obj3.total, currency=j_obj3.currencyid)
+                                                        color_of_center_stone=j_obj.color_of_center_stone,shape=j_obj.shape, metal=j_obj.metal,
+                                                        center_stone_weight=j_obj.center_stone_weight,
+                                                        center_stone_pieces=j_obj.center_stone_pieces,
+                                                        gross_wt=j_obj.grosswt, certificate=j_obj.cert,
+                                                        PCS=j_obj.pcs, tag_price=j_obj.tag_price)
+        if j_obj.purchaseapv is False:
+            j_obj2.update(purchase_approval=True)
         return redirect('delete-jewell')
 
 
@@ -316,6 +315,7 @@ def backtoinv(request, id):
     myobj = Inventoryofjewellery.objects.get(id=id)
     myobj.appvreturnstatus = False
     myobj.save()
+    print("hello")
     totalobjs = Inventoryofjewellery.objects.filter(appvreturnstatus=True)
     return redirect('/retobj_j')
 
@@ -343,13 +343,27 @@ def saving_jewel_cart(request):
     jewel_formset = ADCFormSet(initial=total_jewels)
     if request.method == "POST":
         curr_formset = ADCFormSet(data=request.POST)
-        print(len(curr_formset))
         if(curr_formset.is_valid()):
             curr_formset.save()
-    context = {
+            context = {
+            "totalitems": curr_formset,
+            'itemcount': len(curr_formset),
+            "is_valid":True}
+            return render(request,"showcart.html",context=context)
+        else:
+            context = {
+            "totalitems": curr_formset,
+            'itemcount': len(curr_formset),
+            "is_valid":False}
+            return render(request,"showcart.html",context=context)
+    context={
         "totalitems": jewel_formset,
+        'itemcount': len(total),
     }
-    return render(request, "showcart.html", context=context)
+    return render(request,"showcart.html",context=context)
+
+
+
 
 
 @login_required
@@ -358,13 +372,17 @@ def sell_jewel(request):
     try:
         for object in jewellery_objects:
             Salesofjewellery.objects.create(
+                date=object.date,
                 stockid=object.stockid,
                 company_name=object.company_name,
                 location=object.location,
                 jewellery_type=object.jewellery_type,
                 center_stone=object.center_stone,
+                color_of_center_stone=object.color_of_center_stone,
                 shape=object.shape,
                 metal=object.metal,
+                center_stone_weight=object.center_stone_weight,
+                center_stone_pieces=object.center_stone_weight,
                 gross_wt=object.gross_wt,
                 certificate=object.certificate,
                 PCS=object.PCS,
@@ -408,9 +426,12 @@ def return_jewel_Inventory(request, id):
                                         location=object.location,
                                         jewellery_type=object.jewellery_type,
                                         center_stone=object.center_stone,
+                                        color_of_center_stone=object.color_of_center_stone,
                                         shape=object.shape,
                                         metal=object.metal,
                                         grosswt=object.gross_wt,
+                                        center_stone_weight=object.center_stone_weight,
+                                        center_stone_pieces=object.center_stone_pieces,
                                         cert=object.certificate,
                                         pcs=object.PCS,
                                         purchaseapv=True,
@@ -471,24 +492,6 @@ class BirdAddView(TemplateView):
         return self.render_to_response({'totalitems': formset})
 
 
-@login_required
-def returncart2(request, id):
-    myobject = cloneInvofjewellery.objects.get(id=id)
-    invobj = Inventoryofjewellery.objects.get(stockid=myobject.stockid)
-    invobj.cartstatus = False
-    invobj.save()
-    tjcart = cloneInvofjewellery.objects.all()
-    if tjcart is None:
-        context = {
-            "Cart is Empty": tjcart,
-        }
-        return render(request, "displaycart.html", context=context)
-
-    else:
-        context = {
-            "tjcart": tjcart,
-        }
-        return render(request, "displaycart.html", context=context)
 
 
 @login_required
@@ -503,15 +506,10 @@ def displaysalesreturn(request):
 @login_required
 def displaycart2(request):
     tjcart = cloneInvofjewellery.objects.all()
-    if len(tjcart) == 0:
-        messages.success(request, "Cart is empty")
-        return redirect(request.META.get('HTTP_REFERER'))
-
-    else:
-        context = {
+    context = {
             "tjcart": tjcart,
         }
-        return render(request, "displaycart.html", context=context)
+    return render(request, "displaycart.html", context=context)
 
 
 @login_required
@@ -1767,6 +1765,20 @@ def hide_from_frontend_cs(request, id):
     obj.frontend = False
     obj.save()
     return redirect('delete-cs')
+
+@login_required
+def show_on_frontend_jewel(request, id):
+    obj = Inventoryofjewellery.objects.get(id=id)
+    obj.frontend = True
+    obj.save()
+    return redirect('delete-jewell')
+
+@login_required
+def hide_from_frontend_jewel(request, id):
+    obj = Inventoryofjewellery.objects.get(id=id)
+    obj.frontend = False
+    obj.save()
+    return redirect('delete-jewell')
 
 
 @login_required

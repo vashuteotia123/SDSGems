@@ -123,6 +123,8 @@ class companyinfo(models.Model):
 
 
 class jewell(models.Model):
+    class Meta:
+        verbose_name_plural = "Jewellery -Type"
     jewel = models.CharField(max_length=30)
 
     def __str__(self):
@@ -134,6 +136,9 @@ class jewell(models.Model):
 
 
 class centerstone(models.Model):
+    class Meta:
+        verbose_name_plural = "Jewellery - Center Stone"
+
     stone = models.CharField(max_length=30)
 
     def __str__(self):
@@ -145,6 +150,8 @@ class centerstone(models.Model):
 
 
 class colorofcstone(models.Model):
+    class Meta:
+        verbose_name_plural = "Jewellery - Colour of Center Stone"
     color = models.CharField(max_length=30)
 
     def __str__(self):
@@ -156,6 +163,8 @@ class colorofcstone(models.Model):
 
 
 class shape1(models.Model):
+    class Meta:
+        verbose_name_plural = "Jewellery - Shape"
     shape = models.CharField(max_length=30)
 
     def __str__(self):
@@ -167,10 +176,12 @@ class shape1(models.Model):
 
 
 class metal1(models.Model):
+    class Meta:
+        verbose_name_plural = "Jewellery - Metal"
     metal = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.metal.title()
+        return self.metal.upper()
 
     def save(self, *args, **kwargs):
         self.metal = self.metal.lower()
@@ -180,11 +191,11 @@ class metal1(models.Model):
 class certificate(models.Model):
 
     class Meta:
-        verbose_name_plural = "ColourStone Certificates Types"
+        verbose_name_plural = "Jewellery Certificates Types"
     cert = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.cert.title()
+        return self.cert.upper()
 
     def save(self, *args, **kwargs):
         self.cert = self.cert.lower()
@@ -206,9 +217,9 @@ class currencies(models.Model):
 
 class POJ(models.Model):
 
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField()
     company_name = models.ForeignKey(
-        'companyinfo', on_delete=PROTECT, blank=True)
+        'CompanyInfo', on_delete=PROTECT, blank=True)
     location = models.ForeignKey(
         'location', on_delete=models.PROTECT, null=True, blank=True)
     jewellery = models.ForeignKey(
@@ -221,11 +232,9 @@ class POJ(models.Model):
         'shape1', on_delete=models.PROTECT, null=True, blank=True)
     metal = models.ForeignKey(
         'metal1', on_delete=models.PROTECT, null=True, blank=True)
-    grosswt = models.FloatField()
-    phone_regex = RegexValidator(
-        regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
-    phone_number = models.CharField(
-        validators=[phone_regex], max_length=17, blank=True)  # validators should be a list
+    center_stone_weight=models.DecimalField(decimal_places=2, max_digits=9)
+    center_stone_pieces=models.BigIntegerField()
+    grosswt = models.DecimalField(decimal_places=2, max_digits=9)
     cert = models.ForeignKey(
         'certificate', on_delete=models.PROTECT, null=True, blank=True)
     pcs = models.BigIntegerField()
@@ -239,6 +248,12 @@ class POJ(models.Model):
         decimal_places=2, max_digits=9, blank=True)
     purchase_approval = models.BooleanField(default=False)
     comment = models.TextField(max_length=3000, blank=True, null=True)
+    currency = models.ForeignKey(
+        'currencies', on_delete=models.PROTECT, null=True, blank=True)
+    tag_price = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True)
+    rate = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True)
 
     def save(self, *args, **kwargs):
 
@@ -248,38 +263,38 @@ class POJ(models.Model):
         super(POJ, self).save(*args, **kwargs)
         obj = Inventoryofjewellery.objects.create(stockid=str('J-')+str(self.id), location=self.location, jewellery_type=self.jewellery, center_stone=self.center_stone,
                                                   color_of_center_stone=self.color_of_center_stone, shape=self.shape,
-                                                  metal=self.metal, grosswt=self.grosswt, cert=self.cert, pcs=self.pcs, tag_price=self.tag_price,
+                                                  metal=self.metal, center_stone_weight=self.center_stone_weight,center_stone_pieces=self.center_stone_pieces,
+                                                  grosswt=self.grosswt, cert=self.cert, pcs=self.pcs, tag_price=self.tag_price,
                                                   purchaseapv=self.purchase_approval)
-    currencyid = models.ForeignKey(
-        'currencies', on_delete=models.PROTECT, null=True, blank=True)
-    tag_price = models.FloatField()
-    rate = models.FloatField()
     # salesapproval
 
     def __str__(self):
-        return str(self.id)
+        return str("J-"+str(self.id))
 
 
 class Inventoryofjewellery(models.Model):
     stockid = models.CharField(max_length=30, blank=True)
-    location = models.CharField(max_length=30)
-    jewellery_type = models.CharField(max_length=30)
-    center_stone = models.CharField(max_length=30)
-    color_of_center_stone = models.CharField(max_length=30)
-    shape = models.CharField(max_length=30)
-    metal = models.CharField(max_length=30)
-    grosswt = models.FloatField()
-    cert = models.CharField(max_length=30)
+    location = models.ForeignKey(
+        'location', on_delete=models.PROTECT, null=True, blank=True)
+    jewellery_type =models.ForeignKey(
+        'jewell', on_delete=models.PROTECT, null=True, blank=True)
+    center_stone = models.ForeignKey(
+        'centerstone', on_delete=models.PROTECT, null=True, blank=True)
+    color_of_center_stone = models.ForeignKey(
+        'colorofcstone', on_delete=models.PROTECT, null=True, blank=True)
+    shape = models.ForeignKey(
+        'shape1', on_delete=models.PROTECT, null=True, blank=True)
+    metal = models.ForeignKey(
+        'metal1', on_delete=models.PROTECT, null=True, blank=True)
+    center_stone_weight=models.DecimalField(decimal_places=2, max_digits=9)
+    center_stone_pieces=models.BigIntegerField()
+    grosswt = models.DecimalField(decimal_places=2, max_digits=9)
+    cert = models.ForeignKey(
+        'certificate', on_delete=models.PROTECT, null=True, blank=True)
     pcs = models.IntegerField()
-    #  def save(self, *args, **kwargs):
-
-    #     # self.stockid=str('J-')+str(self.id)
-    #     currobj=super(Inventoryofjewellery, self).save(*args, **kwargs)
-    #     self.stockid=str('J-')+str(currobj.id)
-    #     self.save()
-    tag_price = models.FloatField()
+    tag_price = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True)
     purchaseapv = models.BooleanField(blank=True)
-    status = models.CharField(max_length=30, default=False)
     cartstatus = models.BooleanField(default=False)
     appvreturnstatus = models.BooleanField(default=False)
     frontend = models.BooleanField(default=False)
@@ -289,24 +304,44 @@ class Inventoryofjewellery(models.Model):
 
 
 class Salesofjewellery(models.Model):
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(
+        auto_now_add=False, verbose_name="Date of transaction")
     stockid = models.CharField(max_length=30)
-    company_name = models.CharField(max_length=30)
-    location = models.CharField(max_length=30)
-    jewellery_type = models.CharField(max_length=30)
-    center_stone = models.CharField(max_length=30)
-    shape = models.CharField(max_length=30)
-    metal = models.CharField(max_length=30)
-    gross_wt = models.FloatField()
-    certificate = models.CharField(max_length=30)
-    PCS = models.IntegerField(verbose_name="Pieces")
-    amount = models.FloatField()
-    DIS = models.FloatField()
-    DIS_amount = models.FloatField()
-    total_value = models.FloatField()
-    currency = models.CharField(max_length=30)
-    tag_price = models.FloatField()
-    rate = models.FloatField()
+    company_name = models.ForeignKey(
+        'companyinfo', on_delete=PROTECT, blank=True)
+    location = models.ForeignKey(
+        'location', on_delete=models.PROTECT, null=True)
+    jewellery_type = models.ForeignKey(
+        'jewell', on_delete=models.PROTECT, null=True, blank=True)
+    center_stone = models.ForeignKey(
+        'centerstone', on_delete=models.PROTECT, null=True, blank=True)
+    color_of_center_stone = models.ForeignKey(
+        'colorofcstone', on_delete=models.PROTECT, null=True, blank=True)
+    shape = models.ForeignKey(
+        'shape1', on_delete=models.PROTECT, null=True, blank=True)
+    metal = models.ForeignKey(
+        'metal1', on_delete=models.PROTECT, null=True, blank=True)
+    center_stone_weight=models.DecimalField(decimal_places=2, max_digits=9)
+    center_stone_pieces=models.BigIntegerField()
+    gross_wt = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True)
+    certificate = models.ForeignKey(
+        'certificate', on_delete=models.PROTECT, null=True, blank=True)
+    PCS = models.BigIntegerField(verbose_name="Pieces")
+    amount =models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True)
+    DIS =models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True)
+    DIS_amount = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True)
+    total_value = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True)
+    currency = models.ForeignKey(
+        currencies, on_delete=models.PROTECT, null=True, blank=True, verbose_name="Currency")
+    tag_price = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True)
+    rate = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True)
     salesapprovalstatus = models.BooleanField(default=False)
     comment = models.TextField(max_length=3000, blank=True, null=True)
 
@@ -315,25 +350,43 @@ class Salesofjewellery(models.Model):
 
 
 class cloneInvofjewellery(models.Model):
-
+    date=models.DateField(auto_now_add=True)
     stockid = models.CharField(max_length=30)
-    company_name = models.CharField(max_length=30)
-    location = models.CharField(max_length=30)
-    jewellery_type = models.CharField(max_length=30)
-    center_stone = models.CharField(max_length=30)
-    shape = models.CharField(max_length=30)
-    metal = models.CharField(max_length=30)
-    gross_wt = models.FloatField(null=True)
-    certificate = models.CharField(max_length=30)
+    company_name =models.ForeignKey(
+        companyinfo, on_delete=models.PROTECT, null=True, blank=True, verbose_name="Company")
+    location = models.ForeignKey(
+        'location', on_delete=models.PROTECT, null=True)
+    jewellery_type = jewellery_type =models.ForeignKey(
+        'jewell', on_delete=models.PROTECT, null=True, blank=True)
+    center_stone = models.ForeignKey(
+        'centerstone', on_delete=models.PROTECT, null=True, blank=True)
+    color_of_center_stone = models.ForeignKey(
+        'colorofcstone', on_delete=models.PROTECT, null=True, blank=True)
+    shape = models.ForeignKey(
+        'shape1', on_delete=models.PROTECT, null=True, blank=True)
+    metal = models.ForeignKey(
+        'metal1', on_delete=models.PROTECT, null=True, blank=True)
+    center_stone_weight=models.DecimalField(decimal_places=2, max_digits=9)
+    center_stone_pieces=models.BigIntegerField()
+    gross_wt = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True)
+    certificate = models.ForeignKey(
+        'certificate', on_delete=models.PROTECT, null=True, blank=True)
     PCS = models.IntegerField()
-    amount = models.FloatField(blank=True, null=True)
-    DIS = models.FloatField(blank=True, null=True)
-    DIS_amount = models.FloatField(blank=True, null=True)
-    total_value = models.FloatField(blank=True, null=True)
+    amount =models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True,null=True)
+    DIS = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True,null=True)
+    DIS_amount = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True,null=True)
+    total_value = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True,null=True)
     currency = models.ForeignKey(
         currencies, on_delete=models.PROTECT, null=True, blank=True)
-    tag_price = models.FloatField()
-    rate = models.FloatField(blank=True, null=True)
+    tag_price = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True)
+    rate = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True,default=1)
     salesapprovalstatus = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):

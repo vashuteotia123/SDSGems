@@ -40,22 +40,27 @@ class CompanyForm(forms.ModelForm):
     class Meta:
         model = companyinfo
         fields = "__all__"
-
+class DateInput(forms.DateInput):
+    input_type = "date"
 
 class POJForm(forms.ModelForm):
     class Meta:
         model = POJ
         fields = "__all__"
-        labels = {'purchaseapv': 'Bought Jewell'}
+        labels = {'purchase_approval': 'Bought Jewell'}
+        widgets={'date': DateInput(), 'comment': forms.Textarea(attrs={'rows': 4, 'cols': 30}),
+                   'purchase_approval': forms.CheckboxInput(attrs={'style': 'width:20px;height:20px;'})}
+        def __init__(self, *args, **kwargs):
+            super(POJForm, self).__init__(*args, **kwargs)
+            for field in self.disabled_fields:
+                self.fields[field].disabled = True
+            for field in self.fields:
+                if self.fields[field].label == 'Bought Jewell':
+                    continue
+                self.fields[field].required = True
 
 
 POJFormSet = modelformset_factory(POJ, form=POJForm)
-
-
-class DateInput(forms.DateInput):
-    input_type = "date"
-
-
 class POCSForm(forms.ModelForm):
     class Meta:
         model = PurchaseOfColorStones
@@ -102,35 +107,23 @@ PODFormSet = modelformset_factory(POD, form=PODForm)
 
 
 class ADCForm(forms.ModelForm):
+    disabled_fields=['stockid','location','jewellery_type','center_stone','color_of_center_stone','shape','metal','certificate']
 
     class Meta:
         model = cloneInvofjewellery
         fields = '__all__'
+        labels={'salesapprovalstatus':'Sold Item',}
+    def __init__(self, *args, **kwargs):
+        super(ADCForm, self).__init__(*args, **kwargs)
+        for field in self.disabled_fields:
+            self.fields[field].disabled = True
+        for field in self.fields:
+            if self.fields[field].label == 'Sold Item':
+                continue
+            self.fields[field].required = True
 
-    # def save(self, *args, **kwargs):
-    #     new_obj = Salesofjewellery.objects.create(stockid=self.stockid, company_name=self.company_name, location=self.location, jewellery_type=self.jewellery_type,
-    #                                               center_stone=self.center_stone, shape=self.shape,
-    #                                               metal=self.metal, gross_wt=self.gross_wt, certificate=self.certificate, PCS=self.PCS, amount=self.amount, DIS=self.DIS, DIS_amount=self.DIS_amount, total_value=self.total_value, currency=self.currency, tag_price=self.tag_price,
-    #                                               rate=self.rate, salesapprovalstatus=self.salesapprovalstatus)
-        # class cloneJForm(forms.ModelForm):
-        #     class Meta:
-        #         model = cloneInvofjewellery
-        #         fields = "__all__"
-        # def __init__(self, *args, **kwargs):
-        #     super().__init__(*args, **kwargs)
 
-        #     self.fields['currency'].queryset = Currency.objects.none()
-
-        #     if 'company_name' in self.data:
-        #         try:
-        #             company_id = self.data.get('company_name')
-        #             curr_company = companyinfo.objects.get(company_id=company_id)
-        #             country_now = curr_company.country
-        #             self.fields['currency'].queryset = Currency.objects.filter(country = country_now)
-        #         except(ValueError, TypeError):
-        #             pass
-        #     else:
-        #         self.fields['currency'].queryset = Currency.objects.all()
+    
 
 
 ADCFormSet = modelformset_factory(cloneInvofjewellery, form=ADCForm, extra=0)
@@ -138,7 +131,7 @@ ADCFormSet = modelformset_factory(cloneInvofjewellery, form=ADCForm, extra=0)
 
 class ADCForm_cs(forms.ModelForm):
     disabled_fields = ['stockid', 'location', 'shape', 'gem_type', 'origin', 'treatment',
-                       'certificate_no', 'color', 'measurements', 'lab', 'Weight_cs']
+                       'certificate_no', 'color', 'measurements', 'lab', 'Weight_cs','Clarity']
 
     class Meta:
         model = cloneInvofcolorstones

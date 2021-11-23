@@ -17,8 +17,9 @@ development_mode = True
 
 # doploy variables
 deploy_color_stone = True
-deploy_jewellery = False
+deploy_jewellery = True
 deploy_diamond = False
+
 
 
 @admin.register(State)
@@ -32,6 +33,7 @@ class usertableadmin(admin.ModelAdmin):
 
 
 if deploy_color_stone:
+    
     @admin.register(countries)
     class CountryAdmin(ImportExportModelAdmin):
         pass
@@ -62,7 +64,7 @@ if deploy_color_stone:
         def HomePage(labadmin, request, queryset):
             return redirect('/index')
 
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
+        HomePage.attrs = {'class': 'btn btn--success float-right', }
         changelist_actions = ('HomePage',)
 
     @admin.register(shape_cs)
@@ -384,9 +386,9 @@ class LocAdmin(ImportExportModelAdmin):
 # class mediaJ(admin.ModelAdmin):
 #     pass
 
-# @admin.register(Blog)
-# class blogadmin(admin.ModelAdmin):
-#     pass
+@admin.register(Blog)
+class blogadmin(admin.ModelAdmin):
+    pass
 
 # @admin.register(Salesreturn_cs)
 # class slreturncsadmin(ImportExportModelAdmin):

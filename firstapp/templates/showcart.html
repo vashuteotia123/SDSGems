@@ -17,15 +17,31 @@
         {% for form in totalitems %} {{ form }} {% endfor %}
       </table>
       <button type="submit" class="btn btn-3">Submit</button>
+      {% if is_valid %}
       <a href="{% url 'sell_jewel' %}">Sell</a>
+      {% endif %}
     </form>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
-      const list =[0,1,2,3]
-      for(let i=0;i<2;i++)
-      {
-        let string="gggh"+`${list[i]}`
-        const disc=document.getElementById(string)
+      var k = "$('#id_form-0-company_name').on('change keyup blur',function(){var a = document.getElementById('id_form-0-company_name').value;document.getElementById('id_form-0-company_name').value = a;"
+      var k1=";});";
+      var discount_str = " ";
+      var discount_str2 = " ";
+
+      var formCnt="{{itemcount}}"
+      for(var i=0;i<formCnt;i++){
+        k+="document.getElementById('id_form-"+i+"-company_name').value = a; ";
+        discount_str+="$('#id_form-"+ i + "-DIS').on('change keyup blur', function(){var discount = document.getElementById('id_form-"+i+"-DIS').value; var amount = document.getElementById('id_form-"+i+"-amount').value; document.getElementById('id_form-"+i+"-DIS_amount').value = ((amount * discount)/100).toFixed(2); document.getElementById('id_form-"+i+"-total_value').value = (amount - ((amount * discount)/100)).toFixed(2);  });   ";
+        discount_str2+="$('#id_form-"+ i + "-amount').on('change keyup blur', function(){var discount = document.getElementById('id_form-"+i+"-DIS').value; var amount = document.getElementById('id_form-"+i+"-amount').value; document.getElementById('id_form-"+i+"-DIS_amount').value = ((amount * discount)/100).toFixed(2); document.getElementById('id_form-"+i+"-total_value').value = (amount - ((amount * discount)/100)).toFixed(2);  });   ";
+        eval(k+k1)
+        eval(discount_str);
+        eval(discount_str2);
+
       }
+      eval(discount_str);
+      eval(discount_str2);
+      eval(k+k1)
+
     </script>
   </body>
 </html>

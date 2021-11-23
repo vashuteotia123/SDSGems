@@ -25,53 +25,39 @@
     let birdForm = document.querySelectorAll(".bird-form")
     let container = document.querySelector("#form-container")
     let addButton = document.querySelector("#add-form")
+    document.querySelector("#id_form-0-company_name").insertAdjacentHTML("afterend", "<br><h6><strong>Phone No.: </strong></h6><span id='company_contact_number-0'></span><br><br><h6><strong>Address.: </strong></h6><span id='company_address-0'><span>")
     let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
-    var s = "$('#id_form-" + 0 + "-discount').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + 0 + "-amount').value; var disc = document.getElementById('id_form-" + 0 + "-discount').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" + 0 + "-discount_amount').value = discamt; document.getElementById('id_form-" + 0 + "-total').value=amount- discamt;  });  "
-    var company_detail_call = "$('#id_form-"+0+"-company_name').change(function(){var company_name = $(this).find(':selected')[0].text;$.ajax({type: 'GET',url: '{% url 'get_company_details' %}',data: {'name': company_name,},success: function(data) {var phone_no = document.getElementById('id_form-"+0+"-phone_number');phone_no.value = data.contact_no;var location = document.getElementById('id_form-"+0+"-location');var loc_index = ':selected';for(var i=0; i<location.length; i++){if(location[i].text == data.location){loc_index = i;break; } } location.value = loc_index; } }) });"
-
-    // console.log($('#id_form-0-company_name').change(function(){var company_name = $(this).find(':selected'); console.log(company_name)}));
-  //   $("#id_form-0-company_name").change(function(){
-  //   var company_name = $(this).find(':selected')[0].text;
-  //   $.ajax({
-  //     type: 'GET',
-  //     url: "{% url 'get_company_details' %}",
-  //     data: {
-  //       "name": company_name,
-  //     },
-  //     success: function(data) {
-  //       var phone_no = document.getElementById('id_form-0-phone_number');
-  //       phone_no.value = data.contact_no;
-  //       var location = document.getElementById('id_form-0-location');
-  //       var loc_index = ':selected';
-  //       for(var i=0; i<location.length; i++){
-  //         if(location[i].text == data.location){
-  //           loc_index = i;
-  //           break;
-  //         }
-  //       }
-  //       location.value = loc_index;
-  //     }
-  //   })
-  // })
+    var s = "$('#id_form-" + 0 + "-discount').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + 0 + "-amount').value; var disc = document.getElementById('id_form-" + 0 + "-discount').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" + 0 + "-discount_amount').value = discamt.toFixed(2); document.getElementById('id_form-" + 0 + "-total').value=(amount- discamt).toFixed(2);  });  "
+    var s1 = "$('#id_form-" + 0 + "-amount').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + 0 + "-amount').value; var disc = document.getElementById('id_form-" + 0 + "-discount').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" + 0 + "-discount_amount').value = discamt.toFixed(2); document.getElementById('id_form-" + 0 + "-total').value=(amount- discamt).toFixed(2);  });  "
+    var company_detail_call = 
+        "$('#id_form-"+0+"-company_name').change(function(){var company_name = $(this).find(':selected')[0].text;$.ajax({type: 'GET',url: '{% url 'get_company_details' %}'," +
+        "data: {'name': company_name,},success: function(data) { document.getElementById('company_contact_number-0').innerHTML = data['contact_no']; " +
+        "document.getElementById('company_address-0').innerHTML = data['location'];} }) });" 
     let formNum = birdForm.length - 1
     addButton.addEventListener('click', addForm)
-
     function addForm(e) {
       e.preventDefault()
       let newForm = birdForm[0].cloneNode(true)
       let formRegex = RegExp(`form-(\\d){1}-`, 'g')
+      newForm.getElementsByTagName("span")[0].id = "company_contact_number-"+(formNum+1)
+      newForm.getElementsByTagName('span')[1].id = "company_address-"+(formNum+1)
+      newForm.getElementsByTagName("span")[0].innerHTML = ""
+      newForm.getElementsByTagName('span')[1].innerHTML = ""
       
       formNum++
-      s += "$('#id_form-" + (formNum) + "-discount').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + (formNum) + "-amount').value; var disc = document.getElementById('id_form-" + (formNum) + "-discount').value; var discamt = ((amount * disc) / 100); document.getElementById('id_form-" + (formNum) + "-discount_amount').value = discamt; document.getElementById('id_form-" + formNum + "-total').value= (amount - discamt); });   "
-      company_detail_call += "$('#id_form-"+(formNum)+"-company_name').change(function(){var company_name = $(this).find(':selected')[0].text;$.ajax({type: 'GET',url: '{% url 'get_company_details' %}',data: {'name': company_name,},success: function(data) {var phone_no = document.getElementById('id_form-"+(formNum)+"-phone_number');phone_no.value = data.contact_no;var location = document.getElementById('id_form-"+(formNum)+"-location');var loc_index = ':selected';for(var i=0; i<location.length; i++){if(location[i].text == data.location){loc_index = i;break; } } location.value = loc_index; } }) });"
+      s += "$('#id_form-" + (formNum) + "-discount').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + (formNum) + "-amount').value; var disc = document.getElementById('id_form-" + (formNum) + "-discount').value; var discamt = ((amount * disc) / 100); document.getElementById('id_form-" + (formNum) + "-discount_amount').value = discamt.toFixed(2); document.getElementById('id_form-" + formNum + "-total').value= (amount - discamt).toFixed(2); });   "
+      s1 += "$('#id_form-" + (formNum) + "-amount').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + (formNum) + "-amount').value; var disc = document.getElementById('id_form-" + (formNum) + "-discount').value; var discamt = ((amount * disc) / 100); document.getElementById('id_form-" + (formNum) + "-discount_amount').value = discamt.toFixed(2); document.getElementById('id_form-" + formNum + "-total').value= (amount - discamt).toFixed(2); });   "
+      company_detail_call +="$('#id_form-"+(formNum) +"-company_name').change(function(){var company_name = $(this).find(':selected')[0].text;$.ajax({type: 'GET',url: '{% url 'get_company_details' %}',data: {'name': company_name,},success: function(data) {document.getElementById('company_contact_number-"+formNum+"').innerHTML = data['contact_no']; " +"document.getElementById('company_address-"+formNum+"').innerHTML = data['location']; } }) });"
       newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
       container.insertBefore(newForm, addButton)
       totalForms.setAttribute('value', `${formNum + 1}`)
       eval(s);
+      eval(s1)
       eval(company_detail_call);
   
   }
   eval(s);
+  eval(s1);
   console.log(company_detail_call);
   eval(company_detail_call);
 

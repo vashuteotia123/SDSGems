@@ -21,7 +21,7 @@ urlpatterns = [
     path('updateJ/<str:pk>/', views.updateJ, name="updateJ"),        
     path('cform', views.cform, name="cform"),    
     path('addtocart<str:id>', Jewellery_view.addtocart, name="addtocart"),
-    path('delete/', Jewellery_view.as_view(), name="delete-jewell"),    
+    path('inventory_of_jewellery/', Jewellery_view.as_view(), name="delete-jewell"),    
     path('retobj_j', views.retobj_j, name="retobj_j"),    
     path('search', views.search, name="search"),    
     path('show_jewel_cart', saving_jewel_cart, name='show_jewel_cart'),
@@ -43,6 +43,9 @@ urlpatterns = [
     # path('displayinv',views.displayinv,name="displayinv"),
     path('show_on_frontend_cs<int:id>', views.show_on_frontend_cs, name="show_on_frontend_cs"),
     path('hide_from_frontend_cs<int:id>', views.hide_from_frontend_cs, name="hide_from_frontend_cs"),
+    path('show_on_frontend_jewel<int:id>',views.show_on_frontend_jewel,name="show_on_frontend_jewel"),
+    path('hide_from_frontend_jewel<int:id>',views.hide_from_frontend_jewel,name="hide_from_frontend_jewel"),
+
     path('get_company_details', views.get_company_details,name="get_company_details"),
     # ////////////colorstones url////////////
 
@@ -83,7 +86,7 @@ urlpatterns = [
     path('return_diamond_Inventory<int:id>', views.return_diamond_Inventory, name="return_diamond_Inventory"),
     # ////
     path('displaycart2', views.displaycart2, name='displaycart2'),
-    path('returncart2', views.returncart2, name='returncart2'),
+    # path('returncart2', views.returncart2, name='returncart2'),
     path('displaysalesreturn', views.displaysalesreturn, name='displaysalesreturn'),
 
     path('displaycart2_cs', views.displaycart2_cs, name='displaycart2_cs'),

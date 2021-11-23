@@ -22,6 +22,7 @@
             <th scope="col">Stock ID</th>
           </tr>
         </thead>
+    {% if tjcart.count %}
     {% for p in tjcart %}
     <tbody>
     <tr>
@@ -32,7 +33,16 @@
     </tbody>
     {% endfor %}
     </table>
+    {% else %}
+    <h1>Cart is empty</h1>
+    {% endif %}
+    {% block container1 %}
+    {% if tjcart.count %}
     <a class="btn btn-primary" href="{% url 'show_jewel_cart' %}">Sell Cart</a>
+    {% else %}
+   <div class="allign-centre"><a href="/inventory_of_jewellery" class="uk-button  uk-button-small uk-button-primary">Move Previous</a></div>
+{% endif %}
+{% endblock %}
 
 </body>
 </html>
