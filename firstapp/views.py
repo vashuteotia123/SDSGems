@@ -138,7 +138,14 @@ def updateJ(request, pk):
 @login_required
 def showjewell(request):
     objjewell = POJ.objects.all()
+    invobj = list(Inventoryofjewellery.objects.values_list(
+        'stockid', flat=True))
+    invobjects_jewellery = []
+    for i in invobj:
+        z = i.replace("J-", "")
+        invobjects_jewellery.append(int(z))
     context = {
+        "invobjects_jewellery" : invobjects_jewellery,
         "showjewellery": objjewell,
     }
     return render(request, "showj.html", context=context)
@@ -286,12 +293,11 @@ class Jewellery_view(View):
         for j in y:
             product = Inventoryofjewellery.objects.get(stockid=j)
             allproduct.append(product)
-      
 
-        # allclonej = cloneInvofjewellery.objects.all()
+        length_jewel = Inventoryofjewellery.objects.all().count()
         context = {
             "productsj": allproduct,
-
+            "length_jewel": length_jewel,
         }
         return render(request, "showinvj.html", context=context)
 
@@ -2495,3 +2501,16 @@ def ExportSalesReturn(request):
 
 #     writer.writerows(output)
 #     return response
+
+@login_required
+def get_certificate_of_jewellery(request):
+    stockid = request.GET.get('stockid', None)
+    try:
+        value = Inventoryofjewellery.objects.get(stockid=stockid)
+        print(value.id)
+        data = Jewel_media.objects.get(jewel_object=value.id)
+        
+        return JsonResponse({'certificate': str(data.certificate)}, status=200)
+    except:
+        data = {}
+    return JsonResponse({'certificate': '0'}, status=200)

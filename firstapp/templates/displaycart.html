@@ -15,14 +15,15 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
-    <table class="table table-dark table-striped">
-        <thead>
-          <tr>
-            <th scope="col">Location</th>
-            <th scope="col">Stock ID</th>
-          </tr>
-        </thead>
+    
     {% if tjcart.count %}
+    <table class="table table-dark table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Location</th>
+          <th scope="col">Stock ID</th>
+        </tr>
+      </thead>
     {% for p in tjcart %}
     <tbody>
     <tr>

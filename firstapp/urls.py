@@ -71,6 +71,7 @@ urlpatterns = [
     # path('upload-csv',colorstone_upload,name="colorstone_upload"),
     path('export_sales_of_color_stones', views.ExportSalesofcolorstones, name="export_sales_of_color_stones"),
     path('get_certificate_of_colorstone', views.get_certificate_of_colorstone, name='get_certificate_of_colorstone'),
+    path('get_certificate_of_jewellery', views.get_certificate_of_jewellery, name="get_certificate_of_jewellery"),
 
     # ///////diamond url/////////
 

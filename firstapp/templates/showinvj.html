@@ -34,9 +34,10 @@
                 {% for p in productsj %}
                 {% if p.appvreturnstatus is False %}
                 <tr id="{{p.id}}">
-                    <td>{{p.stockid}}</td>
+                    <td style="text-align:center;" id="stock_id{{ forloop.counter }}">{{p.stockid}}</td>
                     <td>{{p.location}}</td>
                     <td>{{p.cert}}</td>
+                    <td><a href="#" id="stock_id{{ forloop.counter }}_cert">See Certificate</a></td>
                     {% if p.cartstatus is False %}
                     <td><a class="btn btn-primary" href="{% url 'addtocart' id=p.id %}">ADD TO CART</a></td>
                     {% endif %}
@@ -118,6 +119,33 @@
             });
 
         });
+        var length_jewel = "{{length_jewel}}";
+        console.log(length_jewel);
+        console.log(length_jewel);
+        for(var i=1;i<=length_jewel;i++){
+            var query=document.getElementById("stock_id"+i);
+            if(query){
+                // console.log(query);
+                var stockid=document.getElementById("stock_id"+i).innerHTML;
+                // console.log(stockid);
+                $.ajax({type: 'GET',async:false,url: '{% url "get_certificate_of_jewellery" %}',
+                data: {'stockid': stockid},success: function(data) {
+                    
+                    var query2=document.getElementById("stock_id"+i+"_cert");
+                    if(data!="" && query2){
+                        // console.log(data,i);
+                        if(data.certificate!="0"){
+                            document.getElementById("stock_id"+i+"_cert").href="/media/"+data.certificate;
+                            console.log(data.certificate);
+                        }
+                        else{
+                            document.getElementById("stock_id"+i+"_cert").innerHTML="Not Available";
+                            console.log(data.certificate);
+                        }
+                    }
+                }});
+            }
+        }
     </script>
 </body>
 

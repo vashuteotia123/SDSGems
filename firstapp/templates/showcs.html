@@ -62,7 +62,11 @@
         <td>{{obj.tag_price}}</td>
         <td>{{obj.rate}}</td>
         <td>{{obj.certificate_no}}</td>
+        {% if obj.id in invobjectscs %}
         <td style="padding: 10px 10px;"><a class="btn btn-danger" id="delete-btn" style="text-decoration: none;padding: 6px 35px;" href="{% url 'deleteid_cs' idno=obj.id %}" >Delete</a></td>
+        {% else %}
+        <td style="padding: 10px 10px;"><a class="btn btn-primary"style="text-decoration: none;">Already Sold</a></td>
+        {% endif %}
         {% if obj.id in invobjectscs %}
         <td style="padding: 10px 10px;"><a class="btn btn-warning"style="text-decoration: none;padding: 6px 44px;" href="{% url 'update_cs' ck=obj.id %}">Edit</a></td>
         {%  else  %}

@@ -35,8 +35,15 @@
         {% else %}
         <td> Not Available</td>
         {%endif%}
+        {% if obj.id in invobjects_jewellery %}
         <td><a class="btn btn-primary" href="{% url 'deleteid' idno=obj.id %}" >Delete</a></td>
         <td><a class="btn btn-primary" href="{% url 'updateJ' pk=obj.id %}">Edit</a></td>
+        {% else%}
+        <td><a class="btn btn-primary" href="#" >Already Sold</a></td>
+        <td><a class="btn btn-primary" href="#">Already Sold </a></td>
+
+        {%endif%}
+        
       </tr>
       </tbody>
       {%endfor%}

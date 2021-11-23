@@ -13,7 +13,7 @@ from django.contrib import messages
 
 
 # Dev mode
-development_mode = True
+development_mode = False
 
 # doploy variables
 deploy_color_stone = True
@@ -145,6 +145,64 @@ if deploy_color_stone:
         changelist_actions = ('HomePage',)
 
 
+
+#Jewellery models here
+if deploy_jewellery:
+    @admin.register(jewell)
+    class jewelladmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(centerstone)
+    class CSadmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(colorofcstone)
+    class COCSadmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(metal1)
+    class metaladmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(shape1)
+    class shapeadmin(admin.ModelAdmin):
+        pass
+
+
+    @admin.register(certificate)
+    class certadmin(DjangoObjectActions, admin.ModelAdmin):
+        def HomePage(certadmin, request, queryset):
+            return redirect('/index')
+
+        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
+        changelist_actions = ('HomePage',)
+
+    # @admin.register(currencies)
+    # class curradmin(admin.ModelAdmin):
+    #     pass
+
+    @admin.register(Salesofjewellery)
+    class salesofjewadmin(ImportExportModelAdmin):
+        search_fields = ['company_name']
+
+        list_editable = ['company_name', ]
+        list_display = [f.name for f in Salesofjewellery._meta.fields]
+
+        def has_add_permission(self, request, obj=None):
+            return False
+
+        def has_change_permission(self, request, obj=None):
+            return True
+
+        def has_delete_permission(self, request, obj=None):
+            return False
+
+    @admin.register(Jewel_media)
+    class mediaJ(admin.ModelAdmin):
+        pass
+
+
+
 if development_mode:
 
     # @admin.register(companyinfo)
@@ -176,33 +234,13 @@ if development_mode:
     class iojadmin(admin.ModelAdmin):
         pass
 
-    @admin.register(centerstone)
-    class CSadmin(admin.ModelAdmin):
-        pass
+    
 
-    @admin.register(colorofcstone)
-    class COCSadmin(admin.ModelAdmin):
-        pass
+    
 
-    @admin.register(metal1)
-    class metaladmin(admin.ModelAdmin):
-        pass
+    
 
-    @admin.register(jewell)
-    class jewelladmin(admin.ModelAdmin):
-        pass
-
-    @admin.register(certificate)
-    class certadmin(DjangoObjectActions, admin.ModelAdmin):
-        def HomePage(certadmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
-
-    # @admin.register(currencies)
-    # class curradmin(admin.ModelAdmin):
-    #     pass
+   
 
     @admin.register(PurchaseOfColorStones)
     class pcosadmin(admin.ModelAdmin):
@@ -228,9 +266,7 @@ if development_mode:
     class inventoryofcsadmin(ImportExportModelAdmin):
         pass
 
-    @admin.register(shape1)
-    class shapeadmin(admin.ModelAdmin):
-        pass
+    
 
     @admin.register(POD)
     class PODadmin(admin.ModelAdmin):
@@ -276,21 +312,7 @@ if development_mode:
     class certificate_dadmin(admin.ModelAdmin):
         pass
 
-    @admin.register(Salesofjewellery)
-    class salesofjewadmin(ImportExportModelAdmin):
-        search_fields = ['company_name']
-
-        list_editable = ['company_name', ]
-        list_display = [f.name for f in Salesofjewellery._meta.fields]
-
-        def has_add_permission(self, request, obj=None):
-            return False
-
-        def has_change_permission(self, request, obj=None):
-            return True
-
-        def has_delete_permission(self, request, obj=None):
-            return False
+   
 
     @admin.register(cloneInvofjewellery)
     class cloneInvofjewadmin(admin.ModelAdmin):
@@ -382,9 +404,7 @@ class LocAdmin(ImportExportModelAdmin):
     changelist_actions = ('HomePage',)
 
 
-# @admin.register(Jewel_media)
-# class mediaJ(admin.ModelAdmin):
-#     pass
+
 
 @admin.register(Blog)
 class blogadmin(admin.ModelAdmin):

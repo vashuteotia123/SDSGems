@@ -191,7 +191,7 @@ class metal1(models.Model):
 class certificate(models.Model):
 
     class Meta:
-        verbose_name_plural = "Jewellery Certificates Types"
+        verbose_name_plural = "Jewellery - Certificates Types"
     cert = models.CharField(max_length=30)
 
     def __str__(self):
@@ -300,6 +300,8 @@ class Inventoryofjewellery(models.Model):
 
 
 class Salesofjewellery(models.Model):
+    class Meta:
+        verbose_name_plural = "Jewellery - Sales"
     date = models.DateField(
         auto_now_add=False, verbose_name="Date of transaction")
     stockid = models.CharField(max_length=30)
@@ -346,6 +348,7 @@ class Salesofjewellery(models.Model):
 
 
 class cloneInvofjewellery(models.Model):
+
     date=models.DateField(auto_now_add=True)
     stockid = models.CharField(max_length=30)
     company_name =models.ForeignKey(
@@ -402,6 +405,8 @@ class Salesreturn(models.Model):
 
 
 class Jewel_media(models.Model):
+    class Meta:
+        verbose_name_plural = "Jewellery - Media"
     jewel_object = models.ForeignKey(
         Inventoryofjewellery, on_delete=models.CASCADE)
     image1 = models.ImageField(
@@ -427,6 +432,8 @@ class Jewel_media(models.Model):
     video_embed_link = models.TextField(null=True, blank=True)
     certificate = models.FileField(
         upload_to="Certificates/Jewellery/", blank=True, null=True)
+    description = models.TextField(null=True, blank=True, max_length=5000, verbose_name="Description")
+    jewellery_info = models.TextField(null=True, blank=True,  max_length=3000, verbose_name="Jewellery Information")
 
 
 # purchase of diamonds
@@ -1003,3 +1010,5 @@ class ColorStone_media(models.Model):
     video_embed_link = models.TextField(null=True, blank=True)
     certificate = models.FileField(
         upload_to="Certificates/ColorStone/", blank=True, null=True)
+    description = models.TextField(null=True, blank=True, max_length=5000, verbose_name="Description")
+    colorstone_info = models.TextField(null=True, blank=True,  max_length=3000, verbose_name="Colour Stone Information")
