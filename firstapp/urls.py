@@ -47,6 +47,11 @@ urlpatterns = [
     path('hide_from_frontend_jewel<int:id>',views.hide_from_frontend_jewel,name="hide_from_frontend_jewel"),
 
     path('get_company_details', views.get_company_details,name="get_company_details"),
+    path('ExportPOJ',views.ExportPOJ,name="ExportPOJ"),
+    path("ExportInventoryofjewellery",views.ExportInventoryofjewellery,name="ExportInventoryofjewellery"),
+    path('ExportSalesofjewellery',views.ExportSalesofjewellery,name="ExportSalesofjewellery"),
+    path("ExportSalesReturn",views.ExportSalesReturn,name="ExportSalesReturn"),
+
     # ////////////colorstones url////////////
 
     path('showcs', views.showcs, name="showcs"),
@@ -108,11 +113,16 @@ urlpatterns = [
     path('cstone_listing',views.cstone_listing, name='cstone_listing'),
     path('jewel_listing',views.jewel_listing, name='jewel_listing'),
     path('diamond_listing',views.diamond_listing, name='diamond_listing'),
-
+    path("allselljewellrecords",views.allselljewellrecords,name="allselljewellrecords"),
     path("contact", views.contactsendmail, name="contact"), 
     path("allsellcsrecords", views.allsellcsrecords, name="allsellcsrecords"), 
     path("ExportInventoryofcolorstones", views.ExportInventoryofcolorstones, name="ExportInventoryofcolorstones"),
     path("ExportPurchaseOfColorStones", views.ExportPurchaseOfColorStones, name="ExportPurchaseOfColorStones"), 
     path("ExportSalesofcolorstones", views.ExportSalesofcolorstones, name="ExportSalesofcolorstones"),  
     path("ExportSalesReturnCS", views.ExportSalesReturnCS, name="ExportSalesReturnCS"),  
+    
+
+    # path('export_purchase_of_diamond', views.ExportPOD, name="export_purchase_of_diamond"),
+    # path('export_inventory_of_diamond', views.ExportInventoryofdiamond, name="export_inventory_of_diamond"),
+    # path('export_sales_of_diamond', views.ExportSalesofdiamond, name="export_sales_of_diamond"),
 ]

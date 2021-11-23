@@ -254,12 +254,8 @@ class POJ(models.Model):
         decimal_places=2, max_digits=9, blank=True)
     rate = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True)
-
+    comment = models.TextField(max_length=3000, blank=True, null=True)
     def save(self, *args, **kwargs):
-
-        self.discount_amount = (self.amount * self.discount) // 100
-        # self.stockid=str(str('J-')+str(self.id))
-        self.total = self.amount-self.discount_amount
         super(POJ, self).save(*args, **kwargs)
         obj = Inventoryofjewellery.objects.create(stockid=str('J-')+str(self.id), location=self.location, jewellery_type=self.jewellery, center_stone=self.center_stone,
                                                   color_of_center_stone=self.color_of_center_stone, shape=self.shape,

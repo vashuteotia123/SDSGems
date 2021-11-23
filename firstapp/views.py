@@ -24,6 +24,7 @@ from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.views.generic.edit import CreateView
+import datetime
 
 # Create your views here.
 
@@ -269,7 +270,22 @@ class Jewellery_view(View):
     method_decorator(login_required)
 
     def get(self, request):
-        allproduct = Inventoryofjewellery.objects.all().order_by('stockid')
+        z = []
+        y = list()
+        jewel_types = set(
+            Inventoryofjewellery.objects.values_list('stockid', flat=True))
+        for sentence in jewel_types:
+            sentence = sentence.replace("J-", "")
+            z.append(int(sentence))
+        z.sort()
+        z = map(str, z)
+        for i in z:
+            i = "J-"+i
+            y.append(i)
+        allproduct = []
+        for j in y:
+            product = Inventoryofjewellery.objects.get(stockid=j)
+            allproduct.append(product)
       
 
         # allclonej = cloneInvofjewellery.objects.all()
@@ -309,6 +325,18 @@ class Jewellery_view(View):
             j_obj2.update(purchase_approval=True)
         return redirect('delete-jewell')
 
+def allselljewellrecords(request):
+    sold_items = Salesofjewellery.objects.all()
+    if len(sold_items) <= 7:
+        change = True
+    else:
+        change = False
+    context = {
+        "sold_items": Salesofjewellery.objects.all(),
+        "css_adjust": change,
+        "table_type": "Sales Record of Jewellery Table",
+    }
+    return render(request, "show_sell_jewel_table.html", context=context)
 
 @login_required
 def backtoinv(request, id):
@@ -1262,21 +1290,20 @@ def jewellery_upload(request):
     io_string = io.StringIO(dataset)
     next(io_string)
     for column in csv.reader(io_string, delimiter=','):
-        z = re.findall("[0-9]+", column[13])
         # datere=re.findall(r'\d{2}/\d{2}/\d{4}',column[0])
         # date_value=list(datere[0])
         # final_date=datetime.date(int(''.join(date_value[6:])),int(''.join(date_value[3:4])),int(''.join(date_value[0:2])))
-        temp_date = datetime.strptime(str(column[0]), "%m-%d-%Y").date()
+        temp_date = datetime.datetime.strptime(str(column[0]), "%m-%d-%Y").date()
         print(temp_date)
         # print(final_date)
         f = POJ
         try:
-            f.company_name = companyinfo.objects.get(company_name=column[2])
+            f.company_name = companyinfo.objects.get(company_name=column[2].lower())
         except ObjectDoesNotExist:
             html = "Company Name does not exist " + \
                 '<a href="/cform">Create Company details</a>'
             return HttpResponse(html)
-        print(f.company_name)
+        print(column[16])
         try:
             f.location, lcobj = location.objects.get_or_create(
                 place=column[3].lower())
@@ -1284,7 +1311,6 @@ def jewellery_upload(request):
                 f.location.save()
         except Exception as e:
             raise e
-        print(f.location)
         try:
             f.jewellery, jlobj = jewell.objects.get_or_create(
                 jewel=column[4].lower())
@@ -1330,7 +1356,7 @@ def jewellery_upload(request):
         print(f.metal)
         try:
             f.cert, cerobj = certificate.objects.get_or_create(
-                cert=column[11].lower())
+                cert=column[12].lower())
             if cerobj:
                 f.cert.save()
         except Exception as e:
@@ -1338,22 +1364,18 @@ def jewellery_upload(request):
 
         print(f.cert)
         try:
-            f.currencyid, crobj = currencies.objects.get_or_create(
-                currency=column[17].lower())
+            f.currency, crobj = currencies.objects.get_or_create(
+                currency=column[18].lower())
             if crobj:
                 f.currencyid.save()
         except Exception as e:
             raise e
-        print(column[17])
-        print(column[19])
-        print(f.currencyid)
-        if(column[20] == "NO"):
+        if(column[21] == "NO"):
 
             y = False
             print(y)
         else:
             y = True
-        print("Called1234")
         try:
             if float(column[13]):
                 pass
@@ -1367,18 +1389,19 @@ def jewellery_upload(request):
                                    color_of_center_stone_id=f.color_of_center_stone.id,
                                    shape_id=f.shape.id,
                                    metal_id=f.metal.id,
-                                   grosswt=column[9],
-                                   phone_number=column[10],
+                                   center_stone_pieces=column[9],
+                                   center_stone_weight=column[10],
+                                   grosswt=column[11],
                                    cert_id=f.cert.id,
-                                   pcs=column[12],
-                                   amount=float(column[13]),
-                                   discount_amount=float(column[15]),
-                                   discount=float(z[0]),
-                                   total=float(column[16]),
+                                   pcs=column[13],
+                                   amount=float(column[14]),
+                                   discount_amount=float(column[16]),
+                                   discount=float(column[15]),
+                                   total=float(column[17]),
                                    purchase_approval=y,
-                                   currencyid_id=f.currencyid.id,
-                                   tag_price=float(column[18]),
-                                   rate=float(column[19]),
+                                   currency_id=f.currency.id,
+                                   tag_price=float(column[19]),
+                                   rate=float(column[20]),
                                    )
     return HttpResponse('Hi')
 
@@ -2369,3 +2392,106 @@ def user_Logout(request):
         request.session.clear()
         return redirect('user_login')
     return redirect("/")
+def ExportPOJ(request):
+    objects = POJ.objects.all()
+    output = []
+    response = HttpResponse(content_type='text/csv')
+    filename = "PurchaseRecordsofJewellery"+str(datetime.datetime.now())+".csv"
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    writer = csv.writer(response)
+    writer.writerow(['Date','Stock id', 'Company Name','Location','Jewellery','Center Stone', 'Color Of Center Stone','Shape', 'metal','Center Stone Pieces','Center Stone Weight', 'grosswt','Certificate', 'PCS',  'Amount', 'Discount', 'Dicount Amount', 'Total Value', 'Bought', 'Currency', 'Tag Price', 'Rate'])
+    for item in objects:
+        if item.purchase_approval:
+            z="Yes"
+        else:
+            z="No"
+        output.append([item.date, 'J-' + str(item.id), item.company_name, item.location.place.title(),item.jewellery.jewel.title(),item.center_stone.stone.title(),item.color_of_center_stone.color.title(), item.shape.shape.title(),item.metal.metal.title(),item.center_stone_pieces,item.center_stone_weight, item.grosswt,item.cert.cert.upper(),item.pcs,item.amount, str(item.discount)+"%",item.discount_amount , item.total, z,item.currency.currency.upper(), item.tag_price, item.rate])
+
+    writer.writerows(output)
+    return response
+def ExportInventoryofjewellery(request):
+    objects = Inventoryofjewellery.objects.filter(appvreturnstatus=False)
+    output = []
+    response = HttpResponse(content_type='text/csv')
+    filename = "Inventoryofjewellery"+str(datetime.datetime.now())+".csv"
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    writer = csv.writer(response)
+    writer.writerow(['Stock id', 'Location','Jewellery','Center Stone', 'Color Of Center Stone','Shape', 'Metal', 'Center Stone Pieces','Center Stone Weight','Gross Weight', 'Certificate', 'PCS',  'Tag Price'])
+    for item in objects:
+        output.append([ item.stockid, item.location.place.title(),item.jewellery_type.jewel.title(),item.center_stone.stone.title(),item.color_of_center_stone.color.title(), item.shape.shape.title(),item.metal.metal.title(),item.center_stone_pieces,item.center_stone_weight, item.grosswt, item.cert.cert.upper(),item.pcs, item.tag_price])
+
+    writer.writerows(output)
+    return response
+    
+def ExportSalesofjewellery(request):
+    objects = Salesofjewellery.objects.all()
+    output = []
+    response = HttpResponse(content_type='text/csv')
+    filename = "Salesofjewellery"+str(datetime.datetime.now())+".csv"
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    writer = csv.writer(response)
+    writer.writerow(['Date','Stock id', 'Company Name','Location','Jewellery','Center Stone','Colour of Center Stone','Shape', 'Metal', 'Center Stone Pieces','Center Stone Weight','Gross Weight','Certificate', 'PCS',  'Amount', 'Discount', 'Dicount Amount', 'Total Value','Currency', 'Tag Price', 'Rate','Sold Item'])
+    for item in objects:
+        if item.salesapprovalstatus:
+            z="Yes"
+        else:
+            z="No"
+        output.append([item.date,item.stockid, item.company_name, item.location.place.title(),item.jewellery_type.jewel.title(),item.center_stone.stone.title(),item.color_of_center_stone.color.title(), item.shape.shape.title(),item.metal.metal.title(),item.center_stone_pieces,item.center_stone_weight,item.gross_wt, item.certificate.cert.upper(),item.PCS,item.amount, str(item.DIS)+"%",item.DIS_amount , item.total_value, item.currency.currency.upper(), item.tag_price, item.rate,z])
+    
+    writer.writerows(output)
+    return response
+def ExportSalesReturn(request):
+    objects=Salesreturn.objects.all()
+    output=[]
+    response = HttpResponse(content_type='text/csv')
+    filename = "Salesreturnjewellery"+str(datetime.datetime.now())+".csv"
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    writer = csv.writer(response)
+    writer.writerow(['Date','Stock id', 'Company Name','Location','Jewellery'])
+    for item in objects:
+        output.append([item.date,item.stockid, item.company_name, item.location.title(),item.jewellery_type.title()])
+
+    writer.writerows(output)
+    return response
+
+# def ExportPOD(request):
+#     objects = POD.objects.all()
+#     output = []
+#     response = HttpResponse(content_type='text/csv')
+#     filename = "PurchaseOfDiamond"+str(datetime.datetime.now())+".csv"
+#     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+#     writer = csv.writer(response)
+#     writer.writerow(['Date','Stock id', 'Company Name','Location','Shape', 'Clarity', 'Color Origin', 'White Color Grade','Fancy Color Intensity','Fancy Color Grade ','Cut','Polish','Symmetry','Measurements','Depth','Table%','Fluorescence Intensity','Fluorescence Color','Certificate No','Certificate','Laser Inscription', 'PCS','Weight', 'Price','Units','Amount', 'Discount', 'Dicount Amount', 'Total Value', 'Currency', 'Tag Price', 'Rate'])
+#     for item in objects:
+#         output.append([item.date, 'D-' + str(item.id), item.company_name.title(), item.location.place.title(), item.shape.shape.title(),item.clarity.clarity.title(), item.color_origin1.c_o.title(), item.white_color_grade1.w_c_g.title(), item.fancy_color_intensity1.f_c_i.title(),item.fancycolor_grade.f_c_grade.title(),item.cut.cut.title(),item.polish.polish.title(),item.symmetry.symmetry.title(),item.measurements,item.depth,item.table_perc,item.fluorescence_intensity.f_intensity.title(),item.fluorescence_color.f_color.title(),item.certificate_no_d,item.certificate_d.certd,item.laser_inscription.title(),item.PCS_d,item.weight_d,item.price,item.units,item.amount_d, str(item.DIS_d)+"%",item.DIS_Amount_d , item.total_val_d, item.currency.currency.upper(), item.tag_price_d, item.rate_d])
+    
+#     writer.writerows(output)
+#     return response
+
+# def ExportInventoryofdiamond(request):
+#     objects = Inventoryofdiamond.objects.all()
+#     output = []
+#     response = HttpResponse(content_type='text/csv')
+#     filename = "Inventoryofdiamond"+str(datetime.datetime.now())+".csv"
+#     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+#     writer = csv.writer(response)
+#     writer.writerow(['Stock id','Location','Shape', 'clarity', 'White color grade', 'Fancy color intensity','Fancy color grade ','cut','polish','Symmetry','Measurements', 'Depth',  'Table', 'Fluorescence Intensity', 'Fluoresecene color', 'certificate number', ' certificate', 'laser_inscription', 'PCS', 'weight','Units','Tag price','Price'])
+#     for item in objects:
+#         output.append([str(item.id), item.location.title(),item.shape.title(),item.clarity.title(),item.white_color_grade1.title(), item.fancy_color_intensity1.title(),item.fancycolor_grade.title(),item.cut.title(),item.polish.title(),item.symmetry.title(),item.measurements,item.depth,item.table,item.fluorescence_intensity.title(), item.fluorescence_color.title(), item.certificate_no_d, item.certificate_d,item.laser_inscription,item.PCS_d,item.weight_d,item.units,item.tag_price_d,item.price])
+    
+#     writer.writerows(output)
+#     return response 
+   
+# def ExportSalesofdiamond(request):
+#     objects = Salesofdiamond.objects.all()
+#     output = []
+#     response = HttpResponse(content_type='text/csv')
+#     filename = "Salesofdiamond"+str(datetime.datetime.now())+".csv"
+#     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+#     writer = csv.writer(response)
+#     writer.writerow(['Date','Stock id', 'Company Name','Location','Shape', 'clarity', 'color origin', 'white color grade','fancy color intensity','fancy color grade ','cut','polish','Symmetry', 'Measurements',  'Depth', 'Table', 'Fluorescence Intensity', 'Fluorescence Color','Certificate number', 'Certificate', 'Laser Inscription', 'Pcs','Weight','Price','Units','Amount','Discount','Discount Amount','Total Value','Currency','Tag Price','Rate'])
+#     for item in objects:
+#         output.append([item.date, 'D-' + str(item.id), item.company_name, item.location, item.shape,item.clarity, item.color_origin1, item.white_color_grade1, item.fancy_color_intensity1,item.fancycolor_grade,item.cut,item.polish,item.symmetry,item.measurements,item.depth,item.table,item.fluorescence_intensity,item.fluorescence_color,item.certificate_no_d,item.certificate_d,item.laser_inscription,item.PCS_d,item.weight_d,item.price,item.units,str(item.DIS_d)+"%",item.DIS_Amount_d , item.total_value_d, item.currency, item.tag_price_d, item.rate_d])
+
+#     writer.writerows(output)
+#     return response
