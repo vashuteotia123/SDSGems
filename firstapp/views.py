@@ -1503,6 +1503,15 @@ def colorstone_upload(request):
             raise e
         print(f.gem_type)
         try:
+            f.colour, colourobj = color_of_colorstone.objects.get_or_create(
+                color=column[10].lower())
+            if colourobj:
+                f.colour.save()
+        
+        except Exception as e:
+            raise e
+        
+        try:
             f.origin, clobj = Origin_cs.objects.get_or_create(
                 org=column[6].lower())
             if clobj:
@@ -1564,7 +1573,7 @@ def colorstone_upload(request):
                                                      Clarity=column[8],
                                                      certificate_no=column[9].lower(
                                                      ),
-                                                     colour=column[10],
+                                                     colour_id=f.colour.id,
                                                      measurements=column[11],
                                                      lab_id=f.lab.id,
                                                      PCS=column[13],
@@ -2231,7 +2240,7 @@ def ExportPurchaseOfColorStones(request):
 
 @login_required
 def ExportInventoryofcolorstones(request):
-    objects = Inventoryofcolorstones.objects.all()
+    objects = Inventoryofcolorstones.objects.filter(appvreturnstatus=False)
     output = []
     response = HttpResponse(content_type='text/csv')
     filename = "Inventoryofcolorstones.csv"
