@@ -1,47 +1,127 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Conditionals</title>
-  </head>
-
-  <body>
-    {% if message %}
+{% extends 'common_table.html' %}
+{% block different %}
+<style>
+  #sell_cart {
+    display: flex;
+    position: absolute;
+    top: 10vh;
+    width: 80%;
+    margin: 0 10%;
+    margin-top: 40px;
+    justify-content: end;
+  }
+  #total_amount_cum{
+    display: flex;
+    align-items: center;
+    margin-top: 1px;
+    font-size: 16px;
+  }
+  #total_header{
+    font-size: 16px;
+  }
+  #allign_btn{
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    top: 92vh;
+    width: 100%;
+  }
+  #total_display-allignment{
+    display: flex;
+    justify-content: center;
+    background: #6bffd6;
+    width: 40%;
+    margin: 0 30%;
+    border-radius: 7px;
+    border: 2px solid black;
+    margin-top: 20px;
+  }
+</style>
+{% endblock  %}
+{% block table %}
+{% if messages%}
+    {% for message in messages%}
     {{message}}
-    {% endif %}
-    <form method="post" action="">
-      {%csrf_token%} {{totalitems.management_form }}
-      <table>
-        {% for form in totalitems %} {{ form }} {% endfor %}
-      </table>
-      <button type="submit" class="btn btn-3">Submit</button>
-      {% if is_valid %}
-      <a href="{% url 'sell_jewel' %}">Sell</a>
-      {% endif %}
+    {%endfor%}
+    {%endif%}
+  <table class="table table-responsive">
+        <tr id="table-heading" style="max-height: 10px;">
+          <th style="background-color:#e7d896;color:#000000bf;">STOCK ID</th>
+          <th style="background-color:#e7d896;color:#000000bf;">COMPANY NAME</th>
+          <th style="background-color:#e7d896;color:#000000bf;">LOCATION</th>
+          <th style="background-color:#e7d896;color:#000000bf;">JEWELLERY TYPE</th>
+          <th style="background-color:#e7d896;color:#000000bf;">CENTER STONE</th>
+          <th style="background-color:#e7d896;color:#000000bf;">COLOUR OF CENTER STONE</th>
+          <th style="background-color:#e7d896;color:#000000bf;">SHAPE</th>
+          <th style="background-color:#e7d896;color:#000000bf;">METAL</th>
+          <th style="background-color:#e7d896;color:#000000bf;">CENTER STONE WEIGHT</th>
+          <th style="background-color:#e7d896;color:#000000bf;">CENTER STONE PIECES</th>
+          <th style="background-color:#e7d896;color:#000000bf;">GROSS WEIGHT</th>
+          <th style="background-color:#e7d896;color:#000000bf;">CERTIFICATE</th>
+          <th style="background-color:#e7d896;color:#000000bf;">PIECES</th>
+          <th style="background-color:#e7d896;color:#000000bf;">AMOUNT</th>
+          <th style="background-color:#e7d896;color:#000000bf;">DISCOUNT in %</th>
+          <th style="background-color:#e7d896;color:#000000bf;">DISCOUNTED AMOUNT</th>
+          <th style="background-color:#e7d896;color:#000000bf;">TOTAL VALUE</th>
+          <th style="background-color:#e7d896;color:#000000bf;">CURRENCY</th>
+          <th style="background-color:#e7d896;color:#000000bf;">TAG PRICE</th>
+          <th style="background-color:#e7d896;color:#000000bf;">RATE</th>
+          <th style="background-color:#e7d896;color:#000000bf;">SOLD ITEM</th>
+        </tr>
+  <form method="post" action="">
+          {%csrf_token%} {{totalitems.management_form }}
+        {% for obj in totalitems %}
+        <tr>
+            {% for field in obj %}
+            <td>{{field}}<br>{{field.errors}}</td>
+            {%endfor%}
+        </tr>
+        {% endfor %}
+    </table>
+    
+    
+    <div id="allign_btn">
+      {% if is_valid%}
+      <a class="uk-button"  href="{% url 'sell_jewel' %}" style="background-color:#e7d896;color:#000000bf;text-decoration: none;margin-right: 10px;border-radius: 3px;">Sell</a>
+      {% endif%}
+      <button class="btn btn-success" type="submit" onclick=''>Submit</button>
+    </div>
+
     </form>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script>
-      var k = "$('#id_form-0-company_name').on('change keyup blur',function(){var a = document.getElementById('id_form-0-company_name').value;document.getElementById('id_form-0-company_name').value = a;"
-      var k1=";});";
-      var discount_str = " ";
-      var discount_str2 = " ";
+{% endblock  %}
+{% block container1 %}
+<div id="total_display-allignment">
+    <span id="total_header">Total Value of all items&nbsp;:&nbsp;</span><span id="total_amount_cum">0</span>
+</div>
+{% endblock %}
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  var k = "$('#id_form-0-company_name').on('change keyup blur',function(){var a = document.getElementById('id_form-0-company_name').value;document.getElementById('id_form-0-company_name').value = a;"
+  var k1=";});";
+  var discount_str = " ";
+  var discount_str2 = " ";
+  var total_amount = "$(document).on('keyup', function(){ var total_amount_value = 0";
+  var total_amount1 = ";if(!isNaN(total_amount_value)) document.getElementById('total_amount_cum').innerHTML = total_amount_value.toFixed(2);});";
 
-      var formCnt="{{itemcount}}"
-      for(var i=0;i<formCnt;i++){
-        k+="document.getElementById('id_form-"+i+"-company_name').value = a; ";
-        discount_str+="$('#id_form-"+ i + "-DIS').on('change keyup blur', function(){var discount = document.getElementById('id_form-"+i+"-DIS').value; var amount = document.getElementById('id_form-"+i+"-amount').value; document.getElementById('id_form-"+i+"-DIS_amount').value = ((amount * discount)/100).toFixed(2); document.getElementById('id_form-"+i+"-total_value').value = (amount - ((amount * discount)/100)).toFixed(2);  });   ";
-        discount_str2+="$('#id_form-"+ i + "-amount').on('change keyup blur', function(){var discount = document.getElementById('id_form-"+i+"-DIS').value; var amount = document.getElementById('id_form-"+i+"-amount').value; document.getElementById('id_form-"+i+"-DIS_amount').value = ((amount * discount)/100).toFixed(2); document.getElementById('id_form-"+i+"-total_value').value = (amount - ((amount * discount)/100)).toFixed(2);  });   ";
-        eval(k+k1)
-        eval(discount_str);
-        eval(discount_str2);
+  var formCnt="{{itemcount}}"
+  for(var i=0;i<formCnt;i++){
+    k+="document.getElementById('id_form-"+i+"-company_name').value = a; ";
+    discount_str+="$('#id_form-"+ i + "-DIS').on('change keyup blur', function(){var discount = document.getElementById('id_form-"+i+"-DIS').value; var amount = document.getElementById('id_form-"+i+"-amount').value; document.getElementById('id_form-"+i+"-DIS_amount').value = ((amount * discount)/100).toFixed(2); document.getElementById('id_form-"+i+"-total_value').value = (amount - ((amount * discount)/100)).toFixed(2);  });   ";
+    discount_str2+="$('#id_form-"+ i + "-amount').on('change keyup blur', function(){var discount = document.getElementById('id_form-"+i+"-DIS').value; var amount = document.getElementById('id_form-"+i+"-amount').value; document.getElementById('id_form-"+i+"-DIS_amount').value = ((amount * discount)/100).toFixed(2); document.getElementById('id_form-"+i+"-total_value').value = (amount - ((amount * discount)/100)).toFixed(2);  });   ";
+    total_amount+="+parseFloat(document.getElementById('id_form-"+ i +"-total_value').value)" 
+    eval(k+k1)
+    eval(discount_str);
+    eval(discount_str2);
+    eval(total_amount+total_amount1);
 
-      }
-      eval(discount_str);
-      eval(discount_str2);
-      eval(k+k1)
+  }
+  eval(discount_str);
+  eval(discount_str2);
+  eval(total_amount+total_amount1);
+  eval(k+k1)
 
-    </script>
-  </body>
-</html>
+</script>
+{% endblock  %}
+
+

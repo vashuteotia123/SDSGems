@@ -8,8 +8,8 @@
         <th class="bg-primary">PURCHASE DATE</th>
         <th class="bg-primary">COMPANY NAME</th>
         <th class="bg-primary">LOCATION</th>
-        <th class="bg-primary" style="text-align:center;">SHAPE</th>
-        <th class="bg-primary" style="text-align:center;">GEM TYPE</th>
+        <th class="bg-primary">SHAPE</th>
+        <th class="bg-primary">GEM TYPE</th>
         <th class="bg-primary">ORIGIN</th>
         <th class="bg-primary">TREATMENT</th>
         <th class="bg-primary">CLARITY</th>
@@ -29,7 +29,7 @@
         <th class="bg-primary">TAG PRICE</th>
         <th class="bg-primary">RATE</th>
         <th class="bg-primary">CERTIFICATE NUMBER</th>
-        <th class="bg-primary" colspan="2" style="text-align: center;">ACTION</th>
+        <th class="bg-primary" colspan="2">ACTION</th>
     </tr>
     {% for obj in show_cs %}   
     <tr>
@@ -78,8 +78,7 @@
 </table>
 {% endblock  %}
 {% block container1 %}
-<br><br>
-<div align="center">
-<a class="btn btn-primary btn-sm btnedit"   href="{% url 'ExportPurchaseOfColorStones' %}" style="text-decoration: none;">Export Purchase Items</a>
+<div id="purchase_export">
+<a class="btn btn-primary btn-sm"   href="{% url 'ExportPurchaseOfColorStones' %}" style="text-decoration: none;">Export Purchase Items</a>
 </div>
 {% endblock %}

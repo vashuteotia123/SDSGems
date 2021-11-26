@@ -1,17 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-</head>
-<body>
-    <form method="POST">
-        {% csrf_token %} {{form3}}
-        <button type="submit">Submit</button>
-        
-</body>
-</html>
+{% extends 'common_update.html' %} {% block different %}
+<style>
+  #purchase_approval {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  #id_purchase_approval {
+    margin-top: 10px;
+  }
+  @media only screen and (min-width: 723px) and (max-width: 841px) {
+    #id_purchase_approval {
+      margin-top: 5px;
+    }
+  }
+</style>
+{% endblock %} {% block update_form %}
+<p style="margin-top: 18px"><label for="id_date">Date:</label>{{form3.date}}</p>
+<p><label for="id_company_name">Company name:</label>{{form3.company_name}}</p>
+<p><label for="id_location">Location:</label>{{form3.location}}</p>
+<p><label for="id_jewellery">Jewellery:</label>{{form3.jewellery}}</p>
+<p><label for="id_center_stone">Center stone:</label>{{form3.center_stone}}</p>
+<p>
+  <label for="id_color_of_center_stone">Color of center stone:</label>
+  {{form3.color_of_center_stone}}
+</p>
+<p><label for="id_shape">Shape:</label>{{form3.shape}}</p>
+<p><label for="id_metal">Metal:</label>{{form3.metal}}</p>
+<p>
+  <label for="id_center_stone_weight">Center stone weight:</label>
+  {{form3.center_stone_weight}}
+</p>
+<p>
+  <label for="id_center_stone_pieces">Center stone pieces:</label>
+  {{form3.center_stone_pieces}}
+</p>
+<p><label for="id_grosswt">Grosswt:</label>{{form3.grosswt}}</p>
+<p><label for="id_cert">Cert:</label>{{form3.cert}}</p>
+<p><label for="id_pcs">Pcs:</label>{{form3.pcs}}</p>
+<p><label for="id_amount">Amount:</label>{{form3.amount}}</p>
+<p><label for="id_discount">Discount:</label>{{form3.discount}}</p>
+<p>
+  <label for="id_discount_amount">Discount amount:</label>
+  {{form3.discount_amount}}
+</p>
+<p><label for="id_total">Total:</label>{{form3.total}}</p>
+<p id="purchase_approval">
+  <label for="id_purchase_approval">Bought Jewell:</label>
+  {{form3.purchase_approval}}
+</p>
+<p><label for="id_currency">Currency:</label>{{form3.currency}}</p>
+<p><label for="id_tag_price">Tag price:</label>{{form3.tag_price}}</p>
+<p><label for="id_rate">Rate:</label>{{form3.rate}}</p>
+<p><label for="id_comment">Comment:</label>{{form3.comment}}</p>
+{% endblock %} {% block script %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  if (!$) {
+    $ = django.jQuery;
+  }
+  $(document).on("change keyup blur", "#id_discount", function () {
+    var amd = $("#id_amount").val();
+    var disc = $("#id_discount").val();
+    var z = (parseFloat(amd) * parseFloat(disc)) / 100;
+    if (disc != "" && amd != "") {
+      $("#id_discount_amount").val(z.toFixed(2));
+      $("#id_total").val((amd - z).toFixed(2));
+    } else {
+      $("#id_discount_amount").val("");
+      $("#id_total").val("");
+    }
+  });
+</script>
+<script>
+  if (!$) {
+    $ = django.jQuery;
+  }
+  $(document).on("change keyup blur", "#id_amount", function () {
+    var amd = $("#id_amount").val();
+    var disc = $("#id_discount").val();
+    var z = (parseFloat(amd) * parseFloat(disc)) / 100;
+    if (disc != "" && amd != "") {
+      $("#id_discount_amount").val(z.toFixed(2));
+      $("#id_total").val((amd - z).toFixed(2));
+    } else {
+      $("#id_discount_amount").val("");
+      $("#id_total").val("");
+    }
+  });
+</script>
+{% endblock %}

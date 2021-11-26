@@ -1,152 +1,162 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'common_table_inv.html' %}
+<!-- Jewellery Inventory Table -->
+{% block search %}
+<form class="d-flex align-content-center" method='POST' action="{%url 'search' %}">
+    {% csrf_token %}
+    <input class="form-control me-2" type="text" id="search" name="search" placeholder="Search posts" />
+    <input type="submit" class="btn btn-outline-success" value="Search">
+</form>
+{% endblock%}
+{% block table %}
+<table class="table table-responsive" >
+    <tr id="table-heading">
+        <th style="background-color:#e7d896;color:#000000bf;">STOCK ID</th>
+        <th style="background-color:#e7d896;color:#000000bf;">LOCATION</th>
+        <th style="background-color:#e7d896;color:#000000bf;">JEWELLERY</th>
+        <th style="background-color:#e7d896;color:#000000bf;">CENTER STONE</th>
+        <th style="background-color:#e7d896;color:#000000bf;">COLOUR OF CENTER STONE</th>
+        <th style="background-color:#e7d896;color:#000000bf;">SHAPE</th>
+        <th style="background-color:#e7d896;color:#000000bf;">Metal</th>
+        <th style="background-color:#e7d896;color:#000000bf;">CENTER STONE WEIGHT</th>
+        <th style="background-color:#e7d896;color:#000000bf;">CENTER STONE PIECES</th>
+        <th style="background-color:#e7d896;color:#000000bf;">GROSS WEIGHT</th>
+        <th style="background-color:#e7d896;color:#000000bf;">PIECES</th>
+        <th style="background-color:#e7d896;color:#000000bf;">TAG PRICE</th>
+        <th style="background-color:#e7d896;color:#000000bf;">CERTIFICATE TYPE</th>
+        <th style="background-color:#e7d896;color:#000000bf;">CERTIFICATE</th>
+        <th style="background-color:#e7d896;color:#000000bf;">CART</th>
+        <th style="background-color:#e7d896;color:#000000bf;">Home Page</th>
+        <th style="background-color:#e7d896;color:#000000bf;">CHECK</th>
+    </tr>
+    {% csrf_token %}
+                {% for obj in productsj %}
+                {% if obj.appvreturnstatus is False  %}
+    <tr  id="{{obj.id}}">
+        <td style="text-align:center;" id="stock_id{{ forloop.counter }}">{{obj.stockid}}</td>
+        <td>{{obj.location.place.capitalize}}</td>
+        <td>{{obj.jewellery_type}}</td>
+        <td>{{obj.center_stone}}</td>
+        <td>{{obj.color_of_center_stone}}</td>
+        <td>{{obj.shape}}</td>
+        <td>{{obj.metal}}</td>
+        <td>{{obj.center_stone_weight}}</td>
+        <td>{{obj.center_stone_pieces}}</td>
+        <td>{{obj.grosswt}}</th>
+        <td>{{obj.pcs}}</td>
+        <td>{{obj.tag_price}}</td>
+        <td>{{obj.cert}}</td>
+        <td><a href="" id="stock_id{{ forloop.counter }}_cert">See Certificate</a></td>
+        {% if obj.cartstatus is False %}
+        <td style="padding: 10px 20px;"><a class="btn btn-primary"style="text-decoration: none;" href="{% url 'addtocart' id=obj.id %}">ADD TO CART</a></td>
+        
+        {% endif %}
+        {% if obj.cartstatus is True %}
+        <td style="padding: 10px 30px;"><a class="btn btn-primary" style="text-decoration: none;" href="{% url 'displaycart2' %}" >Go To CART</a></td>
+        {% endif %}
+        {% if obj.frontend is False %}
+        <td style="padding: 10px 50px;"><a class="btn btn-primary"style="text-decoration: none;" href="{% url 'show_on_frontend_jewel' id=obj.id %}">Show on Home Page</a></td>
+        
+        {% endif %}
+        {% if obj.frontend is True %}
+        <td style="padding: 10px 30px;"><a class="btn btn-primary" style="text-decoration: none;" href="{% url 'hide_from_frontend_jewel' id=obj.id%}" >Remove From Home Page</a></td>
+        {% endif %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+        {% if obj.appvreturnstatus is False and obj.purchaseapv is False %}
+        <td style="padding-top: 17px;padding-left: 28px;">
+            <input type="checkbox" name="jewell_id[]" value="{{obj.id}}" class="save-cb-state" id="delete_jewell" style="height: 20px;width: 20px;"></td>
+        {% endif %}
+    </tr>
+    {% endif %}
+    {% endfor %}
+</table>
 
-<body>
-    <h1>
-        <center>
-            Jewellery Details
-        </center>
-    </h1>
-    <br>
-    <br>
-    <br>
+{% endblock  %}
+{% block container1 %}
+<div id="button-allignment">
+    <button class="btn btn-sm btnedit" type="submit" id="delete_btn" style="background-color:#e7d896;color:#000000bf;border : 2px solid black;text-decoration:none"><b>Add to return table</b></button>
+    <a class="btn btn-sm btnedit"  href="{% url 'retobj_j' %}" style="background-color:#e7d896;color:#000000bf;border : 2px solid black;text-decoration: none;"><b>View returned objects</b></a>
+    <a class="btn btn-sm btnedit"  href="{% url 'displaycart2' %}" style="background-color:#e7d896;color:#000000bf;border : 2px solid black;text-decoration: none;"><b>View Cart</b></a>
+    <a class="btn btn-sm btnedit"  href="#" style="background-color:#e7d896;color:#000000bf;border : 2px solid black;text-decoration: none;"><b>Export Inventory</b></a>
+</div>
+{% endblock  %}
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-    <div class="container">
-        <table border="1">
-            <thead>
-                <th>Stock ID</th>
-                <th>Location</th>
-                <th>Certification</th>
-                <th>Cart Status</th>
-                <th>Return Item
-                </th>
-                <th>Show user</th>
-            </thead>
-            <tbody>
-                {% csrf_token %}
-                {% for p in productsj %}
-                {% if p.appvreturnstatus is False %}
-                <tr id="{{p.id}}">
-                    <td style="text-align:center;" id="stock_id{{ forloop.counter }}">{{p.stockid}}</td>
-                    <td>{{p.location}}</td>
-                    <td>{{p.cert}}</td>
-                    <td><a href="#" id="stock_id{{ forloop.counter }}_cert">See Certificate</a></td>
-                    {% if p.cartstatus is False %}
-                    <td><a class="btn btn-primary" href="{% url 'addtocart' id=p.id %}">ADD TO CART</a></td>
-                    {% endif %}
-                    {% if p.cartstatus is True %}
-                    <td><a class="btn btn-primary">Go To CART</a></td>
-                    {% endif %}
-                    <td>
-                        {% if p.appvreturnstatus is False and p.purchaseapv is False %}
-                        <input type="checkbox" name="jewell_id[]" value="{{p.id}}" class="save-cb-state"
-                            id="delete_jewell"></td>
-                            {% endif %}
-                        <td>{%if p.frontend%}
-                        <a href="{% url 'hide_from_frontend_jewel' id=p.id%}">Remove from home page</a>
-                        {%else%}
-                        <a href="{% url 'show_on_frontend_jewel' id=p.id %}">Show on home page</a>
-                        {%endif%}
-                    </td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <div>
-        <button type="submit" id="delete_btn">Add to return table</button>
-    </div>
-    <div>
-        <a class="btn btn-primary" href="{% url 'retobj_j' %}">View returned objects</a>
-        <a class="btn-btn-primary" href="{% url 'displaycart2' %}">View Cart</a>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    if (!$) {
+        $ = django.jQuery;
+    }
+    $(document).ready(function () {
+        $('#delete_btn').click(function () {
+            if (confirm("You want to delete this")) {
+                var id = [];
+                var csrf = $('input[name=csrfmiddlewaretoken').val()
+                $(':checkbox:checked').each(function (i) {
 
-    <script>
-        if (!$) {
-            $ = django.jQuery;
-        }
-        $(document).ready(function () {
-            $('#delete_btn').click(function () {
-                if (confirm("You want to delete this")) {
-                    var id = [];
-                    var csrf = $('input[name=csrfmiddlewaretoken').val()
-                    $(':checkbox:checked').each(function (i) {
+                    id[i] = $(this).val()
+                })
+                if (id.length == 0) {
+                    alert("No items Selected Please Select Again");
 
-                        id[i] = $(this).val()
-                    })
-                    if (id.length == 0) {
-                        alert("No items Selected Please Select Again");
+                }
+                else {
+                    $.ajax({
+                        url: '.',
+                        method: "POST",
+                        data: {
+                            id,
+                            csrfmiddlewaretoken: csrf,
+                        },
 
-                    }
-                    else {
-                        $.ajax({
-                            url: '.',
-                            method: "POST",
-                            data: {
-                                id,
-                                csrfmiddlewaretoken: csrf,
-                            },
+                        success: function (response) {
+                            window.location.reload();
+                            for (var i = 0; i < id.length; i++) {
 
-                            success: function (response) {
-                                window.location.reload();
-                                for (var i = 0; i < id.length; i++) {
-
-                                    $('tr#' + id[i] + '').css('background-color', '#ccc');
-                                    $('tr#' + id[i] + '').fadeOut('slow');
-
-                                }
+                                $('tr#' + id[i] + '').css('background-color', '#ccc');
+                                $('tr#' + id[i] + '').fadeOut('slow');
 
                             }
 
-                        });
-                    }
+                        }
 
-
+                    });
                 }
 
 
+            }
 
 
-            });
+
 
         });
-        var length_jewel = "{{length_jewel}}";
-        console.log(length_jewel);
-        console.log(length_jewel);
-        for(var i=1;i<=length_jewel;i++){
-            var query=document.getElementById("stock_id"+i);
-            if(query){
-                // console.log(query);
-                var stockid=document.getElementById("stock_id"+i).innerHTML;
-                // console.log(stockid);
-                $.ajax({type: 'GET',async:false,url: '{% url "get_certificate_of_jewellery" %}',
-                data: {'stockid': stockid},success: function(data) {
-                    
-                    var query2=document.getElementById("stock_id"+i+"_cert");
-                    if(data!="" && query2){
-                        // console.log(data,i);
-                        if(data.certificate!="0"){
-                            document.getElementById("stock_id"+i+"_cert").href="/media/"+data.certificate;
-                            console.log(data.certificate);
-                        }
-                        else{
-                            document.getElementById("stock_id"+i+"_cert").innerHTML="Not Available";
-                            console.log(data.certificate);
-                        }
-                    }
-                }});
-            }
-        }
-    </script>
-</body>
 
-</html>
+    });
+    var length_jewel = "{{length_jewel}}";
+    console.log(length_jewel);
+    console.log(length_jewel);
+    for(var i=1;i<=length_jewel;i++){
+        var query=document.getElementById("stock_id"+i);
+        if(query){
+            // console.log(query);
+            var stockid=document.getElementById("stock_id"+i).innerHTML;
+            // console.log(stockid);
+            $.ajax({type: 'GET',async:false,url: '{% url "get_certificate_of_jewellery" %}',
+            data: {'stockid': stockid},success: function(data) {
+                
+                var query2=document.getElementById("stock_id"+i+"_cert");
+                if(data!="" && query2){
+                    // console.log(data,i);
+                    if(data.certificate!="0"){
+                        document.getElementById("stock_id"+i+"_cert").href="/media/"+data.certificate;
+                        console.log(data.certificate);
+                    }
+                    else{
+                        document.getElementById("stock_id"+i+"_cert").innerHTML="Not Available";
+                        console.log(data.certificate);
+                    }
+                }
+            }});
+        }
+    }
+</script>
+{% endblock %}

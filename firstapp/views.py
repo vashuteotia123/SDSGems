@@ -120,6 +120,10 @@ def updateJ(request, pk):
 
     jewel_obj = POJ.objects.get(id=pk)
     form3 = POJForm(instance=jewel_obj)
+    change_css = False
+    browser_type = request.user_agent.browser.family
+    if (browser_type == 'Edge' or browser_type == 'Chrome' or browser_type == 'Brave'):
+        change_css = True
     # print("7")
     if request.method == 'POST':
         # print("2")
@@ -129,9 +133,11 @@ def updateJ(request, pk):
                 stockid=str("J-")+str(pk)).delete()
             # print("3")
             form3.save()
+            messages.success(
+            request, "Stock ID->{} is Modified  Successfully".format(str("J-")+str(pk)))
             return redirect('/showj')
 
-    context = {'form3': form3}
+    context = {'form3': form3,"b_s_c": change_css, "update_type": "POJ"}
     return render(request, 'update_jewellery.html', context)
 
 
@@ -144,9 +150,15 @@ def showjewell(request):
     for i in invobj:
         z = i.replace("J-", "")
         invobjects_jewellery.append(int(z))
+    if len(objjewell) <= 7:
+        change = True
+    else:
+        change = False
     context = {
         "invobjects_jewellery" : invobjects_jewellery,
         "showjewellery": objjewell,
+        "css_adjust": change,
+        "table_type": "Edit Purchased Items of Jewellery",
     }
     return render(request, "showj.html", context=context)
 
@@ -295,9 +307,15 @@ class Jewellery_view(View):
             allproduct.append(product)
 
         length_jewel = Inventoryofjewellery.objects.all().count()
+        if length_jewel <= 7:
+           change = True
+        else:
+           change = False
         context = {
             "productsj": allproduct,
             "length_jewel": length_jewel,
+            "css_adjust": change,
+            "table_type": "Inventory of Jewellery",
         }
         return render(request, "showinvj.html", context=context)
 
@@ -373,6 +391,12 @@ def backtoinv(request, id):
 @login_required
 def saving_jewel_cart(request):
     total = cloneInvofjewellery.objects.all()
+    if len(total) <= 7:
+        initial_change = False
+        change = True
+    else:
+        initial_change = True
+        change = False
     total_jewels = list(total.values())
     jewel_formset = ADCFormSet(initial=total_jewels)
     if request.method == "POST":
@@ -382,17 +406,30 @@ def saving_jewel_cart(request):
             context = {
             "totalitems": curr_formset,
             'itemcount': len(curr_formset),
-            "is_valid":True}
+            "is_valid":True,
+            "css_adjust_displaycart2_cs": change,
+            "displaycart2_cs": initial_change,
+            "css_adjust": change,
+            "table_type": "Jewellery Cart",}
             return render(request,"showcart.html",context=context)
         else:
             context = {
             "totalitems": curr_formset,
             'itemcount': len(curr_formset),
-            "is_valid":False}
+            "is_valid":False,
+            "css_adjust_displaycart2_cs": change,
+            "displaycart2_cs": initial_change,
+            "css_adjust": change,
+            "table_type": "Jewellery Cart",}
             return render(request,"showcart.html",context=context)
     context={
+       
         "totalitems": jewel_formset,
         'itemcount': len(total),
+        "css_adjust_displaycart2_cs": change,
+        "displaycart2_cs": initial_change,
+        "css_adjust": change,
+        "table_type": "Jewellery Cart",
     }
     return render(request,"showcart.html",context=context)
 
@@ -499,6 +536,7 @@ def save_jewel_forms(request):
             curr_formset.save()
     context = {
         "totalitems": poj_formset,
+         "table_type":"Purchase of Jewellery"
     }
     return render(request, "show_jewel_form.html", context=context)
 
@@ -509,7 +547,7 @@ class BirdAddView(TemplateView):
     @method_decorator(login_required)
     def get(self, *args, **kwargs):
         formset = POJFormSet(queryset=POJ.objects.none())
-        return self.render_to_response({'totalitems': formset})
+        return self.render_to_response({'totalitems': formset, "table_type":"Purchase of Jewellery"})
 
     # @login_required
 # define method to handle POST request
@@ -540,8 +578,17 @@ def displaysalesreturn(request):
 @login_required
 def displaycart2(request):
     tjcart = cloneInvofjewellery.objects.all()
+    if len(tjcart) <= 7:
+        initial_change = False
+        change = True
+    else:
+        initial_change = True
+        change = False
     context = {
-            "tjcart": tjcart,
+             "css_adjust_displaycart2_cs": change,
+             "displaycart2_cs": initial_change,
+             "tjcart": tjcart,
+             "table_type": "Jewellery Cart",
         }
     return render(request, "displaycart.html", context=context)
 

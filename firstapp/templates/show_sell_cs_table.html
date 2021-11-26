@@ -71,6 +71,8 @@
 
 {% endblock  %}
 {% block container1 %}
-<div id="allign_sell_btn_right"><a class="btn btn-primary btn-sm" style ="text-decoration: none" href="{% url 'displaysalesreturn_cs' %}" target=""> View Sales Return</a></div>
-<div id="allign_sell_btn_right"><a class="btn btn-primary btn-sm" style ="text-decoration: none" href="{% url 'ExportSalesofcolorstones' %}" target=""> Export Records</a></div>
+<div class="sale_export">
+    <a class="btn btn-primary btn-sm" style ="text-decoration: none;margin-right: 20px;" href="{% url 'displaysalesreturn_cs' %}">View Sales Return</a>
+    <a class="btn btn-primary btn-sm" style ="text-decoration: none;margin-left: 20px;" href="{% url 'ExportSalesofcolorstones' %}">Export Records</a>
+</div>
 {% endblock %}

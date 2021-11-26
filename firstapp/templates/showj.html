@@ -1,59 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-</head>
-<body>
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Comapny</th>
-        <th scope="col">ID</th>
-        <th scope="col">Metal</th>
-        <th scope="col">Shape</th>
-        <th scope="col">Certificate</th>
-        <th scope="col">Action</th>
-        <th scope="col">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-  {% for obj in showjewellery %} 
-  
-      
-      <tr class="something">
-        <td>{{obj.company_name.company_name}}</td>
-        <td>{{obj.id}}</td>
-        <td>{{obj.metal}}</td>
+{% extends 'common_table.html' %}
+<!-- Jewellery Purchase Table -->
+{% block table %}
+<table class="table table-responsive">
+    <tr id="table-heading">
+        <th style="background-color:#e7d896;color:#000000bf;">STOCK ID</th>
+        <th style="background-color:#e7d896;color:#000000bf;">PURCHASE DATE</th>
+        <th style="background-color:#e7d896;color:#000000bf;">COMPANY NAME</th>
+        <th style="background-color:#e7d896;color:#000000bf;">LOCATION</th>
+        <th style="background-color:#e7d896;color:#000000bf;">JEWELLERY</th>
+        <th style="background-color:#e7d896;color:#000000bf;">CENTER STONE</th>
+        <th style="background-color:#e7d896;color:#000000bf;">COLOUR OF CENTER STONE</th>
+        <th style="background-color:#e7d896;color:#000000bf;">SHAPE</th>
+        <th style="background-color:#e7d896;color:#000000bf;">Metal</th>
+        <th style="background-color:#e7d896;color:#000000bf;">CENTER STONE WEIGHT</th>
+        <th style="background-color:#e7d896;color:#000000bf;">CENTER STONE PIECES</th>
+        <th style="background-color:#e7d896;color:#000000bf;">GROSS WEIGHT</th>
+        <th style="background-color:#e7d896;color:#000000bf;">PIECES</th>
+        <th style="background-color:#e7d896;color:#000000bf;">AMOUNT</th>
+        <th style="background-color:#e7d896;color:#000000bf;">DISCOUNT in %</th>
+        <th style="background-color:#e7d896;color:#000000bf;">DISCOUNTED AMOUNT</th>
+        <th style="background-color:#e7d896;color:#000000bf;">TOTAL</th>
+        <th style="background-color:#e7d896;color:#000000bf;">BOUGHT JEWELLERY</th>
+        <th style="background-color:#e7d896;color:#000000bf;">CURRENCY</th>
+        <th style="background-color:#e7d896;color:#000000bf;">TAG PRICE</th>
+        <th style="background-color:#e7d896;color:#000000bf;">RATE</th>
+        <th style="background-color:#e7d896;color:#000000bf;">CERTIFICATE TYPE</th>
+        <th style="background-color:#e7d896;color:#000000bf;" colspan="2">ACTION</th>
+    </tr>
+    {% for obj in showjewellery %}   
+    <tr>
+        <td>J-{{obj.id}}</td>
+        <td>{{obj.date}}</td>
+        <td>{{obj.company_name}}</td>
+        <td>{{obj.location}}</td>
+        <td>{{obj.jewellery}}</td>
+        <td>{{obj.center_stone}}</td>
+        <td>{{obj.color_of_center_stone}}</th>
         <td>{{obj.shape}}</td>
-        {% if obj.cert.file %}
-        <td><a href="/media/{{ obj.cert.file }}"> Certficate Details</a></td>
-        {% else %}
-        <td> Not Available</td>
-        {%endif%}
+        <td>{{obj.metal}}</td>
+        <td>{{obj.center_stone_weight}}</td>
+        <td>{{obj.center_stone_pieces}}</td>
+        <td>{{obj.grosswt}}</td>
+        <td>{{obj.pcs}}</td>
+        <td>{{obj.amount}}</td>
+        <td>{{obj.discount}}</td>
+        <td>{{obj.discount_amount}}</td>
+        <td>{{obj.total}}</td>
+        {% if obj.purchase_approval %}
+        <td>YES</td>
+        {%else%}
+        <td>NO</td>
+        {% endif %}
+        <td>{{obj.currency}}</td>
+        <td>{{obj.tag_price}}</td>
+        <td>{{obj.rate}}</td>
+        <td>{{obj.cert}}</td>
         {% if obj.id in invobjects_jewellery %}
-        <td><a class="btn btn-primary" href="{% url 'deleteid' idno=obj.id %}" >Delete</a></td>
-        <td><a class="btn btn-primary" href="{% url 'updateJ' pk=obj.id %}">Edit</a></td>
-        {% else%}
-        <td><a class="btn btn-primary" href="#" >Already Sold</a></td>
-        <td><a class="btn btn-primary" href="#">Already Sold </a></td>
-
-        {%endif%}
-        
+        <td style="padding: 10px 10px;"><a class="btn btn-danger" id="delete-btn" style="text-decoration: none;padding: 6px 35px;" href="{% url 'deleteid' idno=obj.id %}" >Delete</a></td>
+        {% else %}
+        <td style="padding: 10px 10px;"><a class="btn btn-primary"style="text-decoration: none;">Already Sold</a></td>
+        {% endif %}
+        {% if obj.id in invobjects_jewellery %}
+        <td style="padding: 10px 10px;"><a class="btn btn-warning"style="text-decoration: none;padding: 6px 44px;" href="{% url 'updateJ' pk=obj.id %}">Edit</a></td>
+        {%  else  %}
+        <td style="padding: 10px 10px;"><a class="btn btn-primary"style="text-decoration: none;">Already Sold</a></td>
+        {% endif %}
       </tr>
-      </tbody>
-      {%endfor%}
-  </table>
-
-
-  
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
-    
-</body>
-</html>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock  %}
+{% block container1 %}
+<div id="purchase_export">
+<a class="btn btn-sm" style="background-color: #e7d896;color:#000000bf;text-decoration: none;" href="/ExportPOJ"><b>Export Purchase Items</b></a>
+</div>
+{% endblock %}

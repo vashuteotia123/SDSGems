@@ -1,49 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-</head>
-<body>
-    
-    {% if tjcart.count %}
-    <table class="table table-dark table-striped">
-      <thead>
-        <tr>
-          <th scope="col">Location</th>
-          <th scope="col">Stock ID</th>
-        </tr>
-      </thead>
-    {% for p in tjcart %}
-    <tbody>
+{% extends 'common_table.html' %}
+{% block different %}
+{% if tjcart.count  %}
+{% else %}
+<style>
+  #table_view {
+    padding-top: 30px;
+  }
+</style>
+{% endif %}
+<style>
+  .allign-centre{
+  display: flex;width: 100%;justify-content: center;margin-top: 50px;
+}
+</style>
+{% if displaycart2_cs %}
+<style>
+  #table_view {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+</style>
+{% endif %}
+{% if css_adjust_displaycart2_cs %}
+<style>
+  #table_view {
+    all:unset;
+    display: flex;
+    white-space: nowrap;
+    margin: 0 1%;
+    justify-content: center;
+  }
+</style>
+{% endif %}
+{% endblock  %}
+{% if tcscart %}
+{% block table %}
+{% if tjcart.count %}
+<table class="table table-responsive" >
     <tr>
-    <td>{{ p.location }}</td>
-    <td>{{p.id}}</td>
-    <td><a class="btn btn-primary" href="{% url 'return_jewel_cart' id=p.id %}">Return from Cart</a></td>
+         <th style="background-color:#e7d896;color:#000000bf;">STOCK ID</th>
+         <th style="background-color:#e7d896;color:#000000bf;">LOCATION</th>
+         <th style="background-color:#e7d896;color:#000000bf;">JEWELLERY</th>
+         <th style="background-color:#e7d896;color:#000000bf;">CENTER STONE</th>
+         <th style="background-color:#e7d896;color:#000000bf;">COLOUR OF CENTER STONE</th>
+         <th style="background-color:#e7d896;color:#000000bf;">Edit Cart</th>
     </tr>
-    </tbody>
+    
+    {% for p in tjcart %}
+    <tr>
+    <td>{{ p.stockid }}</td>
+    <td>{{p.location.place.capitalize}}</td>
+    <td>{{p.jewellery_type}}</td>
+     <td>{{p.center_stone}}</td>
+    <td>{{p.color_of_center_stone}}</td>
+    <td><a class="btn btn-sm btn-primary" style="text-decoration: none;    margin-right: -48px;" href="{% url 'return_jewel_cart' id=p.id %}">Return from Cart</a></td>
+    </tr>
     {% endfor %}
+    
     </table>
     {% else %}
     <h1>Cart is empty</h1>
     {% endif %}
-    {% block container1 %}
-    {% if tjcart.count %}
-    <a class="btn btn-primary" href="{% url 'show_jewel_cart' %}">Sell Cart</a>
-    {% else %}
-   <div class="allign-centre"><a href="/inventory_of_jewellery" class="uk-button  uk-button-small uk-button-primary">Move Previous</a></div>
+{% endblock  %}
+{% block container1 %}
+{% if tjcart.count %}
+<div class="allign-centre">
+  <a class="btn btn-sm" style="text-decoration: none;background-color:#e7d896;color:#000000bf;border : 2px solid black;" href="{% url 'show_jewel_cart' %}">Sell Cart</a>
+</div>
+{% else %}
+   <div class="allign-centre"><a href="/inventory_of_jewellery" class="uk-button  uk-button-small" style="text-decoration: none;background-color:#e7d896;color:#000000bf;border : 2px solid black;">Move Previous</a></div>
 {% endif %}
-{% endblock %}
+{% endblock  %} 
+{% endif %}
 
-</body>
-</html>
+  
