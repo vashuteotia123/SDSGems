@@ -59,6 +59,17 @@ class POJForm(forms.ModelForm):
                     continue
                 self.fields[field].required = True
 
+        def clean(self):
+            cleaned_data = super().clean()
+            loc = cleaned_data.get("location")
+
+            if cc_myself:
+                if "help" not in subject:
+                    raise ValidationError(
+                        "Did not send for 'help' in the subject despite "
+                        "CC'ing yourself."
+                    )
+
 
 POJFormSet = modelformset_factory(POJ, form=POJForm)
 class POCSForm(forms.ModelForm):

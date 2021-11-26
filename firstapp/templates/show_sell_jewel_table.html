@@ -24,14 +24,14 @@
     <th style="background-color:#e7d896;color:#000000bf;">CURRENCY</th>
     <th style="background-color:#e7d896;color:#000000bf;">TAG PRICE</th>
     <th style="background-color:#e7d896;color:#000000bf;">RATE</th>
-    <th style="background-color:#e7d896;color:#000000bf;">COMMENTS</th>
     <th style="background-color:#e7d896;color:#000000bf;">SALES STATUS</th>
     <th style="background-color:#e7d896;color:#000000bf;">ACTION</th>
+    <th style="background-color:#e7d896;color:#000000bf;">COMMENTS</th>
     </tr>
     {% for obj in sold_items%} 
     <tr>
         <td>{{obj.date}}</td>
-        <td>{{obj.id}}</td>
+        <td>{{obj.stockid}}</td>
         <td>{{obj.company_name}}</td>
         <td>{{obj.location}}</td>
         <td>{{obj.jewellery_type}}</td>
@@ -51,7 +51,6 @@
         <td>{{obj.tag_price}}</td>
         <td>{{obj.currency}}</td>
         <td>{{obj.rate}}</td>
-        <td>{{obj.comment}}</td>
         {% if obj.salesapprovalstatus %}
         <td>YES</td>
         {% else %}
@@ -62,6 +61,7 @@
         {% else %}
         <td><a class="btn btn-primary" style="text-decoration:none;" target="">ALREADY SOLD</a></td>
         {% endif%}
+        <td><details><summary>Click to see comment</summary><p>{{obj.comment|linebreaks}}</p></details></td>
     </tr>
     {% endfor %}
 </table>
@@ -70,6 +70,6 @@
 {% block container1 %}
 <div class="sale_export">
    <a class="btn btn-sm" style ="background-color: #e7d896;color:#000000bf;text-decoration: none;margin-right: 20px;" href="{% url 'displaysalesreturn' %}" target=""> View Sales Return</a>
-   <a class="btn  btn-sm" style ="background-color: #e7d896;color:#000000bf;text-decoration: none;margin-left: 20px;" href="#"> Export Records</a>
+   <a class="btn  btn-sm" style ="background-color: #e7d896;color:#000000bf;text-decoration: none;margin-left: 20px;" href="/ExportSalesofjewellery"> Export Records</a>
 </div>
 {% endblock %}

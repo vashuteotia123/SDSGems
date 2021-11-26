@@ -150,7 +150,7 @@ def showjewell(request):
     for i in invobj:
         z = i.replace("J-", "")
         invobjects_jewellery.append(int(z))
-    if len(objjewell) <= 7:
+    if len(objjewell) <= 6:
         change = True
     else:
         change = False
@@ -307,7 +307,7 @@ class Jewellery_view(View):
             allproduct.append(product)
 
         length_jewel = Inventoryofjewellery.objects.all().count()
-        if length_jewel <= 7:
+        if length_jewel <= 6:
            change = True
         else:
            change = False
@@ -351,7 +351,7 @@ class Jewellery_view(View):
 
 def allselljewellrecords(request):
     sold_items = Salesofjewellery.objects.all()
-    if len(sold_items) <= 7:
+    if len(sold_items) <= 6:
         change = True
     else:
         change = False
@@ -391,7 +391,7 @@ def backtoinv(request, id):
 @login_required
 def saving_jewel_cart(request):
     total = cloneInvofjewellery.objects.all()
-    if len(total) <= 7:
+    if len(total) <= 6:
         initial_change = False
         change = True
     else:
@@ -559,7 +559,8 @@ class BirdAddView(TemplateView):
         # Check if submitted forms are valid
         if formset.is_valid():
             formset.save()
-            return redirect("/index")
+            messages.success(self.request, "Forms saved successfully!")
+            return redirect("/showj")
 
         return self.render_to_response({'totalitems': formset})
 
@@ -578,7 +579,7 @@ def displaysalesreturn(request):
 @login_required
 def displaycart2(request):
     tjcart = cloneInvofjewellery.objects.all()
-    if len(tjcart) <= 7:
+    if len(tjcart) <= 6:
         initial_change = False
         change = True
     else:
@@ -619,7 +620,7 @@ def showcs(request):
     for i in invobj:
         z = i.replace("C-", "")
         invobjectscs.append(int(z))
-    if len(cs_obj) <= 7:
+    if len(cs_obj) <= 6:
         change = True
     else:
         change = False
@@ -726,7 +727,7 @@ def saving_colorstone_cart(request):
     total = cloneInvofcolorstones.objects.all()
     total_colorstones = list(total.values())
     colorstone_formset = ADCFormSet_cs(initial=total_colorstones)
-    if len(total) <= 7:
+    if len(total) <= 6:
         change = True
     else:
         change = False
@@ -781,7 +782,7 @@ def sell_cs(request):
             salesapprovalstatus_cs=object.salesapprovalstatus_cs)
         Inventoryofcolorstones.objects.filter(stockid=object.stockid).delete()
     cloneInvofcolorstones.objects.all().delete()
-    if len(cs_objects) <= 7:
+    if len(cs_objects) <= 6:
         change = True
     else:
         change = False
@@ -797,7 +798,7 @@ def sell_cs(request):
 @login_required
 def allsellcsrecords(request):
     sold_items = Salesofcolorstones.objects.all()
-    if len(sold_items) <= 7:
+    if len(sold_items) <= 6:
         change = True
     else:
         change = False
@@ -904,7 +905,7 @@ class colorstone_view(View):
             product = Inventoryofcolorstones.objects.get(stockid=j)
             allproduct.append(product)
         product_cs = Inventoryofcolorstones.objects.all()
-        if len(product_cs) <= 7:
+        if len(product_cs) <= 6:
             change = True
         else:
             change = False
@@ -970,7 +971,7 @@ def displaysalesreturn_cs(request):
 @login_required
 def displaycart2_cs(request):
     tcscart = cloneInvofcolorstones.objects.all()
-    if len(tcscart) <= 7:
+    if len(tcscart) <= 6:
         initial_change = False
         change = True
     else:

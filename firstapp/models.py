@@ -342,9 +342,9 @@ class Salesofjewellery(models.Model):
         decimal_places=2, max_digits=9, blank=True)
     salesapprovalstatus = models.BooleanField(default=False)
     comment = models.TextField(max_length=3000, blank=True, null=True)
-
     def __str__(self):
-        return self.company_name.title()
+        return self.stockid
+  
 
 
 class cloneInvofjewellery(models.Model):
