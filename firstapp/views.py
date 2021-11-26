@@ -558,6 +558,9 @@ class BirdAddView(TemplateView):
 
         # Check if submitted forms are valid
         if formset.is_valid():
+            if formset[0].cleaned_data == {}:
+                messages.error(self.request,"Please fill up the form.")
+                return self.render_to_response({'totalitems': formset})
             formset.save()
             messages.success(self.request, "Forms saved successfully!")
             return redirect("/showj")
@@ -879,6 +882,9 @@ class CSAddView(TemplateView):
 
         # Check if submitted forms are valid
         if formset.is_valid():
+            if formset[0].cleaned_data == {}:
+                messages.error(request,"Please fill up the form.")
+                return self.render_to_response({'totalitems_cs': formset})
             formset.save()
             return redirect("/index")
 
