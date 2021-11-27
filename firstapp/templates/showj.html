@@ -56,7 +56,7 @@
         <td>{{obj.rate}}</td>
         <td>{{obj.cert}}</td>
         {% if obj.id in invobjects_jewellery %}
-        <td style="padding: 10px 10px;"><a class="btn btn-danger" id="delete-btn" style="text-decoration: none;padding: 6px 35px;" href="{% url 'deleteid' idno=obj.id %}" >Delete</a></td>
+        <td style="padding: 10px 10px;"><a class="btn btn-danger" id="delete-btn" style="text-decoration: none;padding: 6px 35px;"  onclick='return delete_alert()' href="{% url 'deleteid' idno=obj.id %}" >Delete</a></td>
         {% else %}
         <td style="padding: 10px 10px;"><a class="btn btn-primary"style="text-decoration: none;">Already Sold</a></td>
         {% endif %}
@@ -74,4 +74,18 @@
 <div id="purchase_export">
 <a class="btn btn-sm" style="background-color: #e7d896;color:#000000bf;text-decoration: none;" href="/ExportPOJ"><b>Export Purchase Items</b></a>
 </div>
+{% endblock %}
+
+{% block script %}
+<script>
+function delete_alert() {
+    var return_val = confirm("Are you sure you want to delete this purchase?");
+    if(return_val == true){
+        return true;
+    }
+    else{
+        return false;
+    }
+  }
+</script>
 {% endblock %}

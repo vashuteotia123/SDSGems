@@ -102,7 +102,7 @@ def deleteid(request, idno):
     current_invj = Inventoryofjewellery.objects.get(stockid=jstr)
     current.delete()
     current_invj.delete()
-    return render(request, "delete.html")
+    return redirect('/showj')
 
 
 @login_required
@@ -1551,7 +1551,7 @@ def colorstone_upload(request):
         # datere=re.findall(r'\d{2}/\d{2}/\d{4}',column[0])
         # date_value=list(datere[0])
         # final_date=datetime.date(int(''.join(date_value[6:])),int(''.join(date_value[3:4])),int(''.join(date_value[0:2])))
-        temp_date = datetime.strptime(str(column[0]), "%m-%d-%Y").date()
+        temp_date = datetime.datetime.strptime(str(column[0]), "%m-%d-%Y").date()
         print(temp_date)
         # print(final_date)
         f = PurchaseOfColorStones
