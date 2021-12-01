@@ -44,8 +44,8 @@ def home(request):
         'jewellery_type', flat=True))
     center_stone_types = set(
         Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-    diam_fci = set(Inventoryofdiamond.objects.values_list(
-        'fancy_color_intensity1', flat=True))
+    # diam_fci = set(Inventoryofdiamond.objects.values_list(
+    #     'fancy_color_intensity1', flat=True))
     diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
     diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
         'white_color_grade1', flat=True))
@@ -60,7 +60,7 @@ def home(request):
         'gemstones': jewel_colors,
         'jewel_types': jewel_types,
         'center_stone_types': center_stone_types,
-        'diam_fancy_color_intensity1': diam_fci,
+        # 'diam_fancy_color_intensity1': diam_fci,
         'diam_polish': diam_pol,
         'diamwcg': diam_wcg1,
         'cs_tr': cs_treatment,
@@ -1170,18 +1170,18 @@ class Diamond_view(View):
         id_d = int(x[0])
         j_obj2 = POD.objects.filter(id=id_d)
         j_obj3 = POD.objects.get(id=id_d)
-
-        if j_obj.purchaseapv_d is False:
-            j_obj2.update(purchaseapv_d=True)
         j_obj.cartstatus = True
         j_obj.save()
         print(j_obj.cartstatus)
         new_object = cloneInvofdiamond.objects.create(stockid=j_obj.stockid, location=j_obj.location, shape=j_obj.shape, clarity=j_obj.clarity,
-                                                      white_color_grade1=j_obj.white_color_grade1, fancy_color_intensity1=j_obj.fancy_color_intensity1, fancycolor_grade=j_obj.fancycolor_grade,
+                                                      white_color_grade1=j_obj.white_color_grade1,color_origin1=j_obj.color_origin1,  fancycolor_grade=j_obj.fancycolor_grade,
                                                       cut=j_obj.cut, polish=j_obj.polish, symmetry=j_obj.symmetry, measurements=j_obj.measurements, depth=j_obj.depth, table=j_obj.table,
                                                       fluorescence_intensity=j_obj.fluorescence_intensity, fluorescence_color=j_obj.fluorescence_color, certificate_no_d=j_obj. certificate_no_d,
-                                                      certificate_d=j_obj.certificate_d, laser_inscription=j_obj.laser_inscription, PCS_d=j_obj.PCS_d, weight_d=j_obj.weight_d, units=j_obj.units, tag_price_d=j_obj.tag_price_d,
-                                                      amount_d=j_obj3.amount_d, DIS_d=j_obj3.DIS_d, DIS_Amount_d=j_obj3.DIS_Amount_d, total_value_d=j_obj3.total_val_d, currency=j_obj3.currency)
+                                                      certificate_d=j_obj.certificate_d, laser_inscription=j_obj.laser_inscription, PCS_d=j_obj.PCS_d, weight_d=j_obj.weight_d, units=j_obj.units, tag_price_d=j_obj.tag_price_d)
+                                                      
+           
+        if j_obj.purchaseapv_d is False:
+            j_obj2.update(purchaseapv_d=True)                                              
         return redirect('/delete_d')
 
 
@@ -1206,7 +1206,7 @@ def sell_diamond(request):
             clarity=object.clarity,
             color_origin1=object.color_origin1,
             white_color_grade1=object.white_color_grade1,
-            fancy_color_intensity1=object.fancy_color_intensity1,
+            # fancy_color_intensity1=object.fancy_color_intensity1,
             # fancy_color_1=object.fancy_color_1,
             # fancy_color_2=object.fancy_color_2,
             fancycolor_grade=object.fancycolor_grade,
@@ -1245,7 +1245,7 @@ def sell_diamond(request):
 def return_diamond_Inventory(request, id):
     object = Salesofdiamond.objects.get(pk=id)
     Inventoryofdiamond.objects.create(stockid=object.stockid,
-                                      fancy_color_intensity1=object.fancy_color_intensity1,
+                                    #   fancy_color_intensity1=object.fancy_color_intensity1,
                                       location=object.location,
                                       shape=object.shape,
                                       clarity=object.clarity,
@@ -1904,8 +1904,8 @@ def jewel_metal_filter(request, value, category):
                 'jewellery_type', flat=True))
             center_stone_types = set(
                 Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-            diam_fci = set(Inventoryofdiamond.objects.values_list(
-                'fancy_color_intensity1', flat=True))
+            # diam_fci = set(Inventoryofdiamond.objects.values_list(
+            #     'fancy_color_intensity1', flat=True))
             diam_pol = set(
                 Inventoryofdiamond.objects.values_list('polish', flat=True))
             diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
@@ -1921,7 +1921,7 @@ def jewel_metal_filter(request, value, category):
                 'gemstones': jewel_colors,
                 'jewel_types': jewel_types,
                 'center_stone_types': center_stone_types,
-                'diam_fancy_color_intensity1': diam_fci,
+                # 'diam_fancy_color_intensity1': diam_fci,
                 'diam_polish': diam_pol,
                 'diamwcg': diam_wcg1,
                 'cs_tr': cs_treatment,
@@ -1946,8 +1946,8 @@ def jewel_metal_filter(request, value, category):
                 'jewellery_type', flat=True))
             center_stone_types = set(
                 Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-            diam_fci = set(Inventoryofdiamond.objects.values_list(
-                'fancy_color_intensity1', flat=True))
+            # diam_fci = set(Inventoryofdiamond.objects.values_list(
+            #     'fancy_color_intensity1', flat=True))
             diam_pol = set(
                 Inventoryofdiamond.objects.values_list('polish', flat=True))
             diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
@@ -1963,7 +1963,7 @@ def jewel_metal_filter(request, value, category):
                 'gemstones': jewel_colors,
                 'jewel_types': jewel_types,
                 'center_stone_types': center_stone_types,
-                'diam_fancy_color_intensity1': diam_fci,
+                # 'diam_fancy_color_intensity1': diam_fci,
                 'diam_polish': diam_pol,
                 'diamwcg': diam_wcg1,
                 'cs_tr': cs_treatment,
@@ -1986,8 +1986,8 @@ def jewel_metal_filter(request, value, category):
                 'jewellery_type', flat=True))
             center_stone_types = set(
                 Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-            diam_fci = set(Inventoryofdiamond.objects.values_list(
-                'fancy_color_intensity1', flat=True))
+            # diam_fci = set(Inventoryofdiamond.objects.values_list(
+            #     'fancy_color_intensity1', flat=True))
             diam_pol = set(
                 Inventoryofdiamond.objects.values_list('polish', flat=True))
             diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
@@ -2003,7 +2003,7 @@ def jewel_metal_filter(request, value, category):
                 'gemstones': jewel_colors,
                 'jewel_types': jewel_types,
                 'center_stone_types': center_stone_types,
-                'diam_fancy_color_intensity1': diam_fci,
+                # 'diam_fancy_color_intensity1': diam_fci,
                 'diam_polish': diam_pol,
                 'diamwcg': diam_wcg1,
                 'cs_tr': cs_treatment,
@@ -2038,50 +2038,8 @@ def contactsendmail(request):
 
 @login_required
 def diamond_filter(request, value, category):
-    print(category)
-    if category == "fancy_color_intensity1":
-        print(value)
-        dm = Inventoryofdiamond.objects.filter(Q(fancy_color_intensity1=value))
-        print(dm)
-        if len(dm) == 0:
-            message = "No records found"
-            context = {
-                'message': message,
-            }
-        else:
-            jewel_colors = colorofcstone.objects.all()
-            jewel_types = set(Inventoryofjewellery.objects.values_list(
-                'jewellery_type', flat=True))
-            center_stone_types = set(
-                Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-            diam_fci = set(Inventoryofdiamond.objects.values_list(
-                'fancy_color_intensity1', flat=True))
-            diam_pol = set(
-                Inventoryofdiamond.objects.values_list('polish', flat=True))
-            diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
-                'white_color_grade1', flat=True))
-            cs_treatment = set(
-                Inventoryofcolorstones.objects.values_list('treatment', flat=True))
-            cs_origin = set(
-                Inventoryofcolorstones.objects.values_list('origin', flat=True))
-            cs_shape = set(
-                Inventoryofcolorstones.objects.values_list('shape', flat=True))
-
-            context = {
-                'gemstones': jewel_colors,
-                'jewel_types': jewel_types,
-                'center_stone_types': center_stone_types,
-                'diam_fancy_color_intensity1': diam_fci,
-                'diam_polish': diam_pol,
-                'diamwcg': diam_wcg1,
-                'cs_tr': cs_treatment,
-                'cs_org': cs_origin,
-                'cs_shpe': cs_shape,
-                "diamcat": dm,
-            }
-        print(dm)
-        return render(request, "filtered_d.html", context=context)
-    elif category == "polish":
+    print(category)          
+    if category == "polish":
         dm = Inventoryofdiamond.objects.filter(Q(polish=value))
         if dm is None:
             message = "No records found"
@@ -2094,8 +2052,8 @@ def diamond_filter(request, value, category):
                 'jewellery_type', flat=True))
             center_stone_types = set(
                 Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-            diam_fci = set(Inventoryofdiamond.objects.values_list(
-                'fancy_color_intensity1', flat=True))
+            # diam_fci = set(Inventoryofdiamond.objects.values_list(
+            #     'fancy_color_intensity1', flat=True))
             diam_pol = set(
                 Inventoryofdiamond.objects.values_list('polish', flat=True))
             diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
@@ -2111,7 +2069,7 @@ def diamond_filter(request, value, category):
                 'gemstones': jewel_colors,
                 'jewel_types': jewel_types,
                 'center_stone_types': center_stone_types,
-                'diam_fancy_color_intensity1': diam_fci,
+                # 'diam_fancy_color_intensity1': diam_fci,
                 'diam_polish': diam_pol,
                 'diamwcg': diam_wcg1,
                 'cs_tr': cs_treatment,
@@ -2133,8 +2091,8 @@ def diamond_filter(request, value, category):
                 'jewellery_type', flat=True))
             center_stone_types = set(
                 Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-            diam_fci = set(Inventoryofdiamond.objects.values_list(
-                'fancy_color_intensity1', flat=True))
+            # diam_fci = set(Inventoryofdiamond.objects.values_list(
+                # 'fancy_color_intensity1', flat=True))
             diam_pol = set(
                 Inventoryofdiamond.objects.values_list('polish', flat=True))
             diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
@@ -2150,7 +2108,7 @@ def diamond_filter(request, value, category):
                 'gemstones': jewel_colors,
                 'jewel_types': jewel_types,
                 'center_stone_types': center_stone_types,
-                'diam_fancy_color_intensity1': diam_fci,
+                # 'diam_fancy_color_intensity1': diam_fci,
                 'diam_polish': diam_pol,
                 'diamwcg': diam_wcg1,
                 'cs_tr': cs_treatment,
@@ -2187,8 +2145,8 @@ def cs_filter(request, value, category):
                 'jewellery_type', flat=True))
             center_stone_types = set(
                 Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-            diam_fci = set(Inventoryofdiamond.objects.values_list(
-                'fancy_color_intensity1', flat=True))
+            # diam_fci = set(Inventoryofdiamond.objects.values_list(
+            #     'fancy_color_intensity1', flat=True))
             diam_pol = set(
                 Inventoryofdiamond.objects.values_list('polish', flat=True))
             diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
@@ -2204,7 +2162,7 @@ def cs_filter(request, value, category):
                 'gemstones': jewel_colors,
                 'jewel_types': jewel_types,
                 'center_stone_types': center_stone_types,
-                'diam_fancy_color_intensity1': diam_fci,
+                # 'diam_fancy_color_intensity1': diam_fci,
                 'diam_polish': diam_pol,
                 'diamwcg': diam_wcg1,
                 'cs_tr': cs_treatment,
@@ -2227,8 +2185,8 @@ def cs_filter(request, value, category):
                 'jewellery_type', flat=True))
             center_stone_types = set(
                 Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-            diam_fci = set(Inventoryofdiamond.objects.values_list(
-                'fancy_color_intensity1', flat=True))
+            # diam_fci = set(Inventoryofdiamond.objects.values_list(
+            #     'fancy_color_intensity1', flat=True))
             diam_pol = set(
                 Inventoryofdiamond.objects.values_list('polish', flat=True))
             diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
@@ -2244,7 +2202,7 @@ def cs_filter(request, value, category):
                 'gemstones': jewel_colors,
                 'jewel_types': jewel_types,
                 'center_stone_types': center_stone_types,
-                'diam_fancy_color_intensity1': diam_fci,
+                # 'diam_fancy_color_intensity1': diam_fci,
                 'diam_polish': diam_pol,
                 'diamwcg': diam_wcg1,
                 'cs_tr': cs_treatment,
@@ -2266,8 +2224,8 @@ def cs_filter(request, value, category):
                 'jewellery_type', flat=True))
             center_stone_types = set(
                 Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-            diam_fci = set(Inventoryofdiamond.objects.values_list(
-                'fancy_color_intensity1', flat=True))
+            # diam_fci = set(Inventoryofdiamond.objects.values_list(
+            #     'fancy_color_intensity1', flat=True))
             diam_pol = set(
                 Inventoryofdiamond.objects.values_list('polish', flat=True))
             diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
@@ -2283,7 +2241,7 @@ def cs_filter(request, value, category):
                 'gemstones': jewel_colors,
                 'jewel_types': jewel_types,
                 'center_stone_types': center_stone_types,
-                'diam_fancy_color_intensity1': diam_fci,
+                # 'diam_fancy_color_intensity1': diam_fci,
                 'diam_polish': diam_pol,
                 'diamwcg': diam_wcg1,
                 'cs_tr': cs_treatment,

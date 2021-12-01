@@ -13,7 +13,7 @@ from django.contrib import messages
 
 
 # Dev mode
-development_mode = False
+development_mode = True
 
 # doploy variables
 deploy_color_stone = True
@@ -380,19 +380,19 @@ class gemtypeadmin(ImportExportModelAdmin):
     changelist_actions = ('HomePage',)
 
 
-# @admin.register(cut)
-# class cutadmin(admin.ModelAdmin):
-#     pass
+@admin.register(cut)
+class cutadmin(admin.ModelAdmin):
+    pass
 
 
-# @admin.register(polish)
-# class polishadmin(admin.ModelAdmin):
-#     pass
+@admin.register(polish)
+class polishadmin(admin.ModelAdmin):
+    pass
 
 
-# @admin.register(symmetry)
-# class symmetryadmin(admin.ModelAdmin):
-#     pass
+@admin.register(symmetry)
+class symmetryadmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(location)

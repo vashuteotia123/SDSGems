@@ -89,17 +89,17 @@ class PODForm(forms.ModelForm):
         model = POD
         fields = "__all__"
         labels = {'purchaseapv_d': 'Bought Diamond'}
+        widgets = {'date': DateInput(), 'comment': forms.Textarea(attrs={'rows': 4, 'cols': 30}),
+                   'purchaseapv': forms.CheckboxInput(attrs={'style': 'width:20px;height:20px;'})}
 
-    class DateForm(forms.Form):
-        date = forms.DateTimeField(
-            input_formats=['%m-%d-%Y'],
-            widget=forms.DateTimeInput(attrs={
-                'class': 'form-control datetimepicker-input',
-                'data-target': '#datetimepicker1'
-            })
-        )
-
-
+        def __init__(self, *args, **kwargs):
+            super(PODForm, self).__init__(*args, **kwargs)
+            for field in self.disabled_fields:
+                self.fields[field].disabled = True
+            for field in self.fields:
+                if self.fields[field].label == 'Bought Diamond':
+                    continue
+                self.fields[field].required = True
 PODFormSet = modelformset_factory(POD, form=PODForm)
 
 # class ADCForm(forms.ModelForm):
