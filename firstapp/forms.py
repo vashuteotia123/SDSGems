@@ -155,9 +155,8 @@ ADCFormSet_cs = modelformset_factory(
 
 
 class ADCForm_d(forms.ModelForm):
-    disabled_fields = ['stockid', 'location', 'shape', 'clarity', 'white_color_grade1', 'fancy_color_intensity1', 'fancycolor_grade', 'cut', 'polish', 'symmetry',
-                       'measurements', 'depth', 'table', 'fluorescence_intensity', 'fluorescence_color', 'certificate_no_d', 'certificate_d', 'laser_inscription', 'PCS_d', 'weight_d',
-                       'amount_d', 'DIS_d', 'DIS_Amount_d', 'total_value_d', 'currency']
+    disabled_fields = ['stockid', 'location', 'shape', 'clarity', 'white_color_grade1', 'fancycolor_grade', 'cut', 'polish', 'symmetry',
+                       'measurements', 'depth', 'table', 'fluorescence_intensity', 'fluorescence_color', 'certificate_no_d', 'certificate_d', 'laser_inscription', 'PCS_d']
 
     class Meta:
         model = cloneInvofdiamond

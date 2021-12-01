@@ -1057,7 +1057,7 @@ def deleteid_d(request, idno):
     current_invd = Inventoryofdiamond.objects.get(stockid=d_str)
     current.delete()
     current_invd.delete()
-    return render(request, "delete_d.html")
+    return render(request, "inventory_of_diamonds.html")
 
 
 @login_required
@@ -1182,7 +1182,7 @@ class Diamond_view(View):
            
         if j_obj.purchaseapv_d is False:
             j_obj2.update(purchaseapv_d=True)                                              
-        return redirect('/delete_d')
+        return redirect('/inventory_of_diamonds')
 
 
 @login_required
@@ -1199,6 +1199,7 @@ def sell_diamond(request):
     diamond_objects = cloneInvofdiamond.objects.all()
     for object in diamond_objects:
         Salesofdiamond.objects.create(
+            date=object.date,
             stockid=object.stockid,
             company_name=object.company_name,
             location=object.location,
@@ -1223,6 +1224,7 @@ def sell_diamond(request):
             laser_inscription=object.laser_inscription,
             PCS_d=object.PCS_d,
             weight_d=object.weight_d,
+            price=object.price,
             units=object.units,
             amount_d=object.amount_d,
             DIS_d=object.DIS_d,
@@ -1254,6 +1256,7 @@ def return_diamond_Inventory(request, id):
                                       certificate_no_d=object.certificate_no_d,
                                       PCS_d=object.PCS_d,
                                       purchaseapv_d=True,
+                                      color_origin1=object.color_origin1,
                                       cartstatus=False,
                                       appvreturnstatus_d=False,
                                       tag_price_d=object.tag_price_d,
@@ -1269,7 +1272,6 @@ def return_diamond_Inventory(request, id):
                                       laser_inscription=object.laser_inscription,
                                       weight_d=object.weight_d,
                                       units=object.units,
-                                      price=object.price,
 
 
                                       )
@@ -1281,12 +1283,7 @@ def return_diamond_Inventory(request, id):
 
     )
     Salesofdiamond.objects.filter(pk=id).delete()
-
-    context = {
-        "products_d": Inventoryofdiamond.objects.all(),
-
-    }
-    return render(request, "showinvd.html", context=context)
+    return redirect('/inventory_of_diamonds')
 
 
 @login_required
@@ -1356,7 +1353,7 @@ def jewellery_upload(request):
         temp_date = datetime.datetime.strptime(str(column[0]), "%m-%d-%Y").date()
         print(temp_date)
         # print(final_date)
-        f = POJ
+        f = clonePOJ
         try:
             f.company_name = companyinfo.objects.get(company_name=column[2].lower())
         except ObjectDoesNotExist:
@@ -1427,7 +1424,7 @@ def jewellery_upload(request):
             f.currency, crobj = currencies.objects.get_or_create(
                 currency=column[18].lower())
             if crobj:
-                f.currencyid.save()
+                f.currency.save()
         except Exception as e:
             raise e
         if(column[21] == "NO"):
@@ -1441,7 +1438,8 @@ def jewellery_upload(request):
                 pass
         except:
             return HttpResponse("enter float ")
-        myibj = POJ.objects.create(date=temp_date,
+        print("Rate is : ", column[20])
+        myibj = clonePOJ.objects.create(date=temp_date,
                                    company_name_id=f.company_name.id,
                                    location_id=f.location.id,
                                    jewellery_id=f.jewellery.id,
@@ -1554,7 +1552,7 @@ def colorstone_upload(request):
         temp_date = datetime.datetime.strptime(str(column[0]), "%m-%d-%Y").date()
         print(temp_date)
         # print(final_date)
-        f = PurchaseOfColorStones
+        f = clonePurchaseOfColorStones
         try:
             f.company_name = companyinfo.objects.get(
                 company_name=column[2].lower())
@@ -1646,7 +1644,7 @@ def colorstone_upload(request):
         else:
             y = True
 
-        myibj = PurchaseOfColorStones.objects.create(date=temp_date,
+        myibj = clonePurchaseOfColorStones.objects.create(date=temp_date,
                                                      company_name_id=f.company_name.id,
                                                      location_id=f.location.id,
                                                      shape_id=f.shape.id,
