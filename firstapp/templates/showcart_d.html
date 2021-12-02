@@ -23,5 +23,38 @@
       <button type="submit" class="btn btn-3">Submit</button>
       <a href="{% url 'sell_diamond' %}">Sell</a>
     </form>
+<div id="total_display-allignment">
+    <span id="total_header">Total Value of all items&nbsp;:&nbsp;</span><span id="total_amount_cum">0</span>
+</div>
   </body>
-</html>
+ <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+
+    var s = " ";
+    var formCnt = "{{itemcount}}";
+    console.log(formCnt)
+    var k = "$('#id_form-0-company_name').on('change keyup blur',function(){var a = document.getElementById('id_form-0-company_name').value;document.getElementById('id_form-0-company_name').value = a;"
+    var k1 = ";});";
+
+    var discount_str = " ";
+    var total_amount = "$(document).on('keyup', function(){ var total_amount_value = 0";
+    var total_amount1 = ";if(!isNaN(total_amount_value)) document.getElementById('total_amount_cum').innerHTML = total_amount_value.toFixed(2);});";
+    
+    // $('#id_form-0-price').on("change keyup blur",function(){document.getElementById('id_form-0-amount_cs').value = 8349983});
+    for( var i = 0; i < formCnt; i++){
+      s+="$('#id_form-"+ i + "-price').on('change keyup blur', function(){var price = document.getElementById('id_form-"+i+"-price').value; var weight = document.getElementById('id_form-"+i+"-weight_d').value; document.getElementById('id_form-"+i+"-amount_d').value = (weight * price).toFixed(2);  });   ";
+      k+="document.getElementById('id_form-"+i+"-company_name').value = a; ";
+      discount_str+="$('#id_form-"+ i + "-DIS_d').on('change keyup blur', function(){var discount = document.getElementById('id_form-"+i+"-DIS_d').value; var amount = document.getElementById('id_form-"+i+"-amount_d').value; document.getElementById('id_form-"+i+"-DIS_Amount_d').value = ((amount * discount)/100).toFixed(2); document.getElementById('id_form-"+i+"-total_value_d').value = (amount - ((amount * discount)/100)).toFixed(2);  });   ";
+      total_amount+="+parseFloat(document.getElementById('id_form-"+ i +"-total_value_d').value)" 
+      eval(s);
+      eval(k+k1);
+      eval(discount_str);
+      eval(total_amount+total_amount1);
+    }
+    eval(s);
+    eval(k+k1);
+    eval(discount_str);
+    eval(total_amount+total_amount1);
+    console.log(total_amount+total_amount1);
+  </script>
+  </html>

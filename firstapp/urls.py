@@ -117,6 +117,7 @@ urlpatterns = [
     path("allselljewellrecords",views.allselljewellrecords,name="allselljewellrecords"),
     path("contact", views.contactsendmail, name="contact"), 
     path("allsellcsrecords", views.allsellcsrecords, name="allsellcsrecords"), 
+    path("allselldiamondsrecords",views.allselldiamondsrecords,name="allselldiamondsrecords"),
     path("ExportInventoryofcolorstones", views.ExportInventoryofcolorstones, name="ExportInventoryofcolorstones"),
     path("ExportPurchaseOfColorStones", views.ExportPurchaseOfColorStones, name="ExportPurchaseOfColorStones"), 
     path("ExportSalesofcolorstones", views.ExportSalesofcolorstones, name="ExportSalesofcolorstones"),  

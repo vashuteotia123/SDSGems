@@ -14,4 +14,39 @@
         <button type="submit">Submit</button>
         
 </body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    if (!$) {
+      $ = django.jQuery;
+    }
+    $( "#id_price, #id_weight_d").on("change keyup blur", function () {
+      var weight = $('#id_weight_d').val();
+      var price = $('#id_price').val();
+      var z = (parseFloat(weight)) * (parseFloat(price))
+      if (weight != '' && price != '') {
+        $('#id_amount_d').val(z.toFixed(2));
+      } else {
+        $('#id_amount_d').val('')
+  
+      }
+    })
+    $(document).on("change keyup blur", "#id_DIS_d", function () {
+      var amount = $('#id_amount_d').val();
+      var discount = $('#id_DIS_d').val();
+      var z = (parseFloat(amount)) * (parseFloat(discount)) / 100
+      var total = amount - z
+  
+      if (amount != '' && discount != '') {
+        $('#id_total_val_d').val(total.toFixed(2));
+        $('#id_DIS_Amount_d').val(z.toFixed(2))
+      } else {
+        $('#id_total_val_d').val('')
+        $('#id_DIS_Amount_d').val('')
+  
+      }
+    });
+  
+    var company_detail_call = "$('#id_company_name').change(function(){var company_name = $(this).find(':selected')[0].text;$.ajax({type: 'GET',url: '{% url 'get_company_details' %}',data: {'name': company_name,},success: function(data) {var phone_no = document.getElementById('id_phone_number');phone_no.value = data.contact_no;var location = document.getElementById('id_location');var loc_index = ':selected';for(var i=0; i<location.length; i++){if(location[i].text == data.location){loc_index = i;break; } } location.value = loc_index; } }) });"
+    eval(company_detail_call)
+  </script>
 </html>

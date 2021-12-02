@@ -1013,7 +1013,14 @@ def return_colorstone_cart(request, id):
 @login_required
 def showdiamond(request):
     diamondobj = POD.objects.all()
+    invobj = list(Inventoryofdiamond.objects.values_list(
+        'stockid', flat=True))
+    invobjects_diamonds = []
+    for i in invobj:
+        z = i.replace("D-", "")
+        invobjects_diamonds.append(int(z))
     context = {
+        "invobjects_diamonds":invobjects_diamonds,
         "showdia": diamondobj,
     }
     return render(request, "showd.html", context=context)
@@ -1033,6 +1040,8 @@ def update_d(request, dk):
                 stockid=str("D-")+str(dk)).delete()
             # print("3")
             form4.save()
+            messages.success(
+                request, "Stock ID->{} is Modified  Successfully".format(str("D-")+str(dk)))
             return redirect('/showd')
 
     context = {'form4': form4}
@@ -1092,13 +1101,20 @@ def saving_diamond_cart(request):
         print(len(curr_formset))
         if(curr_formset.is_valid()):
             curr_formset.save()
+            context={
+                "totalitems_d":curr_formset,
+                "itemcount":len(curr_formset),
+            }
+            return render(request, "showcart_d.html", context=context)
         else:
             context = {
+                "itemcount":len(curr_formset),
                 "totalitems_d": curr_formset,
             }
             return render(request, "showcart_d.html", context=context)
     context = {
         "totalitems_d": diamond_formset,
+        "itemcount":len(total),
     }
     return render(request, "showcart_d.html", context=context)
 
@@ -1128,11 +1144,13 @@ class DiamondAddView(TemplateView):
     def post(self, *args, **kwargs):
 
         formset = PODFormSet(data=self.request.POST)
-
-        # Check if submitted forms are valid
         if formset.is_valid():
+            if formset[0].cleaned_data == {}:
+                messages.error(self.request,"Please fill up the form.")
+                return self.render_to_response({'totalitems_d': formset})
             formset.save()
-            return redirect("/index")
+            messages.success(self.request, "Forms saved successfully!")
+            return redirect("/showd")
 
         return self.render_to_response({'totalitems_d': formset})
 
@@ -1149,8 +1167,22 @@ def retobj_d(request):
 class Diamond_view(View):
     @method_decorator(login_required)
     def get(self, request):
-        print("hello")
-        allproduct = Inventoryofdiamond.objects.all().order_by('stockid')
+        z = []
+        y = list()
+        diamond_types = set(
+            Inventoryofdiamond.objects.values_list('stockid', flat=True))
+        for sentence in diamond_types:
+            sentence = sentence.replace("D-", "")
+            z.append(int(sentence))
+        z.sort()
+        z = map(str, z)
+        for i in z:
+            i = "C-"+i
+            y.append(i)
+        allproduct = []
+        for j in y:
+            product = Inventoryofdiamond.objects.get(stockid=j)
+            allproduct.append(product)
         # allclone_d = cloneInvofdiamond.objects.all()
         context = {
             "products_d": allproduct,
@@ -1182,7 +1214,7 @@ class Diamond_view(View):
                                                       white_color_grade1=j_obj.white_color_grade1,color_origin1=j_obj.color_origin1,  fancycolor_grade=j_obj.fancycolor_grade,
                                                       cut=j_obj.cut, polish=j_obj.polish, symmetry=j_obj.symmetry, measurements=j_obj.measurements, depth=j_obj.depth, table=j_obj.table,
                                                       fluorescence_intensity=j_obj.fluorescence_intensity, fluorescence_color=j_obj.fluorescence_color, certificate_no_d=j_obj. certificate_no_d,
-                                                      certificate_d=j_obj.certificate_d, laser_inscription=j_obj.laser_inscription, PCS_d=j_obj.PCS_d, weight_d=j_obj.weight_d, units=j_obj.units, tag_price_d=j_obj.tag_price_d)
+                                                      certificate_d=j_obj.certificate_d, laser_inscription=j_obj.laser_inscription, PCS_d=j_obj.PCS_d, weight_d=j_obj.weight_d, units=j_obj.units)
                                                       
            
         if j_obj.purchaseapv_d is False:
@@ -1246,6 +1278,14 @@ def sell_diamond(request):
         "sold_items": Salesofdiamond.objects.all(),
     }
     return render(request, "show_sell_diamond_table.html", context=context)
+
+
+def allselldiamondsrecords(request):
+    context = {
+        "sold_items": Salesofdiamond.objects.all(),
+    }
+    return render(request, "show_sell_diamond_table.html", context=context)
+
 
 
 @login_required
@@ -2451,6 +2491,7 @@ def ExportSalesofjewellery(request):
     filename = "Salesofjewellery"+str(datetime.datetime.now())+".csv"
     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
     writer = csv.writer(response)
+    
     writer.writerow(['Date','Stock id', 'Company Name','Location','Jewellery','Center Stone','Colour of Center Stone','Shape', 'Metal', 'Center Stone Pieces','Center Stone Weight','Gross Weight','Certificate', 'PCS',  'Amount', 'Discount', 'Dicount Amount', 'Total Value','Currency', 'Tag Price', 'Rate','Sold Item'])
     for item in objects:
         if item.salesapprovalstatus:
@@ -2475,19 +2516,19 @@ def ExportSalesReturn(request):
     writer.writerows(output)
     return response
 
-# def ExportPOD(request):
-#     objects = POD.objects.all()
-#     output = []
-#     response = HttpResponse(content_type='text/csv')
-#     filename = "PurchaseOfDiamond"+str(datetime.datetime.now())+".csv"
-#     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
-#     writer = csv.writer(response)
-#     writer.writerow(['Date','Stock id', 'Company Name','Location','Shape', 'Clarity', 'Color Origin', 'White Color Grade','Fancy Color Intensity','Fancy Color Grade ','Cut','Polish','Symmetry','Measurements','Depth','Table%','Fluorescence Intensity','Fluorescence Color','Certificate No','Certificate','Laser Inscription', 'PCS','Weight', 'Price','Units','Amount', 'Discount', 'Dicount Amount', 'Total Value', 'Currency', 'Tag Price', 'Rate'])
-#     for item in objects:
-#         output.append([item.date, 'D-' + str(item.id), item.company_name.title(), item.location.place.title(), item.shape.shape.title(),item.clarity.clarity.title(), item.color_origin1.c_o.title(), item.white_color_grade1.w_c_g.title(), item.fancy_color_intensity1.f_c_i.title(),item.fancycolor_grade.f_c_grade.title(),item.cut.cut.title(),item.polish.polish.title(),item.symmetry.symmetry.title(),item.measurements,item.depth,item.table_perc,item.fluorescence_intensity.f_intensity.title(),item.fluorescence_color.f_color.title(),item.certificate_no_d,item.certificate_d.certd,item.laser_inscription.title(),item.PCS_d,item.weight_d,item.price,item.units,item.amount_d, str(item.DIS_d)+"%",item.DIS_Amount_d , item.total_val_d, item.currency.currency.upper(), item.tag_price_d, item.rate_d])
+def ExportPOD(request):
+    objects = POD.objects.all()
+    output = []
+    response = HttpResponse(content_type='text/csv')
+    filename = "PurchaseOfDiamond"+str(datetime.datetime.now())+".csv"
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    writer = csv.writer(response)
+    writer.writerow(['Date','Stock id', 'Company Name','Location','Shape', 'Clarity', 'Color Origin', 'White Color Grade','Fancy Color Intensity','Fancy Color Grade ','Cut','Polish','Symmetry','Measurements','Depth','Table%','Fluorescence Intensity','Fluorescence Color','Certificate No','Certificate','Laser Inscription', 'PCS','Weight', 'Price','Units','Amount', 'Discount', 'Dicount Amount', 'Total Value', 'Currency', 'Tag Price', 'Rate'])
+    for item in objects:
+        output.append([item.date, 'D-' + str(item.id), item.company_name.title(), item.location.place.title(), item.shape.shape.title(),item.clarity.clarity.title(), item.color_origin1.c_o.title(), item.white_color_grade1.w_c_g.title(), item.fancy_color_intensity1.f_c_i.title(),item.fancycolor_grade.f_c_grade.title(),item.cut.cut.title(),item.polish.polish.title(),item.symmetry.symmetry.title(),item.measurements,item.depth,item.table_perc,item.fluorescence_intensity.f_intensity.title(),item.fluorescence_color.f_color.title(),item.certificate_no_d,item.certificate_d.certd,item.laser_inscription.title(),item.PCS_d,item.weight_d,item.price,item.units,item.amount_d, str(item.DIS_d)+"%",item.DIS_Amount_d , item.total_val_d, item.currency.currency.upper(), item.tag_price_d, item.rate_d])
     
-#     writer.writerows(output)
-#     return response
+    writer.writerows(output)
+    return response
 
 # def ExportInventoryofdiamond(request):
 #     objects = Inventoryofdiamond.objects.all()

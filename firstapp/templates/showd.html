@@ -26,8 +26,16 @@
         <td>{{obj.id}}</td>
         <td>{{obj.clarity}}</td>
         <td>{{obj.shape}}</td>
-        <td><a class="btn btn-primary" href="{% url 'deleteid_d' idno=obj.id %}" >Delete</a></td>
-        <td><a class="btn btn-primary" href="{% url 'update_d' dk=obj.id %}">Edit</a></td>
+        {% if obj.id in invobjects_diamonds %}
+        <td style="padding: 10px 10px;"><a class="btn btn-danger" id="delete-btn" style="text-decoration: none;padding: 6px 35px;"  onclick='return delete_alert()' href="{% url 'deleteid_d' idno=obj.id %}" >Delete</a></td>
+        {% else %}
+        <td style="padding: 10px 10px;"><a class="btn btn-primary"style="text-decoration: none;">Already Sold</a></td>
+        {% endif %}
+        {% if obj.id in invobjects_diamonds %}
+        <td style="padding: 10px 10px;"><a class="btn btn-warning"style="text-decoration: none;padding: 6px 44px;" href="{% url 'update_d' dk=obj.id %}">Edit</a></td>
+        {%  else  %}
+        <td style="padding: 10px 10px;"><a class="btn btn-primary"style="text-decoration: none;">Already Sold</a></td>
+        {% endif %}
       </tr>
       </tbody>
   </table>

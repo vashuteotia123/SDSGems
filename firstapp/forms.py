@@ -161,12 +161,15 @@ class ADCForm_d(forms.ModelForm):
     class Meta:
         model = cloneInvofdiamond
         fields = '__all__'
+        labels={'salesapprovalstatus_d':'Sold Item'}
 
     def __init__(self, *args, **kwargs):
         super(ADCForm_d, self).__init__(*args, **kwargs)
         for field in self.disabled_fields:
             self.fields[field].disabled = True
         for field in self.fields:
+            if self.fields[field].label=="Sold Item":
+                continue
             self.fields[field].required = True
 
 
