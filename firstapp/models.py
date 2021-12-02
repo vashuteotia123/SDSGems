@@ -610,6 +610,66 @@ class shape_d(models.Model):
     def save(self, *args, **kwargs):
         self.shape = self.shape.lower()
         super(shape_d, self).save(*args, **kwargs)
+class clonePOD(models.Model):
+    date = models.DateField()
+    # stockid_d = models.CharField(max_length=30)
+    company_name = models.ForeignKey('CompanyInfo', on_delete=PROTECT)
+    location = models.ForeignKey(
+        'location', on_delete=models.PROTECT, null=True)
+    shape = models.ForeignKey('shape_d', on_delete=models.PROTECT, null=True)
+    clarity = models.ForeignKey('clarity', on_delete=models.PROTECT)
+    color_origin1 = models.ForeignKey('color_origin', on_delete=models.PROTECT)
+    white_color_grade1 = models.ForeignKey(
+        'white_color_grade', on_delete=models.PROTECT, null=True, blank=True)
+    fancycolor_grade = models.CharField(max_length=100,null=True, blank=True)
+    cut = models.ForeignKey('cut', on_delete=models.PROTECT)
+    polish = models.ForeignKey('polish', on_delete=models.PROTECT)
+    symmetry = models.ForeignKey('symmetry', on_delete=models.PROTECT)
+    measurements = models.CharField(max_length=30, blank=True, null=True)
+    depth = models.DecimalField(decimal_places=2, max_digits=9)
+    table_perc = models.DecimalField(decimal_places=2, max_digits=9)
+    fluorescence_intensity = models.ForeignKey(
+        'fluorescence_intensity', on_delete=models.PROTECT)
+    fluorescence_color = models.ForeignKey(
+        'fluorescence_color', on_delete=models.PROTECT)
+    certificate_no_d = models.CharField(max_length=30)
+    certificate_d = models.ForeignKey(
+        'certificate_d', on_delete=models.PROTECT)
+    laser_inscription = models.BooleanField()
+    PCS_d = models.IntegerField()
+    weight_d = models.DecimalField(decimal_places=2, max_digits=9)
+    price = models.DecimalField(decimal_places=2, max_digits=9)
+    units = models.CharField(max_length=30, blank=True, null=True)
+    amount_d = models.DecimalField(decimal_places=2, max_digits=9)
+    DIS_d = models.DecimalField(decimal_places=2, max_digits=9)
+    DIS_Amount_d = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True, null=True)
+
+    total_val_d = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True)
+    purchaseapv_d = models.BooleanField(default=False)
+    currency = models.ForeignKey('currencies', on_delete=models.PROTECT)
+    tag_price_d = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True)
+    rate_d = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True)
+    comment = models.TextField(max_length=3000, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        # self.amount_d = (self.price * self.units * self.PCS_d)
+        # self.DIS_Amount_d = (self.amount_d * self.DIS_d) // 100
+        # self.total_val_d = self.amount_d - self.DIS_Amount_d
+        super(clonePOD, self).save(*args, **kwargs)
+        obj2 = POD.objects.create(date=self.date,company_name=self.company_name, location=self.location, shape=self.shape,color_origin1=self.color_origin1,
+                                                 clarity=self.clarity, white_color_grade1=self.white_color_grade1,
+                                                 fancycolor_grade=self.fancycolor_grade,cut=self.cut, weight_d=self.weight_d,  polish=self.polish, symmetry=self.symmetry, measurements=self.measurements,
+                                                 price=self.price,depth=self.depth, table_perc=self.table_perc, fluorescence_intensity=self.fluorescence_intensity, fluorescence_color=self.fluorescence_color, certificate_no_d=self.certificate_no_d,
+                                                 certificate_d=self.certificate_d, units=self.units, laser_inscription=self.laser_inscription, PCS_d=self.PCS_d, tag_price_d=self.tag_price_d, purchaseapv_d=self.purchaseapv_d,rate_d=self.rate_d,
+                                                amount_d=self.amount_d,DIS_d=self.DIS_d,DIS_Amount_d=self.DIS_Amount_d,total_val_d=self.total_val_d,currency=self.currency,)
+    
+
+    def __str__(self):
+        return str(self.id)
 
 
 class POD(models.Model):

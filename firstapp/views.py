@@ -1177,7 +1177,7 @@ class Diamond_view(View):
         z.sort()
         z = map(str, z)
         for i in z:
-            i = "C-"+i
+            i = "D-"+i
             y.append(i)
         allproduct = []
         for j in y:
@@ -1740,7 +1740,7 @@ def diamond_upload(request):
         temp_date = datetime.datetime.strptime(str(column[0]), "%m-%d-%Y").date()
         print(temp_date)
         
-        f=POD
+        f=clonePOD
         try:
             f.company_name = companyinfo.objects.get(company_name=column[2].lower())
         except ObjectDoesNotExist:
@@ -1840,7 +1840,7 @@ def diamond_upload(request):
             bools=True
         else:
             bools=False
-        myibj=POD.objects.create(date=temp_date,
+        myibj=clonePOD.objects.create(date=temp_date,
         company_name_id=f.company_name.id,
         location_id=f.location.id,
         shape_id=f.shape.id,
