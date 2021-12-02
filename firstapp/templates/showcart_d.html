@@ -9,11 +9,17 @@
   </head>
 
   <body>
+
     <form method="post" action="">
       {%csrf_token%} {{totalitems_d.management_form }}
-      <table>
-        {% for form in totalitems_d %} {{ form }} {% endfor %}
-      </table>
+    {% for obj in totalitems_d %}
+    <tr>
+        {% for field in obj %}
+        <td>{{field}}<br>{{field.errors}}</td>
+        {%endfor%}
+    </tr>
+    {% endfor %}
+    
       <button type="submit" class="btn btn-3">Submit</button>
       <a href="{% url 'sell_diamond' %}">Sell</a>
     </form>

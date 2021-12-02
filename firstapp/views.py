@@ -1092,6 +1092,11 @@ def saving_diamond_cart(request):
         print(len(curr_formset))
         if(curr_formset.is_valid()):
             curr_formset.save()
+        else:
+            context = {
+                "totalitems_d": curr_formset,
+            }
+            return render(request, "showcart_d.html", context=context)
     context = {
         "totalitems_d": diamond_formset,
     }

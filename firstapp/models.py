@@ -771,7 +771,7 @@ class cloneInvofdiamond(models.Model):
     fluorescence_color = models.ForeignKey('fluorescence_color', on_delete=models.PROTECT)
     certificate_no_d = models.CharField(max_length=30)
     certificate_d = models.ForeignKey('certificate_d', on_delete=models.PROTECT)
-    laser_inscription = models.CharField(max_length=30)
+    laser_inscription = models.BooleanField(default=False)
     PCS_d = models.IntegerField(null=True, blank=True)
     weight_d = models.DecimalField(decimal_places=2, max_digits=9)
     price = models.DecimalField( blank=True, null=True, verbose_name="Price", decimal_places=2, max_digits=9)

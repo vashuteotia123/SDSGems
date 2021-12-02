@@ -166,6 +166,9 @@ class ADCForm_d(forms.ModelForm):
         super(ADCForm_d, self).__init__(*args, **kwargs)
         for field in self.disabled_fields:
             self.fields[field].disabled = True
+        for field in self.fields:
+            self.fields[field].required = True
+
 
 
 ADCFormSet_d = modelformset_factory(cloneInvofdiamond, form=ADCForm_d, extra=0)
