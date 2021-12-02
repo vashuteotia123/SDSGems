@@ -43,6 +43,8 @@ urlpatterns = [
     # path('displayinv',views.displayinv,name="displayinv"),
     path('show_on_frontend_cs<int:id>', views.show_on_frontend_cs, name="show_on_frontend_cs"),
     path('hide_from_frontend_cs<int:id>', views.hide_from_frontend_cs, name="hide_from_frontend_cs"),
+    path('show_on_frontend_d<int:id>', views.show_on_frontend_d, name="show_on_frontend_d"),
+    path('hide_from_frontend_d<int:id>', views.hide_from_frontend_d, name="hide_from_frontend_d"),
     path('show_on_frontend_jewel<int:id>',views.show_on_frontend_jewel,name="show_on_frontend_jewel"),
     path('hide_from_frontend_jewel<int:id>',views.hide_from_frontend_jewel,name="hide_from_frontend_jewel"),
 

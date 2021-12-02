@@ -1873,6 +1873,19 @@ def diamond_upload(request):
         purchaseapv_d=bools,
         )
     return HttpResponse('Hi')
+@login_required
+def show_on_frontend_d(request, id):
+    obj = Inventoryofdiamond.objects.get(id=id)
+    obj.frontend = True
+    obj.save()
+    return redirect('delete-d')
+@login_required
+def hide_from_frontend_d(request, id):
+    obj = Inventoryofdiamond.objects.get(id=id)
+    obj.frontend = False
+    obj.save()
+    return redirect('delete-d')
+
 
 @login_required
 def show_on_frontend_cs(request, id):

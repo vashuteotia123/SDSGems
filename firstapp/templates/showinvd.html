@@ -20,6 +20,7 @@
                 <th>Location</th>
                 <th>certificate</th>
                 <th>Add to Cart</th>
+                <th>Frontend</th>
                 <th>check</th>
             </thead>
             <tbody>
@@ -36,6 +37,13 @@
                     {% endif %}
                     {% if p.cartstatus is True %}
                     <td><a class="btn btn-primary">Go To CART</a></td>
+                    {% endif %}
+                    {% if p.frontend is False %}
+                    <td style="padding: 10px 50px;"><a class="btn btn-primary"style="text-decoration: none;" href="{% url 'show_on_frontend_d' id=p.id %}">Show on Home Page</a></td>
+                    
+                    {% endif %}
+                    {% if p.frontend is True %}
+                    <td style="padding: 10px 30px;"><a class="btn btn-primary" style="text-decoration: none;" href="{% url 'hide_from_frontend_d' id=p.id %}" >Remove From Home Page</a></td>
                     {% endif %}
                     {% if p.appvreturnstatus_d is False and p.purchaseapv_d is False %}
                     <td><input type="checkbox" name="d_id[]" value="{{p.id}}" class="save-cb-state"

@@ -763,6 +763,7 @@ class Inventoryofdiamond(models.Model):
     purchaseapv_d = models.BooleanField(blank=True)
     cartstatus = models.BooleanField(default=False)
     appvreturnstatus_d = models.BooleanField(default=False)
+    frontend=models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.stockid)
