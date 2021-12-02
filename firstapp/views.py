@@ -1392,6 +1392,7 @@ def jewellery_upload(request):
     io_string = io.StringIO(dataset)
     next(io_string)
     for column in csv.reader(io_string, delimiter=','):
+        print(column[0])
         # datere=re.findall(r'\d{2}/\d{2}/\d{4}',column[0])
         # date_value=list(datere[0])
         # final_date=datetime.date(int(''.join(date_value[6:])),int(''.join(date_value[3:4])),int(''.join(date_value[0:2])))
@@ -1722,169 +1723,156 @@ def colorstone_upload(request):
     return redirect(request.META.get('HTTP_REFERER'))
 
 
-# @login_required
-# def diamond_upload(request):
-#     template="diamondupload.html"
-#     if request.method=="GET":
-#         return render(request,template)
+@login_required
+def diamond_upload(request):
+    template="diamondupload.html"
+    if request.method=="GET":
+        return render(request,template)
 
-#     csv_file=request.FILES['file']
-#     if not csv_file.name.endswith('.csv'):
-#         messages.error(request,"This is not a CSV file")
-#     dataset=csv_file.read().decode('UTF-8')
-#     io_string=io.StringIO(dataset)
-#     next(io_string)
-#     for column in csv.reader(io_string,delimiter=','):
-#         z=re.findall("[0-9]+",column[27])
-#         # datere=re.findall(r'\d{2}/\d{2}/\d{4}',column[0])
-#         # date_value=list(datere[0])
-#         # final_date=datetime.date(int(''.join(date_value[6:])),int(''.join(date_value[3:4])),int(''.join(date_value[0:2])))
-#         temp_date = datetime.strptime(str(column[0]), "%m-%d-%y").date()
-#         print(temp_date)
-#         # print(final_date)
-#         f=POD
-#         try:
-#             f.company_name = CompanyInfo.objects.get(company_name=column[2])
-#         except ObjectDoesNotExist:
-#             html="Company Name does not exist " + '<a href="/showform">Create Company details</a>'
-#             return HttpResponse(html)
-#         print(f.company_name)
-#         try:
-#             f.location,lcobj = loc.objects.get_or_create(place=column[3].lower())
-#             if lcobj :
-#                 f.location.save()
-#         except Exception as e:
-#             raise e
-#         print(f.location)
-#         try:
-#             f.shape,slobj = shape_d.objects.get_or_create(shape=column[4].lower())
-#             if slobj :
-#                 f.shape.save()
-#         except Exception as e:
-#             raise e
-#         print(f.clarity)
-#         try:
-#             f.clarity,clobj = clarity.objects.get_or_create(clarity=column[5].lower())
-#             if clobj :
-#                 f.clarity.save()
-#         except Exception as e:
-#             raise e
-#         print(f.color_origin1)
-#         try:
-#             f.color_origin1,colobj=color_origin.objects.get_or_create(color_origin1=column[6].lower())
-#             if colobj :
-#                 f.color_origin1.save()
-#         except Exception as e:
-#             raise e
-#         f.white_color_grade1=white_color_grade.objects.get(white_color_grade1=column[7])
-#         print(f.white_color_grade1)
-#         try:
-#             f.fancy_color_intensity1,fobj=fancy_color_intensity.objects.get_or_create(fancy_color_intensity1=column[8].lower())
-#             if fobj :
-#                 f.fancy_color_intensity1.save()
-#         except Exception as e:
-#             raise e
+    csv_file=request.FILES['file']
+    if not csv_file.name.endswith('.csv'):
+        messages.error(request,"This is not a CSV file")
+    dataset=csv_file.read().decode('UTF-8')
+    io_string=io.StringIO(dataset)
+    next(io_string)
+    for column in csv.reader(io_string,delimiter=','):
+        print(column[0])
+        temp_date = datetime.datetime.strptime(str(column[0]), "%m-%d-%Y").date()
+        print(temp_date)
+        
+        f=POD
+        try:
+            f.company_name = companyinfo.objects.get(company_name=column[2].lower())
+        except ObjectDoesNotExist:
+            messages.error(
+                request, "Company Name does not exist, Add company from top bar!")
+            return redirect(request.META.get('HTTP_REFERER'))
+        print(f.company_name)
+        try:
+            f.location,lcobj = location.objects.get_or_create(place=column[3].lower())
+            if lcobj :
+                f.location.save()
+        except Exception as e:
+            raise e
+        print(f.location)
+        try:
+            f.shape,slobj = shape_d.objects.get_or_create(shape=column[4].lower())
+            if slobj :
+                f.shape.save()
+        except Exception as e:
+            raise e
+        print(f.clarity)
+        try:
+            f.clarity,clobj = clarity.objects.get_or_create(clarity=column[5].lower())
+            if clobj :
+                f.clarity.save()
+        except Exception as e:
+            raise e
+        print(f.color_origin1)
+        try:
+            f.color_origin1,colobj=color_origin.objects.get_or_create(c_o=column[6].lower())
+            if colobj :
+                f.color_origin1.save()
+        except Exception as e:
+            raise e
+        try:
+            f.white_color_grade1,fgobj = white_color_grade.objects.get_or_create(w_c_g=column[7].lower())
+            if fgobj :
+                f.white_color_grade1.save()
+        except Exception as e:
+            raise e
 
-#         print(f.fancycolor_grade)
-#         try:
-#             f.fancycolor_grade,fgobj = fancycolor_grade.objects.get_or_create(metal=column[9].lower())
-#             if fgobj :
-#                 f.fancycolor_grade.save()
-#         except Exception as e:
-#             raise e
+        print(f.cut)
+        try:
+            f.cut,cobj = cut.objects.get_or_create(cut=column[9].lower())
+            if cobj :
+                f.cut.save()
+        except Exception as e:
+            raise e
 
-#         print(f.cut)
-#         try:
-#             f.cut,cobj = cut.objects.get_or_create(cut=column[10].lower())
-#             if cobj :
-#                 f.cut.save()
-#         except Exception as e:
-#             raise e
-
-#         print(f.polish)
-#         try:
-#             f.polish,plobj = polish.objects.get_or_create(polish=column[11].lower())
-#             if plobj :
-#                 f.polish.save()
-#         except Exception as e:
-#             raise e
-#         print(f.symmetry)
-#         try:
-#             f.symmetry,syobj = symmetry.objects.get_or_create(symmetry=column[12].lower())
-#             if syobj :
-#                 f.symmetry.save()
-#         except Exception as e:
-#             raise e
-#         print(f.fluorescence_intensity)
-#         try:
-#             f.fluorescence_intensity,fiobj = fluorescence_intensity.objects.get_or_create(fluorescence_intensity=column[16].lower())
-#             if fiobj :
-#                 f.fluorescence_intensity.save()
-#         except Exception as e:
-#             raise e
-#         print(f.fluorescence_color)
-#         try:
-#             f.fluorescence_color,fcobj = fluorescence_color.objects.get_or_create(fluorescence_color=column[17].lower())
-#             if fcobj :
-#                 f.fluorescence_color.save()
-#         except Exception as e:
-#             raise e
-#         print(f.certificate_d)
-#         try:
-#             f.certificate_d,ceobj = certificate_d.objects.get_or_create(certificate_d=column[19].lower())
-#             if ceobj :
-#                 f.certificate_d.save()
-#         except Exception as e:
-#             raise e
-
-
-#         print(f.currencyid)
-#         if(column[30]=="NO"):
-
-#             y=False
-#             print(y)
-#         else:
-#             y=True
-#         print("Called1234")
-#         try:
-#             if float(column[13]):
-#                 pass
-#         except:
-#             return HttpResponse("enter float ")
-#         myibj=POJ.objects.create(date=temp_date,
-#         company_name_id=f.company_name.id,
-#         location_id=f.location.id,
-#         shape_id=f.shape.id,
-#         clarity_id=f.clarity.id,
-#         color_origin1_id=f.color_origin1.id,
-#         white_color_grade1_id=f.white_color_grade1.id,
-#         fancy_color_intensity1_id=f.fancy_color_intensity1.id,
-#         fancycolor_grade_id=f.fancycolor_grade.id,
-#         cut_id=f.cut.id,
-#         polish_id=f.polish.id,
-#         symmetry_id=f.symmetry.id,
-#         measurements=column[13],
-#         depth=column[14],
-#         table_perc=column[15],
-#         fluorescence_intensity_id=f.fluorescence_intensity.id,
-#         fluorescence_color_id=f.fluorescence_color.id,
-#         certificate_no_d=column[18],
-#         certificate_d_id=f.certificate_d.id,
-#         laser_inscription=float(column[20]),
-#         PCS_d=float(column[21]),
-#         weight_d=float(z[0]),
-#         price=float(column[23]),
-#         units=float(column[24]),
-#         amount_d=float(column[25]),
-#         DIS_Amount_d=float(column[26]),
-#         DIS_d=float(column[27]),
-#         total_val_d=float(column[28]),
-#         purchaseapv_d=y,
-#         currency_id=f.currencyid.id,
-#         tag_price_d=float(column[31]),
-#         rate_d=float(column[32]),
-#         )
-#     return HttpResponse('Hi')
+        print(f.polish)
+        try:
+            f.polish,plobj = polish.objects.get_or_create(polish=column[10].lower())
+            if plobj :
+                f.polish.save()
+        except Exception as e:
+            raise e
+        print(f.symmetry)
+        try:
+            f.symmetry,syobj = symmetry.objects.get_or_create(symmetry=column[11].lower())
+            if syobj :
+                f.symmetry.save()
+        except Exception as e:
+            raise e
+        print(f.fluorescence_intensity)
+        try:
+            f.fluorescence_intensity,fiobj = fluorescence_intensity.objects.get_or_create(f_intensity=column[15].lower())
+            if fiobj :
+                f.fluorescence_intensity.save()
+        except Exception as e:
+            raise e
+        print(f.fluorescence_color)
+        try:
+            f.fluorescence_color,fcobj = fluorescence_color.objects.get_or_create(f_color=column[16].lower())
+            if fcobj :
+                f.fluorescence_color.save()
+        except Exception as e:
+            raise e
+        print(f.certificate_d)
+        try:
+            f.certificate_d,ceobj = certificate_d.objects.get_or_create(certd=column[18].lower())
+            if ceobj :
+                f.certificate_d.save()
+        except Exception as e:
+            raise e
+        try:
+            f.currency, crobj = currencies.objects.get_or_create(
+                currency=column[28].lower())
+            if crobj:
+                f.currency.save()
+        except Exception as e:
+            raise e
+        if column[19].lower()=="yes":
+            bools1=True
+        else:
+            bools1=False
+        if column[31].lower()=="yes":
+            bools=True
+        else:
+            bools=False
+        myibj=POD.objects.create(date=temp_date,
+        company_name_id=f.company_name.id,
+        location_id=f.location.id,
+        shape_id=f.shape.id,
+        clarity_id=f.clarity.id,
+        color_origin1_id=f.color_origin1.id,
+        white_color_grade1_id=f.white_color_grade1.id,
+        fancycolor_grade=column[8],
+        cut_id=f.cut.id,
+        polish_id=f.polish.id,
+        symmetry_id=f.symmetry.id,
+        measurements=column[12],
+        depth=column[13],
+        table_perc=column[14],
+        fluorescence_intensity_id=f.fluorescence_intensity.id,
+        fluorescence_color_id=f.fluorescence_color.id,
+        certificate_no_d=column[17],
+        certificate_d_id=f.certificate_d.id,
+        laser_inscription=bools1,
+        PCS_d=column[20],
+        weight_d=float(column[21]),
+        price=float(column[22]),
+        units=float(column[23]),
+        amount_d=float(column[24]),
+        DIS_Amount_d=float(column[26]),
+        DIS_d=float(column[25]),
+        total_val_d=float(column[27]),
+        currency_id=f.currency.id,
+        tag_price_d=float(column[29]),
+        rate_d=float(column[30]),
+        purchaseapv_d=bools,
+        )
+    return HttpResponse('Hi')
 
 @login_required
 def show_on_frontend_cs(request, id):
@@ -2491,7 +2479,7 @@ def ExportSalesofjewellery(request):
     filename = "Salesofjewellery"+str(datetime.datetime.now())+".csv"
     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
     writer = csv.writer(response)
-    
+
     writer.writerow(['Date','Stock id', 'Company Name','Location','Jewellery','Center Stone','Colour of Center Stone','Shape', 'Metal', 'Center Stone Pieces','Center Stone Weight','Gross Weight','Certificate', 'PCS',  'Amount', 'Discount', 'Dicount Amount', 'Total Value','Currency', 'Tag Price', 'Rate','Sold Item'])
     for item in objects:
         if item.salesapprovalstatus:
@@ -2528,6 +2516,8 @@ def ExportPOD(request):
         output.append([item.date, 'D-' + str(item.id), item.company_name.title(), item.location.place.title(), item.shape.shape.title(),item.clarity.clarity.title(), item.color_origin1.c_o.title(), item.white_color_grade1.w_c_g.title(), item.fancy_color_intensity1.f_c_i.title(),item.fancycolor_grade.f_c_grade.title(),item.cut.cut.title(),item.polish.polish.title(),item.symmetry.symmetry.title(),item.measurements,item.depth,item.table_perc,item.fluorescence_intensity.f_intensity.title(),item.fluorescence_color.f_color.title(),item.certificate_no_d,item.certificate_d.certd,item.laser_inscription.title(),item.PCS_d,item.weight_d,item.price,item.units,item.amount_d, str(item.DIS_d)+"%",item.DIS_Amount_d , item.total_val_d, item.currency.currency.upper(), item.tag_price_d, item.rate_d])
     
     writer.writerows(output)
+
+
     return response
 
 # def ExportInventoryofdiamond(request):
