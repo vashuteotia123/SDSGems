@@ -552,7 +552,7 @@ class BirdAddView(TemplateView):
     @method_decorator(login_required)
     def get(self, *args, **kwargs):
         formset = POJFormSet(queryset=POJ.objects.none())
-        return self.render_to_response({'totalitems': formset, "table_type":"Purchase of Jewellery"})
+        return self.render_to_response({'totalitems': formset, "table_type":"Purchase Form of Jewellery"})
 
     # @login_required
 # define method to handle POST request
@@ -879,7 +879,7 @@ class CSAddView(TemplateView):
     @method_decorator(login_required)
     def get(self, *args, **kwargs):
         formset = POCSFormSet(queryset=PurchaseOfColorStones.objects.none())
-        return self.render_to_response({'totalitems_cs': formset})
+        return self.render_to_response({'totalitems_cs': formset,"table_type":"Purchase Form of Colourstone"})
 
     def post(self, request, *args, **kwargs):
 
@@ -1166,7 +1166,7 @@ class DiamondAddView(TemplateView):
     @method_decorator(login_required)
     def get(self, *args, **kwargs):
         formset = PODFormSet(queryset=POD.objects.none())
-        return self.render_to_response({'totalitems_d': formset})
+        return self.render_to_response({'totalitems_d': formset,"table_type":"Purchase Form of Diamonds"})
 
     def post(self, *args, **kwargs):
 

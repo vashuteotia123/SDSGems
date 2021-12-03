@@ -18,12 +18,19 @@
     <th style="background-color:#a01b1b;color:#fff;">FLUORESCENCE INTENSITY</th>
     <th style="background-color:#a01b1b;color:#fff;">FLUORESCENCE COLOUR</th>
     <th style="background-color:#a01b1b;color:#fff;">CERTIFICATE NO.</th>
-    <th style="background-color:#a01b1b;color:#fff;">C TYPE</th>
+    <th style="background-color:#a01b1b;color:#fff;">CERTIFICATE TYPE</th>
     <th style="background-color:#a01b1b;color:#fff;">LASER INSCRIPTION</th>
     <th style="background-color:#a01b1b;color:#fff;">PIECES</th>
     <th style="background-color:#a01b1b;color:#fff;">WEIGHT</th>
     <th style="background-color:#a01b1b;color:#fff;">UNITS</th>
+    <th style="background-color:#a01b1b;color:#fff;">AMOUNT</th>
+    <th style="background-color:#a01b1b;color:#fff;">DISCOUNT IN %</th>
+    <th style="background-color:#a01b1b;color:#fff;">DISCOUNTED AMOUNT</th>
+    <th style="background-color:#a01b1b;color:#fff;">TOTAL</th>
+    <th style="background-color:#a01b1b;color:#fff;">BOUGHT DIAMOND</th>
+    <th style="background-color:#a01b1b;color:#fff;">CURRENCY</th>
     <th style="background-color:#a01b1b;color:#fff;">TAG PRICE</th>
+    <th style="background-color:#a01b1b;color:#fff;">RATE</th>
     <th style="background-color:#a01b1b;color:#fff;">DELETE ITEM</th>
     <th style="background-color:#a01b1b;color:#fff;">EDIT ITEM</th>
   </tr>
@@ -49,7 +56,18 @@
     <td>{{obj.PCS_d}}</td>
     <td>{{obj.weight_d}}</td>
     <td>{{obj.units}}</td>
+    <td>{{obj.amount_d}}</td>
+    <td>{{obj.DIS_d}}</td>
+    <td>{{obj.DIS_Amount_d}}</td>
+    <td>{{obj.total_val_d}}</td>
+    {% if obj.purchaseapv_d %}
+        <td>YES</td>
+        {%else%}
+        <td>NO</td>
+        {% endif %}
+    <td>{{obj.currency}}</td>
     <td>{{obj.tag_price_d}}</td>
+    <td>{{obj.rate_d}}</td>
     {% if obj.id in invobjects_diamonds %}
     <td style="padding: 10px 10px;"><a class="btn btn-danger" id="delete-btn"
         style="text-decoration: none;padding: 6px 35px;" onclick='return delete_alert()'

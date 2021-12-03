@@ -30,15 +30,6 @@
           {{totalitems.management_form}}
           {% for obj in totalitems %} 
           <tr class="bird-form">
-            {% comment %} {% for field in obj%}
-            {% if field.purchase_approval %}
-            <td style="display: flex;width: 100%;
-            justify-content: center;
-            border: none;"></td>{{field}}<br> {{field.errors}}</td>
-            {% elif %}
-            <td>{{field}} <br> {{field.errors}}</td>
-            {% endif %}
-            {% endfor %} {% endcomment %}
               {% for field in obj%}
               <td>{{field}} <br> {{field.errors}}</td>
               {% endfor %}
