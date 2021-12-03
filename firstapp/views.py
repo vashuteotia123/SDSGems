@@ -344,7 +344,7 @@ class Jewellery_view(View):
                                                         center_stone_weight=j_obj.center_stone_weight,
                                                         center_stone_pieces=j_obj.center_stone_pieces,
                                                         gross_wt=j_obj.grosswt, certificate=j_obj.cert,
-                                                        PCS=j_obj.pcs, tag_price=j_obj.tag_price)
+                                                        PCS=j_obj.pcs)
         if j_obj.purchaseapv is False:
             j_obj2.update(purchase_approval=True)
         return redirect('delete-jewell')
@@ -440,6 +440,7 @@ def saving_jewel_cart(request):
 @login_required
 def sell_jewel(request):
     jewellery_objects = cloneInvofjewellery.objects.all()
+
     try:
         for object in jewellery_objects:
             Salesofjewellery.objects.create(
@@ -469,8 +470,16 @@ def sell_jewel(request):
             Inventoryofjewellery.objects.filter(
                 stockid=object.stockid).delete()
             cloneInvofjewellery.objects.filter(stockid=object.stockid).delete()
+        if len(jewellery_objects) <= 6:
+            change = True
+        else:
+            change = False
         context = {
             "sold_items": Salesofjewellery.objects.all(),
+             "css_adjust": change,
+        "table_type": "Sales Records of Jewellery",
+
+
         }
         return render(request, "show_sell_jewel_table.html", context=context)
     except:
@@ -519,11 +528,7 @@ def return_jewel_Inventory(request, id):
 
     )
     Salesofjewellery.objects.filter(pk=id).delete()
-    context = {
-        "productsj": Inventoryofjewellery.objects.all(),
-
-    }
-    return render(request, "showinvj.html", context=context)
+    return redirect('delete-jewell')
 
 
 @login_required
@@ -668,7 +673,7 @@ def update_cs(request, ck):
                 request, "Stock ID->{} is Modified  Successfully".format(str("C-")+str(ck)))
             return redirect('/showcs')
 
-    context = {'form5': form5, "b_s_c": change_css, "update_type": "POCS"}
+    context = {'form5': form5, "b_s_c": change_css, "update_type": "Purchase of Colour Stones"}
     return render(request, 'update_cs.html', context)
 
 
@@ -1015,6 +1020,10 @@ def showdiamond(request):
     diamondobj = POD.objects.all()
     invobj = list(Inventoryofdiamond.objects.values_list(
         'stockid', flat=True))
+    if len(diamondobj)<8:
+        change=True
+    else:
+        change=False
     invobjects_diamonds = []
     for i in invobj:
         z = i.replace("D-", "")
@@ -1022,6 +1031,8 @@ def showdiamond(request):
     context = {
         "invobjects_diamonds":invobjects_diamonds,
         "showdia": diamondobj,
+        "table_type":"Purchase Records of Diamonds",
+        "css_adjust":change
     }
     return render(request, "showd.html", context=context)
 
@@ -1031,6 +1042,10 @@ def update_d(request, dk):
 
     diamond_obj = POD.objects.get(id=dk)
     form4 = PODForm(instance=diamond_obj)
+    change_css = False
+    browser_type = request.user_agent.browser.family
+    if (browser_type == 'Edge' or browser_type == 'Chrome' or browser_type == 'Brave'):
+        change_css = True
     # print("7")
     if request.method == 'POST':
         # print("2")
@@ -1044,7 +1059,7 @@ def update_d(request, dk):
                 request, "Stock ID->{} is Modified  Successfully".format(str("D-")+str(dk)))
             return redirect('/showd')
 
-    context = {'form4': form4}
+    context = {'form4': form4, "b_s_c": change_css, "update_type": "Purchase of Diamonds"}
     return render(request, 'update_diamond.html', context)
 
 
@@ -1097,6 +1112,10 @@ def saving_diamond_cart(request):
     total = cloneInvofdiamond.objects.all()
     total_diamond = list(total.values())
     diamond_formset = ADCFormSet_d(initial=total_diamond)
+    if(len(total)<=7):
+        change=True
+    else:
+        change=False
     if request.method == "POST":
         curr_formset = ADCFormSet_d(data=request.POST)
         print(len(curr_formset))
@@ -1105,18 +1124,24 @@ def saving_diamond_cart(request):
             context={
                 "totalitems_d":curr_formset,
                 "itemcount":len(curr_formset),
-                "is_valid": True
+                "is_valid": True,
+                "table_type": "Cart Items", 
+                "css_adjust": change,
             }
             return render(request, "showcart_d.html", context=context)
         else:
             context = {
                 "itemcount":len(curr_formset),
                 "totalitems_d": curr_formset,
+                "table_type": "Cart Items", 
+                "css_adjust": change,
             }
             return render(request, "showcart_d.html", context=context)
     context = {
         "totalitems_d": diamond_formset,
         "itemcount":len(total),
+        "table_type": "Cart Items",
+        "css_adjust": change,
     }
     return render(request, "showcart_d.html", context=context)
 
@@ -1187,7 +1212,7 @@ class Diamond_view(View):
             allproduct.append(product)
         # allclone_d = cloneInvofdiamond.objects.all()
         length_diamond = Inventoryofdiamond.objects.filter(appvreturnstatus_d=False).count()
-        if length_diamond >= 7:
+        if length_diamond <=6:
            change = True
         else:
            change = False
@@ -1244,6 +1269,10 @@ def backtoinv_d(request, id):
 @login_required
 def sell_diamond(request):
     diamond_objects = cloneInvofdiamond.objects.all()
+    if len(diamond_objects) <= 6:
+        change = True
+    else:
+        change = False
     for object in diamond_objects:
         Salesofdiamond.objects.create(
             date=object.date,
@@ -1286,13 +1315,21 @@ def sell_diamond(request):
     cloneInvofdiamond.objects.all().delete()
     context = {
         "sold_items": Salesofdiamond.objects.all(),
+        "css_adjust": change,
+        "table_type": "Sell Items",
     }
     return render(request, "show_sell_diamond_table.html", context=context)
 
 
 def allselldiamondsrecords(request):
+    if(Salesofdiamond.objects.all().count()<=6):
+        change=True
+    else:
+        change=False
     context = {
         "sold_items": Salesofdiamond.objects.all(),
+        "css_adjust": change,
+        "table_type": "Sales Records Of ColourStones",
     }
     return render(request, "show_sell_diamond_table.html", context=context)
 
@@ -1537,11 +1574,11 @@ def itemsearch(request):
         query_name = request.POST.get('Stockid', None)
         if query_name:
             h = re.findall("[0-9]+", query_name)
-            id = int(h[0])
             if len(h) == 0:
-                return render(request, 'itemsearch.html', {"message": "Does not exist"})
+                return render(request, 'itemsearch.html', {"message": "No Records Found"})
 
             elif query_name.startswith("C") or query_name.startswith("c"):
+                id = int(h[0])
                 purchasecsobj = PurchaseOfColorStones.objects.filter(id=id)
                 salescsobj = Salesofcolorstones.objects.filter(
                     stockid=str("C-")+str(id))
@@ -1577,8 +1614,82 @@ def itemsearch(request):
 
                     }
                     return render(request, "itemsearch.html", context=context)
+            elif query_name.startswith("J") or query_name.startswith("j"):
+                id = int(h[0])
+                purchasejobj = POJ.objects.filter(id=id)
+                salesjobj = Salesofjewellery.objects.filter(
+                    stockid=str("J-")+str(id))
+                if(len(purchasejobj) == 0 and len(salesjobj) == 0):
+                    context = {
+                        "purjobj": purchasejobj,
+                        "salesjobj": salesjobj,
+                        "message": "No Records Found",
+
+                    }
+                    return render(request, "itemsearch.html", context=context)
+                elif (len(purchasejobj) == 0 and len(salesjobj) > 0):
+                    context = {
+                        "purjobj": purchasejobj,
+                        "salesjobj": salesjobj,
+                        "message": "No Purchase Records Found",
+
+                    }
+                    return render(request, "itemsearch.html", context=context)
+
+                elif(len(purchasejobj) > 0 and len(salesjobj) == 0):
+                    context = {
+                        "purjobj": purchasejobj,
+                        "salesjobj": salesjobj,
+                        "message": "No Sales Records Found",
+
+                    }
+                    return render(request, "itemsearch.html", context=context)
+                else:
+                    context = {
+                        "purjobj": purchasejobj,
+                        "salesjobj": salesjobj,
+
+                    }
+                    return render(request, "itemsearch.html", context=context)
+            elif query_name.startswith("D") or query_name.startswith("d"):
+                id = int(h[0])
+                purchasedobj = POD.objects.filter(id=id)
+                salesdobj = Salesofdiamond.objects.filter(
+                    stockid=str("D-")+str(id))
+                if(len(purchasedobj) == 0 and len(salesdobj) == 0):
+                    context = {
+                        "purdobj": purchasedobj,
+                        "salesdobj": salesdobj,
+                        "message": "No Records Found",
+
+                    }
+                    return render(request, "itemsearch.html", context=context)
+                elif (len(purchasedobj) == 0 and len(salesdobj) > 0):
+                    context = {
+                        "purdobj": purchasedobj,
+                        "salesdobj": salesdobj,
+                        "message": "No Purchase Records Found",
+
+                    }
+                    return render(request, "itemsearch.html", context=context)
+
+                elif(len(purchasedobj) > 0 and len(salesdobj) == 0):
+                    context = {
+                        "purdobj": purchasedobj,
+                        "salesdobj": salesdobj,
+                        "message": "No Sales Records Found",
+
+                    }
+                    return render(request, "itemsearch.html", context=context)
+                else:
+                    context = {
+                        "purdobj": purchasedobj,
+                        "salesdobj": salesdobj,
+
+                    }
+                    return render(request, "itemsearch.html", context=context)
             else:
-                return render(request, 'itemsearch.html', {"message": "Does not exist"})
+                return render(request, 'itemsearch.html', {"message": "No Records Found"})
 
     return render(request, "itemsearch.html")
 
@@ -2665,9 +2776,11 @@ def ExportSalesReturnDiamonds(request):
     filename = "Salesreturndiamonds"+str(datetime.datetime.now())+".csv"
     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
     writer = csv.writer(response)
-    writer.writerow(['Date','Stock id', 'Company Name','Location','Shape'])
+    writer.writerow(['SDS GEMS'])
+    writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
+    writer.writerow(['Date','Stock id', 'Company Name','Location','Shape','Total Value -Sold'])
     for item in objects:
-        output.append([item.date,item.stockid, item.company_name, item.location,item.shape,item.total_val_d])
+        output.append([item.date,item.stockid, item.company_name, item.location,item.shape,item.totalamount])
 
     writer.writerows(output)
     return response

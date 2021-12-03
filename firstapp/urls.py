@@ -129,6 +129,6 @@ urlpatterns = [
 
     path('export_purchase_of_diamond', views.ExportPOD, name="export_purchase_of_diamond"),
     path('export_inventory_of_diamond', views.ExportInventoryofdiamond, name="export_inventory_of_diamond"),
-    # path('export_sales_of_diamond', views.ExportSalesofdiamond, name="export_sales_of_diamond"),
+    path('export_sales_of_diamond', views.ExportSalesofdiamond, name="export_sales_of_diamond"),
     path('export_sales_return_of_diamond', views.ExportSalesReturnDiamonds, name="export_sales_of_diamond")
 ]

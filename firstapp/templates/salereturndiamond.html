@@ -1,21 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+{% extends 'base.html' %}
+{% block style %}
+<style>
+  #allign_center{
+    display: flex;
+    justify-content: end;
+    margin-right: 3%;
+  }
+</style>
+{% endblock  %}
+{% block container %}
+<div style="text-align: center;"> 
+  <h2>Sales Returns of Jewellery</h2>
+</div>
 
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-<body>
-    <table class="table table-dark table-striped">
+  <div id="allign_center"><a class="btn btn-success" style="text-decoration:none;margin-top: 30px;" href="/export_sales_return_of_diamond" target="">Export Entry</a></div>
+    <table class="table table-striped mt-4">
         <thead>
           <tr>
             <th scope="col">Returned Date</th>
@@ -23,6 +22,7 @@
             <th scope="col">Company Name</th>
             <th scope="col">location</th>
             <th scope="col">Shape</th>
+            <th scope="col">Total Value -Sold</th>
           </tr>
         </thead>
     {% for p in ret_sd %}
@@ -33,9 +33,9 @@
           <td>{{p.company_name}}</td>
           <td>{{p.location}}</td>
           <td>{{p.shape}}</td>
+          <td>{{p.totalamount}}</td>
         </tr>
       </tbody>
     {%endfor%}
 </table>
-</body>
-</html>
+{% endblock %}

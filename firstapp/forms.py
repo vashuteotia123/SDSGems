@@ -40,16 +40,20 @@ class CompanyForm(forms.ModelForm):
     class Meta:
         model = companyinfo
         fields = "__all__"
+
+
 class DateInput(forms.DateInput):
     input_type = "date"
+
 
 class POJForm(forms.ModelForm):
     class Meta:
         model = POJ
         fields = "__all__"
         labels = {'purchase_approval': 'Bought Jewell'}
-        widgets={'date': DateInput(), 'comment': forms.Textarea(attrs={'rows': 4, 'cols': 30}),
+        widgets = {'date': DateInput(), 'comment': forms.Textarea(attrs={'rows': 4, 'cols': 30}),
                    'purchase_approval': forms.CheckboxInput(attrs={'style': 'width:20px;height:20px;'})}
+
         def __init__(self, *args, **kwargs):
             super(POJForm, self).__init__(*args, **kwargs)
             for field in self.disabled_fields:
@@ -59,10 +63,10 @@ class POJForm(forms.ModelForm):
                     continue
                 self.fields[field].required = True
 
-        
-
 
 POJFormSet = modelformset_factory(POJ, form=POJForm)
+
+
 class POCSForm(forms.ModelForm):
     class Meta:
         model = PurchaseOfColorStones
@@ -100,6 +104,8 @@ class PODForm(forms.ModelForm):
                 if self.fields[field].label == 'Bought Diamond':
                     continue
                 self.fields[field].required = True
+
+
 PODFormSet = modelformset_factory(POD, form=PODForm)
 
 # class ADCForm(forms.ModelForm):
@@ -109,12 +115,14 @@ PODFormSet = modelformset_factory(POD, form=PODForm)
 
 
 class ADCForm(forms.ModelForm):
-    disabled_fields=['stockid','location','jewellery_type','center_stone','color_of_center_stone','shape','metal','certificate']
+    disabled_fields = ['stockid', 'location', 'jewellery_type',
+                       'center_stone', 'color_of_center_stone', 'shape', 'metal', 'certificate']
 
     class Meta:
         model = cloneInvofjewellery
         fields = '__all__'
-        labels={'salesapprovalstatus':'Sold Item',}
+        labels = {'salesapprovalstatus': 'Sold Item', }
+
     def __init__(self, *args, **kwargs):
         super(ADCForm, self).__init__(*args, **kwargs)
         for field in self.disabled_fields:
@@ -125,15 +133,12 @@ class ADCForm(forms.ModelForm):
             self.fields[field].required = True
 
 
-    
-
-
 ADCFormSet = modelformset_factory(cloneInvofjewellery, form=ADCForm, extra=0)
 
 
 class ADCForm_cs(forms.ModelForm):
     disabled_fields = ['stockid', 'location', 'shape', 'gem_type', 'origin', 'treatment',
-                       'certificate_no', 'color', 'measurements', 'lab', 'Weight_cs','Clarity']
+                       'certificate_no', 'color', 'measurements', 'lab', 'Weight_cs']
 
     class Meta:
         model = cloneInvofcolorstones
@@ -145,7 +150,7 @@ class ADCForm_cs(forms.ModelForm):
         for field in self.disabled_fields:
             self.fields[field].disabled = True
         for field in self.fields:
-            if self.fields[field].label == 'Sold Item':
+            if self.fields[field].label == 'Sold Item' or self.fields[field]=="Clarity":
                 continue
             self.fields[field].required = True
 
@@ -155,23 +160,22 @@ ADCFormSet_cs = modelformset_factory(
 
 
 class ADCForm_d(forms.ModelForm):
-    disabled_fields = ['stockid', 'location', 'shape', 'clarity', 'white_color_grade1', 'fancycolor_grade', 'cut', 'polish', 'symmetry',
+    disabled_fields = ['stockid', 'location', 'shape', 'white_color_grade1', 'fancycolor_grade', 'cut', 'polish', 'symmetry',
                        'measurements', 'depth', 'table', 'fluorescence_intensity', 'fluorescence_color', 'certificate_no_d', 'certificate_d', 'laser_inscription', 'PCS_d']
 
     class Meta:
         model = cloneInvofdiamond
         fields = '__all__'
-        labels={'salesapprovalstatus_d':'Sold Item'}
+        labels = {'salesapprovalstatus_d': 'Sold Item'}
 
     def __init__(self, *args, **kwargs):
         super(ADCForm_d, self).__init__(*args, **kwargs)
         for field in self.disabled_fields:
             self.fields[field].disabled = True
         for field in self.fields:
-            if self.fields[field].label=="Sold Item":
+            if self.fields[field].label == "Sold Item":
                 continue
             self.fields[field].required = True
-
 
 
 ADCFormSet_d = modelformset_factory(cloneInvofdiamond, form=ADCForm_d, extra=0)

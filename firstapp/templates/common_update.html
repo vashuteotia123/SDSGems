@@ -26,9 +26,10 @@
   grid-template-columns: 18% 18% 18% 18% 20%;
   grid-column-gap: 2%;
 } 
-  #allign-btn-right{
-  display: flex;
-  justify-content:right;
+@media only screen and (orientation:landscape){
+  .bird-form{
+    height:85vh;
+  }
 }
   /*  Style for Responsive  */
     @media only screen and (min-width:720px) and (max-width:900px) {
@@ -46,8 +47,25 @@
     font-size: 15px;
   }
 }
-    
-    @media only screen and (min-width:1072px){
+@media only screen and (min-width:1263px){
+      #form-container { 
+        font-size: 19px;
+       }
+       select{
+        width:300px;
+       }
+      input,textarea{
+        width: 300px;
+       }
+      label{
+       font-size: 19px;
+       }
+       #id_date{
+         margin-top: 3px;
+         height:25px;
+       }
+}
+    @media only screen and (min-width:1071px) and (max-width:1263px){
        #form-container { 
          font-size: 18px;
    }
@@ -153,14 +171,16 @@
 {% endblock  %}
 <!-- Layout Common For all Updating Operation -->
 {% block container %}
-<div class="update_title">{{update_type}} Form Update</div>
+<div class="update_title">{{update_type}} Item Update</div>
 <form id="form-container" method="POST">
     {% csrf_token %}
     <div class="bird-form">
         {% block update_form %}{% endblock  %}
     </div>
-    <div id="allign-btn-right">
-    <button type="submit" class="btn btn-sm btn-success" >Submit</button>
+    <div  style="  justify-content: center;width:77%;  display: flex;
+    ;position: absolute;
+    top: 87vh;">
+    <button type="submit" class="btn btn-lg btn-success" >Submit</button>
     </div>
 </form>
 {% endblock  %}

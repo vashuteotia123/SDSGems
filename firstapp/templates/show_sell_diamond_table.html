@@ -71,12 +71,12 @@
         <td>{{item.currency}}</td>
         <td>{{item.tag_price_d}}</td>
         <td>{{item.rate_d}}</td>
-        {% if obj.salesapprovalstatus %}
+        {% if item.salesapprovalstatus %}
         <td>YES</td>
         {% else %}
         <td>NO</td>
         {% endif %}
-        {% if obj.salesapprovalstatus is False %}
+        {% if item.salesapprovalstatus_d  is False %}
         <td><a class="btn btn-primary" style="text-decoration:none;" href="{% url 'return_diamond_Inventory' item.id %}"
                 target=""> Return back to Inventory</a></td>
         {% else %}
@@ -97,5 +97,6 @@
 <div class="sale_export">
     <a class="btn btn-sm" style="background-color: #a01b1b;color:#fff;text-decoration: none;margin-right: 20px;"
         href="{% url 'displaysalesreturn_d' %}" target=""> View Sales Return</a>
+    <a class="btn  btn-sm" style ="background-color: #a01b1b;color:#fff;text-decoration: none;margin-left: 20px;" href="/export_sales_of_diamond"> Export Records</a>
 </div>
 {% endblock %}

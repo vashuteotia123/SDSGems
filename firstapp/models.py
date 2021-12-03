@@ -437,7 +437,7 @@ class cloneInvofjewellery(models.Model):
     currency = models.ForeignKey(
         currencies, on_delete=models.PROTECT, null=True, blank=True)
     tag_price = models.DecimalField(
-        decimal_places=2, max_digits=9, blank=True)
+        decimal_places=2, max_digits=9, blank=True,null=True)
     rate = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True,default=1)
     salesapprovalstatus = models.BooleanField(default=False)
@@ -496,7 +496,7 @@ class certificate_d(models.Model):
     certd = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.certd.title()
+        return self.certd.upper()
     def save(self, *args, **kwargs):
         self.certd = self.certd.lower()
         super(certificate_d, self).save(*args, **kwargs)
@@ -755,8 +755,8 @@ class Inventoryofdiamond(models.Model):
     certificate_no_d = models.CharField(max_length=30)
     certificate_d = models.ForeignKey('certificate_d', on_delete=models.PROTECT)
     laser_inscription = models.BooleanField()
-    PCS_d = models.IntegerField(null=True, blank=True)
-    weight_d = models.DecimalField(decimal_places=2, max_digits=9)
+    PCS_d = models.IntegerField(null=True, blank=True,verbose_name="Pieces")
+    weight_d = models.DecimalField(decimal_places=2, max_digits=9,verbose_name="Weight in Grams")
     units = models.CharField(max_length=30, blank=True, null=True)
     tag_price_d = models.DecimalField(decimal_places=2, max_digits=9)
     # status = models.BooleanField(default=False)

@@ -1,19 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-</head>
-<body>
-    <form method="POST">
-        {% csrf_token %} {{form4}}
-        <button type="submit">Submit</button>
-        
-</body>
+{% extends 'common_update.html' %}
+{% block different %}{% endblock %}
+{% block update_form %}
+<p style="margin-top: 18px;"><label for="id_date">Date:</label>{{form4.date}}</p>
+<p><label for="id_company_name">Company name:</label> {{form4.company_name}}</p>
+<p><label for="id_location">Location:</label>{{form4.location}}</p>
+<p><label for="id_shape">Shape:</label>{{form4.shape}}</p>
+<p><label for="id_clarity">Clarity:</label>{{form4.clarity}}</p>
+<p><label for="id_color_origin1">Color Origin:</label>{{form4.color_origin1}}</p> 
+<p><label for="id_white_color_grade1">White color grade1:</label>{{form4.white_color_grade1}} </p>
+<p><label for="id_fancycolor_grade">Fancycolor grade:</label>{{form4.fancycolor_grade}} </p>
+<p><label for="id_cut">Cut:</label>{{form4.cut}}</p> 
+<p><label for="id_polish">Polish:</label>{{form4.polish}}</p>
+<p><label for="id_symmetry">Symmetry:</label>{{form4.symmetry}}</p>
+<p><label for="id_measurements">Measurements:</label>{{form4.measurements}}</p>
+<p><label for="id_depth">Depth in %</label>{{form4.depth}} </p>
+<p><label for="id_table_perc">Table in %:</label>{{form4.table_perc}}</p>
+<p><label for="id_fluorescence_intensity">Fluorescence intensity:</label>{{form4.fluorescence_intensity}} </p>
+<p><label for="id_fluorescence_color">Fluorescence color:</label>{{form4.fluorescence_color}}</p>
+<p><label for="id_certificate_no_d">Certificate Number:</label> {{form4.certificate_no_d}}</p>
+<p><label for="id_certificate_d">Certificate Type:</label>{{form4.certificate_d}}</p>
+<p><label for="id_laser_inscription">Laser inscription:</label>{{form4.laser_inscription}}</p>
+<p><label for="id_PCS_d">Pieces :</label>{{form4.PCS_d}} </p>
+<p><label for="id_weight_d">Weight in grams :</label> {{form4.weight_d}}</p>
+<p><label for="id_price">Price:</label>{{form4.price}} </p>
+<p><label for="id_units">Units:</label>{{form4.units}} </p>
+<p><label for="id_amount_d">Amount: </label>{{form4.amount_d}} </p>
+<p><label for="id_DIS_d">Discount:</label>{{form4.DIS_d}} %</p>
+<p><label for="id_DIS_Amount_d">Discount Amount:</label>{{form4.DIS_Amount_d}} </p>
+<p><label for="id_total_val_d">Total Value :</label>{{form4.total_val_d}} </p>
+<p><label for="id_purchaseapv_d">Bought Diamond :</label>{{form4.purchaseapv_d}} </p>
+<p><label for="id_currency">Currency :</label> {{form4.currency}}
+<p><label for="id_tag_price_d">Tag price: </label>{{form4.tag_price_d}} </p>
+<p><label for="id_rate_d">Rate :</label>{{form4.rate_d}} </p>
+<p><label for="id_comment">Comment:</label>{{form4.comment}} </p>
+{% endblock %}
+{% block script %}
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     if (!$) {
@@ -49,4 +70,4 @@
     var company_detail_call = "$('#id_company_name').change(function(){var company_name = $(this).find(':selected')[0].text;$.ajax({type: 'GET',url: '{% url 'get_company_details' %}',data: {'name': company_name,},success: function(data) {var phone_no = document.getElementById('id_phone_number');phone_no.value = data.contact_no;var location = document.getElementById('id_location');var loc_index = ':selected';for(var i=0; i<location.length; i++){if(location[i].text == data.location){loc_index = i;break; } } location.value = loc_index; } }) });"
     eval(company_detail_call)
   </script>
-</html>
+{% endblock %}

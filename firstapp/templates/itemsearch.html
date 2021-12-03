@@ -47,7 +47,7 @@
             <th scope="col">Stock ID</th>
             <th scope="col">Company</th>
             <th scope="col">Gem Type</th>
-            <th scope="col">Weight</th>
+            <th scope="col">Weight in Grams</th>
             <th scope="col">Price</th>
             <th scope="col">Total value</th>
             
@@ -79,7 +79,7 @@
             <th scope="col">Stock ID</th>
             <th scope="col">Sold to Company </th>
             <th scope="col">Gem Type</th>
-            <th scope="col">Weight</th>
+            <th scope="col">Weight in Grams</th>
             <th scope="col">Amount</th>
             <th scope="col">Total value</th>
             
@@ -102,7 +102,161 @@
         </table>
         <br><br><br>
    {% endif %}
-  {% if message %}<div class="allign_center"><b>{{message}}</b></div>{%endif%}
+   {% if purjobj %}
+   <h2 class="allign_center">Purchase Records</h2>
+   <table class="table">
+       <thead class="thead-dark">
+         <tr>
+           <th scope="col">Purchase Date</th>
+           <th scope="col">Stock ID</th>
+           <th scope="col">Company</th>
+           <th scope="col">Location</th>
+           <th scope="col">Jewellery Type</th>
+           <th scope="col">Shape</th>
+           <th scope="col">Weight in Grams</th>
+           <th scope="col">Amount</th>
+           <th scope="col">Total value</th>
+           
+         </tr>
+       </thead>
+       <tbody>
+       <tr class="something">
+       {% for r in purjobj %}
+      
+       <td><p>{{r.date}}</p></td>
+       <td><p>J-{{r.id}}</p></td>
+       <td><p>{{r.company_name}}</p></td>
+       <td><p>{{r.location}}</p></td>
+       <td><p>{{r.jewellery}}</p></td>
+       <td><p>{{r.shape}}</p></td>
+       <td><p>{{r.grosswt}}</p></td>
+       <td><p>{{r.amount}}</p></td>
+       <td><p>{{r.total}}</p></td>
+       </tr>
+       </tbody>
+       {% endfor %}
+       </table>
+ <br><br><br>
+  {% endif %}
+  {% if salesjobj %}
+  <h2 class="allign_center">Sales Records</h2>
+   <table class="table">
+       <thead class="thead-dark">
+         <tr>
+           <th scope="col">Sales Date</th>
+           <th scope="col">Stock ID</th>
+           <th scope="col">Sold to Company </th>
+           <th scope="col">Location</th>
+           <th scope="col">Jewellery Type</th>
+           <th scope="col">Weight in Grams</th>
+           <th scope="col">Amount</th>
+           <th scope="col">Total value</th>
+           
+         </tr>
+       </thead>
+       <tbody>
+       <tr class="something">
+       {% for r in salesjobj %}
+      
+       <td><p>{{r.date}}</p></td>
+       <td><p>{{r.stockid}}</p></td>
+       <td><p>{{r.company_name}}</p></td>
+       <td><p>{{r.location}}</p></td>
+       <td><p>{{r.jewellery_type}}</p></td>
+       <td><p>{{r.gross_wt}}</p></td>
+       <td><p>{{r.amount}}</p></td>
+       <td><p>{{r.total_value}}</p></td>
+       </tr>
+       </tbody>
+       {% endfor %}
+       </table>
+       <br><br><br>
+  {% endif %}
+  {% if purdobj %}
+  <h2 class="allign_center">Purchase Records</h2>
+  <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Purchase Date</th>
+          <th scope="col">Stock ID</th>
+          <th scope="col">Company</th>
+          <th scope="col">Location</th>
+          <th scope="col">Shape</th>
+          <th scope="col">Colour Origin</th>
+          <th scope="col">Laser Inscription</th>
+          <th scope="col">Weight in Grams</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Total value</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+      <tr class="something">
+      {% for r in purdobj %}
+     
+      <td><p>{{r.date}}</p></td>
+      <td><p>D-{{r.id}}</p></td>
+      <td><p>{{r.company_name}}</p></td>
+      <td><p>{{r.location}}</p></td>
+      <td><p>{{r.shape}}</p></td>
+      <td><p>{{r.color_origin1}}</p></td>
+      {% if r.laser_inscription %}
+      <td><p>Yes</p></td>
+      {% else %}
+      <td><p>No</p></td>
+      {% endif %}
+      <td><p>{{r.weight_d}}</p></td>
+      <td><p>{{r.amount_d}}</p></td>
+      <td><p>{{r.total_val_d}}</p></td>
+      </tr>
+      </tbody>
+      {% endfor %}
+      </table>
+<br><br><br>
+ {% endif %}
+ {% if salesdobj %}
+ <h2 class="allign_center">Sales Records</h2>
+  <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Sales Date</th>
+          <th scope="col">Stock ID</th>
+          <th scope="col">Sold to Company </th>
+          <th scope="col">Location</th>
+          <th scope="col">Shape</th>
+          <th scope="col">Colour Origin</th>
+          <th scope="col">Laser Inscription</th>
+          <th scope="col">Weight in Grams</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Total value</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+      <tr class="something">
+      {% for r in salesdobj %}
+     
+      <td><p>{{r.date}}</p></td>
+      <td><p>{{r.stockid}}</p></td>
+      <td><p>{{r.company_name}}</p></td>
+      <td><p>{{r.location}}</p></td>
+      <td><p>{{r.shape}}</p></td>
+      <td><p>{{r.color_origin1}}</p></td>
+      {% if r.laser_inscription %}
+      <td><p>Yes</p></td>
+      {% else %}
+      <td><p>No</p></td>
+      {% endif %}
+      <td><p>{{r.weight_d}}</p></td>
+      <td><p>{{r.amount_d}}</p></td>
+      <td><p>{{r.total_value_d}}</p></td>
+      </tr>
+      </tbody>
+      {% endfor %}
+      </table>
+      <br><br><br>
+ {% endif %}
+  {% if message %}<div class="allign_center"><b><h2>{{message}}</h2></b></div>{%endif%}
 {% endblock %}
 
 

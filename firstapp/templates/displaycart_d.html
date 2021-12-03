@@ -60,7 +60,7 @@
     <td>{{p.color_origin1}}</td>
     <td>{{p.white_color_grade1}}, {{p.fancycolor_grade}}</td>
     <td>{{p.cut}}</td>
-    <td><a class="btn btn-sm btn-primary" style="text-decoration: none"
+    <td style="display:flex;justify-content: center;width: 100%;"><a class="btn btn-sm btn-primary" style="text-decoration: none "
         href="{% url 'return_diamond_cart' id=p.id %}">Return from Cart</a></td>
   </tr>
   {% endfor %}
@@ -73,7 +73,7 @@
 {% block container1 %}
 {% if tdcart.count %}
 <div class="allign-centre">
-  <a class="btn btn-sm btn-primary" style="text-decoration: none" href="{% url 'show_diamond_cart' %}">Sell Cart</a>
+  <a class="btn btn-sm " style="text-decoration: none;background-color:#a01b1b;color:#fff;" href="{% url 'show_diamond_cart' %}">Sell Cart</a>
 </div>
 {% else %}
 <div class="allign-centre"><a href="/inventory_of_diamonds" class="uk-button  uk-button-small uk-button-primary">Move
