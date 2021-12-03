@@ -859,6 +859,47 @@ class Salesreturn_d(models.Model):
     company_name = models.CharField(max_length=30)
     location = models.CharField(max_length=30)
     shape = models.CharField(max_length=30)
+    totalamount=models.DecimalField(blank=True, null=True, verbose_name="Total Value", decimal_places=2, max_digits=9)
+
+
+
+
+class Diamond_media(models.Model):
+    class Meta:
+        verbose_name_plural = "Diamond - Media"
+    Diamond_object = models.ForeignKey(
+        Inventoryofdiamond, on_delete=models.CASCADE)
+    image1 = models.ImageField(
+        upload_to="DiamondMedia/", blank=True, null=True)
+    image2 = models.ImageField(
+        upload_to="DiamondMedia/", blank=True, null=True)
+    image3 = models.ImageField(
+        upload_to="DiamondMedia/", blank=True, null=True)
+    image4 = models.ImageField(
+        upload_to="DiamondMedia/", blank=True, null=True)
+    image5 = models.ImageField(
+        upload_to="DiamondMedia/", blank=True, null=True)
+    image6 = models.ImageField(
+        upload_to="DiamondMedia/", blank=True, null=True)
+    image7 = models.ImageField(
+        upload_to="DiamondMedia/", blank=True, null=True)
+    image8 = models.ImageField(
+        upload_to="DiamondMedia/", blank=True, null=True)
+    image9 = models.ImageField(
+        upload_to="DiamondMedia/", blank=True, null=True)
+    image10 = models.ImageField(
+        upload_to="DiamondMedia/", blank=True, null=True)
+    video_embed_link = models.TextField(null=True, blank=True)
+    certificate = models.FileField(
+        upload_to="Certificates/Diamond/", blank=True, null=True)
+    description = models.TextField(null=True, blank=True, max_length=5000, verbose_name="Description")
+    jewellery_info = models.TextField(null=True, blank=True,  max_length=3000, verbose_name="Diamond Information")
+
+
+
+
+
+
 
 # purchase of Colour Stones
 

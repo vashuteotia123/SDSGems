@@ -1,32 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {%  if messages  %}
+{% extends 'base.html' %}
+{% block title %}Upload File{% endblock %}
+{% block style %}
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+    integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+<style>
+    .main-block {
+        text-align: center;
+        margin-top: 200px;
+    }
+
+    #csv {
+        margin-top: 50px;
+    }
+</style>
+{% endblock %}
+{% block container %}
+<div class="main-block">
+    <h1>Select Jewellery CSV File</h1>
+    {% if messages %}
     {% for message in messages %}
     <div>
         <strong>
-            {{message|safe}}
+            <p align="center">{{message|safe}}</p>
         </strong>
     </div>
-{% endfor %}
-{% else %}
-{{ order }}
-<form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <label for="">Upload File</label>
-    <input type="file" name="file">
-    <p>Only accepts csv file</p>
-    <button type="submit">
-        Upload
-    </button>
+    {% endfor %}
+    {% else %}
+    <div class="main-block" id="csv">
+        <p align="center">{{ order }}</p>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
 
-</form>
-{%  endif %}
-</body>
-</html>
+            <input type="file" name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+            <button id="button" class="btn btn-success" type="submit" href="/">Submit</button>
+        </form>
+        {% endif %}
+    </div>
+    {% endblock %}

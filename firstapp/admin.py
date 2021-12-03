@@ -276,6 +276,10 @@ if development_mode:
     class inventoryofdiamondadmin(admin.ModelAdmin):
         pass
 
+    @admin.register(Diamond_media)
+    class diamondMediaAdmin(admin.ModelAdmin):
+        pass
+
     @admin.register(shape_d)
     class shapedadmin(admin.ModelAdmin):
         pass

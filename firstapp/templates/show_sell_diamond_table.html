@@ -1,46 +1,101 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1><center>
-        Sales Records
-    </center></h1>
-    <br>
-    <br>
-    <table border="1">
-        <tr>
-            <th>Date</th>
-            <th>Stockid</th>
-            <th>Company Name</th>
-            <th>Shape</th>
-            <th>Country</th>
-            <th>clarity</th>
-            <th>Sales Status</th>
-            <th></th>
-            <th></th>
-        </tr>
-    {%for item in sold_items%}
-        <tr>
-            <td>{{item.date}}</td>
+{% extends 'common_table.html' %}
+<!-- Diamond Sell Record -->
+{% block table %}
+<table class="table table-responsive">
+    <tr id="table-heading">
+        <th style="background-color:#a01b1b;color:#fff;">DATE</th>
+        <th style="background-color:#a01b1b;color:#fff;">STOCK ID</th>
+        <th style="background-color:#a01b1b;color:#fff;">COMPANY NAME</th>
+        <th style="background-color:#a01b1b;color:#fff;">LOCATION</th>
+        <th style="background-color:#a01b1b;color:#fff;">SHAPE</th>
+        <th style="background-color:#a01b1b;color:#fff;">CLARITY</th>
+        <th style="background-color:#a01b1b;color:#fff;">COLOUR ORIGIN</th>
+        <th style="background-color:#a01b1b;color:#fff;">COLOUR GRADE</th>
+        <th style="background-color:#a01b1b;color:#fff;">CUT</th>
+        <th style="background-color:#a01b1b;color:#fff;">POLISH</th>
+        <th style="background-color:#a01b1b;color:#fff;">SYMMETRY</th>
+        <th style="background-color:#a01b1b;color:#fff;">MEASUREMENTS</th>
+        <th style="background-color:#a01b1b;color:#fff;">DEPTH</th>
+        <th style="background-color:#a01b1b;color:#fff;">TABLE</th>
+        <th style="background-color:#a01b1b;color:#fff;">FLUORESCENCE INTENSITY</th>
+        <th style="background-color:#a01b1b;color:#fff;">FLUORESCENCE COLOUR</th>
+        <th style="background-color:#a01b1b;color:#fff;">CERTIFICATE NO.</th>
+        <th style="background-color:#a01b1b;color:#fff;">CERTIFICATE TYPE</th>
+        <th style="background-color:#a01b1b;color:#fff;">LASER INSCRIPTION</th>
+        <th style="background-color:#a01b1b;color:#fff;">PIECES</th>
+        <th style="background-color:#a01b1b;color:#fff;">WEIGHT</th>
+        <th style="background-color:#a01b1b;color:#fff;">PRICE</th>
+        <th style="background-color:#a01b1b;color:#fff;">UNITS</th>
+        <th style="background-color:#a01b1b;color:#fff;">AMOUNT</th>
+        <th style="background-color:#a01b1b;color:#fff;">DISCOUNT %</th>
+        <th style="background-color:#a01b1b;color:#fff;">DISCOUNTED AMOUNT</th>
+        <th style="background-color:#a01b1b;color:#fff;">TOTAL VALUE</th>
+        <th style="background-color:#a01b1b;color:#fff;">CURRENCY</th>
+        <th style="background-color:#a01b1b;color:#fff;">TAG PRICE</th>
+        <th style="background-color:#a01b1b;color:#fff;">RATE</th>
+        <th style="background-color:#a01b1b;color:#fff;">SOLD</th>
+        <th style="background-color:#a01b1b;color:#fff;">RETURN</th>
+        <th style="background-color:#a01b1b;color:#fff;">COMMENT</th>
+
+
+    </tr>
+    {% for item in sold_items%}
+    <tr>
+        <td>{{item.date}}</td>
         <td>{{item.stockid}}</td>
         <td>{{item.company_name}}</td>
-        <td>{{item.shape}}</td>
         <td>{{item.location}}</td>
+        <td>{{item.shape}}</td>
         <td>{{item.clarity}}</td>
-        <td>{{item.salesapprovalstatus_d}}</td>
-        {% if item.salesapprovalstatus_d is False %}
-        <td><a href="{% url 'return_diamond_Inventory' item.id %}" target=""> Return back to Inventory</a></td>
+        <td>{{item.color_origin1}}</td>
+        <td>{{item.white_color_grade1}}, {{item.fancycolor_grade}}</td>
+        <td>{{item.cut}}</td>
+        <td>{{item.polish}}</td>
+        <td>{{item.symmetry}}</td>
+        <td>{{item.measurements}}</td>
+        <td>{{item.depth}}</td>
+        <td>{{item.table}}</td>
+        <td>{{item.fluorescence_intensity}}</td>
+        <td>{{item.fluorescence_color}}</td>
+        <td>{{item.certificate_no_d}}</td>
+        <td>{{item.certificate_d}}</td>
+        <td>{{item.laser_inscription}}</td>
+        <td>{{item.PCS_d}}</td>
+        <td>{{item.weight_d}}</td>
+        <td>{{item.price}}</td>
+        <td>{{item.units}}</td>
+        <td>{{item.amount_d}}</td>
+        <td>{{item.DIS_d}}</td>
+        <td>{{item.DIS_Amount_d}}</td>
+        <td>{{item.total_value_d}}</td>
+        <td>{{item.currency}}</td>
+        <td>{{item.tag_price_d}}</td>
+        <td>{{item.rate_d}}</td>
+        {% if obj.salesapprovalstatus %}
+        <td>YES</td>
+        {% else %}
+        <td>NO</td>
+        {% endif %}
+        {% if obj.salesapprovalstatus is False %}
+        <td><a class="btn btn-primary" style="text-decoration:none;" href="{% url 'return_diamond_Inventory' item.id %}"
+                target=""> Return back to Inventory</a></td>
+        {% else %}
+        <td><a class="btn btn-primary" style="text-decoration:none;" target="">ALREADY SOLD</a></td>
         {% endif%}
+        <td>
+            <details>
+                <summary>Click to see comment</summary>
+                <p>{{item.comment|linebreaks}}</p>
+            </details>
+        </td>
     </tr>
-
     {%endfor%}
-
-    <button><a href="{% url 'displaysalesreturn_d' %}" target=""> View Sales Return</a></button>
 </table>
-</body>
-</html>
+{% endblock %}
+
+{% block container1 %}
+<div class="sale_export">
+    <a class="btn btn-sm" style="background-color: #a01b1b;color:#fff;text-decoration: none;margin-right: 20px;"
+        href="{% url 'displaysalesreturn_d' %}" target=""> View Sales Return</a>
+</div>
+{% endblock %}

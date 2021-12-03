@@ -1,123 +1,124 @@
 {% extends 'common_table_inv.html' %}
 {% block table %}
-    <form id="form-container" method="POST">
-        {% csrf_token %}
-    <table id="all_forms"class="table table-responsive">
-           <tr id="table-heading" height="30px">
-            <th style="background-color:#e7d896;color:#000000bf;">PURCHASE DATE</th>
-            <th style="background-color:#e7d896;color:#000000bf;">COMPANY NAME</th>
-            <th style="background-color:#e7d896;color:#000000bf;">LOCATION</th>
-            <th style="background-color:#e7d896;color:#000000bf;">SHAPE</th>
-            <th style="background-color:#e7d896;color:#000000bf;">CLARITY</th>
-            <th style="background-color:#e7d896;color:#000000bf;">COLOUR ORIGIN</th>
-            <th style="background-color:#e7d896;color:#000000bf;">WHITE COLOUR GRADE</th>
-            <th style="background-color:#e7d896;color:#000000bf;">FANCY COLOUR GRADE</th>
-            <th style="background-color:#e7d896;color:#000000bf;">CUT</th>
-            <th style="background-color:#e7d896;color:#000000bf;">POLISH</th>
-            <th style="background-color:#e7d896;color:#000000bf;">SYMMETRY</th>
-            <th style="background-color:#e7d896;color:#000000bf;">MEASUREMENTS</th>
-            <th style="background-color:#e7d896;color:#000000bf;">DEPTH %</th>
-            <th style="background-color:#e7d896;color:#000000bf;">TABLE %</th>
-            <th style="background-color:#e7d896;color:#000000bf;">FLUORESCENCE INTENSITY</th>
-            <th style="background-color:#e7d896;color:#000000bf;">FLUORESCENCE COLOR</th>
-            <th style="background-color:#e7d896;color:#000000bf;">CERTIFICATE NUMBER</th>
-            <th style="background-color:#e7d896;color:#000000bf;">CERTIFICATE</th>
-            <th style="background-color:#e7d896;color:#000000bf;">LASER INSCRIPTION</th>
-            <th style="background-color:#e7d896;color:#000000bf;">PIECES</th>
-            <th style="background-color:#e7d896;color:#000000bf;">WEIGHT</th>
-            <th style="background-color:#e7d896;color:#000000bf;">PRICE</th>
-            <th style="background-color:#e7d896;color:#000000bf;">UNITS</th>
-            <th style="background-color:#e7d896;color:#000000bf;">AMOUNT</th>
-            <th style="background-color:#e7d896;color:#000000bf;">DISCOUNT</th>
-            <th style="background-color:#e7d896;color:#000000bf;">DISCOUNT AMOUNT</th>
-            <th style="background-color:#e7d896;color:#000000bf;">TOTAL VALUE</th> 
-            <th style="background-color:#e7d896;color:#000000bf;">BOUGHT DIAMOND</th>
-            <th style="background-color:#e7d896;color:#000000bf;">CURRENCY</th>
-            <th style="background-color:#e7d896;color:#000000bf;">TAG PRICE</th>
-            <th style="background-color:#e7d896;color:#000000bf;">RATE</th>
-            <th style="background-color:#e7d896;color:#000000bf;">COMMENT</th>
+<form id="form-container" method="POST">
+  {% csrf_token %}
+  <table id="all_forms" class="table table-responsive">
+    <tr id="table-heading" height="30px">
+      <th style="background-color:#a01b1b;color:#fff;">PURCHASE DATE</th>
+      <th style="background-color:#a01b1b;color:#fff;">COMPANY NAME</th>
+      <th style="background-color:#a01b1b;color:#fff;">LOCATION</th>
+      <th style="background-color:#a01b1b;color:#fff;">SHAPE</th>
+      <th style="background-color:#a01b1b;color:#fff;">CLARITY</th>
+      <th style="background-color:#a01b1b;color:#fff;">COLOUR ORIGIN</th>
+      <th style="background-color:#a01b1b;color:#fff;">WHITE COLOUR GRADE</th>
+      <th style="background-color:#a01b1b;color:#fff;">FANCY COLOUR GRADE</th>
+      <th style="background-color:#a01b1b;color:#fff;">CUT</th>
+      <th style="background-color:#a01b1b;color:#fff;">POLISH</th>
+      <th style="background-color:#a01b1b;color:#fff;">SYMMETRY</th>
+      <th style="background-color:#a01b1b;color:#fff;">MEASUREMENTS</th>
+      <th style="background-color:#a01b1b;color:#fff;">DEPTH %</th>
+      <th style="background-color:#a01b1b;color:#fff;">TABLE %</th>
+      <th style="background-color:#a01b1b;color:#fff;">FLUORESCENCE INTENSITY</th>
+      <th style="background-color:#a01b1b;color:#fff;">FLUORESCENCE COLOR</th>
+      <th style="background-color:#a01b1b;color:#fff;">CERTIFICATE NUMBER</th>
+      <th style="background-color:#a01b1b;color:#fff;">CERTIFICATE</th>
+      <th style="background-color:#a01b1b;color:#fff;">LASER INSCRIPTION</th>
+      <th style="background-color:#a01b1b;color:#fff;">PIECES</th>
+      <th style="background-color:#a01b1b;color:#fff;">WEIGHT</th>
+      <th style="background-color:#a01b1b;color:#fff;">PRICE</th>
+      <th style="background-color:#a01b1b;color:#fff;">UNITS</th>
+      <th style="background-color:#a01b1b;color:#fff;">AMOUNT</th>
+      <th style="background-color:#a01b1b;color:#fff;">DISCOUNT</th>
+      <th style="background-color:#a01b1b;color:#fff;">DISCOUNT AMOUNT</th>
+      <th style="background-color:#a01b1b;color:#fff;">TOTAL VALUE</th>
+      <th style="background-color:#a01b1b;color:#fff;">BOUGHT DIAMOND</th>
+      <th style="background-color:#a01b1b;color:#fff;">CURRENCY</th>
+      <th style="background-color:#a01b1b;color:#fff;">TAG PRICE</th>
+      <th style="background-color:#a01b1b;color:#fff;">RATE</th>
+      <th style="background-color:#a01b1b;color:#fff;">COMMENT</th>
     </tr>
-          {{totalitems_d.management_form}}
-          {% for obj in totalitems_d %} 
-          <tr class="bird-form">
-            {% comment %} {% for field in obj%}
-            {% if field.purchase_approval %}
-            <td style="display: flex;width: 100%;
+    {{totalitems_d.management_form}}
+    {% for obj in totalitems_d %}
+    <tr class="bird-form">
+      {% comment %} {% for field in obj%}
+      {% if field.purchase_approval %}
+      <td style="display: flex;width: 100%;
             justify-content: center;
             border: none;"></td>{{field}}<br> {{field.errors}}</td>
-            {% elif %}
-            <td>{{field}} <br> {{field.errors}}</td>
-            {% endif %}
-            {% endfor %} {% endcomment %}
-              {% for field in obj%}
-              <td>{{field}} <br> {{field.errors}}</td>
-              {% endfor %}
-              </tr>
-              {% endfor %}
-        </table>
-    <div id="button-allignment" style="top: 92.5vh;">
-        <button id="add-form" type="button" class="btn btn-sm btn-success btnedit">Add Another Form</button>
-        <button id="remove-form" type="button" class="btn btn-sm btn-warning btnedit">Remove</button>
-        <button type="submit" class="btn btn-sm btn-danger btnedit" id="btn-danger">Submit</button>
-    </div>   
-    </form> 
-{% endblock  %}
+      {% elif %}
+      <td>{{field}} <br> {{field.errors}}</td>
+      {% endif %}
+      {% endfor %} {% endcomment %}
+      {% for field in obj%}
+      <td>{{field}} <br> {{field.errors}}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+  <div id="button-allignment" style="top: 92.5vh;">
+    <button id="add-form" type="button" class="btn btn-sm btn-success btnedit">Add Another Form</button>
+    <button id="remove-form" type="button" class="btn btn-sm btn-warning btnedit">Remove</button>
+    <button type="submit" class="btn btn-sm btn-danger btnedit" id="btn-danger">Submit</button>
+  </div>
+</form>
+{% endblock %}
 {% block script %}
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script>
-      let birdForm = document.querySelectorAll(".bird-form")
-      let container = document.querySelector("#form-container")
-      let addButton = document.querySelector("#add-form")
-      let removeButton = document.querySelector("#remove-form")
-      document.querySelector("#id_form-0-company_name").insertAdjacentHTML("afterend", "<br><h6><strong>Phone No.: </strong></h6><span id='company_contact_number-0'></span><br><br><h6><strong>Address.: </strong></h6><span id='company_address-0'><span>")
-      let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
-      var amt = "$('#id_form-" + 0 + "-price, #id_form-"+0+"-weight_d').on('change keyup blur', function () { var weight = document.getElementById('id_form-" + 0 + "-weight_d').value; var price = document.getElementById('id_form-" + 0 + "-price').value; var amount_value = (price * weight); document.getElementById('id_form-" + 0 + "-amount_d').value = amount_value.toFixed(2);  });  " 
-      var s = "$('#id_form-" + 0 + "-DIS_d').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + 0 + "-amount_d').value; var disc = document.getElementById('id_form-" + 0 + "-DIS_d').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" + 0 + "-DIS_Amount_d').value = discamt.toFixed(2); document.getElementById('id_form-" + 0 + "-total_val_d').value=(amount- discamt).toFixed(2);  });  "
-      var s1 = "$('#id_form-" + 0 + "-amount_d').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + 0 + "-amount_d').value; var disc = document.getElementById('id_form-" + 0 + "-DIS_d').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" + 0 + "-DIS_Amount_d').value = discamt.toFixed(2); document.getElementById('id_form-" + 0 + "-total_val_d').value=(amount- discamt).toFixed(2);  });  "
-      
-      var company_detail_call = 
-          "$('#id_form-"+0+"-company_name').change(function(){var company_name = $(this).find(':selected')[0].text;$.ajax({type: 'GET',url: '{% url 'get_company_details' %}'," +
-          "data: {'name': company_name,},success: function(data) { document.getElementById('company_contact_number-0').innerHTML = data['contact_no']; " +
-          "document.getElementById('company_address-0').innerHTML = data['location'];} }) });" 
-      let formNum = birdForm.length - 1
-      addButton.addEventListener('click', addForm)
-      removeButton.addEventListener('click', RemoveForm)
-      function addForm(e) {
-        e.preventDefault()
-        let newForm = birdForm[0].cloneNode(true)
-        let formRegex = RegExp(`form-(\\d){1}-`, 'g')
-        newForm.getElementsByTagName("span")[0].id = "company_contact_number-"+(formNum+1)
-        newForm.getElementsByTagName('span')[1].id = "company_address-"+(formNum+1)
-        newForm.getElementsByTagName("span")[0].innerHTML = ""
-        newForm.getElementsByTagName('span')[1].innerHTML = ""
-        
-        formNum++
-        amt += "$('#id_form-" + (formNum) + "-price, #id_form-"+(formNum)+"-weight_d').on('change keyup blur', function () { var weight = document.getElementById('id_form-" + (formNum)+ "-weight_d').value; var price = document.getElementById('id_form-" + (formNum) + "-price').value; var amount_value = (price * weight); document.getElementById('id_form-" + (formNum) + "-amount_d').value = amount_value.toFixed(2);  });  "
-        s += "$('#id_form-" + (formNum) + "-DIS_d').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + (formNum) + "-amount_d').value; var disc = document.getElementById('id_form-" + (formNum) + "-DIS_d').value; var discamt = ((amount * disc) / 100); document.getElementById('id_form-" + (formNum) + "-DIS_Amount_d').value = discamt.toFixed(2); document.getElementById('id_form-" + formNum + "-total_val_d').value= (amount - discamt).toFixed(2); });   "
-        s1 += "$('#id_form-" + (formNum) + "-amount_d').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + (formNum) + "-amount_d').value; var disc = document.getElementById('id_form-" + (formNum) + "-DIS_d').value; var discamt = ((amount * disc) / 100); document.getElementById('id_form-" + (formNum) + "-DIS_Amount_d').value = discamt.toFixed(2); document.getElementById('id_form-" + formNum + "-total_val_d').value= (amount - discamt).toFixed(2); });   "
-        company_detail_call +="$('#id_form-"+(formNum) +"-company_name').change(function(){var company_name = $(this).find(':selected')[0].text;$.ajax({type: 'GET',url: '{% url 'get_company_details' %}',data: {'name': company_name,},success: function(data) {document.getElementById('company_contact_number-"+formNum+"').innerHTML = data['contact_no']; " +"document.getElementById('company_address-"+formNum+"').innerHTML = data['location']; } }) });"
-        newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
-        document.getElementById("all_forms").innerHTML+=newForm.innerHTML;
-        totalForms.setAttribute('value', `${formNum+1}`)
-        eval(amt);
-        eval(s);
-        eval(s1);
-        eval(company_detail_call);
-      }
-      function RemoveForm(e){
-            e.preventDefault();
-            formNum--;
-            var formcontainer = document.getElementById("all_forms")
-            formcontainer.removeChild(formcontainer.lastChild);
-            console.log(formNum);
-      }
-        eval(amt);
-        eval(s);
-        eval(s1);
-        console.log(company_detail_call);
-        eval(company_detail_call);
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  let birdForm = document.querySelectorAll(".bird-form")
+  let container = document.querySelector("#form-container")
+  let addButton = document.querySelector("#add-form")
+  let removeButton = document.querySelector("#remove-form")
+  document.querySelector("#id_form-0-company_name").insertAdjacentHTML("afterend", "<br><h6><strong>Phone No.: </strong></h6><span id='company_contact_number-0'></span><br><br><h6><strong>Address.: </strong></h6><span id='company_address-0'><span>")
+  let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
+  var amt = "$('#id_form-" + 0 + "-price, #id_form-" + 0 + "-weight_d').on('change keyup blur', function () { var weight = document.getElementById('id_form-" + 0 + "-weight_d').value; var price = document.getElementById('id_form-" + 0 + "-price').value; var amount_value = (price * weight); document.getElementById('id_form-" + 0 + "-amount_d').value = amount_value.toFixed(2);  });  "
+  var s = "$('#id_form-" + 0 + "-DIS_d').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + 0 + "-amount_d').value; var disc = document.getElementById('id_form-" + 0 + "-DIS_d').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" + 0 + "-DIS_Amount_d').value = discamt.toFixed(2); document.getElementById('id_form-" + 0 + "-total_val_d').value=(amount- discamt).toFixed(2);  });  "
+  var s1 = "$('#id_form-" + 0 + "-amount_d').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + 0 + "-amount_d').value; var disc = document.getElementById('id_form-" + 0 + "-DIS_d').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" + 0 + "-DIS_Amount_d').value = discamt.toFixed(2); document.getElementById('id_form-" + 0 + "-total_val_d').value=(amount- discamt).toFixed(2);  });  "
 
-    </script>
-  </body>
+  var company_detail_call =
+    "$('#id_form-" + 0 + "-company_name').change(function(){var company_name = $(this).find(':selected')[0].text;$.ajax({type: 'GET',url: '{% url 'get_company_details' %}'," +
+    "data: {'name': company_name,},success: function(data) { document.getElementById('company_contact_number-0').innerHTML = data['contact_no']; " +
+    "document.getElementById('company_address-0').innerHTML = data['location'];} }) });"
+  let formNum = birdForm.length - 1
+  addButton.addEventListener('click', addForm)
+  removeButton.addEventListener('click', RemoveForm)
+  function addForm(e) {
+    e.preventDefault()
+    let newForm = birdForm[0].cloneNode(true)
+    let formRegex = RegExp(`form-(\\d){1}-`, 'g')
+    newForm.getElementsByTagName("span")[0].id = "company_contact_number-" + (formNum + 1)
+    newForm.getElementsByTagName('span')[1].id = "company_address-" + (formNum + 1)
+    newForm.getElementsByTagName("span")[0].innerHTML = ""
+    newForm.getElementsByTagName('span')[1].innerHTML = ""
+
+    formNum++
+    amt += "$('#id_form-" + (formNum) + "-price, #id_form-" + (formNum) + "-weight_d').on('change keyup blur', function () { var weight = document.getElementById('id_form-" + (formNum) + "-weight_d').value; var price = document.getElementById('id_form-" + (formNum) + "-price').value; var amount_value = (price * weight); document.getElementById('id_form-" + (formNum) + "-amount_d').value = amount_value.toFixed(2);  });  "
+    s += "$('#id_form-" + (formNum) + "-DIS_d').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + (formNum) + "-amount_d').value; var disc = document.getElementById('id_form-" + (formNum) + "-DIS_d').value; var discamt = ((amount * disc) / 100); document.getElementById('id_form-" + (formNum) + "-DIS_Amount_d').value = discamt.toFixed(2); document.getElementById('id_form-" + formNum + "-total_val_d').value= (amount - discamt).toFixed(2); });   "
+    s1 += "$('#id_form-" + (formNum) + "-amount_d').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + (formNum) + "-amount_d').value; var disc = document.getElementById('id_form-" + (formNum) + "-DIS_d').value; var discamt = ((amount * disc) / 100); document.getElementById('id_form-" + (formNum) + "-DIS_Amount_d').value = discamt.toFixed(2); document.getElementById('id_form-" + formNum + "-total_val_d').value= (amount - discamt).toFixed(2); });   "
+    company_detail_call += "$('#id_form-" + (formNum) + "-company_name').change(function(){var company_name = $(this).find(':selected')[0].text;$.ajax({type: 'GET',url: '{% url 'get_company_details' %}',data: {'name': company_name,},success: function(data) {document.getElementById('company_contact_number-" + formNum + "').innerHTML = data['contact_no']; " + "document.getElementById('company_address-" + formNum + "').innerHTML = data['location']; } }) });"
+    newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
+    document.getElementById("all_forms").innerHTML += newForm.innerHTML;
+    totalForms.setAttribute('value', `${formNum + 1}`)
+    eval(amt);
+    eval(s);
+    eval(s1);
+    eval(company_detail_call);
+  }
+  function RemoveForm(e) {
+    e.preventDefault();
+    formNum--;
+    var formcontainer = document.getElementById("all_forms")
+    formcontainer.removeChild(formcontainer.lastChild);
+    console.log(formNum);
+  }
+  eval(amt);
+  eval(s);
+  eval(s1);
+  console.log(company_detail_call);
+  eval(company_detail_call);
+
+</script>
+</body>
+
 </html>
 {% endblock %}

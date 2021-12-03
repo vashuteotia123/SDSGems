@@ -1,38 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+{% extends 'common_table.html' %}
+{% block different %}
+{% if tdcart.count %}
+{% else %}
+<style>
+  #table_view {
+    padding-top: 30px;
+  }
+</style>
+{% endif %}
+<style>
+  .allign-centre {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 50px;
+  }
+</style>
+{% if displaycart2_cs %}
+<style>
+  #table_view {
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+</style>
+{% endif %}
+{% if css_adjust_displaycart2_cs %}
+<style>
+  #table_view {
+    all: unset;
+    display: flex;
+    white-space: nowrap;
+    margin: 0 1%;
+    justify-content: center;
+  }
+</style>
+{% endif %}
+{% endblock %}
+{% if tdcart %}
+{% block table %}
+{% if tdcart.count %}
+<table class="table table-responsive">
+  <tr class="bg-primary bg-opacity-50">
+    <th style="background-color:#a01b1b;color:#fff;">STOCK ID</th>
+    <th style="background-color:#a01b1b;color:#fff;">LOCATION</th>
+    <th style="background-color:#a01b1b;color:#fff;" style="text-align:center;">SHAPE</th>
+    <th style="background-color:#a01b1b;color:#fff;" style="text-align:center;">CLARITY</th>
+    <th style="background-color:#a01b1b;color:#fff;">ORIGIN</th>
+    <th style="background-color:#a01b1b;color:#fff;">COLOUR GRADE</th>
+    <th style="background-color:#a01b1b;color:#fff;" style="text-align:center;">CUT</th>
+    <th style="background-color:#a01b1b;color:#fff;">Edit Cart</th>
+  </tr>
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  {% for p in tdcart %}
+  <tr>
+    <td>{{ p.stockid }}</td>
+    <td>{{p.location.place.capitalize}}</td>
+    <td>{{p.shape.shape.capitalize}}</td>
+    <td>{{p.clarity.clarity.capitalize}}</td>
+    <td>{{p.color_origin1}}</td>
+    <td>{{p.white_color_grade1}}, {{p.fancycolor_grade}}</td>
+    <td>{{p.cut}}</td>
+    <td><a class="btn btn-sm btn-primary" style="text-decoration: none"
+        href="{% url 'return_diamond_cart' id=p.id %}">Return from Cart</a></td>
+  </tr>
+  {% endfor %}
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-</head>
-<body>
-    <table class="table table-dark table-striped">
-        <thead>
-          <tr>
-            <th scope="col">Location</th>
-            <th scope="col">Stock ID</th>
-          </tr>
-        </thead>
-    {% for p in tdcart %}
-    <tbody>
-    <tr>
-    <td>{{ p.location }}</td>
-    <td>{{p.stockid}}</td>
-    <td><a class="btn btn-primary" href="{% url 'return_diamond_cart' id=p.id %}">Return from Cart</a></td>
-    </tr>
-    </tbody>
-    {% endfor %}
-    </table>
-    <a class="btn btn-primary" href="{% url 'show_diamond_cart' %}">Sell Cart</a>
-
-</body>
-</html>
+</table>
+{% else %}
+<h1>Cart is empty</h1>
+{% endif %}
+{% endblock %}
+{% block container1 %}
+{% if tdcart.count %}
+<div class="allign-centre">
+  <a class="btn btn-sm btn-primary" style="text-decoration: none" href="{% url 'show_diamond_cart' %}">Sell Cart</a>
+</div>
+{% else %}
+<div class="allign-centre"><a href="/inventory_of_diamonds" class="uk-button  uk-button-small uk-button-primary">Move
+    Previous</a></div>
+{% endif %}
+{% endblock %}
+{% endif %}

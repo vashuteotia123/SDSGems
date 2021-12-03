@@ -8,7 +8,7 @@
 </form>
 {% endblock%}
 {% block table %}
-<table class="table table-responsive" >
+<table class="table table-responsive">
     <tr>
         <th style="background-color:#e7d896;color:#000000bf;">STOCK ID</th>
         <th style="background-color:#e7d896;color:#000000bf;">LOCATION</th>
@@ -29,9 +29,9 @@
         <th style="background-color:#e7d896;color:#000000bf;">CHECK</th>
     </tr>
     {% csrf_token %}
-                {% for obj in productsj %}
-                {% if obj.appvreturnstatus is False  %}
-    <tr  id="{{obj.id}}">
+    {% for obj in productsj %}
+    {% if obj.appvreturnstatus is False %}
+    <tr id="{{obj.id}}">
         <td style="text-align:center;" id="stock_id{{ forloop.counter }}">{{obj.stockid}}</td>
         <td>{{obj.location.place.capitalize}}</td>
         <td>{{obj.jewellery_type}}</td>
@@ -47,38 +47,52 @@
         <td>{{obj.cert}}</td>
         <td><a href="" id="stock_id{{ forloop.counter }}_cert">See Certificate</a></td>
         {% if obj.cartstatus is False %}
-        <td style="padding: 10px 20px;"><a class="btn btn-primary"style="text-decoration: none;" href="{% url 'addtocart' id=obj.id %}">ADD TO CART</a></td>
-        
+        <td style="padding: 10px 20px;"><a class="btn btn-primary" style="text-decoration: none;"
+                href="{% url 'addtocart' id=obj.id %}">ADD TO CART</a></td>
+
         {% endif %}
         {% if obj.cartstatus is True %}
-        <td style="padding: 10px 30px;"><a class="btn btn-primary" style="text-decoration: none;" href="{% url 'displaycart2' %}" >Go To CART</a></td>
+        <td style="padding: 10px 30px;"><a class="btn btn-primary" style="text-decoration: none;"
+                href="{% url 'displaycart2' %}">Go To CART</a></td>
         {% endif %}
         {% if obj.frontend is False %}
-        <td style="padding: 10px 50px;"><a class="btn btn-primary"style="text-decoration: none;" href="{% url 'show_on_frontend_jewel' id=obj.id %}">Show on Home Page</a></td>
-        
+        <td style="padding: 10px 50px;"><a class="btn btn-primary" style="text-decoration: none;"
+                href="{% url 'show_on_frontend_jewel' id=obj.id %}">Show on Home Page</a></td>
+
         {% endif %}
         {% if obj.frontend is True %}
-        <td style="padding: 10px 30px;"><a class="btn btn-primary" style="text-decoration: none;" href="{% url 'hide_from_frontend_jewel' id=obj.id%}" >Remove From Home Page</a></td>
+        <td style="padding: 10px 30px;"><a class="btn btn-primary" style="text-decoration: none;"
+                href="{% url 'hide_from_frontend_jewel' id=obj.id%}">Remove From Home Page</a></td>
         {% endif %}
 
         {% if obj.appvreturnstatus is False and obj.purchaseapv is False %}
         <td style="padding-top: 17px;padding-left: 28px;">
-            <input type="checkbox" name="jewell_id[]" value="{{obj.id}}" class="save-cb-state" id="delete_jewell" style="height: 20px;width: 20px;"></td>
+            <input type="checkbox" name="jewell_id[]" value="{{obj.id}}" class="save-cb-state" id="delete_jewell"
+                style="height: 20px;width: 20px;">
+        </td>
         {% endif %}
     </tr>
     {% endif %}
     {% endfor %}
 </table>
 
-{% endblock  %}
+{% endblock %}
 {% block container1 %}
 <div id="button-allignment">
-    <button class="btn btn-sm btnedit" type="submit" id="delete_btn" style="background-color:#e7d896;color:#000000bf;border : 2px solid black;text-decoration:none"><b>Add to return table</b></button>
-    <a class="btn btn-sm btnedit"  href="{% url 'retobj_j' %}" style="background-color:#e7d896;color:#000000bf;border : 2px solid black;text-decoration: none;"><b>View returned objects</b></a>
-    <a class="btn btn-sm btnedit"  href="{% url 'displaycart2' %}" style="background-color:#e7d896;color:#000000bf;border : 2px solid black;text-decoration: none;"><b>View Cart</b></a>
-    <a class="btn btn-sm btnedit"  href="/ExportInventoryofjewellery" style="background-color:#e7d896;color:#000000bf;border : 2px solid black;text-decoration: none;"><b>Export Inventory</b></a>
+    <button class="btn btn-sm btnedit" type="submit" id="delete_btn"
+        style="background-color:#e7d896;color:#000000bf;border : 2px solid black;text-decoration:none"><b>Add to return
+            table</b></button>
+    <a class="btn btn-sm btnedit" href="{% url 'retobj_j' %}"
+        style="background-color:#e7d896;color:#000000bf;border : 2px solid black;text-decoration: none;"><b>View
+            returned objects</b></a>
+    <a class="btn btn-sm btnedit" href="{% url 'displaycart2' %}"
+        style="background-color:#e7d896;color:#000000bf;border : 2px solid black;text-decoration: none;"><b>View
+            Cart</b></a>
+    <a class="btn btn-sm btnedit" href="/ExportInventoryofjewellery"
+        style="background-color:#e7d896;color:#000000bf;border : 2px solid black;text-decoration: none;"><b>Export
+            Inventory</b></a>
 </div>
-{% endblock  %}
+{% endblock %}
 {% block script %}
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
@@ -134,28 +148,30 @@
     var length_jewel = "{{length_jewel}}";
     console.log(length_jewel);
     console.log(length_jewel);
-    for(var i=1;i<=length_jewel;i++){
-        var query=document.getElementById("stock_id"+i);
-        if(query){
+    for (var i = 1; i <= length_jewel; i++) {
+        var query = document.getElementById("stock_id" + i);
+        if (query) {
             // console.log(query);
-            var stockid=document.getElementById("stock_id"+i).innerHTML;
+            var stockid = document.getElementById("stock_id" + i).innerHTML;
             // console.log(stockid);
-            $.ajax({type: 'GET',async:false,url: '{% url "get_certificate_of_jewellery" %}',
-            data: {'stockid': stockid},success: function(data) {
-                
-                var query2=document.getElementById("stock_id"+i+"_cert");
-                if(data!="" && query2){
-                    // console.log(data,i);
-                    if(data.certificate!="0"){
-                        document.getElementById("stock_id"+i+"_cert").href="/media/"+data.certificate;
-                        console.log(data.certificate);
-                    }
-                    else{
-                        document.getElementById("stock_id"+i+"_cert").innerHTML="Not Available";
-                        console.log(data.certificate);
+            $.ajax({
+                type: 'GET', async: false, url: '{% url "get_certificate_of_jewellery" %}',
+                data: { 'stockid': stockid }, success: function (data) {
+
+                    var query2 = document.getElementById("stock_id" + i + "_cert");
+                    if (data != "" && query2) {
+                        // console.log(data,i);
+                        if (data.certificate != "0") {
+                            document.getElementById("stock_id" + i + "_cert").href = "/media/" + data.certificate;
+                            console.log(data.certificate);
+                        }
+                        else {
+                            document.getElementById("stock_id" + i + "_cert").innerHTML = "Not Available";
+                            console.log(data.certificate);
+                        }
                     }
                 }
-            }});
+            });
         }
     }
 </script>

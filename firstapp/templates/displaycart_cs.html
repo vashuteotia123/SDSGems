@@ -1,6 +1,6 @@
 {% extends 'common_table.html' %}
 {% block different %}
-{% if tcscart.count  %}
+{% if tcscart.count %}
 {% else %}
 <style>
   #table_view {
@@ -9,22 +9,25 @@
 </style>
 {% endif %}
 <style>
-  .allign-centre{
-  display: flex;width: 100%;justify-content: center;margin-top: 50px;
-}
+  .allign-centre {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 50px;
+  }
 </style>
 {% if displaycart2_cs %}
 <style>
   #table_view {
-  overflow-x: hidden;
-  overflow-y: scroll;
-}
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
 </style>
 {% endif %}
 {% if css_adjust_displaycart2_cs %}
 <style>
   #table_view {
-    all:unset;
+    all: unset;
     display: flex;
     white-space: nowrap;
     margin: 0 1%;
@@ -32,48 +35,49 @@
   }
 </style>
 {% endif %}
-{% endblock  %}
+{% endblock %}
 {% if tcscart %}
 {% block table %}
 {% if tcscart.count %}
-<table class="table table-responsive" >
-    <tr class="bg-primary bg-opacity-50">
-        <th class="bg-primary">STOCK ID</th>
-        <th class="bg-primary" >LOCATION</th>
-        <th class="bg-primary" style="text-align:center;">SHAPE</th>
-        <th class="bg-primary" style="text-align:center;">GEM TYPE</th>
-        <th class="bg-primary">ORIGIN</th>
-         <th class="bg-primary">Colour</th>
-        <th class="bg-primary" style="text-align:center;">TREATMENT</th>
-         <th class="bg-primary">Edit Cart</th>
-    </tr>
-    
-    {% for p in tcscart %}
-    <tr>
+<table class="table table-responsive">
+  <tr class="bg-primary bg-opacity-50">
+    <th class="bg-primary">STOCK ID</th>
+    <th class="bg-primary">LOCATION</th>
+    <th class="bg-primary" style="text-align:center;">SHAPE</th>
+    <th class="bg-primary" style="text-align:center;">GEM TYPE</th>
+    <th class="bg-primary">ORIGIN</th>
+    <th class="bg-primary">Colour</th>
+    <th class="bg-primary" style="text-align:center;">TREATMENT</th>
+    <th class="bg-primary">Edit Cart</th>
+  </tr>
+
+  {% for p in tcscart %}
+  <tr>
     <td>{{ p.stockid }}</td>
     <td>{{p.location.place.capitalize}}</td>
     <td>{{p.shape.shape.capitalize}}</td>
-     <td>{{p.gem_type.gem.capitalize}}</td>
+    <td>{{p.gem_type.gem.capitalize}}</td>
     <td>{{p.origin.org.capitalize}}</td>
     <td>{{p.color.color.capitalize}}</td>
     <td>{{p.treatment.treatment.capitalize}}</td>
-    <td><a class="btn btn-sm btn-primary" style="text-decoration: none" href="{% url 'return_colorstone_cart' id=p.id %}">Return from Cart</a></td>
-    </tr>
-    {% endfor %}
-    
-    </table>
-    {% else %}
-    <h1>Cart is empty</h1>
-    {% endif %}
-{% endblock  %}
+    <td><a class="btn btn-sm btn-primary" style="text-decoration: none"
+        href="{% url 'return_colorstone_cart' id=p.id %}">Return from Cart</a></td>
+  </tr>
+  {% endfor %}
+
+</table>
+{% else %}
+<h1>Cart is empty</h1>
+{% endif %}
+{% endblock %}
 {% block container1 %}
 {% if tcscart.count %}
 <div class="allign-centre">
   <a class="btn btn-sm btn-primary" style="text-decoration: none" href="{% url 'show_colorstone_cart' %}">Sell Cart</a>
 </div>
 {% else %}
-   <div class="allign-centre"><a href="/inventory_color_stone" class="uk-button  uk-button-small uk-button-primary">Move Previous</a></div>
+<div class="allign-centre"><a href="/inventory_color_stone" class="uk-button  uk-button-small uk-button-primary">Move
+    Previous</a></div>
 {% endif %}
-{% endblock  %} 
+{% endblock %}
 {% endif %}
-

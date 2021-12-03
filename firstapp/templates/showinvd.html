@@ -1,123 +1,195 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
-</head>
-<body><h1><center>
-    Diamonds
-</center></h1>
-<br>
-<br>
-    <div class="container">
-        <table border="1">
-            <thead>
-                <th>Stock ID</th>
-                <th>Location</th>
-                <th>certificate</th>
-                <th>Add to Cart</th>
-                <th>Frontend</th>
-                <th>check</th>
-            </thead>
-            <tbody>
-                {% csrf_token %}
-                {% for p in products_d %}
-                {% if p.appvreturnstatus_d is False %}
-                <tr id="{{p.id}}">
-                    <td>{{p.stockid}}</td>
-                    <td>{{p.location}}</td>
-                    <td>{{p.certificate_no_d}}</td>
-                    
-                    {% if p.cartstatus is False %}
-                    <td><a class="btn btn-primary" href="{% url 'addtocart_d' id=p.id %}">ADD TO CART</a></td>
-                    {% endif %}
-                    {% if p.cartstatus is True %}
-                    <td><a class="btn btn-primary">Go To CART</a></td>
-                    {% endif %}
-                    {% if p.frontend is False %}
-                    <td style="padding: 10px 50px;"><a class="btn btn-primary"style="text-decoration: none;" href="{% url 'show_on_frontend_d' id=p.id %}">Show on Home Page</a></td>
-                    
-                    {% endif %}
-                    {% if p.frontend is True %}
-                    <td style="padding: 10px 30px;"><a class="btn btn-primary" style="text-decoration: none;" href="{% url 'hide_from_frontend_d' id=p.id %}" >Remove From Home Page</a></td>
-                    {% endif %}
-                    {% if p.appvreturnstatus_d is False and p.purchaseapv_d is False %}
-                    <td><input type="checkbox" name="d_id[]" value="{{p.id}}" class="save-cb-state"
-                            id="inventory_of_diamonds"></td>
-                    {% endif %}
-                </tr>
-                {% endif %}
-                {% endfor %}
-            </tbody>
-            </table>
-            </div>
-            <div>
-                <button type="submit" id="delete_btn">Add to return table</button>
-            </div>
-            <div>
-                <a class="btn btn-primary" href="{% url 'retobj_d' %}">View returned objects</a>
-                <a class="btn btn-primary" href="{% url 'displaycart2_d' %}">View Cart</a>
-            </div>
-            <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        
-            <script>
-                if (!$) {
-                    $ = django.jQuery;
+{% extends 'common_table_inv.html' %}
+{% block search %}
+<form class="d-flex align-content-center" method='POST' action="{%url 'search' %}">
+    {% csrf_token %}
+    <input class="form-control me-2" type="text" id="search" name="search" placeholder="Search posts" />
+    <input type="submit" class="btn btn-outline-success" value="Search">
+</form>
+{% endblock%}
+{% block table %}
+<table class="table table-responsive">
+    <tr>
+        <th style="background-color:#a01b1b;color:#fff;">STOCK ID</th>
+        <th style="background-color:#a01b1b;color:#fff;">LOCATION</th>
+        <th style="background-color:#a01b1b;color:#fff;">SHAPE</th>
+        <th style="background-color:#a01b1b;color:#fff;">CLARITY</th>
+        <th style="background-color:#a01b1b;color:#fff;">COLOUR ORIGIN</th>
+        <th style="background-color:#a01b1b;color:#fff;">COLOUR GRADE</th>
+        <th style="background-color:#a01b1b;color:#fff;">CUT</th>
+        <th style="background-color:#a01b1b;color:#fff;">POLISH</th>
+        <th style="background-color:#a01b1b;color:#fff;">SYMMETRY</th>
+        <th style="background-color:#a01b1b;color:#fff;">MEASUREMENTS</th>
+        <th style="background-color:#a01b1b;color:#fff;">DEPTH</th>
+        <th style="background-color:#a01b1b;color:#fff;">TABLE</th>
+        <th style="background-color:#a01b1b;color:#fff;">FLUORESCENCE INTENSITY</th>
+        <th style="background-color:#a01b1b;color:#fff;">FLUORESCENCE COLOUR</th>
+        <th style="background-color:#a01b1b;color:#fff;">CERTIFICATE NO.</th>
+        <th style="background-color:#a01b1b;color:#fff;">C TYPE</th>
+        <th style="background-color:#a01b1b;color:#fff;">C FILE</th>
+        <th style="background-color:#a01b1b;color:#fff;">LASER INSCRIPTION</th>
+        <th style="background-color:#a01b1b;color:#fff;">PIECES</th>
+        <th style="background-color:#a01b1b;color:#fff;">WEIGHT</th>
+        <th style="background-color:#a01b1b;color:#fff;">UNITS</th>
+        <th style="background-color:#a01b1b;color:#fff;">TAG PRICE</th>
+        <th style="background-color:#a01b1b;color:#fff;">ADD TO CART</th>
+        <th style="background-color:#a01b1b;color:#fff;">SHOW ON HOME</th>
+        <th style="background-color:#a01b1b;color:#fff;">RETURN</th>
+    </tr>
+
+    {% csrf_token %}
+    {% for obj in products_d %}
+    {% if obj.appvreturnstatus_d is False %}
+    <tr id="{{obj.id}}">
+        <td style="text-align:center;" id="stock_id{{ forloop.counter }}">{{obj.stockid}}</td>
+        <td>{{obj.location.place.capitalize}}</td>
+        <td>{{obj.shape}}</td>
+        <td>{{obj.clarity}}</td>
+        <td>{{obj.color_origin1}}</td>
+        <td>{{obj.white_color_grade1}}, {{obj.fancycolor_grade}}</td>
+        <td>{{obj.cut}}</td>
+        <td>{{obj.polish}}</td>
+        <td>{{obj.symmetry}}</td>
+        <td>{{obj.measurements}}</th>
+        <td>{{obj.depth}}</td>
+        <td>{{obj.table}}</td>
+        <td>{{obj.fluorescence_intensity}}</td>
+        <td>{{obj.fluorescence_color}}</td>
+        <td>{{obj.certificate_no_d}}</td>
+        <td>{{obj.certificate_d}}</td>
+        <td><a href="" id="stock_id{{ forloop.counter }}_cert">See Certificate</a></td>
+        <td>{%if obj.laser_inscription%}YES{% else %}NO{% endif %}</td>
+        <td>{{obj.PCS_d}}</td>
+        <td>{{obj.weight_d}}</td>
+        <td>{{obj.units}}</td>
+        <td>{{obj.tag_price_d}}</td>
+        {% if obj.cartstatus is False %}
+        <td style="padding: 10px 20px;"><a class="btn btn-primary" style="text-decoration: none;"
+                href="{% url 'addtocart_d' id=obj.id %}">ADD TO CART</a></td>
+
+        {% endif %}
+        {% if obj.cartstatus is True %}
+        <td style="padding: 10px 30px;"><a class="btn btn-primary" style="text-decoration: none;"
+                href="{% url 'displaycart2_d' %}">Go To CART</a></td>
+        {% endif %}
+        {% if obj.frontend is False %}
+        <td style="padding: 10px 50px;"><a class="btn btn-primary" style="text-decoration: none;"
+                href="{% url 'show_on_frontend_d' id=obj.id %}">Show on Home Page</a></td>
+
+        {% endif %}
+        {% if obj.frontend is True %}
+        <td style="padding: 10px 30px;"><a class="btn btn-primary" style="text-decoration: none;"
+                href="{% url 'hide_from_frontend_d' id=obj.id%}">Remove From Home Page</a></td>
+        {% endif %}
+
+        {% if obj.appvreturnstatus_d is False and obj.purchaseapv_d is False %}
+        <td style="padding-top: 17px;padding-left: 28px;">
+            <input type="checkbox" name="jewell_id[]" value="{{obj.id}}" class="save-cb-state"
+                id="inventory_of_diamonds" style="height: 20px;width: 20px;">
+        </td>
+        {% endif %}
+    </tr>
+    {% endif %}
+    {% endfor %}
+</table>
+{% endblock %}
+{% block container1 %}
+<div id="button-allignment">
+    <button class="btn btn-sm btnedit" type="submit" id="delete_btn"
+        style="background-color:#a01b1b;color:#fff;border : 2px solid black;text-decoration:none">Add to return
+        table</button>
+    <a class="btn btn-sm btnedit" href="{% url 'retobj_d' %}"
+        style="background-color:#a01b1b;color:#fff;border : 2px solid black;text-decoration:none">View returned
+        objects</a>
+    <a class="btn btn-sm btnedit" href="{% url 'displaycart2_d' %}"
+        style="background-color:#a01b1b;color:#fff;border : 2px solid black;text-decoration:none">View Cart</a>
+    <a class="btn btn-sm btnedit" href="{% url 'export_inventory_of_diamond' %}"
+        style="background-color:#a01b1b;color:#fff;border : 2px solid black;text-decoration:none">Export Inventory</a>
+</div>
+{% endblock %}
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<script>
+    if (!$) {
+        $ = django.jQuery;
+    }
+    $(document).ready(function () {
+        $('#delete_btn').click(function () {
+            if (confirm("You want to delete this")) {
+                var id = [];
+                var csrf = $('input[name=csrfmiddlewaretoken').val()
+                $(':checkbox:checked').each(function (i) {
+
+                    id[i] = $(this).val()
+                    console.log("ajax called")
+                    console.log(id[0])
+                })
+                if (id.length == 0) {
+                    alert("No items Selected Please Select Again");
+
                 }
-                $(document).ready(function () {
-                    $('#delete_btn').click(function () {
-                        if (confirm("You want to delete this")) {
-                            var id = [];
-                            var csrf = $('input[name=csrfmiddlewaretoken').val()
-                            $(':checkbox:checked').each(function (i) {
-        
-                                id[i] = $(this).val()
-                                console.log("ajax called")
-                                console.log(id[0])
-                            })
-                            if (id.length == 0) {
-                                alert("No items Selected Please Select Again");
-        
+                else {
+                    $.ajax({
+                        url: '.',
+                        method: "POST",
+                        data: {
+                            id,
+                            csrfmiddlewaretoken: csrf,
+                        },
+
+                        success: function (response) {
+                            window.location.reload();
+                            for (var i = 0; i < id.length; i++) {
+
+                                $('tr#' + id[i] + '').css('background-color', '#ccc');
+                                $('tr#' + id[i] + '').fadeOut('slow');
+
                             }
-                            else {
-                                $.ajax({
-                                    url: '.',
-                                    method: "POST",
-                                    data: {
-                                        id,
-                                        csrfmiddlewaretoken: csrf,
-                                    },
-        
-                                    success: function (response) {
-                                        window.location.reload();
-                                        for (var i = 0; i < id.length; i++) {
-        
-                                            $('tr#' + id[i] + '').css('background-color', '#ccc');
-                                            $('tr#' + id[i] + '').fadeOut('slow');
-        
-                                        }
-        
-                                    }
-        
-                                });
-                            }
-        
-        
+
                         }
-        
-        
-        
-        
+
                     });
-        
-                });
-            </script>
-        </body>
-        
-        </html>
-    
-    
+                }
+
+
+            }
+
+
+
+
+        });
+
+    });
+
+    var length_diamond = "{{length_diamond}}";
+    for (var i = 1; i <= length_diamond; i++) {
+        var query = document.getElementById("stock_id" + i);
+        if (query) {
+            // console.log(query);
+            var stockid = document.getElementById("stock_id" + i).innerHTML;
+            // console.log(stockid);
+            $.ajax({
+                type: 'GET', async: false, url: '{% url "get_certificate_of_diamond" %}',
+                data: { 'stockid': stockid }, success: function (data) {
+
+                    var query2 = document.getElementById("stock_id" + i + "_cert");
+                    if (data != "" && query2) {
+                        // console.log(data,i);
+                        if (data.certificate != "0") {
+                            document.getElementById("stock_id" + i + "_cert").href = "/media/" + data.certificate;
+                        }
+                        else {
+                            document.getElementById("stock_id" + i + "_cert").innerHTML = "Not Available";
+                            document.getElementById("stock_id" + i + "_cert").classList.add("disabled-link");
+                        }
+                    }
+                }
+            });
+        }
+    }
+</script>
+</body>
+
+</html>
+
+{% endblock %}

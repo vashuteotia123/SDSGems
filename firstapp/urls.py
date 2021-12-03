@@ -96,6 +96,7 @@ urlpatterns = [
     path('displaycart2', views.displaycart2, name='displaycart2'),
     # path('returncart2', views.returncart2, name='returncart2'),
     path('displaysalesreturn', views.displaysalesreturn, name='displaysalesreturn'),
+    path('get_certificate_of_diamond', views.get_certificate_of_diamond, name='get_certificate_of_diamond'),
 
     path('displaycart2_cs', views.displaycart2_cs, name='displaycart2_cs'),
     path('returncart2_cs', views.returncart2_cs, name='returncart2_cs'),
@@ -126,7 +127,8 @@ urlpatterns = [
     path("ExportSalesReturnCS", views.ExportSalesReturnCS, name="ExportSalesReturnCS"),  
     
 
-    # path('export_purchase_of_diamond', views.ExportPOD, name="export_purchase_of_diamond"),
-    # path('export_inventory_of_diamond', views.ExportInventoryofdiamond, name="export_inventory_of_diamond"),
+    path('export_purchase_of_diamond', views.ExportPOD, name="export_purchase_of_diamond"),
+    path('export_inventory_of_diamond', views.ExportInventoryofdiamond, name="export_inventory_of_diamond"),
     # path('export_sales_of_diamond', views.ExportSalesofdiamond, name="export_sales_of_diamond"),
+    path('export_sales_return_of_diamond', views.ExportSalesReturnDiamonds, name="export_sales_of_diamond")
 ]
