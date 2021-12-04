@@ -776,7 +776,7 @@ class Migration(migrations.Migration):
                 ('price', models.DecimalField(blank=True, decimal_places=2, max_digits=9, null=True)),
                 ('units_cs', models.CharField(blank=True, max_length=30, null=True, verbose_name='Units')),
                 ('amount_cs', models.DecimalField(blank=True, decimal_places=2, max_digits=9, null=True, verbose_name='Amount Per CTS')),
-                ('DIS_cs', models.DecimalField(blank=True, decimal_places=2, max_digits=9, null=True, verbose_name='Discount in %')),
+                ('DIS_cs', models.DecimalField(blank=True, decimal_places=2, max_digits=9, null=True, verbose_name='Discount %')),
                 ('DIS_amount_cs', models.DecimalField(blank=True, decimal_places=2, max_digits=9, null=True, verbose_name='Discounted Amount')),
                 ('total_value_cs', models.DecimalField(blank=True, decimal_places=2, max_digits=9, null=True, verbose_name='Total Value')),
                 ('tag_price_cs', models.DecimalField(decimal_places=2, max_digits=9, null=True, verbose_name='Tag Price')),
