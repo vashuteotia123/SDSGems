@@ -23,7 +23,9 @@ deploy_diamond = True
 
 
 
-
+@admin.register(clonePurchaseOfColorStones)
+class ColorPurchaseOfColorStonesAdmin(admin.ModelAdmin):
+    list_display = [f.name for f in clonePurchaseOfColorStones._meta.fields]
 
 
 
@@ -335,7 +337,7 @@ if deploy_diamond:
     @admin.register(Salesofdiamond)
     class salesofdiaadmin(DjangoObjectActions, admin.ModelAdmin):
         search_fields = [f.name for f in Salesofdiamond._meta.fields]
-        list_editable = ['company_name', 'price', 'amount_d', 'DIS_d', 'DIS_Amount_d', 'total_value_d', 'currency', 'tag_price_d', 'rate_d', 'salesapprovalstatus_d', 'comment']
+        list_editable = ['date','company_name', 'price', 'amount_d', 'DIS_d', 'DIS_Amount_d', 'total_value_d', 'currency', 'tag_price_d', 'rate_d', 'salesapprovalstatus_d', 'comment']
         list_display = [f.name for f in Salesofdiamond._meta.fields]
 
         def HomePage(LocAdmin, request, queryset):

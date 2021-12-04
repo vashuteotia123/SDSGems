@@ -1447,7 +1447,9 @@ def jewellery_upload(request):
         messages.error(request, "This is not a CSV file")
     dataset = csv_file.read().decode('UTF-8')
     io_string = io.StringIO(dataset)
-    next(io_string)
+    column_names = str(next(io_string))
+    counter = 1
+    column_names = column_names.split(",")
     for column in csv.reader(io_string, delimiter=','):
         print(column[0])
         # datere=re.findall(r'\d{2}/\d{2}/\d{4}',column[0])
@@ -1457,12 +1459,17 @@ def jewellery_upload(request):
         print(temp_date)
         # print(final_date)
         f = clonePOJ
+        for i in range(len(column)):
+            if(i==1 or i==8 or i==12):
+                continue
+            if(column[i] == ""):
+                messages.error(request, "ERROR: {} cannot be empty for entry:  {}. Please remove all the entries from 1 to {} in the CSV file and try again.".format(column_names[i],str(counter), str(counter-1)))
+                return redirect(request.META.get('HTTP_REFERER'))
         try:
             f.company_name = companyinfo.objects.get(company_name=column[2].lower())
         except ObjectDoesNotExist:
-            html = "Company Name does not exist " + \
-                '<a href="/cform">Create Company details</a>'
-            return HttpResponse(html)
+            messages.error(request, "Company Details not found! Please Create one.")
+            return redirect(request.META.get('HTTP_REFERER'))
         print(column[16])
         try:
             f.location, lcobj = location.objects.get_or_create(
@@ -1541,7 +1548,8 @@ def jewellery_upload(request):
                 pass
         except:
             return HttpResponse("enter float ")
-        print("Rate is : ", column[20])
+        counter+=1
+
         myibj = clonePOJ.objects.create(date=temp_date,
                                    company_name_id=f.company_name.id,
                                    location_id=f.location.id,
@@ -1721,9 +1729,10 @@ def colorstone_upload(request):
         messages.error(request, "This is not a CSV file")
     dataset = csv_file.read().decode('UTF-8')
     io_string = io.StringIO(dataset)
-    next(io_string)
+    column_names = str(next(io_string))
+    counter = 1
+    column_names = column_names.split(",")
     for column in csv.reader(io_string, delimiter=','):
-        z = re.findall("[0-9]+", column[19])
         # datere=re.findall(r'\d{2}/\d{2}/\d{4}',column[0])
         # date_value=list(datere[0])
         # final_date=datetime.date(int(''.join(date_value[6:])),int(''.join(date_value[3:4])),int(''.join(date_value[0:2])))
@@ -1731,6 +1740,12 @@ def colorstone_upload(request):
         print(temp_date)
         # print(final_date)
         f = clonePurchaseOfColorStones
+        for i in range(len(column)):
+            if(i==1 or i==8 or i==12):
+                continue
+            if(column[i] == ""):
+                messages.error(request, "ERROR: {} cannot be empty for entry:  {}. Please remove all the entries from 1 to {} in the CSV file and try again.".format(column_names[i],str(counter), str(counter-1)))
+                return redirect(request.META.get('HTTP_REFERER'))
         try:
             f.company_name = companyinfo.objects.get(
                 company_name=column[2].lower())
@@ -1740,6 +1755,9 @@ def colorstone_upload(request):
             return redirect(request.META.get('HTTP_REFERER'))
         print(f.company_name)
         try:
+            if(column[3] == ""):
+                messages.error(request, "ERROR: Location cannot be empty.For entry number: "+ str(counter))
+                return redirect(request.META.get('HTTP_REFERER'))
             f.location, lcobj = location.objects.get_or_create(
                 place=column[3].lower())
             if lcobj:
@@ -1747,6 +1765,9 @@ def colorstone_upload(request):
         except Exception as e:
             raise e
         try:
+            if(column[4] == ""):
+                messages.error(request, "ERROR: Shape cannot be empty.For entry number: "+ str(counter))
+                return redirect(request.META.get('HTTP_REFERER'))
             f.shape, sobj = shape_cs.objects.get_or_create(
                 shape=column[4].lower())
             if sobj:
@@ -1754,6 +1775,9 @@ def colorstone_upload(request):
         except Exception as e:
             raise e
         try:
+            if(column[5] == ""):
+                messages.error(request, "ERROR: GEM Type cannot be empty.For entry number: "+ str(counter))
+                return redirect(request.META.get('HTTP_REFERER'))
             f.gem_type, jlobj = gemtype.objects.get_or_create(
                 gem=column[5].lower())
             if jlobj:
@@ -1762,6 +1786,9 @@ def colorstone_upload(request):
             raise e
         print(f.gem_type)
         try:
+            if(column[10] == ""):
+                messages.error(request, "ERROR: Colour cannot be empty.For entry number: "+ str(counter))
+                return redirect(request.META.get('HTTP_REFERER'))
             f.colour, colourobj = color_of_colorstone.objects.get_or_create(
                 color=column[10].lower())
             if colourobj:
@@ -1771,6 +1798,9 @@ def colorstone_upload(request):
             raise e
         
         try:
+            if(column[6] == ""):
+                messages.error(request, "ERROR: Origin cannot be empty.For entry number: "+ str(counter))
+                return redirect(request.META.get('HTTP_REFERER'))
             f.origin, clobj = Origin_cs.objects.get_or_create(
                 org=column[6].lower())
             if clobj:
@@ -1779,6 +1809,9 @@ def colorstone_upload(request):
             raise e
         print(f.origin)
         try:
+            if(column[7] == ""):
+                messages.error(request, "ERROR: Treatment cannot be empty.For entry number: "+ str(counter))
+                return redirect(request.META.get('HTTP_REFERER'))
             f.Treatment, clsobj = Treatment_cs.objects.get_or_create(
                 treatment=column[7].lower())
             if clsobj:
@@ -1807,21 +1840,40 @@ def colorstone_upload(request):
         print(f.lab)
 
         try:
+            if(column[22] == ""):
+                messages.error(request, "ERROR: Currency cannot be empty.For entry number: "+ str(counter))
+                return redirect(request.META.get('HTTP_REFERER'))
             f.currency, crobj = currencies.objects.get_or_create(
                 currency=column[22].lower())
             if crobj:
                 f.currency.save()
         except Exception as e:
             raise e
-        print(f.currency)
 
-        print(f.currency)
         if(column[21] == "NO"):
             y = False
             print(y)
         else:
             y = True
+        try:
+            f.tag_price = float(column[23])
+        except:
+            messages.error(request, "Tag Price cannot be empty. Provide 0")
+            return redirect(request.META.get('HTTP_REFERER'))
+        try:
+            f.rate = float(column[24])
+        except:
+            messages.error(request, "Rate cannot be empty. Provide 0")
+            return redirect(request.META.get('HTTP_REFERER'))
+        try:
+            f.Clarity = (column[8])
+        except:
+            messages.error(request, "Rate cannot be empty. Provide any value")
+            return redirect(request.META.get('HTTP_REFERER'))
+        
 
+            
+        counter += 1
         myibj = clonePurchaseOfColorStones.objects.create(date=temp_date,
                                                      company_name_id=f.company_name.id,
                                                      location_id=f.location.id,
@@ -1829,7 +1881,7 @@ def colorstone_upload(request):
                                                      gem_type_id=f.gem_type.id,
                                                      origin_id=f.origin.id,
                                                      Treatment_id=f.Treatment.id,
-                                                     Clarity=column[8],
+                                                     Clarity=f.Clarity,
                                                      certificate_no=column[9].lower(
                                                      ),
                                                      colour_id=f.colour.id,
@@ -1842,14 +1894,13 @@ def colorstone_upload(request):
                                                      amount=float(column[17]),
                                                      discount_amount=float(
                                                          column[18]),
-                                                     discount=float(z[0]),
+                                                     discount=float(column[19]),
                                                      total_val=float(
                                                          column[20]),
                                                      purchaseapv=y,
                                                      currency_id=f.currency.id,
-                                                     tag_price=float(
-                                                         column[23]),
-                                                     rate=float(column[24]),
+                                                     tag_price=f.tag_price,
+                                                     rate=f.rate,
                                                      )
     messages.success(request, "Successfully uploaded records")
     return redirect(request.META.get('HTTP_REFERER'))
@@ -1866,13 +1917,21 @@ def diamond_upload(request):
         messages.error(request,"This is not a CSV file")
     dataset=csv_file.read().decode('UTF-8')
     io_string=io.StringIO(dataset)
-    next(io_string)
+    column_names = str(next(io_string))
+    counter = 1
+    column_names = column_names.split(",")
     for column in csv.reader(io_string,delimiter=','):
         print(column[0])
         temp_date = datetime.datetime.strptime(str(column[0]), "%m-%d-%Y").date()
         print(temp_date)
         
         f=clonePOD
+        for i in range(len(column)):
+            if(i==1 or i==8 or i==12):
+                continue
+            if(column[i] == ""):
+                messages.error(request, "ERROR: {} cannot be empty for entry:  {}. Please remove all the entries from 1 to {} in the CSV file and try again.".format(column_names[i],str(counter), str(counter-1)))
+                return redirect(request.META.get('HTTP_REFERER'))
         try:
             f.company_name = companyinfo.objects.get(company_name=column[2].lower())
         except ObjectDoesNotExist:
@@ -1972,6 +2031,7 @@ def diamond_upload(request):
             bools=True
         else:
             bools=False
+        counter+=1
         myibj=clonePOD.objects.create(date=temp_date,
         company_name_id=f.company_name.id,
         location_id=f.location.id,
