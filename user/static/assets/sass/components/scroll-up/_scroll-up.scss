@@ -1,0 +1,26 @@
+/******************************** 
+    scrollUp style
+ ********************************/
+
+#scrollUp {
+  background: $theme-color;
+  width: 40px;
+  height: 40px;
+  bottom: 50px;
+  right: 50px;
+  border-radius: 100%;
+  color: $color-white;
+  text-align: center;
+  font-size: 22px;
+  line-height: 40px;
+  font-weight: fontweight(medium);
+  &:hover {
+    background: $theme-color2;
+    color: $color-white;
+  }
+}
+
+
+/******************************** 
+    scrollUp style End
+ ********************************/

@@ -1,0 +1,47 @@
+/*------------------*
+# Main-menu
+*------------------*/
+.main-menu {
+  li {
+    margin: 0 1px;
+    position: relative;
+    a {
+      font-weight: fontweight(semi-bold);
+      display: block;
+      padding: 20px;
+      text-align: center;
+      line-height: 30px;
+      font-size: 14px;
+      text-transform: uppercase;
+      @include max-screen(992, 1199) {
+        padding: 15px;
+        font-size: 13px;
+      }
+      i {
+        font-size: 15px;
+        position: relative;
+        top: 1px;
+      }
+    }
+  }
+}
+// theme1
+.theme1 {
+  li {
+    a {
+      color: $color-dark;
+    }
+    &:hover > a {
+      color: $theme-color;
+    }
+
+    &.active > a {
+      color: $theme-color;
+    }
+  }
+}
+
+
+/*------------------*
+# Main-menu END
+*------------------*/

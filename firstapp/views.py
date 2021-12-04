@@ -2613,50 +2613,7 @@ def ExportSalesReturnCS(request):
     return response
 
 
-class SignUpView(CreateView):
-    template_name = 'user_register.html'
-    success_url = reverse_lazy('user_login')
-    form_class = UserForm
 
-
-def user_login(request):
-    message = None
-
-    if 'is_logedin' not in request.session and request.method != 'POST':
-        message = "Please Enter your Email  and password "
-        return render(request, 'user_login.html', {'message': message})
-    elif request.method == 'POST':
-
-        user_email = request.POST.get('email')
-        user_email = user_email.lower()
-        user_password = request.POST.get('password')
-        try:
-            user_details = (User_table.objects.get(pk=user_email))
-            if(user_details.password == user_password):
-                if(user_details.permit_user):
-                    request.session['is_logedin'] = True
-                    request.session['logdin_time'] = str(datetime.now())
-                    request.session['user_email'] = user_details.email_id
-                    request.session['business_type'] = user_details.Businesstype
-                    return redirect('/')
-                else:
-                    message = "You are not permitted to view the content. Contact the administrator."
-            else:
-                message = "Please check your credentials."
-        except User_table.DoesNotExist:
-            message = "No user found...!!"
-
-        return render(request, 'user_login.html', {'message': message})
-
-    return redirect("/")
-
-
-def user_Logout(request):
-    if 'is_logedin' in request.session:
-        del request.session['is_logedin']
-        request.session.clear()
-        return redirect('user_login')
-    return redirect("/")
 def ExportPOJ(request):
     objects = POJ.objects.all()
     output = []

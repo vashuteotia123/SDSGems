@@ -1,0 +1,36 @@
+/******************************** 
+    product tab menu style
+ ********************************/
+.product-tab-menu {
+  .nav-item {
+    margin: 0px 2px;
+    @include max-screen(560) {
+      margin: 0px 2px 5px;
+    }
+    .nav-link {
+      font-weight: 600;
+      font-size: 16px;
+      text-transform: capitalize;
+      padding: 8px 15px;
+      color: $color-dark;
+    }
+  }
+}
+
+// theme1
+.theme1 {
+  .nav-link {
+    &.active,
+    &:hover {
+      color: $theme-color;
+      background: transparent;
+      text-decoration: underline;
+     
+    }
+  }
+}
+
+
+/******************************** 
+    product tab menu style END
+ ********************************/

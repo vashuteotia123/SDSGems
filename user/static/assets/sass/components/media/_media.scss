@@ -1,0 +1,62 @@
+/*************************************
+ media CSS 
+*************************************/
+
+.static-media {
+  &.mr-50 {
+    @include max-screen(1200, 1399) {
+      margin-right: 25px;
+    }
+    @include max-screen(992, 1199) {
+      margin-right: 30px;
+    }
+  }
+}
+
+.phone {
+  line-height: 1;
+  font-size: 14px;
+  @include max-screen(767) {
+    font-size: 13px;
+  }
+  a {
+    &:hover {
+      color: $theme-color !important;
+    }
+  }
+
+  span {
+    line-height: 1;
+    font-size: 14px;
+  }
+  strong {
+    line-height: 1;
+  }
+
+  .email {
+    line-height: 2rem;
+  }
+}
+
+
+
+
+// theme1
+.theme1 {
+  .phone {
+    a {
+      &:hover {
+        color: $theme-color !important;
+      }
+    }
+    &.modify{a {
+      &:hover {
+        color: $color-white !important;
+      }
+    }}
+  }
+}
+
+/*************************************
+ media CSS  ENd
+*************************************/

@@ -28,16 +28,6 @@ class ColorPurchaseOfColorStonesAdmin(admin.ModelAdmin):
     list_display = [f.name for f in clonePurchaseOfColorStones._meta.fields]
 
 
-
-@admin.register(User_table)
-class usertableadmin(DjangoObjectActions, admin.ModelAdmin):
-    def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
-
-    HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-    changelist_actions = ('HomePage',)
-
-
 if deploy_color_stone:
     
     @admin.register(countries)

@@ -1,0 +1,33 @@
+/*************************************
+   cart-block-links CSS 
+*************************************/
+.cart-block-links {
+  li {
+    margin-right: 30px;
+    a {
+      font-size: 20px;
+      @include max-screen(767) {
+        font-size: 20px;
+      }
+      font-family: $raleway;
+      font-weight: fontweight(medium);
+      text-align: center;
+      line-height: 25px;
+    }
+  }
+}
+
+// theme1
+.cart-block-links {
+  &.theme1 a {
+    color: $color-dark;
+    &:hover {
+      color: $theme-color;
+    }
+  }
+}
+
+
+/*************************************
+   cart-block-links CSS  END
+*************************************/

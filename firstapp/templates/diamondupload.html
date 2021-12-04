@@ -32,7 +32,8 @@
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
-            <input type="file" name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+            <input type="file" name="file"
+                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
             <button id="button" class="btn btn-success" type="submit" href="/">Submit</button>
         </form>
         {% endif %}

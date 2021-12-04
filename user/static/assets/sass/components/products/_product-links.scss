@@ -1,0 +1,74 @@
+/******************************** 
+    product links style
+ ********************************/
+.actions {
+  position: absolute;
+  z-index: 3;
+  width: 100%;
+  @include min-screen(768) {
+    bottom: 20px;
+  }
+  bottom: 30px;
+  li {
+    margin: 0 3px;
+    .action {
+      display: block;
+      background: $color-grey-light;
+      color: $color-dark;
+      width: 40px;
+      height: 40px;
+      font-size: 16px;
+      line-height: 40px;
+      text-align: center;
+      span {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        display: block;
+      }
+      @include transform(scale3d(0, 0, 0));
+      @include border-radius(50%);
+    }
+  }
+}
+
+.product-card {
+  .card-body {
+    &:hover {
+      .actions {
+        li {
+          a {
+            @include transform(scale3d(1, 1, 1));
+          }
+
+          &:nth-child(2) {
+            a {
+              @include transition(0.6s);
+            }
+          }
+          &:nth-child(3) {
+            a {
+              @include transition(0.9s);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// theme1
+.theme1 {
+  .actions {
+    li {
+      &:hover .action {
+        background: $theme-color;
+        color: $color-white;
+      }
+    }
+  }
+}
+
+/******************************** 
+    product links style END
+ ********************************/

@@ -1,0 +1,156 @@
+@import "./product-tabs-menu";
+@import "./product-links";
+
+/******************************** 
+   product-card style 
+ ********************************/
+.tab-content {
+  .tab-pane {
+    &.active {
+      .product-list {
+        animation: zoomIn 0.5s ease;
+        animation-duration: 1s;
+      }
+    }
+  }
+}
+.product-thumbnail {
+  img {
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+  }
+}
+
+img {
+  &.second-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    background: $color-white;
+  }
+}
+
+.product-card {
+  border: 0;
+  box-shadow: 0 0 11.83px 1.17px rgba(0, 0, 0, 0.06);
+  &:hover img {
+    &.second-img {
+      opacity: 1;
+      z-index: 1;
+    }
+  }
+  &.no-shadow {
+    box-shadow: none;
+  }
+}
+
+/* product desc style */
+
+.product-desc {
+  padding: 18px;
+  .title {
+    margin-bottom: 10px;
+    font-size: 16px;
+    @include max-screen(991) {
+      font-size: 14px;
+    }
+    font-weight: 600;
+    line-height: 1.5;
+  }
+}
+
+// theme1
+.theme1 {
+  .product-desc {
+    .title {
+      &:hover {
+        a {
+          color: $theme-color;
+        }
+      }
+    }
+  }
+}
+
+
+
+.star-rating {
+  span {
+    font-weight: fontweight(regular);
+    line-height: 1;
+    margin: 0 1px 0 0;
+    font-size: 18px;
+    color: $color-warning;
+    .de-selected {
+      color: $border-color2;
+    }
+  }
+}
+
+.product-price {
+  font-weight: fontweight(bold);
+  font-size: 16px;
+  color: $color-dark;
+  .del {
+    margin-right: 2px;
+  }
+}
+// theme1
+.theme1 {
+  .product-price {
+    .onsale {
+      color: $theme-color;
+    }
+  }
+}
+
+
+
+.pro-btn {
+  background: $color-grey-light;
+  color: $color-dark;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  font-weight: fontweight(regular);
+  line-height: 40px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @include border-radius(50%);
+}
+.pro-btn-right {
+  position: absolute;
+  right: 20px;
+}
+
+// theme1
+.theme1 {
+  .pro-btn {
+    &:hover {
+      background: $theme-color;
+      color: $color-white;
+    }
+  }
+}
+
+
+.product-thumbnail {
+  @include max-screen(480) {
+    width: 100%;
+  }
+  a {
+    @include max-screen(480) {
+      display: block;
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
+
+/******************************** 
+   product-card style END
+ ********************************/

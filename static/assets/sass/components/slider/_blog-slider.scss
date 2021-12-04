@@ -1,0 +1,78 @@
+/*******************************
+ blog-init
+ *******************************/
+.blog-init {
+  .slick-list {
+    margin: 0 -15px;
+
+    .slick-slide {
+      padding: 0 15px;
+    }
+  }
+}
+
+.blog-thumb {
+  img {
+    width: 100%;
+  }
+}
+
+.blog-post-content {
+  .title {
+    font-size: 16px;
+    font-weight: fontweight(semi-bold);
+    text-transform: capitalize;
+  }
+  .sub-title {
+    text-transform: capitalize;
+    font-size: 14px;
+    a {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  .text {
+    margin-bottom: 15px;
+  }
+  .read-more {
+    font-size: 14px;
+    text-transform: capitalize;
+    display: inline-block;
+    color: $theme-color;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .separator {
+    margin: 0 5px;
+  }
+}
+
+.blog-link {
+  font-weight: 600;
+  font-size: 12px;
+  color: $theme-color;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.blog-links {
+  li {
+    margin-bottom: 5px;
+    a {
+      color: $tab-menu-color;
+    }
+
+    &:hover {
+      a {
+        color: $theme-color;
+      }
+    }
+  }
+}
+/*******************************
+ blog-init End
+ *******************************/

@@ -1,0 +1,50 @@
+/******************************** 
+    countdown-sync-nav Slider
+ ********************************/
+
+.countdown-sync-nav {
+  max-width: 80%;
+  margin: auto;
+}
+
+// theme1
+.theme1 {
+  .product-sync-nav {
+    // max-width: 90%;
+    margin: 0 auto;
+    .slick-slide {
+      padding: 0 5px;
+      .product-thumb {
+        border: 1px solid transparent;
+        &:hover {
+          border-color: $theme-color;
+        }
+        img {
+          width: 100%;
+        }
+      }
+      &.slick-current {
+        .product-thumb {
+          border-color: $theme-color;
+        }
+      }
+    }
+  }
+}
+
+.has-opacity {
+  .slick-slide {
+    img {
+      opacity: 0.3;
+    }
+    &.slick-current.slick-active {
+      img {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+/******************************** 
+    countdown-sync-nav Slider End
+ ********************************/

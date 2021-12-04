@@ -1,0 +1,35 @@
+/******************************** 
+     static media Css
+  ********************************/
+.media {
+  display: flex;
+  align-items: flex-start;
+}
+
+.media-body {
+  flex: 1;
+ 
+}
+.static-media-wrap {
+  padding: 45px 30px;
+}
+
+.static-media2 {
+  .title {
+    text-transform: capitalize;
+    font-size: 18px;
+    margin-bottom: 5px;
+    font-weight: fontweight(bold);
+    color: $color-white;
+    @include max-screen(992, 1199) {
+      font-size: 15px;
+    }
+  }
+  .text{
+    color: $color-white;
+  }
+}
+
+/******************************** 
+     static media Css End
+  ********************************/

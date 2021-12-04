@@ -1,0 +1,221 @@
+/*************************************
+    check-box style CSS 
+*************************************/
+
+.widget-check-box {
+  margin-bottom: 10px;
+}
+
+.sidbar-widget {
+  padding-top: 20px;
+}
+
+.sidbar-widget .title {
+  font-weight: fontweight(bold);
+  font-size: 18px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  position: relative;
+  display: block;
+  border-bottom: 1px solid $border-color;
+  text-transform: capitalize;
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 60px;
+    height: 2px;
+    background: $theme-color;
+  }
+}
+.sidbar-widget .sub-title {
+  font-weight: fontweight(semi-bold);
+  font-size: 16px;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+}
+
+.widget-check-box input[type="checkbox"] {
+  display: none;
+}
+
+.widget-check-box input[type="checkbox"] + label {
+  position: relative;
+  padding-top: 3px;
+  padding-left: 30px;
+  cursor: pointer;
+  text-transform: capitalize;
+  user-select: none;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.widget-check-box input[type="checkbox"] + label:hover {
+  color: $theme-color;
+}
+
+.widget-check-box input[type="checkbox"] + label:before {
+  content: "";
+  display: block;
+  width: 15px;
+  height: 15px;
+  border: 1px solid $border-color;
+  border-radius: 3px;
+  position: absolute;
+  left: 0;
+  top: 5px;
+  opacity: 1;
+}
+
+.widget-check-box input[type="checkbox"] + label:hover:before {
+  border-color: $theme-color;
+}
+
+.widget-check-box.color-grey input[type="checkbox"] + label:before {
+  background-color: $black-soft;
+  box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.widget-check-box.color-grey input[type="checkbox"]:checked + label:before {
+  background-color: transparent;
+}
+
+.widget-check-box.color-white input[type="checkbox"] + label:before {
+  box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.widget-check-box.color-black input[type="checkbox"] + label:before {
+  background-color: $tab-menu-color;
+  border: 1px solid $tab-menu-color;
+}
+
+.widget-check-box.color-camel input[type="checkbox"] + label:before {
+  background-color: $camel;
+  border: 1px solid $camel;
+}
+
+.widget-check-box.color-camel input[type="checkbox"]:checked + label:before {
+  background-color: transparent;
+}
+
+.widget-check-box input[type="checkbox"]:checked + label:before {
+  width: 10px;
+  top: -1px;
+  left: 5px;
+  border-color: $theme-color;
+  border-radius: 0;
+  opacity: 1;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  @include transform(rotate(45deg));
+}
+
+// theme1
+.theme1 {
+  .widget-check-box input[type="checkbox"]:checked + label:before {
+    border-color: $theme-color;
+    border-radius: 0;
+    opacity: 1;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    @include transform(rotate(45deg));
+  }
+}
+
+
+
+.widget-check-box.color-black input[type="checkbox"]:checked + label:before {
+  background: 0 0;
+}
+
+/* radio check box style */
+
+.widget-check-box input[type="radio"]:checked,
+.widget-check-box input[type="radio"]:not(:checked) {
+  position: absolute;
+  left: -9999px;
+}
+
+.widget-check-box input[type="radio"]:checked + label,
+.widget-check-box input[type="radio"]:not(:checked) + label {
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  line-height: 20px;
+  display: inline-block;
+}
+
+.widget-check-box input[type="radio"]:checked + label:before,
+.widget-check-box input[type="radio"]:not(:checked) + label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid $border-color;
+  border-radius: 100%;
+  background: $color-white;
+}
+
+.widget-check-box input[type="radio"]:checked + label:after,
+.widget-check-box input[type="radio"]:not(:checked) + label:after {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background: $theme-color;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  border-radius: 100%;
+}
+
+.widget-check-box input[type="radio"]:not(:checked) + label:after {
+  opacity: 0;
+  @include transform(scale(0));
+}
+
+.widget-check-box input[type="radio"]:checked + label:after {
+  opacity: 1;
+  @include transform(scale(1));
+}
+
+.widget-check-box input[type="radio"] + label:hover {
+  color: $theme-color;
+}
+
+/* check-box style CSS End */
+#amount {
+  border: 0;
+  color: #565656;
+  font-size: 14px;
+  margin: 0 0 20px;
+}
+
+.sidbar-widget .ui-widget-content {
+  border: 1px solid $theme-color;
+}
+.sidbar-widget .ui-slider-horizontal {
+  height: 5px;
+}
+.sidbar-widget .ui-widget-header {
+  background: $theme-color;
+}
+.sidbar-widget .ui-slider-handle {
+  top: 50%;
+  width: 15px;
+  height: 15px;
+  border: none;
+  background: $color-white;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
+  outline: 0;
+  cursor: pointer;
+  margin-top: -7.5px;
+  border-radius: 100%;
+}
+/*************************************
+    check-box style CSS  END
+*************************************/

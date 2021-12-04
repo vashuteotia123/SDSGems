@@ -1,0 +1,62 @@
+/******************************** 
+    popular Slider
+ ********************************/
+
+.popular-slider-init {
+  .slick-list {
+    padding: 20px 0px;
+    margin: 0 -15px;
+    .slick-slide {
+      padding: 0 15px;
+    }
+  }
+}
+
+.popular-card {
+  text-align: center;
+  background: $color-white;
+  border: 0;
+  box-shadow: 0 0 11.83px 1.17px rgba(0,0,0,.06);
+  @include border-radius(0px);
+  .card-body {
+    padding: 20px;
+    .thumb-naile{
+      display: block;
+      overflow: hidden;
+    }
+    .popular-title {
+      text-transform: uppercase;
+      padding: 20px 0px 0px;
+      font-weight: 600;
+      font-size: 14px;
+      a{
+        display: block;
+      }
+      
+    }
+  }
+}
+
+
+// theme1
+.theme1 {
+  .popular-card {
+    text-align: center;
+    .card-body {
+      .popular-title {
+        a {
+          &:hover {
+            color: $theme-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+/******************************** 
+    popular Slider ENd
+ ********************************/

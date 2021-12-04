@@ -1,0 +1,65 @@
+/*******************************
+    badge style 
+ *******************************/
+
+.badge {
+  position: absolute;
+  text-align: center;
+  padding: 5px;
+  line-height: 1;
+  font-size: 12px;
+  z-index: 2;
+  font-weight: fontweight(medium);
+  text-transform: capitalize;
+}
+// theme1
+.theme1 {
+  .badge-danger {
+    color: $color-white;
+    background-color: $theme-color !important;
+  }
+}
+.badge-success {
+  color: $color-white;
+  background-color: $theme-color3 !important;
+}
+
+.cbdg1 {
+  width: 20px;
+  height: 20px;
+  bottom: 10px;
+  left: 15px;
+  padding: 0px;
+  line-height: 18px;
+  @include border-radius(50%);
+}
+
+// theme1
+.theme1 {
+  .cbdg1 {
+    color: $color-white;
+    background-color: $theme-color !important;
+  }
+}
+
+.cb6 {
+  display: inline-block;
+  text-align: center;
+  font-size: 18px;
+  padding: 10px;
+}
+// badge position
+
+.top-left {
+  top: 10px;
+  left: 10px;
+}
+.top-right {
+  @extend.top-left;
+  left: auto;
+  right: 10px;
+}
+
+/*******************************
+    badge style  END
+ *******************************/

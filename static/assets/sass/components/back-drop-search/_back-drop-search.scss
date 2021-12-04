@@ -1,0 +1,104 @@
+body.open {
+  overflow-y: scroll;
+}
+
+.overlay {
+  bottom: 0;
+  height: 100vh;
+  left: 0;
+  margin: 0;
+  opacity: 0;
+  overflow: hidden;
+  position: fixed;
+  right: 0;
+  top: 0;
+  -webkit-transition: all 0.3s cubic-bezier(0.4, 0, 1, 1) 0s;
+  -o-transition: all 0.3s cubic-bezier(0.4, 0, 1, 1) 0s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 1, 1) 0s;
+  visibility: hidden;
+  width: 100%;
+  z-index: 9999999;
+  background: rgba(22, 22, 27, 0.97);
+  cursor: pointer;
+}
+
+.open .overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+.scale {
+  cursor: pointer;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.overlay form.search-box {
+  bottom: 0;
+  height: 60px;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 10;
+  max-width: 80%;
+  -webkit-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  opacity: 0;
+  transform: scale(1.1);
+}
+
+.open .overlay form.search-box {
+  opacity: 1;
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
+
+.overlay .search-box input {
+  border: 0 none;
+  line-height: 60px;
+  width: 100%;
+  font-size: 14px;
+  background: transparent;
+  border: 1px solid $border-color;
+  padding: 10px 50px 10px 10px;
+  height: 60px;
+  color: $color-white;
+  text-transform: capitalize;
+
+  &::placeholder {
+    color: $color-white !important;
+  }
+
+
+}
+
+.overlay .search-box button {
+  background-color: transparent;
+  border: 0 none;
+  color: #ffffff;
+  font-size: 25px;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  padding: 0;
+}
+
+button.close {
+  position: absolute;
+  font-size: 30px;
+  color: #fff;
+  top: 40px;
+  right: 40px;
+  z-index: 33;
+  opacity: 1;
+
+  &:hover {
+    color: $color-white !important;
+    opacity: 1 !important;
+  }
+}

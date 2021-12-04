@@ -1,0 +1,850 @@
+/*------------------*
+# Check out Page
+*------------------*/
+
+.billing-info-wrap .billing-info input,
+.billing-info-wrap .billing-select input {
+  background: transparent none repeat scroll 0 0;
+  border: 1px solid #e6e6e6;
+  color: #666;
+  font-size: 14px;
+  padding-left: 20px;
+  padding-right: 10px;
+  width: 100%;
+  outline: none;
+  height: 45px;
+}
+
+.billing-info-wrap .checkout-account-toggle input {
+  background: transparent none repeat scroll 0 0;
+  border: 1px solid #e6e6e6;
+  color: #666;
+  font-size: 14px;
+  padding-left: 20px;
+  padding-right: 10px;
+  margin: 0 0 20px;
+  width: 100%;
+  height: 45px;
+  outline: none;
+}
+
+.billing-info-wrap .additional-info-wrap .additional-info textarea {
+  background: transparent none repeat scroll 0 0;
+  border: 1px solid #e6e6e6;
+  color: #333;
+  font-size: 14px;
+  height: 138px;
+  padding: 17px 20px;
+  width: 100%;
+  outline: none;
+}
+
+.billing-info-wrap {
+  .title {
+    font-size: 30px;
+    text-transform: capitalize;
+    font-weight: fontweight(semi-bold);
+    margin-bottom: 30px;
+  }
+}
+
+.your-order-area {
+  .title {
+    font-size: 30px;
+    text-transform: capitalize;
+    font-weight: fontweight(semi-bold);
+    margin-bottom: 30px;
+  }
+}
+.billing-info {
+  margin-bottom: 20px;
+}
+
+.billing-info label {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.form-select {
+  height: 45px;
+  border-radius: 0px;
+  outline: 0;
+  color: #565656;
+}
+.form-select:focus {
+  border-color: #e6e6e6;
+  outline: 0;
+  box-shadow: none;
+}
+
+.open-toggle,
+.open-toggle2 {
+  display: none;
+}
+
+.your-order-area .your-order-wrap {
+  padding: 38px 45px 44px;
+  background: #f6f6f6;
+}
+.your-order-area
+  .your-order-wrap
+  .your-order-product-info
+  .your-order-top
+  ul
+  li {
+  font-size: 24px;
+  text-transform: capitalize;
+  color: #111;
+  font-weight: 500;
+}
+
+.your-order-area .your-order-wrap .your-order-product-info .your-order-top ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.your-order-area
+  .your-order-wrap
+  .your-order-product-info
+  .your-order-top
+  ul
+  li {
+  font-size: 15px;
+  font-weight: 500;
+  list-style: outside none none;
+  color: $color-dark;
+}
+
+.your-order-area .your-order-wrap .your-order-product-info .your-order-middle {
+  border-bottom: 1px solid #dee0e4;
+  border-top: 1px solid #dee0e4;
+  margin: 29px 0;
+  padding: 19px 0 18px;
+}
+
+.your-order-area
+  .your-order-wrap
+  .your-order-product-info
+  .your-order-bottom
+  ul
+  li.your-order-shipping {
+  font-size: 15px;
+  color: $color-dark;
+  font-weight: 500;
+}
+
+.your-order-area
+  .your-order-wrap
+  .your-order-product-info
+  .your-order-middle
+  ul
+  li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin: 0 0 10px;
+}
+.your-order-area
+  .your-order-wrap
+  .your-order-product-info
+  .your-order-bottom
+  ul {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.your-order-area
+  .your-order-wrap
+  .your-order-product-info
+  .your-order-total
+  ul {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.billing-info-wrap .billing-info input,
+.billing-info-wrap .billing-select input {
+  background: transparent none repeat scroll 0 0;
+  border: 1px solid #e6e6e6;
+  color: #666;
+  font-size: 14px;
+  padding-left: 20px;
+  padding-right: 10px;
+  width: 100%;
+  outline: none;
+  height: 45px;
+}
+.billing-info-wrap .nice-select {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.billing-info-wrap .nice-select .list {
+  width: 100%;
+}
+.billing-info-wrap .nice-select:active,
+.billing-info-wrap .nice-select.open,
+.billing-info-wrap .nice-select:focus {
+  border-color: #ebebeb;
+}
+.billing-info-wrap .billing-info input.billing-address,
+.billing-info-wrap .billing-select input.billing-address {
+  margin-bottom: 10px;
+}
+.billing-info-wrap .checkout-account label {
+  color: #666;
+  font-weight: 400;
+  margin: 0 0 0 12px;
+}
+.billing-info-wrap .checkout-account input {
+  border: 1px solid #e6e6e6;
+  display: inline-block;
+  float: left;
+  height: 12px;
+  width: 12px;
+  margin-top: 7px;
+  cursor: pointer;
+}
+.billing-info-wrap .checkout-account-toggle input {
+  background: transparent none repeat scroll 0 0;
+  border: 1px solid #e6e6e6;
+  color: #666;
+  font-size: 14px;
+  padding-left: 20px;
+  padding-right: 10px;
+  margin: 0 0 20px;
+  width: 100%;
+  height: 45px;
+  outline: none;
+}
+
+.billing-info-wrap .additional-info-wrap h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: $color-dark;
+  margin: 0 0 10px;
+}
+.billing-info-wrap .additional-info-wrap .additional-info textarea {
+  background: transparent none repeat scroll 0 0;
+  border: 1px solid #e6e6e6;
+  color: #333;
+  font-size: 14px;
+  height: 138px;
+  padding: 17px 20px;
+  width: 100%;
+  outline: none;
+}
+.additional-info-wrap {
+  margin: 30px 0;
+}
+.your-order-area .your-order-wrap {
+  padding: 38px 45px 44px;
+  @include max-screen(767) {
+    padding: 15px;
+  }
+  background: #f6f6f6;
+}
+.your-order-area .your-order-wrap .your-order-product-info .your-order-top ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+.your-order-area
+  .your-order-wrap
+  .your-order-product-info
+  .your-order-top
+  ul
+  li {
+  font-size: 15px;
+  font-weight: 500;
+  list-style: outside none none;
+  color: $color-dark;
+}
+.your-order-area .your-order-wrap .your-order-product-info .your-order-middle {
+  border-bottom: 1px solid #dee0e4;
+  border-top: 1px solid #dee0e4;
+  margin: 29px 0;
+  padding: 19px 0 18px;
+}
+.your-order-area
+  .your-order-wrap
+  .your-order-product-info
+  .your-order-middle
+  ul
+  li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin: 0 0 10px;
+}
+.your-order-area
+  .your-order-wrap
+  .your-order-product-info
+  .your-order-bottom
+  ul {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+.your-order-area
+  .your-order-wrap
+  .your-order-product-info
+  .your-order-bottom
+  ul
+  li.your-order-shipping {
+  font-size: 15px;
+  color: $color-dark;
+  font-weight: 500;
+}
+.your-order-area .your-order-wrap .your-order-product-info .your-order-total {
+  border-bottom: 1px solid #dee0e4;
+  border-top: 1px solid #dee0e4;
+  margin: 18px 0 33px;
+  padding: 17px 0 19px;
+}
+.your-order-area
+  .your-order-wrap
+  .your-order-product-info
+  .your-order-total
+  ul {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+.your-order-area
+  .your-order-wrap
+  .your-order-product-info
+  .your-order-total
+  ul
+  li.order-total {
+  font-weight: 500;
+  color: $color-dark;
+  font-size: 15px;
+}
+.your-order-area
+  .your-order-wrap
+  .your-order-product-info
+  .your-order-total
+  ul
+  li {
+  font-weight: 600;
+  color: $theme-color;
+  font-size: 16px;
+  list-style: outside none none;
+}
+.your-order-area .payment-accordion:last-child {
+  margin: 0 0 0;
+}
+.your-order-area .payment-accordion {
+  margin: 0 0 16px;
+}
+.your-order-area .payment-accordion {
+  margin: 0 0 16px;
+}
+.your-order-area .payment-accordion h4 a {
+  color: $color-dark;
+  font-size: 16px;
+  margin: 0;
+  font-weight: 500;
+}
+.your-order-area .payment-accordion .panel-body {
+  padding: 5px 0 0 0;
+}
+.your-order-area .payment-accordion .panel-body p {
+  padding: 0 0 0 10px;
+}
+
+.Place-order {
+  margin-top: 25px;
+}
+
+.open-toggle,
+.open-toggle2 {
+  display: none;
+}
+.single-my-account h3.panel-title {
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ebebeb;
+  color: $color-dark;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+  position: relative;
+  text-transform: uppercase;
+  line-height: 2;
+}
+.single-my-account h3.panel-title span {
+  color: $color-dark;
+  font-size: 14px;
+  left: 20px;
+  position: absolute;
+  top: 16px;
+}
+.single-my-account h3.panel-title a {
+  color: $color-dark;
+  display: block;
+  padding: 16px 55px;
+  position: relative;
+}
+.single-my-account h3.panel-title a:hover {
+  color: $theme-color;
+}
+.single-my-account h3.panel-title a:hover::before {
+  color: $theme-color;
+}
+.single-my-account h3.panel-title a::before {
+  color: #000;
+  content: "\f3d0";
+  display: inline-block;
+  font-family: "Ionicons";
+  font-size: 14px;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  margin-top: -14px;
+}
+.single-my-account .myaccount-info-wrapper {
+  padding: 30px 20px;
+  background-color: #fff;
+}
+.single-my-account .myaccount-info-wrapper .account-info-wrapper {
+  border-bottom: 1px solid #eaeaea;
+  margin-bottom: 28px;
+  padding-bottom: 30px;
+}
+.single-my-account .myaccount-info-wrapper .account-info-wrapper h4 {
+  font-size: 14px;
+  margin: 0;
+  text-transform: uppercase;
+  color: $color-dark;
+  font-weight: 700;
+}
+.single-my-account .myaccount-info-wrapper .account-info-wrapper h5 {
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  margin-top: 7px;
+  font-weight: 600;
+  color: $color-dark;
+}
+.single-my-account .myaccount-info-wrapper .billing-info {
+  margin-bottom: 20px;
+}
+.single-my-account .myaccount-info-wrapper .billing-info label {
+  color: #666;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+.single-my-account .myaccount-info-wrapper .billing-info input {
+  background: transparent none repeat scroll 0 0;
+  border: 1px solid #ebebeb;
+  color: #666;
+  height: 40px;
+  padding: 0 15px;
+  width: 100%;
+  outline: none;
+}
+.single-my-account .myaccount-info-wrapper .billing-back-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin-top: 26px;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.single-my-account .myaccount-info-wrapper .billing-back-btn .billing-back a {
+  color: $color-dark;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.single-my-account
+  .myaccount-info-wrapper
+  .billing-back-btn
+  .billing-back
+  a:hover {
+  color: $theme-color;
+}
+.single-my-account .myaccount-info-wrapper .billing-back-btn .billing-back a i {
+  font-size: 15px;
+  color: $theme-color;
+}
+
+.single-my-account .myaccount-info-wrapper .entries-wrapper .entries-info {
+  padding: 30px 20px;
+}
+.single-my-account .myaccount-info-wrapper .entries-wrapper .entries-info p {
+  color: #666;
+  font-size: 14px;
+  margin: 0;
+  text-transform: capitalize;
+}
+.single-my-account
+  .myaccount-info-wrapper
+  .entries-wrapper
+  .entries-edit-delete
+  a.edit {
+  background-color: #0090f0;
+  font-weight: 700;
+}
+.single-my-account
+  .myaccount-info-wrapper
+  .entries-wrapper
+  .entries-edit-delete
+  a.edit:hover {
+  background-color: $theme-color;
+}
+.single-my-account
+  .myaccount-info-wrapper
+  .entries-wrapper
+  .entries-edit-delete
+  a:hover {
+  background-color: $theme-color;
+}
+.single-my-account
+  .myaccount-info-wrapper
+  .entries-wrapper
+  .entries-edit-delete
+  a {
+  background-color: #f32013;
+  color: #fff;
+  display: inline-block;
+  line-height: 1;
+  margin: 0 2px;
+  padding: 12px 15px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.single-my-account {
+  margin-bottom: 20px;
+  border: 1px solid #ebebeb;
+}
+.single-my-account:last-child {
+  margin: 0;
+}
+.single-my-account .myaccount-info-wrapper .entries-wrapper {
+  border: 1px solid #eaeaea;
+  position: relative;
+}
+.single-my-account .myaccount-info-wrapper .entries-wrapper::before {
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 1px;
+  left: 50%;
+  top: 0;
+  background-color: #eaeaea;
+}
+.login-register-wrapper .login-register-tab-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+.login-register-wrapper .login-register-tab-list a {
+  position: relative;
+}
+.login-register-wrapper .login-register-tab-list a:last-child:before {
+  display: none;
+}
+.login-register-wrapper .login-register-tab-list a::before {
+  background-color: #000;
+  bottom: 5px;
+  content: "";
+  height: 18px;
+  margin: 0 auto;
+  position: absolute;
+  right: -2px;
+  -webkit-transition: all 0.4s ease 0s;
+  -o-transition: all 0.4s ease 0s;
+  transition: all 0.4s ease 0s;
+  width: 1px;
+}
+.login-register-wrapper .login-register-tab-list a.active h4 {
+  color: $theme-color;
+}
+.login-register-wrapper .login-register-tab-list a h4 {
+  font-size: 25px;
+  font-weight: 700;
+  margin: 0 20px;
+  text-transform: capitalize;
+  -webkit-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  color: $color-dark;
+}
+.login-register-wrapper .login-form-container {
+  background: transparent none repeat scroll 0 0;
+  -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  padding: 80px;
+  text-align: left;
+  @include max-screen(768) {
+    padding: 30px;
+  }
+}
+.login-register-wrapper .login-form-container .login-register-form form input {
+  background-color: transparent;
+  border: 1px solid #ebebeb;
+  color: #666;
+  font-size: 14px;
+  height: 45px;
+  margin-bottom: 30px;
+  padding: 0 15px;
+  width: 100%;
+  outline: none;
+}
+.login-register-wrapper
+  .login-form-container
+  .login-register-form
+  form
+  .button-box
+  .login-toggle-btn {
+  padding: 10px 0 19px;
+}
+
+.login-register-wrapper
+  .login-form-container
+  .login-register-form
+  form
+  input[type="checkbox"] {
+  height: 15px;
+  margin: 0;
+  position: relative;
+  top: 1px;
+  width: 17px;
+}
+.login-register-wrapper
+  .login-form-container
+  .login-register-form
+  form
+  .button-box
+  .login-toggle-btn
+  label {
+  color: $color-dark;
+  font-size: 15px;
+  font-weight: 400;
+}
+.login-register-wrapper
+  .login-form-container
+  .login-register-form
+  form
+  .button-box
+  .login-toggle-btn
+  a.flote-none {
+  float: none !important;
+}
+.login-register-wrapper
+  .login-form-container
+  .login-register-form
+  form
+  .button-box
+  .login-toggle-btn
+  a {
+  color: $color-dark;
+  float: right;
+  font-size: 14px;
+  -webkit-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  @include max-screen(480) {
+    float: none;
+  }
+}
+.login-register-wrapper
+  .login-form-container
+  .login-register-form
+  form
+  .button-box
+  .login-toggle-btn
+  a:hover {
+  color: $theme-color;
+}
+.contact-map #mapid {
+  height: 560px;
+}
+.custom-row-2 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -5px;
+  margin-left: -5px;
+}
+.custom-row-2 div[class^="col-"] {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.contact-info-wrap {
+  background-color: #f3f3f3;
+  padding: 120px 70px 116px 90px;
+}
+.contact-info-wrap .single-contact-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 40px;
+}
+.contact-info-wrap .single-contact-info .contact-icon {
+  margin-right: 20px;
+}
+.contact-info-wrap .single-contact-info .contact-icon i {
+  font-size: 20px;
+  color: $color-dark;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border: 1px solid #252525;
+  text-align: center;
+  border-radius: 100%;
+  -webkit-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+}
+.contact-info-wrap .single-contact-info .contact-info-dec p {
+  line-height: 1;
+  color: $color-dark;
+  margin: 0 0 9px;
+}
+.contact-info-wrap .single-contact-info .contact-info-dec p a {
+  color: $color-dark;
+}
+.contact-info-wrap .single-contact-info .contact-info-dec p a:hover {
+  color: $theme-color;
+}
+.contact-info-wrap .single-contact-info:hover .contact-icon i {
+  background-color: $theme-color;
+  color: #fff;
+  border-color: $theme-color;
+}
+.contact-social h3 {
+  font-weight: 700;
+  color: $color-dark;
+  font-size: 24px;
+  margin: 0 0 17px;
+  line-height: 1;
+}
+.contact-social ul li a {
+  color: #666;
+}
+.contact-social .social-info li a {
+  margin-right: 15px;
+}
+.contact-form {
+  background-color: #f3f3f3;
+  padding: 35px;
+  @include max-screen(767) {
+    padding: 15px;
+  }
+}
+.contact-form .contact-title h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: $color-dark;
+  line-height: 1;
+  margin-bottom: 36px;
+  margin-left: -10px;
+}
+.contact-form .contact-form-style input,
+.contact-form .contact-form-style textarea {
+  background: transparent;
+  border: 1px solid #c1c1c1;
+  height: 40px;
+  padding: 2px 14px;
+  margin-bottom: 30px;
+  color: #000;
+  width: 100%;
+  outline: none;
+}
+.contact-form p {
+  color: #333;
+}
+.contact-form .contact-form-style textarea {
+  padding: 20px 14px;
+  margin-bottom: 0;
+  height: 200px;
+}
+.contact-map {
+  margin-bottom: 60px;
+}
+.contact-form .contact-form-style button {
+  border: none;
+  background-color: $theme-color;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 15px 52px;
+  margin-top: 33px;
+  outline: none;
+  -webkit-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  border-radius: 30px;
+}
+.contact-form .contact-form-style button:hover {
+  background-color: $color-dark;
+  color: #fff;
+}
+
+.coupon-title {
+  font-size: 20px;
+  text-transform: capitalize;
+  font-weight: 600;
+  margin: 20px 0px 15px;
+}
+
+.check-out-btn {
+  padding: 14px 30px;
+}
