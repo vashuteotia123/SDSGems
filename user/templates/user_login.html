@@ -1,26 +1,5 @@
-{% load static %}
-
-
-<!DOCTYPE html>
-<html lang="zxx">
-
-    <head>
-        <link rel="stylesheet" href="/static/assets/css/fontawesome.min.css" />
-        <link rel="stylesheet" href="/static/assets/css/ionicons.min.css" />
-        <link rel="stylesheet" href="/static/assets/css/simple-line-icons.css" />
-        <link rel="stylesheet" href="/static/assets/css/plugins/jquery-ui.min.css">
-        <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="/static/assets/css/plugins/plugins.css" />
-        <!-- <link rel="stylesheet" href="/static/assets/css/plugins/aos.css" /> -->
-        <link rel="stylesheet" href="/static/assets/css/style.min.css" />
-    </head>
-
-    <body>
-
-        <!-- header top end -->
-
-        <!-- breadcrumb-section end -->
-
+{% extends 'base.html' %}
+{% block content %}
         <!-- login area start -->
         <div class="login-register-area pt-80 pb-80">
             <div class="container">
@@ -62,5 +41,4 @@
             </div>
         </div>
         <!-- login area end -->
-    </body>
-</html>
+{% endblock content %}

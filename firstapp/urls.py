@@ -7,7 +7,6 @@ urlpatterns = [
     #user model 
 
     path('index', views.index, name="index"),
-    path('', views.home, name="home"),
     path('showform', views.showform, name="showdform"),
     # path('ajax/load-currency/',views.load_currency,name="ajax/load-currency/")
     path('showj', views.showjewell, name="showjewell"),

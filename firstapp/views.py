@@ -38,36 +38,6 @@ def index(request):
     return render(request, 'index.html', context=context)
 
 
-def home(request):
-    jewel_colors = colorofcstone.objects.all()
-    jewel_types = set(Inventoryofjewellery.objects.values_list(
-        'jewellery_type', flat=True))
-    center_stone_types = set(
-        Inventoryofjewellery.objects.values_list('center_stone', flat=True))
-    # diam_fci = set(Inventoryofdiamond.objects.values_list(
-    #     'fancy_color_intensity1', flat=True))
-    diam_pol = set(Inventoryofdiamond.objects.values_list('polish', flat=True))
-    diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
-        'white_color_grade1', flat=True))
-    cs_treatment = set(
-        Inventoryofcolorstones.objects.values_list('treatment', flat=True))
-    cs_origin = set(
-        Inventoryofcolorstones.objects.values_list('origin', flat=True))
-    cs_shape = set(
-        Inventoryofcolorstones.objects.values_list('shape', flat=True))
-
-    context = {
-        'gemstones': jewel_colors,
-        'jewel_types': jewel_types,
-        'center_stone_types': center_stone_types,
-        # 'diam_fancy_color_intensity1': diam_fci,
-        'diam_polish': diam_pol,
-        'diamwcg': diam_wcg1,
-        'cs_tr': cs_treatment,
-        'cs_org': cs_origin,
-        'cs_shpe': cs_shape,
-    }
-    return render(request, 'home.html', context)
 
 
 @login_required

@@ -72,4 +72,34 @@ def user_Logout(request):
         request.session.clear()
         return redirect('user_login')
     return redirect("/")
-    
+
+
+
+def home(request):
+    context = {}
+    return render(request, 'home.html', context)
+
+class ShopList(View):
+    template_name = 'shop_list.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+
+class BlogList(View):
+    template_name = 'blog_list.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+class ContactUs(View):
+    template_name = 'contactus.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+class MyAccount(View):
+    template_name = 'myaccount.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
