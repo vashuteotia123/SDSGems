@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="description" content="" />
-    <title>Website Name</title>
+    <title>SDS Gems</title>
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="static/assets/img/favicon.ico" />
 
@@ -416,14 +416,16 @@
                 <ul class="d-flex justify-content-center justify-content-md-end
                   align-items-center">
                   <li>
-                    <a href="#" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Setting
+                    <a href="#" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My
+                      Account
                       <i class="ion
                         ion-ios-arrow-down"></i></a>
                     <ul class="topnav-submenu dropdown-menu" aria-labelledby="dropdown1">
-                      <li><a href="myaccount.html">My account</a></li>
+                      <li><a href="myaccount.html">Account Details</a></li>
                       {% if user_login %}
                       <li><a href="/user_logout">Logout</a></li>
                       {% else %}
+                      <li><a href="/user_register">Register</a></li>
                       <li><a href="/user_login">Login</a></li>
                       {% endif %}
                     </ul>
@@ -573,6 +575,7 @@
                   </ul>
                 </li>
                 {% if user_login %}
+                {% if only_cs%}
                 <li class="position-static">
                   <a href="shop-grid-3-column.html">Diamonds<i class="ion-ios-arrow-down"></i></a>
                   <ul class="mega-menu row">
@@ -589,7 +592,7 @@
                     </li>
                     <li class="col-3">
                       <ul>
-                        <li class="mega-menu-title"><a href="#">Diamonds by Cuts</a></li>
+                        <li class="mega-menu-title"><a href="#">Diamonds by Clarity</a></li>
                         {% for cut in diamond_cuts%}
                         <li><a href="">{{cut}}</a></li>
                         {% endfor %}
@@ -604,14 +607,6 @@
                         {% endfor %}
                       </ul>
                     </li>
-                    <li class=" col-3">
-                      <ul>
-                        <li class="mega-menu-title"><a href="#">Diamond by Polishes</a></li>
-                        {% for polish in diamond_polishes %}
-                        <li><a href="">{{polish}} </a></li>
-                        {% endfor %}
-                      </ul>
-                    </li>
                     <li class="col-6 mt-4">
                       <a href="single-product.html" class="zoom-in
                         overflow-hidden"><img src="static/assets/img/mega-menu/1.jpg" alt="img" /></a>
@@ -623,21 +618,13 @@
                   </ul>
                 </li>
                 {% endif %}
+                {% endif %}
                 {% if user_login %}
+                {% if only_cs%}
                 <li class="position-static">
                   <a href="shop-grid-3-column.html">Jewellery<i class="ion-ios-arrow-down"></i></a>
                   <ul class="mega-menu row">
-                    <li class="col-3">
-                      <ul>
-                        <li class="mega-menu-title"><a href="#">Jewellery by Shapes</a></li>
-                        {% for shape in jewellery_shapes %}
-                        <li>
-                          <a href="">{{shape}}</a>
-                        </li>
-                        {% endfor %}
 
-                      </ul>
-                    </li>
                     <li class="col-3">
                       <ul>
                         <li class="mega-menu-title"><a href="#">Jewellery by Center Stones</a></li>
@@ -673,6 +660,7 @@
                     </li>
                   </ul>
                 </li>
+                {% endif %}
                 {% endif %}
                 {% if user_login %}
                 <li class="position-static">

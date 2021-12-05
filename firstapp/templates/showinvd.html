@@ -45,7 +45,8 @@
         <td>{{obj.shape}}</td>
         <td>{{obj.clarity}}</td>
         <td>{{obj.color_origin1}}</td>
-        <td>{{obj.white_color_grade1}}, {{obj.fancycolor_grade}}</td>
+        <td>{% if obj.white_color_grade1%}{{obj.white_color_grade1}}{% endif%}{%if obj.fancycolor_grade%},
+            {{obj.fancycolor_grade}}{% endif%}</td>
         <td>{{obj.cut}}</td>
         <td>{{obj.polish}}</td>
         <td>{{obj.symmetry}}</td>

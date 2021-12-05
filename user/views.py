@@ -25,6 +25,9 @@ from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.views.generic.edit import CreateView
 import datetime
+from django.core.mail import EmailMessage
+from django.contrib import messages
+from django.template.loader import  get_template
 
 # Create your views here.
 
@@ -98,9 +101,33 @@ class ContactUs(View):
 
     def get(self, request):
         return render(request, self.template_name)
+    
+    def post(self, request):
+        from_name = request.POST.get('name')
+        from_mail = request.POST.get('email').lower()
+        mail_subject = request.POST.get('subject')
+        mail_message = request.POST.get('contactMessage')
+        to_mail = "sdsgems9@gmail.com"
+
+        ctx={
+            'from_name' : from_name,
+            'from_mail' : from_mail,
+            'mail_message': mail_message,
+        }
+        msg=get_template('mail.html').render(ctx)
+        email = EmailMessage(
+            mail_subject, msg, to=[to_mail]
+        )
+        email.content_subtype = "html"
+        email.send()
+        return render(request, self.template_name)
+        
+                
 
 class MyAccount(View):
     template_name = 'myaccount.html'
 
     def get(self, request):
         return render(request, self.template_name)
+
+

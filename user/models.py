@@ -16,7 +16,6 @@ class countries(models.Model):
         super(countries, self).save(*args, **kwargs)
 
 class State(models.Model):
-    country = models.ForeignKey('countries', on_delete=models.PROTECT)
     state = models.CharField(max_length=30)
 
     def __str__(self):

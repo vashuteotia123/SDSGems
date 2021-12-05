@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib import messages
+from import_export.admin import ImportExportModelAdmin
 
 from django.shortcuts import redirect
 from django_object_actions import DjangoObjectActions
@@ -14,7 +15,7 @@ class User(admin.ModelAdmin):
 
 
 @admin.register(countries)
-class CountryAdmin(admin.ModelAdmin):
+class CountryAdmin(ImportExportModelAdmin):
     pass
 
 @admin.register(State)
