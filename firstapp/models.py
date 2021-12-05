@@ -13,15 +13,6 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 
-class Blog(models.Model):
-    date = models.DateField(auto_now_add=True)
-    image = models.ImageField(upload_to="profile/", blank=True, null=True)
-    title = models.CharField(max_length=30)
-    subject = HTMLField(blank=True, null=True)
-
-    def __str__(self):
-        return (self.title)
-
 
 class countries(models.Model):
     class Meta:

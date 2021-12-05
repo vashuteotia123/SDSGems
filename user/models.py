@@ -1,5 +1,6 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from tinymce.models import HTMLField
 
 
 class countries(models.Model):
@@ -49,3 +50,12 @@ class User_table(models.Model):
 
     def ___str__(self):
         return self.first_name + self.last_name
+
+class Blog(models.Model):
+    date = models.DateField(auto_now_add=True)
+    image = models.ImageField(upload_to="blog_images/", blank=True, null=True)
+    title = models.CharField(max_length=30)
+    subject = HTMLField(blank=True, null=True)
+
+    def __str__(self):
+        return (self.title)

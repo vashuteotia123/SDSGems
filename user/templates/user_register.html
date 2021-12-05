@@ -1,6 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'user_base.html' %}
 {% block content %}
 {% load crispy_forms_tags %}
+
 <body>
   <div class="login-register-area pt-80 pb-80">
     <div class="container">
@@ -8,7 +9,7 @@
         <div class="col-lg-7 col-md-12 ml-auto mr-auto">
           <div class="login-register-wrapper">
             <div class="login-register-tab-list nav">
-                <h3>Register</h3>
+              <h3>Register</h3>
             </div>
             <div class="tab-content">
               <div id="lg1" class="tab-pane active">
@@ -17,7 +18,7 @@
                     <form method="post">
                       {% csrf_token %}
                       {{ form | crispy }}
-                      <button type="submit" class="btn btn-dark btn--md" >Sign Up</button>
+                      <button type="submit" class="btn btn-dark btn--md">Sign Up</button>
                     </form>
                   </div>
                 </div>
@@ -27,6 +28,6 @@
         </div>
       </div>
     </div>
-  </div>  
+  </div>
 </body>
 {% endblock content %}

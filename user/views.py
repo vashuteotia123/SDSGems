@@ -50,7 +50,7 @@ def user_login(request):
             if(user_details.password == user_password):
                 if(user_details.permit_user):
                     request.session['is_logedin'] = True
-                    request.session['logdin_time'] = str(datetime.now())
+                    request.session['logdin_time'] = str(datetime.datetime.now())
                     request.session['user_email'] = user_details.email_id
                     request.session['business_type'] = user_details.Businesstype
                     return redirect('/')
@@ -90,7 +90,8 @@ class BlogList(View):
     template_name = 'blog_list.html'
 
     def get(self, request):
-        return render(request, self.template_name)
+        all_blogs = Blog.objects.all()
+        return render(request, self.template_name, {'all_blogs': all_blogs})
 
 class ContactUs(View):
     template_name = 'contactus.html'

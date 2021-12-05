@@ -75,6 +75,11 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'user.context_processors.diamond_common_context',
+                'user.context_processors.jewellery_common_context',
+                'user.context_processors.colorstone_common_context',
+
+
             ],
         },
     },

@@ -538,16 +538,6 @@ if development_mode:
 
 
 
-@admin.register(Blog)
-class blogadmin(DjangoObjectActions, admin.ModelAdmin):
 
-    search_fields = ['title', 'subject']
-    def response_change(self, request, obj):
-        messages.success(request, "Blog changed successfully!")
-        return redirect('/index')
-
-    def response_add(self, request, obj, post_url_continue=None):
-        messages.success(request, "Blog added successfully!")
-        return redirect('/index')
 
 
