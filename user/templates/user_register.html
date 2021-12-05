@@ -1,7 +1,55 @@
+<head>
+  
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/static/assets/img/favicon.ico" />
+  <link rel="stylesheet" href="/static/assets/css/fontawesome.min.css" />
+  <link rel="stylesheet" href="/static/assets/css/ionicons.min.css" />
+  <link rel="stylesheet" href="/static/assets/css/simple-line-icons.css" />
+  <link rel="stylesheet" href="/static/assets/css/plugins/jquery-ui.min.css">
+  <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/static/assets/css/plugins/plugins.css" />
+  <!-- <link rel="stylesheet" href="/static/assets/css/plugins/aos.css" /> -->
+  <link rel="stylesheet" href="/static/assets/css/style.min.css" />
+</head>
+<style>
+  .select{
+    background-color: transparent;
+    border: 1px solid #ebebeb;
+    color: #666;
+    font-size: 14px;
+    height: 45px;
+    margin-bottom: 30px;
+    padding: 0 15px;
+    width: 100%;
+    outline: none;
+  }
+</style>
 {% load crispy_forms_tags %}
-<h2>Sign up</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form | crispy }}
-  <button type="submit">Sign Up</button>
-</form>
+<body>
+  <div class="login-register-area pt-80 pb-80">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7 col-md-12 ml-auto mr-auto">
+          <div class="login-register-wrapper">
+            <div class="login-register-tab-list nav">
+                <h3>Register</h3>
+            </div>
+            <div class="tab-content">
+              <div id="lg1" class="tab-pane active">
+                <div class="login-form-container">
+                  <div class="login-register-form">
+                    <form method="post">
+                      {% csrf_token %}
+                      {{ form | crispy }}
+                      <button type="submit" class="btn btn-dark btn--md" >Sign Up</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+</body>
