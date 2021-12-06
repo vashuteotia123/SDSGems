@@ -71,6 +71,7 @@ urlpatterns = [
     path('export_sales_of_color_stones', views.ExportSalesofcolorstones, name="export_sales_of_color_stones"),
     path('get_certificate_of_colorstone', views.get_certificate_of_colorstone, name='get_certificate_of_colorstone'),
     path('get_certificate_of_jewellery', views.get_certificate_of_jewellery, name="get_certificate_of_jewellery"),
+    path('purchaseOfColorStoneFormCount', purchaseOfColorStoneFormCount, name="purchaseOfColorStoneFormCount"),
 
     # ///////diamond url/////////
 
@@ -126,5 +127,6 @@ urlpatterns = [
     path('export_purchase_of_diamond', views.ExportPOD, name="export_purchase_of_diamond"),
     path('export_inventory_of_diamond', views.ExportInventoryofdiamond, name="export_inventory_of_diamond"),
     path('export_sales_of_diamond', views.ExportSalesofdiamond, name="export_sales_of_diamond"),
-    path('export_sales_return_of_diamond', views.ExportSalesReturnDiamonds, name="export_sales_of_diamond")
+    path('export_sales_return_of_diamond', views.ExportSalesReturnDiamonds, name="export_sales_of_diamond"),
+    path('purchaseOfDiamondFormCount', purchaseOfDiamondFormCount, name="purchaseOfDiamondFormCount"),
 ]

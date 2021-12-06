@@ -74,6 +74,7 @@ def deleteid(request, idno):
     current_invj = Inventoryofjewellery.objects.get(stockid=jstr)
     current.delete()
     current_invj.delete()
+    cloneInvofjewellery.objects.filter(stockid=jstr).delete()
     return redirect('/showj')
 
 
@@ -286,6 +287,8 @@ class Jewellery_view(View):
             jewell_ids = request.POST.getlist('id[]')
             for id in jewell_ids:
                 j = Inventoryofjewellery.objects.get(id=id)
+                j.cartstatus = False
+                cloneInvofjewellery.objects.filter(stockid=j.stockid).delete()
                 j.appvreturnstatus = True
                 j.save()
         return redirect('delete-jewell')
@@ -328,6 +331,7 @@ def allselljewellrecords(request):
 def backtoinv(request, id):
     myobj = Inventoryofjewellery.objects.get(id=id)
     myobj.appvreturnstatus = False
+    myobj.cartstatus = False
     myobj.save()
     print("hello")
     totalobjs = Inventoryofjewellery.objects.filter(appvreturnstatus=True)
@@ -511,13 +515,17 @@ def save_jewel_forms(request):
 def PurchaseofJewelleryFormCount(request):
     return render(request, 'PurchaseofJewelleryFormCount.html')
 
+
 class BirdAddView(TemplateView):
     template_name = "show_jewel_form.html"
     @method_decorator(login_required)
     def get(self, *args, **kwargs):
         # formset = POJFormSet(queryset=POJ.objects.none(),)
         form_count = self.request.GET.get('form_count')
-        
+        try: 
+            form_count = int(form_count)
+        except:
+            pass
         if form_count == 0:
             messages.error(self.request, "Zero forms cannot be greated due to your IQ.")
             return redirect(self.request.META.get('HTTP_REFERER'))
@@ -673,6 +681,7 @@ def deleteid_cs(request, idno):
         messages.success(request, "Data record not found in Inventory!")
         return redirect(request.META.get('HTTP_REFERER'))
     current.delete()
+    cloneInvofcolorstones.objects.filter(stockid = c_str).delete()
     messages.success(request, "Deleted Successfully")
     return redirect(request.META.get('HTTP_REFERER'))
 
@@ -700,6 +709,7 @@ def retobj_cs(request):
 def backtoinvcs1(request, id):
     myobj = Inventoryofcolorstones.objects.get(id=id)
     myobj.appvreturnstatus = False
+    myobj.cartstatus = False
     myobj.save()
     totalobjs = Inventoryofcolorstones.objects.filter(
         appvreturnstatus=True)
@@ -848,13 +858,28 @@ def save_colorstone_forms(request):
     return render(request, "show_colorstone_form.html", context=context)
 
 
+def purchaseOfColorStoneFormCount(request):
+    return render(request, "purchaseOfColorStoneFormCount.html")
+
 class CSAddView(TemplateView):
 
     template_name = "show_colorstone_form.html"
 
     @method_decorator(login_required)
     def get(self, *args, **kwargs):
-        formset = POCSFormSet(queryset=PurchaseOfColorStones.objects.none())
+        form_count = self.request.GET.get('form_count')
+        try: 
+            form_count = int(form_count)
+        except:
+            pass
+        if form_count == 0:
+            messages.error(self.request, "Zero forms cannot be greated due to your IQ.")
+            return redirect(self.request.META.get('HTTP_REFERER'))
+        if form_count is None:
+            return redirect('/purchaseOfDiamondFormCount')
+        form_count = int(form_count)
+        formset_factory = modelformset_factory(PurchaseOfColorStones, POCSForm, extra=form_count)
+        formset = formset_factory(queryset=PurchaseOfColorStones.objects.none(), )
         return self.render_to_response({'totalitems_cs': formset,"table_type":"Purchase Form of Colourstone"})
 
     def post(self, request, *args, **kwargs):
@@ -906,6 +931,8 @@ class colorstone_view(View):
             cs_ids = request.POST.getlist('id[]')
             for id in cs_ids:
                 j = Inventoryofcolorstones.objects.get(id=id)
+                cloneInvofjewellery.objects.filter(stockid=j.stockid).delete()
+                j.cartstatus = False
                 j.appvreturnstatus = True
                 j.save()
         return redirect('delete-cs')
@@ -1057,6 +1084,7 @@ def deleteid_d(request, idno):
     current_invd = Inventoryofdiamond.objects.get(stockid=d_str)
     current.delete()
     current_invd.delete()
+    cloneInvofdiamond.objects.filter(stockid = d_str).delete()
     messages.success(request,d_str+ " Deleted Successfully")
     return redirect(request.META.get('HTTP_REFERER'))
 
@@ -1136,12 +1164,27 @@ def save_diamond_forms(request):
     return render(request, "show_diamond_form.html", context=context)
 
 
+def purchaseOfDiamondFormCount(request):
+    return render(request, "purchaseOfDiamondFormCount.html")
+
 class DiamondAddView(TemplateView):
     template_name = "show_diamond_form.html"
 
     @method_decorator(login_required)
     def get(self, *args, **kwargs):
-        formset = PODFormSet(queryset=POD.objects.none())
+        form_count = self.request.GET.get('form_count')
+        try: 
+            form_count = int(form_count)
+        except:
+            pass
+        if form_count == 0:
+            messages.error(self.request, "Zero forms cannot be greated due to your IQ.")
+            return redirect(self.request.META.get('HTTP_REFERER'))
+        if form_count is None:
+            return redirect('/purchaseOfDiamondFormCount')
+        form_count = int(form_count)
+        formset_factory = modelformset_factory(POD, PODForm, extra=form_count)
+        formset = formset_factory(queryset=POD.objects.none(), )
         return self.render_to_response({'totalitems_d': formset,"table_type":"Purchase Form of Diamonds"})
 
     def post(self, *args, **kwargs):
@@ -1207,6 +1250,8 @@ class Diamond_view(View):
             for id in d_ids:
                 j = Inventoryofdiamond.objects.get(id=id)
                 j.appvreturnstatus_d = True
+                j.cartstatus = False
+                cloneInvofdiamond.objects.filter(stockid = j.stockid).delete()
                 j.save()
         return redirect('delete-d')
 
@@ -1237,6 +1282,7 @@ class Diamond_view(View):
 def backtoinv_d(request, id):
     myobj = Inventoryofdiamond.objects.get(id=id)
     myobj.appvreturnstatus_d = False
+    myobj.cartstatus = False
     myobj.save()
     totalobjs = Inventoryofdiamond.objects.filter(appvreturnstatus_d=True)
     return redirect('/retobj_d')

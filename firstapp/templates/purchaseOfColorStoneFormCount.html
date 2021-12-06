@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Enter Form Count{% endblock %}
+{% block style %}
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+    integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+<style>
+    .main-block {
+        text-align: center;
+        margin-top: 200px;
+    }
+
+    #csv {
+        margin-top: 50px;
+    }
+</style>
+{% endblock %}
+{% block container %}
+<div class="main-block">
+    <h1>Enter Number of Entries </h1>
+    {% for message in messages %}
+    <div>
+        <strong>
+            <p align="center">{{message|safe}}</p>
+        </strong>
+    </div>
+    {% endfor %}
+    <div class="main-block" id="csv">
+        <form action="show_colorstone_form" method="get" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="number" name="form_count" min="1" max="25" required>
+            <button id="button" class="btn btn-success" type="submit" href="/">Submit</button>
+        </form>
+    </div>
+    {% endblock %}
