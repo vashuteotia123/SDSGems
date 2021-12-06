@@ -6,6 +6,8 @@ from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, get_list_or_404, get_object_or_404
 from django.utils.regex_helper import Group
 from django.views.generic.base import TemplateView
+
+from user.views import BlogList
 from .models import *
 from .forms import *
 from django.urls import reverse_lazy
@@ -136,16 +138,6 @@ def showjewell(request):
 #     query = Inventoryofjewellery.objects.get(pk=idno)
 #     query.delete()
 #     return HttpResponse("Deleted!")
-
-
-def displayblog(request):
-    blogobj = Blog.objects.all()
-    context = {
-        "blogobj": blogobj,
-        "MEDIA_URL": settings.MEDIA_URL,
-    }
-    return render(request, "displayblog.html", context=context)
-
 
 @login_required
 def cform(request):
@@ -516,12 +508,25 @@ def save_jewel_forms(request):
     return render(request, "show_jewel_form.html", context=context)
 
 
+def PurchaseofJewelleryFormCount(request):
+    return render(request, 'PurchaseofJewelleryFormCount.html')
+
 class BirdAddView(TemplateView):
     template_name = "show_jewel_form.html"
-
     @method_decorator(login_required)
     def get(self, *args, **kwargs):
-        formset = POJFormSet(queryset=POJ.objects.none())
+        # formset = POJFormSet(queryset=POJ.objects.none(),)
+        form_count = self.request.GET.get('form_count')
+        
+        if form_count == 0:
+            messages.error(self.request, "Zero forms cannot be greated due to your IQ.")
+            return redirect(self.request.META.get('HTTP_REFERER'))
+        if form_count is None:
+            return redirect('/PurchaseofJewelleryFormCount')
+        form_count = int(form_count)
+        formset_factory = modelformset_factory(POJ, POJForm, extra=form_count)
+        formset = formset_factory(queryset=POJ.objects.none(), )
+        
         return self.render_to_response({'totalitems': formset, "table_type":"Purchase Form of Jewellery"})
 
     # @login_required
@@ -533,9 +538,10 @@ class BirdAddView(TemplateView):
 
         # Check if submitted forms are valid
         if formset.is_valid():
-            if formset[0].cleaned_data == {}:
-                messages.error(self.request,"Please fill up the form.")
-                return self.render_to_response({'totalitems': formset})
+            for i in range(len(formset)):
+                if formset[i].cleaned_data == {}:
+                    messages.error(self.request,"Please fill up the form.")
+                    return self.render_to_response({'totalitems': formset})
             formset.save()
             messages.success(self.request, "Forms saved successfully!")
             return redirect("/showj")

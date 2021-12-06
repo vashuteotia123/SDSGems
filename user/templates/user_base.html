@@ -9,7 +9,7 @@
     <meta name="description" content="" />
     <title>SDS Gems</title>
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="static/assets/img/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="/static/assets/img/favicon.ico" />
 
     <!--********************************** 
         all css files 
@@ -19,14 +19,14 @@
      ***************************************************-->
     <!-- cdn links -->
 
-    <link rel="stylesheet" href="static/assets/css/fontawesome.min.css" />
-    <link rel="stylesheet" href="static/assets/css/ionicons.min.css" />
-    <link rel="stylesheet" href="static/assets/css/simple-line-icons.css" />
-    <link rel="stylesheet" href="static/assets/css/plugins/jquery-ui.min.css">
-    <link rel="stylesheet" href="static/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="static/assets/css/plugins/plugins.css" />
-    <!-- <link rel="stylesheet" href="static/assets/css/plugins/aos.css" /> -->
-    <link rel="stylesheet" href="static/assets/css/style.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/ionicons.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/simple-line-icons.css" />
+    <link rel="stylesheet" href="/static/assets/css/plugins/jquery-ui.min.css">
+    <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/plugins/plugins.css" />
+    <!-- <link rel="stylesheet" href="/static/assets/css/plugins/aos.css" /> -->
+    <link rel="stylesheet" href="/static/assets/css/style.min.css" />
 
     <!-- Use the minified version files listed below for better performance and remove the files listed above -->
     <!--**************************** 
@@ -35,9 +35,9 @@
     <!--*********************************************** 
        vendor min css,plugins min css,style min css
      ***********************************************-->
-    <!-- <link rel="stylesheet" href="static/assets/css/vendor/vendor.min.css" />
-    <link rel="stylesheet" href="static/assets/css/plugins/plugins.min.css" />
-    <link rel="stylesheet" href="static/assets/css/style.min.css" /> -->
+    <!-- <link rel="stylesheet" href="/static/assets/css/vendor/vendor.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/plugins/plugins.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/style.min.css" /> -->
   </head>
   {% block style %}
   {% endblock style %}
@@ -443,7 +443,7 @@
                   <li class="english">
                     <a href="#" id="dropdown3" class="pr-0" data-toggle="dropdown" aria-haspopup="true"
                       aria-expanded="false">
-                      <img src="static/assets/img/logo/us-flag.jpg" alt="us flag" />
+                      <img src="/static/assets/img/logo/us-flag.jpg" alt="us flag" />
                       English
                     </a>
                   </li>
@@ -609,11 +609,11 @@
                     </li>
                     <li class="col-6 mt-4">
                       <a href="single-product.html" class="zoom-in
-                        overflow-hidden"><img src="static/assets/img/mega-menu/1.jpg" alt="img" /></a>
+                        overflow-hidden"><img src="/static/assets/img/mega-menu/1.jpg" alt="img" /></a>
                     </li>
                     <li class="col-6 mt-4">
                       <a href="single-product.html" class="zoom-in
-                        overflow-hidden"><img src="static/assets/img/mega-menu/2.jpg" alt="img" /></a>
+                        overflow-hidden"><img src="/static/assets/img/mega-menu/2.jpg" alt="img" /></a>
                     </li>
                   </ul>
                 </li>
@@ -652,11 +652,11 @@
                     </li>
                     <li class="col-6 mt-4">
                       <a href="single-product.html" class="zoom-in
-                        overflow-hidden"><img src="static/assets/img/mega-menu/1.jpg" alt="img" /></a>
+                        overflow-hidden"><img src="/static/assets/img/mega-menu/1.jpg" alt="img" /></a>
                     </li>
                     <li class="col-6 mt-4">
                       <a href="single-product.html" class="zoom-in
-                        overflow-hidden"><img src="static/assets/img/mega-menu/2.jpg" alt="img" /></a>
+                        overflow-hidden"><img src="/static/assets/img/mega-menu/2.jpg" alt="img" /></a>
                     </li>
                   </ul>
                 </li>
@@ -671,7 +671,7 @@
                         <li class="mega-menu-title"><a href="#">Colour Stones by Shapes</a></li>
                         {% for shape in colorstone_shapes %}
                         <li>
-                          <a href="">{{shape}}</a>
+                          <a href='{% url "colorStoneByShapeFilter" shape_id=shape.id %}'>{{shape}}</a>
                         </li>
                         {% endfor %}
 
@@ -704,11 +704,11 @@
                     </li>
                     <li class="col-6 mt-4">
                       <a href="single-product.html" class="zoom-in
-                        overflow-hidden"><img src="static/assets/img/mega-menu/1.jpg" alt="img" /></a>
+                        overflow-hidden"><img src="/static/assets/img/mega-menu/1.jpg" alt="img" /></a>
                     </li>
                     <li class="col-6 mt-4">
                       <a href="single-product.html" class="zoom-in
-                        overflow-hidden"><img src="static/assets/img/mega-menu/2.jpg" alt="img" /></a>
+                        overflow-hidden"><img src="/static/assets/img/mega-menu/2.jpg" alt="img" /></a>
                     </li>
                   </ul>
                 </li>
@@ -773,7 +773,7 @@
               <div class="footer-widget mx-w-400 ">
                 <div class="footer-logo mb-25">
                   <a href="index.html">
-                    <img class="logo" src="static/assets/img/logo/logo.png" alt="footer
+                    <img class="logo" src="/static/assets/img/logo/logo.png" alt="footer
                         logo" />
                   </a>
                 </div>
@@ -879,7 +879,7 @@
             </div>
             <div class="col-12 col-md-6 col-xl-8">
               <div class="text-md-right text-center">
-                <img src="static/assets/img/payment/1.png" alt="img" />
+                <img src="/static/assets/img/payment/1.png" alt="img" />
               </div>
             </div>
           </div>
@@ -905,25 +905,25 @@
                 <div class="product-sync-init mb-20">
                   <div class="single-product">
                     <div class="product-thumb">
-                      <img src="static/assets/img/slider/thumb/1.jpg" alt="product-thumb" />
+                      <img src="/static/assets/img/slider/thumb/1.jpg" alt="product-thumb" />
                     </div>
                   </div>
                   <!-- single-product end -->
                   <div class="single-product">
                     <div class="product-thumb">
-                      <img src="static/assets/img/slider/thumb/2.jpg" alt="product-thumb" />
+                      <img src="/static/assets/img/slider/thumb/2.jpg" alt="product-thumb" />
                     </div>
                   </div>
                   <!-- single-product end -->
                   <div class="single-product">
                     <div class="product-thumb">
-                      <img src="static/assets/img/slider/thumb/3.jpg" alt="product-thumb" />
+                      <img src="/static/assets/img/slider/thumb/3.jpg" alt="product-thumb" />
                     </div>
                   </div>
                   <!-- single-product end -->
                   <div class="single-product">
                     <div class="product-thumb">
-                      <img src="static/assets/img/slider/thumb/4.jpg" alt="product-thumb" />
+                      <img src="/static/assets/img/slider/thumb/4.jpg" alt="product-thumb" />
                     </div>
                   </div>
                   <!-- single-product end -->
@@ -933,27 +933,27 @@
                   <div class="single-product">
                     <div class="product-thumb">
                       <a href="javascript:void(0)">
-                        <img src="static/assets/img/slider/thumb/1.1.jpg" alt="product-thumb" /></a>
+                        <img src="/static/assets/img/slider/thumb/1.1.jpg" alt="product-thumb" /></a>
                     </div>
                   </div>
                   <!-- single-product end -->
                   <div class="single-product">
                     <div class="product-thumb">
                       <a href="javascript:void(0)">
-                        <img src="static/assets/img/slider/thumb/2.1.jpg" alt="product-thumb" /></a>
+                        <img src="/static/assets/img/slider/thumb/2.1.jpg" alt="product-thumb" /></a>
                     </div>
                   </div>
                   <!-- single-product end -->
                   <div class="single-product">
                     <div class="product-thumb">
-                      <a href="javascript:void(0)"><img src="static/assets/img/slider/thumb/3.1.jpg"
+                      <a href="javascript:void(0)"><img src="/static/assets/img/slider/thumb/3.1.jpg"
                           alt="product-thumb" /></a>
                     </div>
                   </div>
                   <!-- single-product end -->
                   <div class="single-product">
                     <div class="product-thumb">
-                      <a href="javascript:void(0)"><img src="static/assets/img/slider/thumb/4.1.jpg"
+                      <a href="javascript:void(0)"><img src="/static/assets/img/slider/thumb/4.1.jpg"
                           alt="product-thumb" /></a>
                     </div>
                   </div>
@@ -1094,7 +1094,7 @@
               <div class="col-lg-5 divide-right">
                 <div class="row">
                   <div class="col-md-6">
-                    <img src="static/assets/img/modal/1.jpg" alt="img" />
+                    <img src="/static/assets/img/modal/1.jpg" alt="img" />
                   </div>
                   <div class="col-md-6 mb-2 mb-md-0">
                     <h4 class="product-name">
@@ -1237,15 +1237,15 @@
 
       <i class="fas fa-whatsapp my-float"></i>
     </a>
-    <script src="static/assets/js/vendor/jquery-3.5.1.min.js"></script>
-    <script src="static/assets/js/vendor/modernizr-3.7.1.min.js"></script>
-    <script src="static/assets/js/popper.min.js"></script>
-    <script src="static/assets/js/plugins/jquery-ui.min.js"></script>
-    <script src="static/assets/js/bootstrap.min.js"></script>
-    <script src="static/assets/js/plugins/plugins.js"></script>
-    <script src="static/assets/js/plugins/ajax-contact.js"></script>
-    <!-- <script src="static/assets/js/plugins/aos.js"></script> -->
-    <script src="static/assets/js/main.js"></script>
+    <script src="/static/assets/js/vendor/jquery-3.5.1.min.js"></script>
+    <script src="/static/assets/js/vendor/modernizr-3.7.1.min.js"></script>
+    <script src="/static/assets/js/popper.min.js"></script>
+    <script src="/static/assets/js/plugins/jquery-ui.min.js"></script>
+    <script src="/static/assets/js/bootstrap.min.js"></script>
+    <script src="/static/assets/js/plugins/plugins.js"></script>
+    <script src="/static/assets/js/plugins/ajax-contact.js"></script>
+    <!-- <script src="/static/assets/js/plugins/aos.js"></script> -->
+    <script src="/static/assets/js/main.js"></script>
 
     <!-- Use the minified version files listed below for better performance and remove the files listed above -->
     <!--*************************** 
@@ -1254,9 +1254,9 @@
     <!--*********************************** 
          vendor,plugins and main js
       ***********************************-->
-    <!-- <script src="static/assets/js/vendor/vendor.min.js"></script>
-    <script src="static/assets/js/plugins/plugins.min.js"></script>
-    <script src="static/assets/js/main.js"></script> -->
+    <!-- <script src="/static/assets/js/vendor/vendor.min.js"></script>
+    <script src="/static/assets/js/plugins/plugins.min.js"></script>
+    <script src="/static/assets/js/main.js"></script> -->
   </body>
 
 </html>

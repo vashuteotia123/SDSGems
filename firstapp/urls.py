@@ -49,6 +49,7 @@ urlpatterns = [
     path("ExportInventoryofjewellery",views.ExportInventoryofjewellery,name="ExportInventoryofjewellery"),
     path('ExportSalesofjewellery',views.ExportSalesofjewellery,name="ExportSalesofjewellery"),
     path("ExportSalesReturn",views.ExportSalesReturn,name="ExportSalesReturn"),
+    path('PurchaseofJewelleryFormCount', PurchaseofJewelleryFormCount, name="PurchaseofjewllersFormCount"),
 
     # ////////////colorstones url////////////
 
@@ -103,7 +104,6 @@ urlpatterns = [
     path('displaysalesreturn_d', views.displaysalesreturn_d, name='displaysalesreturn_d'),
     path('return_diamond_cart<str:id>',views.return_diamond_cart, name='return_diamond_cart'),
     path('upload-csv',jewellery_upload,name="jewellery_upload"),
-    path('displayblog',views.displayblog,name="displayblog"),
     path('itemsearch',views.itemsearch, name='itemsearch'),
     path('jewel_metal_filter/<str:value>/<str:category>/', views.jewel_metal_filter, name='jewel_metal_filter'),
     path('diamond_filter/<str:value>/<str:category>/', views.diamond_filter, name='diamond_filter'),

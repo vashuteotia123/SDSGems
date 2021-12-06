@@ -6,6 +6,8 @@ from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, get_list_or_404, get_object_or_404
 from django.utils.regex_helper import Group
 from django.views.generic.base import TemplateView
+
+from firstapp.models import Inventoryofcolorstones
 from .models import *
 from .forms import *
 from django.urls import reverse_lazy
@@ -131,3 +133,9 @@ class MyAccount(View):
         return render(request, self.template_name)
 
 
+
+def colorStoneByShapeFilter(request, shape_id):
+    context = {
+        "all_objects": Inventoryofcolorstones.objects.filter(shape=shape_id, frontend = True).all(),
+    }
+    return render(request, 'colorstone_shop_list.html', context=context)

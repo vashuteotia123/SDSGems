@@ -16,4 +16,7 @@ urlpatterns = [
     path('contact_us', ContactUs.as_view(), name="contact_us"),
     path('myaccount', MyAccount.as_view(), name="myaccount"),
 
+    #Filters for ColorStones
+    path('colorStoneByShapeFilter/<int:shape_id>', colorStoneByShapeFilter, name="colorStoneByShapeFilter")
+
 ]
