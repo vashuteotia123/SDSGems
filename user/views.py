@@ -81,8 +81,12 @@ def user_Logout(request):
 
 
 def home(request):
+    if(request.method == 'POST'):
+        email = request.POST.get('email')
+        Subscribed_users.objects.create(email = email)
+        return render(request, 'coming_soon_message.html')
     context = {}
-    return render(request, 'home.html', context)
+    return render(request, 'coming_soon.html', context)
 
 class ShopList(View):
     template_name = 'shop_list.html'
@@ -139,3 +143,7 @@ def colorStoneByShapeFilter(request, shape_id):
         "all_objects": Inventoryofcolorstones.objects.filter(shape=shape_id, frontend = True).all(),
     }
     return render(request, 'colorstone_shop_list.html', context=context)
+
+def custom_404(request):
+    
+    return render(request, '404.html')

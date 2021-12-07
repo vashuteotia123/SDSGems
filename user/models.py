@@ -58,3 +58,9 @@ class Blog(models.Model):
 
     def __str__(self):
         return (self.title)
+
+class Subscribed_users(models.Model):
+    email = models.EmailField(max_length=90)
+
+    def __str__(self):
+        return str(self.email)

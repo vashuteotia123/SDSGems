@@ -33,3 +33,7 @@ class blogadmin(DjangoObjectActions, admin.ModelAdmin):
     def response_add(self, request, obj, post_url_continue=None):
         messages.success(request, "Blog added successfully!")
         return redirect('/index')
+
+@admin.register(Subscribed_users)
+class SubscribedAdmin(admin.ModelAdmin):
+    pass
