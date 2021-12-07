@@ -1,102 +1,73 @@
 {% extends 'common_table_inv.html' %}
 {% block table %}
-    <form id="form-container" method="POST">
-        {% csrf_token %}
-    <table id="all_forms"class="table table-responsive">
-           <tr class="bg-primary bg-opacity-50" id="table-heading" height="30px">
-           <th class="bg-primary">DATE</th>
-           <th class="bg-primary">COMPANY NAME</th>
-           <th class="bg-primary" >LOCATION</th>
-           <th class="bg-primary" style="text-align:center;">SHAPE</th>
-           <th class="bg-primary" style="text-align:center;">GEM TYPE</th>
-           <th class="bg-primary">ORIGIN</th>
-           <th class="bg-primary" style="text-align:center;">TREATMENT</th>
-           <th class="bg-primary">CLARITY</th>
-           <th class="bg-primary">CERTIFICATE NUMBER</th>
-           <th class="bg-primary">COLOURS</th>
-           <th class="bg-primary">MEASUREMENTS</th>
-           <th class="bg-primary">LAB</th>
-           <th class="bg-primary">PIECES</th>
-           <th class="bg-primary">WEIGHT</th>
-           <th class="bg-primary">PRICE</th>
-           <th class="bg-primary">UNITS</th>
-           <th class="bg-primary">AMOUNT</th>
-           <th class="bg-primary">DISCOUNT</th>
-           <th class="bg-primary">DISCOUNTED AMOUNT</th>
-           <th class="bg-primary">Total val</th>
-           <th class="bg-primary">Bought Color Stone</th>
-           <th class="bg-primary">CURRENCY</th>
-           <th class="bg-primary">TAG PRICE</th>
-           <th class="bg-primary">RATE</th>
-           <th class="bg-primary">COMMENTS</th>
-    </tr>
-           {{totalitems_cs.management_form}}
-          {% for obj in totalitems_cs %} 
-          <tr class="bird-form">
-              {% for field in obj%}
-              <td>{{field}} <br> {{field.errors}}</td>
-              {% endfor %}
-              </tr>
-              {% endfor %}
-        </table>
+<style>
+    .bird-form td {
+        overflow: scroll;
+        max-width: 200px;
+    }
+</style>
+<form id="form-container" method="POST">
+    {% csrf_token %}
+    <table id="all_forms" class="table table-responsive">
+        <tr class="bg-primary bg-opacity-50" id="table-heading" height="30px">
+            <th class="bg-primary">DATE</th>
+            <th class="bg-primary">COMPANY NAME</th>
+            <th class="bg-primary">LOCATION</th>
+            <th class="bg-primary" style="text-align:center;">SHAPE</th>
+            <th class="bg-primary" style="text-align:center;">GEM TYPE</th>
+            <th class="bg-primary">ORIGIN</th>
+            <th class="bg-primary" style="text-align:center;">TREATMENT</th>
+            <th class="bg-primary">CLARITY</th>
+            <th class="bg-primary">CERTIFICATE NUMBER</th>
+            <th class="bg-primary">COLOURS</th>
+            <th class="bg-primary">MEASUREMENTS</th>
+            <th class="bg-primary">LAB</th>
+            <th class="bg-primary">PIECES</th>
+            <th class="bg-primary">WEIGHT</th>
+            <th class="bg-primary">PRICE</th>
+            <th class="bg-primary">UNITS</th>
+            <th class="bg-primary">AMOUNT</th>
+            <th class="bg-primary">DISCOUNT</th>
+            <th class="bg-primary">DISCOUNTED AMOUNT</th>
+            <th class="bg-primary">Total val</th>
+            <th class="bg-primary">Bought Color Stone</th>
+            <th class="bg-primary">CURRENCY</th>
+            <th class="bg-primary">TAG PRICE</th>
+            <th class="bg-primary">RATE</th>
+            <th class="bg-primary">COMMENTS</th>
+        </tr>
+        {{totalitems_cs.management_form}}
+        {% for obj in totalitems_cs %}
+        <tr class="bird-form">
+            {% for field in obj%}
+            <td>{{field}} <br> {{field.errors}}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
     <div id="button-allignment" style="top: 88vh;">
-        <button id="add-form" type="button" class="btn btn-sm btn-success btnedit">Add Another Form</button>
-        <button id="remove-form" type="button" class="btn btn-sm btn-warning btnedit">Remove</button>
         <button type="submit" class="btn btn-sm btn-danger btnedit" id="btn-danger">Submit</button>
-    </div>   
-    </form> 
-{% endblock  %}
-   {% block script %}
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script>
-        let birdForm = document.querySelectorAll(".bird-form")
-        let container = document.querySelector("#form-container")
-        let addButton = document.querySelector("#add-form")
-        let removeButton = document.querySelector("#remove-form")
-        document.querySelector("#id_form-0-company_name").insertAdjacentHTML("afterend", "<br><h6><strong>Phone No.: </strong></h6><span id='company_contact_number-0'></span><br><br><h6><strong>Address.: </strong></h6><span id='company_address-0'><span>")
-        let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
-        var s = "$('#id_form-" + 0 + "-discount').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + 0 + "-amount').value; var disc = document.getElementById('id_form-" + 0 + "-discount').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" + 0 + "-discount_amount').value = discamt.toFixed(2); document.getElementById('id_form-" + 0 + "-total_val').value=(amount- discamt).toFixed(2);  });  "
-        var amt = "$('#id_form-" + 0 + "-Price, #id_form-"+0+"-Weight').on('change keyup blur', function () { var weight = document.getElementById('id_form-" + 0 + "-Weight').value; var price = document.getElementById('id_form-" + 0 + "-Price').value; var amount_value = (price * weight); document.getElementById('id_form-" + 0 + "-amount').value = amount_value.toFixed(2);  });  "
-        var company_detail_call = 
-        "$('#id_form-"+0+"-company_name').change(function(){var company_name = $(this).find(':selected')[0].text;$.ajax({type: 'GET',url: '{% url 'get_company_details' %}'," +
-        "data: {'name': company_name,},success: function(data) { document.getElementById('company_contact_number-0').innerHTML = data['contact_no']; " +
-        "document.getElementById('company_address-0').innerHTML = data['location'];} }) });" 
-        let formNum = birdForm.length-1
-        addButton.addEventListener('click', addForm)
-        removeButton.addEventListener('click', RemoveForm)
-        function addForm(e){
-            e.preventDefault()
-
-            let newForm = birdForm[0].cloneNode(true)
-            let formRegex = RegExp(`form-(\\d){1}-`,'g')
-            newForm.getElementsByTagName("span")[0].id = "company_contact_number-"+(formNum+1)
-            newForm.getElementsByTagName('span')[1].id = "company_address-"+(formNum+1)
-            newForm.getElementsByTagName("span")[0].innerHTML = ""
-            newForm.getElementsByTagName('span')[1].innerHTML = ""
-            // console.log(newForm.getElementsByTagName('span')[1].innerHTML)
-            formNum++
-            // add_span_tags+= toString(document.querySelector("#id_form-"+ formNum+"-company_name").insertAdjacentHTML("afterend", "<br><span id='company_contact_number-"+fornNum+"'></span><br><span id='company_address-"+formNum+"'><span>"))
-            s+= "$('#id_form-" +(formNum)+ "-discount').on('change keyup blur', function () { var amount = document.getElementById('id_form-" +(formNum) + "-amount').value; var disc = document.getElementById('id_form-" + (formNum) + "-discount').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" +(formNum)+ "-discount_amount').value = discamt; document.getElementById('id_form-" +(formNum)+ "-total_val').value=amount- discamt;  });  "
-            amt += "$('#id_form-" +(formNum) + "-Price, #id_form-" +(formNum)+"-Weight').on('change keyup blur', function () { var weight = document.getElementById('id_form-" + (formNum) + "-Weight').value; var price = document.getElementById('id_form-" + (formNum)+ "-Price').value; var amount_value = (price * weight); document.getElementById('id_form-" + (formNum) + "-amount').value = amount_value.toFixed(2);  });  "
-            company_detail_call += "$('#id_form-"+(formNum) +"-company_name').change(function(){var company_name = $(this).find(':selected')[0].text;$.ajax({type: 'GET',url: '{% url 'get_company_details' %}',data: {'name': company_name,},success: function(data) {document.getElementById('company_contact_number-"+formNum+"').innerHTML = data['contact_no']; " +"document.getElementById('company_address-"+formNum+"').innerHTML = data['location']; } }) });"
-            newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
-            document.getElementById("all_forms").innerHTML+=newForm.innerHTML;
-            totalForms.setAttribute('value', `${formNum+1}`)
-            eval(s);
-            eval(amt);
-            eval(company_detail_call);
-        }
-        function RemoveForm(e){
-            e.preventDefault();
-            formNum--;
-            var formcontainer = document.getElementById("all_forms")
-            formcontainer.removeChild(formcontainer.lastChild);
-            console.log(formNum);
-        }
-        eval(s);
-        eval(amt);
+    </div>
+</form>
+{% endblock %}
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    var total = "{{total}}"
+    console.log(total)
+    var s, company_detail_call;
+    for (var i = 0; i < total; i++) {
+        document.querySelector("#id_form-" + i + "-company_name").insertAdjacentHTML("afterend", "<br><h6><strong>Phone No.: </strong></h6><span id='company_contact_number-" + i + "'></span><br><br><h6><strong>Address.: </strong></h6><span id='company_address-" + i + "'><span>")
+        company_detail_call = "$('#id_form-" + i + "-company_name').change(function(){var company_name = $(this).find(':selected')[0].text;$.ajax({type: 'GET',url: '{% url 'get_company_details' %}'," +
+            "data: {'name': company_name,},success: function(data) { document.getElementById('company_contact_number-" + i + "').innerHTML = data['contact_no']; " +
+            "document.getElementById('company_address-" + i + "').innerHTML = data['location'];} }) });"
+        amt = "$('#id_form-" + i + "-Price, #id_form-" + i + "-Weight').on('change keyup blur', function () { var weight = document.getElementById('id_form-" + i + "-Weight').value; var price = document.getElementById('id_form-" + i + "-Price').value; var amount_value = (price * weight); document.getElementById('id_form-" + i + "-amount').value = amount_value.toFixed(2);  });  "
+        s = "$('#id_form-" + i + "-discount').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + i + "-amount').value; var disc = document.getElementById('id_form-" + i + "-discount').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" + i + "-discount_amount').value = discamt.toFixed(2); document.getElementById('id_form-" + i + "-total_val').value=(amount- discamt).toFixed(2);  });  "
+        s1 = "$('#id_form-" + i + "-discount_amount').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + i + "-amount').value; var disc = document.getElementById('id_form-" + i + "-discount_amount').value;  var discamt = (disc/amount) * 100; document.getElementById('id_form-" + i + "-discount').value= discamt.toFixed(2); document.getElementById('id_form-" + i + "-total_val').value=(amount- disc).toFixed(2);});  "
         eval(company_detail_call);
-
-      
-    </script>
-     {% endblock%}
+        eval(s);
+        eval(s1);
+        eval(amt);
+    }
+</script>
+{% endblock%}

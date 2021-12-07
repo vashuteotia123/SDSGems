@@ -535,7 +535,7 @@ class BirdAddView(TemplateView):
         formset_factory = modelformset_factory(POJ, POJForm, extra=form_count)
         formset = formset_factory(queryset=POJ.objects.none(), )
         
-        return self.render_to_response({'totalitems': formset, "table_type":"Purchase Form of Jewellery"})
+        return self.render_to_response({'totalitems': formset, "table_type":"Purchase Form of Jewellery","total":len(formset)})
 
     # @login_required
 # define method to handle POST request
@@ -876,11 +876,11 @@ class CSAddView(TemplateView):
             messages.error(self.request, "Zero forms cannot be greated due to your IQ.")
             return redirect(self.request.META.get('HTTP_REFERER'))
         if form_count is None:
-            return redirect('/purchaseOfDiamondFormCount')
+            return redirect('/purchaseOfColorStoneFormCount')
         form_count = int(form_count)
         formset_factory = modelformset_factory(PurchaseOfColorStones, POCSForm, extra=form_count)
         formset = formset_factory(queryset=PurchaseOfColorStones.objects.none(), )
-        return self.render_to_response({'totalitems_cs': formset,"table_type":"Purchase Form of Colourstone"})
+        return self.render_to_response({'totalitems_cs': formset,"table_type":"Purchase Form of Colourstone","total":len(formset)})
 
     def post(self, request, *args, **kwargs):
 
@@ -1185,7 +1185,7 @@ class DiamondAddView(TemplateView):
         form_count = int(form_count)
         formset_factory = modelformset_factory(POD, PODForm, extra=form_count)
         formset = formset_factory(queryset=POD.objects.none(), )
-        return self.render_to_response({'totalitems_d': formset,"table_type":"Purchase Form of Diamonds"})
+        return self.render_to_response({'totalitems_d': formset,"table_type":"Purchase Form of Diamonds","total":len(formset)})
 
     def post(self, *args, **kwargs):
 

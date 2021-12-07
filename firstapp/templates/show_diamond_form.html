@@ -1,5 +1,11 @@
 {% extends 'common_table_inv.html' %}
 {% block table %}
+<style>
+  .bird-form td {
+      overflow: scroll;
+      max-width: 200px;
+  }
+</style>
 <form id="form-container" method="POST">
   {% csrf_token %}
   <table id="all_forms" class="table table-responsive">
@@ -56,8 +62,7 @@
     {% endfor %}
   </table>
   <div id="button-allignment" style="top: 92.5vh;">
-    <button id="add-form" type="button" class="btn btn-sm btn-success btnedit">Add Another Form</button>
-    <button id="remove-form" type="button" class="btn btn-sm btn-warning btnedit">Remove</button>
+
     <button type="submit" class="btn btn-sm btn-danger btnedit" id="btn-danger">Submit</button>
   </div>
 </form>
@@ -65,58 +70,24 @@
 {% block script %}
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
-  let birdForm = document.querySelectorAll(".bird-form")
-  let container = document.querySelector("#form-container")
-  let addButton = document.querySelector("#add-form")
-  let removeButton = document.querySelector("#remove-form")
-  document.querySelector("#id_form-0-company_name").insertAdjacentHTML("afterend", "<br><h6><strong>Phone No.: </strong></h6><span id='company_contact_number-0'></span><br><br><h6><strong>Address.: </strong></h6><span id='company_address-0'><span>")
-  let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
-  var amt = "$('#id_form-" + 0 + "-price, #id_form-" + 0 + "-weight_d').on('change keyup blur', function () { var weight = document.getElementById('id_form-" + 0 + "-weight_d').value; var price = document.getElementById('id_form-" + 0 + "-price').value; var amount_value = (price * weight); document.getElementById('id_form-" + 0 + "-amount_d').value = amount_value.toFixed(2);  });  "
-  var s = "$('#id_form-" + 0 + "-DIS_d').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + 0 + "-amount_d').value; var disc = document.getElementById('id_form-" + 0 + "-DIS_d').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" + 0 + "-DIS_Amount_d').value = discamt.toFixed(2); document.getElementById('id_form-" + 0 + "-total_val_d').value=(amount- discamt).toFixed(2);  });  "
-  var s1 = "$('#id_form-" + 0 + "-amount_d').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + 0 + "-amount_d').value; var disc = document.getElementById('id_form-" + 0 + "-DIS_d').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" + 0 + "-DIS_Amount_d').value = discamt.toFixed(2); document.getElementById('id_form-" + 0 + "-total_val_d').value=(amount- discamt).toFixed(2);  });  "
-
-  var company_detail_call =
-    "$('#id_form-" + 0 + "-company_name').change(function(){var company_name = $(this).find(':selected')[0].text;$.ajax({type: 'GET',url: '{% url 'get_company_details' %}'," +
-    "data: {'name': company_name,},success: function(data) { document.getElementById('company_contact_number-0').innerHTML = data['contact_no']; " +
-    "document.getElementById('company_address-0').innerHTML = data['location'];} }) });"
-  let formNum = birdForm.length - 1
-  addButton.addEventListener('click', addForm)
-  removeButton.addEventListener('click', RemoveForm)
-  function addForm(e) {
-    e.preventDefault()
-    let newForm = birdForm[0].cloneNode(true)
-    let formRegex = RegExp(`form-(\\d){1}-`, 'g')
-    newForm.getElementsByTagName("span")[0].id = "company_contact_number-" + (formNum + 1)
-    newForm.getElementsByTagName('span')[1].id = "company_address-" + (formNum + 1)
-    newForm.getElementsByTagName("span")[0].innerHTML = ""
-    newForm.getElementsByTagName('span')[1].innerHTML = ""
-
-    formNum++
-    amt += "$('#id_form-" + (formNum) + "-price, #id_form-" + (formNum) + "-weight_d').on('change keyup blur', function () { var weight = document.getElementById('id_form-" + (formNum) + "-weight_d').value; var price = document.getElementById('id_form-" + (formNum) + "-price').value; var amount_value = (price * weight); document.getElementById('id_form-" + (formNum) + "-amount_d').value = amount_value.toFixed(2);  });  "
-    s += "$('#id_form-" + (formNum) + "-DIS_d').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + (formNum) + "-amount_d').value; var disc = document.getElementById('id_form-" + (formNum) + "-DIS_d').value; var discamt = ((amount * disc) / 100); document.getElementById('id_form-" + (formNum) + "-DIS_Amount_d').value = discamt.toFixed(2); document.getElementById('id_form-" + formNum + "-total_val_d').value= (amount - discamt).toFixed(2); });   "
-    s1 += "$('#id_form-" + (formNum) + "-amount_d').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + (formNum) + "-amount_d').value; var disc = document.getElementById('id_form-" + (formNum) + "-DIS_d').value; var discamt = ((amount * disc) / 100); document.getElementById('id_form-" + (formNum) + "-DIS_Amount_d').value = discamt.toFixed(2); document.getElementById('id_form-" + formNum + "-total_val_d').value= (amount - discamt).toFixed(2); });   "
-    company_detail_call += "$('#id_form-" + (formNum) + "-company_name').change(function(){var company_name = $(this).find(':selected')[0].text;$.ajax({type: 'GET',url: '{% url 'get_company_details' %}',data: {'name': company_name,},success: function(data) {document.getElementById('company_contact_number-" + formNum + "').innerHTML = data['contact_no']; " + "document.getElementById('company_address-" + formNum + "').innerHTML = data['location']; } }) });"
-    newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
-    document.getElementById("all_forms").innerHTML += newForm.innerHTML;
-    totalForms.setAttribute('value', `${formNum + 1}`)
-    eval(amt);
-    eval(s);
-    eval(s1);
-    eval(company_detail_call);
+  var total = "{{total}}"
+  var s2;
+  var s, s1, company_detail_call;
+  for (var i = 0; i < total; i++) {
+    document.querySelector("#id_form-"+i+"-company_name").insertAdjacentHTML("afterend", "<br><h6><strong>Phone No.: </strong></h6><span id='company_contact_number-"+i+"'></span><br><br><h6><strong>Address.: </strong></h6><span id='company_address-"+i+"'><span>")
+      company_detail_call = "$('#id_form-" + i + "-company_name').change(function(){var company_name = $(this).find(':selected')[0].text;$.ajax({type: 'GET',url: '{% url 'get_company_details' %}'," +
+          "data: {'name': company_name,},success: function(data) { document.getElementById('company_contact_number-" + i + "').innerHTML = data['contact_no']; " +
+          "document.getElementById('company_address-" + i + "').innerHTML = data['location'];} }) });"
+      amt = "$('#id_form-" + i + "-price, #id_form-" + i + "-weight_d').on('change keyup blur', function () { var weight = document.getElementById('id_form-" + i + "-weight_d').value; var price = document.getElementById('id_form-" + i + "-price').value; var amount_value = (price * weight); document.getElementById('id_form-" + i + "-amount_d').value = amount_value.toFixed(2);  });  "
+      s  = "$('#id_form-" + i + "-DIS_d').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + i + "-amount_d').value; var disc = document.getElementById('id_form-" + i + "-DIS_d').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" + i + "-DIS_Amount_d').value = discamt.toFixed(2); document.getElementById('id_form-" + i + "-total_val_d').value=(amount- discamt).toFixed(2);  });  "
+      s1 = "$('#id_form-" + i + "-amount_d').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + i + "-amount_d').value; var disc = document.getElementById('id_form-" + i + "-DIS_d').value; var discamt = (amount * disc) / 100; document.getElementById('id_form-" + i + "-DIS_Amount_d').value = discamt.toFixed(2); document.getElementById('id_form-" + i + "-total_val_d').value=(amount- discamt).toFixed(2);  });  "
+      s2 = "$('#id_form-" + i + "-DIS_Amount_d').on('change keyup blur', function () { var amount = document.getElementById('id_form-" + i + "-amount_d').value; var disc = document.getElementById('id_form-" + i + "-DIS_Amount_d').value;  var discamt = (disc/amount) * 100; document.getElementById('id_form-" + i + "-DIS_d').value= discamt.toFixed(2); document.getElementById('id_form-" + i + "-total_val_d').value=(amount- disc).toFixed(2);});  "
+      eval(company_detail_call);
+      eval(s);
+      eval(amt);
+      eval(s1);
+      eval(s2);
   }
-  function RemoveForm(e) {
-    e.preventDefault();
-    formNum--;
-    var formcontainer = document.getElementById("all_forms")
-    formcontainer.removeChild(formcontainer.lastChild);
-    console.log(formNum);
-  }
-  eval(amt);
-  eval(s);
-  eval(s1);
-  console.log(company_detail_call);
-  eval(company_detail_call);
-
 </script>
 </body>
 
