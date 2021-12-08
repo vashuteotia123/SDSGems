@@ -10,23 +10,27 @@
     margin-top: 40px;
     justify-content: end;
   }
-  #total_amount_cum{
+
+  #total_amount_cum {
     display: flex;
     align-items: center;
     margin-top: 1px;
     font-size: 16px;
   }
-  #total_header{
+
+  #total_header {
     font-size: 16px;
   }
-  #allign_btn{
+
+  #allign_btn {
     display: flex;
     position: absolute;
     justify-content: center;
     top: 92vh;
     width: 100%;
   }
-  #total_display-allignment{
+
+  #total_display-allignment {
     display: flex;
     justify-content: center;
     background: #f7ff7f;
@@ -37,97 +41,96 @@
     margin-top: 20px;
   }
 </style>
-{% endblock  %}
+{% endblock %}
 {% block table %}
 {% if messages%}
-    {% for message in messages%}
-    {{message}}
-    {%endfor%}
-    {%endif%}
-  <table class="table table-responsive">
-        <tr class="bg-primary bg-opacity-50" id="table-heading" style="max-height: 10px;">
-            <th class="bg-primary">STOCK ID</th>
-            <th class="bg-primary">COMPANY</th>
-            <th class="bg-primary" >LOCATION</th>
-            <th class="bg-primary" style="text-align:center;">SHAPE</th>
-            <th class="bg-primary" style="text-align:center;">GEM TYPE</th>
-            <th class="bg-primary">ORIGIN</th>
-            <th class="bg-primary" style="text-align:center;">TREATMENT</th>
-            <th class="bg-primary">CLARITY</th>
-            <th class="bg-primary">CERTIFICATE NUMBER</th>
-            <th class="bg-primary">COLOURS</th>
-            <th class="bg-primary">MEASUREMENTS</th>
-            <th class="bg-primary">LAB</th>
-            <th class="bg-primary">PIECES</th>
-            <th class="bg-primary">WEIGHT</th>
-            <th class="bg-primary">PRICE</th>
-            <th class="bg-primary">UNITS</th>
-            <th class="bg-primary">AMOUNT</th>
-            <th class="bg-primary">DISCOUNT</th>
-            <th class="bg-primary">DISCOUNTED AMOUNT</th>
-            <th class="bg-primary">TOTAL VALUE</th>
-            <th class="bg-primary">CURRENCY</th>
-            <th class="bg-primary">TAG PRICE</th>
-            <th class="bg-primary">RATE</th>
-            <th class="bg-primary">SOLD ITEM</th>
-        </tr>
+{% for message in messages%}
+{{message}}
+{%endfor%}
+{%endif%}
+<table class="table table-responsive">
+  <tr class="bg-primary bg-opacity-50" id="table-heading" style="max-height: 10px;">
+    <th class="bg-primary">STOCK ID</th>
+    <th class="bg-primary">COMPANY</th>
+    <th class="bg-primary">LOCATION</th>
+    <th class="bg-primary" style="text-align:center;">SHAPE</th>
+    <th class="bg-primary" style="text-align:center;">GEM TYPE</th>
+    <th class="bg-primary">ORIGIN</th>
+    <th class="bg-primary" style="text-align:center;">TREATMENT</th>
+    <th class="bg-primary">CLARITY</th>
+    <th class="bg-primary">CERTIFICATE NUMBER</th>
+    <th class="bg-primary">COLOUR</th>
+    <th class="bg-primary">MEASUREMENTS</th>
+    <th class="bg-primary">LAB</th>
+    <th class="bg-primary">PIECES</th>
+    <th class="bg-primary">WEIGHT (g)</th>
+    <th class="bg-primary">PRICE</th>
+    <th class="bg-primary">UNITS</th>
+    <th class="bg-primary">AMOUNT</th>
+    <th class="bg-primary">DISCOUNT %</th>
+    <th class="bg-primary">DISCOUNT AMOUNT</th>
+    <th class="bg-primary">TOTAL AMOUNT</th>
+    <th class="bg-primary">CURRENCY</th>
+    <th class="bg-primary">TAG PRICE</th>
+    <th class="bg-primary">RATE</th>
+    <th class="bg-primary">SOLD ITEM</th>
+  </tr>
   <form method="post" action="">
-          {%csrf_token%} {{totalitems_cs.management_form }}
-        {% for obj in totalitems_cs %}
-        <tr>
-            {% for field in obj %}
-            <td>{{field}}<br>{{field.errors}}</td>
-            {%endfor%}
-        </tr>
-        {% endfor %}
-    </table>
-    
-    
-    <div id="allign_btn">
-      {% if is_valid%}
-      <a class="uk-button uk-button-primary"  href="{% url 'sell_cs' %}" style="text-decoration: none;margin-right: 10px;border-radius: 3px;">Sell</a>
-      {% endif%}
-      <button class="btn btn-success" type="submit" onclick=''>Submit</button>
-    </div>
+    {%csrf_token%} {{totalitems_cs.management_form }}
+    {% for obj in totalitems_cs %}
+    <tr>
+      {% for field in obj %}
+      <td>{{field}}<br>{{field.errors}}</td>
+      {%endfor%}
+    </tr>
+    {% endfor %}
+</table>
 
-    </form>
-{% endblock  %}
+
+<div id="allign_btn">
+  {% if is_valid%}
+  <a class="uk-button uk-button-primary" href="{% url 'sell_cs' %}"
+    style="text-decoration: none;margin-right: 10px;border-radius: 3px;">Sell</a>
+  {% endif%}
+  <button class="btn btn-success" type="submit" onclick=''>Submit</button>
+</div>
+
+</form>
+{% endblock %}
 {% block container1 %}
 <div id="total_display-allignment">
-    <span id="total_header">Total Value of all items&nbsp;:&nbsp;</span><span id="total_amount_cum">0</span>
+  <span id="total_header">Total Value of all items&nbsp;:&nbsp;</span><span id="total_amount_cum">0</span>
 </div>
 {% endblock %}
-    
-  {% block script %}
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script>
 
-    var s = " ";
-    var formCnt = "{{itemcount}}";
-    var k = "$('#id_form-0-company_name').on('change keyup blur',function(){var a = document.getElementById('id_form-0-company_name').value;document.getElementById('id_form-0-company_name').value = a;"
-    var k1 = ";});";
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
 
-    var discount_str = " ";
-    var total_amount = "$(document).on('keyup', function(){ var total_amount_value = 0";
-    var total_amount1 = ";if(!isNaN(total_amount_value)) document.getElementById('total_amount_cum').innerHTML = total_amount_value.toFixed(2);});";
-    
-    // $('#id_form-0-price').on("change keyup blur",function(){document.getElementById('id_form-0-amount_cs').value = 8349983});
-    for( var i = 0; i < formCnt; i++){
-      s+="$('#id_form-"+ i + "-price').on('change keyup blur', function(){var price = document.getElementById('id_form-"+i+"-price').value; var weight = document.getElementById('id_form-"+i+"-Weight_cs').value; document.getElementById('id_form-"+i+"-amount_cs').value = (weight * price).toFixed(2);  });   ";
-      k+="document.getElementById('id_form-"+i+"-company_name').value = a; ";
-      discount_str+="$('#id_form-"+ i + "-DIS_cs').on('change keyup blur', function(){var discount = document.getElementById('id_form-"+i+"-DIS_cs').value; var amount = document.getElementById('id_form-"+i+"-amount_cs').value; document.getElementById('id_form-"+i+"-DIS_amount_cs').value = ((amount * discount)/100).toFixed(2); document.getElementById('id_form-"+i+"-total_value_cs').value = (amount - ((amount * discount)/100)).toFixed(2);  });   ";
-      total_amount+="+parseFloat(document.getElementById('id_form-"+ i +"-total_value_cs').value)" 
-      eval(s);
-      eval(k+k1);
-      eval(discount_str);
-      eval(total_amount+total_amount1);
-    }
+  var s = " ";
+  var formCnt = "{{itemcount}}";
+  var k = "$('#id_form-0-company_name').on('change keyup blur',function(){var a = document.getElementById('id_form-0-company_name').value;document.getElementById('id_form-0-company_name').value = a;"
+  var k1 = ";});";
+
+  var discount_str = " ";
+  var total_amount = "$(document).on('keyup', function(){ var total_amount_value = 0";
+  var total_amount1 = ";if(!isNaN(total_amount_value)) document.getElementById('total_amount_cum').innerHTML = total_amount_value.toFixed(2);});";
+
+  // $('#id_form-0-price').on("change keyup blur",function(){document.getElementById('id_form-0-amount_cs').value = 8349983});
+  for (var i = 0; i < formCnt; i++) {
+    s += "$('#id_form-" + i + "-price').on('change keyup blur', function(){var price = document.getElementById('id_form-" + i + "-price').value; var weight = document.getElementById('id_form-" + i + "-Weight_cs').value; document.getElementById('id_form-" + i + "-amount_cs').value = (weight * price).toFixed(2);  });   ";
+    k += "document.getElementById('id_form-" + i + "-company_name').value = a; ";
+    discount_str += "$('#id_form-" + i + "-DIS_cs').on('change keyup blur', function(){var discount = document.getElementById('id_form-" + i + "-DIS_cs').value; var amount = document.getElementById('id_form-" + i + "-amount_cs').value; document.getElementById('id_form-" + i + "-DIS_amount_cs').value = ((amount * discount)/100).toFixed(2); document.getElementById('id_form-" + i + "-total_value_cs').value = (amount - ((amount * discount)/100)).toFixed(2);  });   ";
+    total_amount += "+parseFloat(document.getElementById('id_form-" + i + "-total_value_cs').value)"
     eval(s);
-    eval(k+k1);
+    eval(k + k1);
     eval(discount_str);
-    eval(total_amount+total_amount1);
-    console.log(total_amount+total_amount1);
-  </script>
-  {% endblock  %}
-
-
+    eval(total_amount + total_amount1);
+  }
+  eval(s);
+  eval(k + k1);
+  eval(discount_str);
+  eval(total_amount + total_amount1);
+  console.log(total_amount + total_amount1);
+</script>
+{% endblock %}

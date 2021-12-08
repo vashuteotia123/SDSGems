@@ -4,23 +4,23 @@
 <table class="table table-responsive">
     <tr class="bg-primary bg-opacity-50" id="table-heading">
         <th class="bg-primary">STOCK ID</th>
-        <th class="bg-primary" >LOCATION</th>
+        <th class="bg-primary">LOCATION</th>
         <th class="bg-primary" style="text-align:center;">SHAPE</th>
         <th class="bg-primary" style="text-align:center;">GEM TYPE</th>
         <th class="bg-primary">ORIGIN</th>
         <th class="bg-primary" style="text-align:center;">TREATMENT</th>
         <th class="bg-primary">CLARITY</th>
         <th class="bg-primary">CERTIFICATE NUMBER</th>
-        <th class="bg-primary">COLOURS</th>
-        <th class="bg-primary">MEASUREMENTS</th>
         <th class="bg-primary">LAB</th>
+        <th class="bg-primary">COLOUR</th>
+        <th class="bg-primary">MEASUREMENTS</th>
         <th class="bg-primary">PIECES</th>
         <th class="bg-primary">WEIGHT</th>
         <th class="bg-primary">PRICE</th>
         <th class="bg-primary">UNITS</th>
         <th class="bg-primary">AMOUNT</th>
         <th class="bg-primary">DISCOUNT</th>
-        <th class="bg-primary">DISCOUNTED AMOUNT</th>
+        <th class="bg-primary">DISCOUNT AMOUNT</th>
         <th class="bg-primary">TOTAL VALUE</th>
         <th class="bg-primary">CURRENCY</th>
         <th class="bg-primary">TAG PRICE</th>
@@ -29,7 +29,7 @@
         <th class="bg-primary">SALES STATUS</th>
         <th class="bg-primary" style="text-align:center;">ACTION</th>
     </tr>
-    {% for obj in sold_items %} 
+    {% for obj in sold_items %}
     <tr>
         <td style="text-align:center;">{{obj.stockid}}</td>
         <td>{{obj.location.place.capitalize}}</td>
@@ -39,9 +39,9 @@
         <td>{{obj.treatment.treatment.capitalize}}</td>
         <td>{{obj.Clarity.capitalize}}</td>
         <td>{{obj.certificate_no}}</th>
+        <td>{{obj.lab.lab.upper}}</td>
         <td>{{obj.color}}</td>
         <td>{{obj.measurements}}</td>
-        <td>{{obj.lab.lab.upper}}</td>
         <td>{{obj.PCS}}</td>
         <td>{{obj.Weight_cs}}</td>
         <td>{{obj.price}}</td>
@@ -59,9 +59,10 @@
         {% else %}
         <td>NO</td>
         {% endif %}
-    
+
         {% if obj.salesapprovalstatus_cs is False %}
-        <td><a class="btn btn-primary" style="text-decoration:none;" href="{% url 'return_colorstone_Inventory' obj.id %}" target=""> Return back to Inventory</a></td>
+        <td><a class="btn btn-primary" style="text-decoration:none;"
+                href="{% url 'return_colorstone_Inventory' obj.id %}" target=""> Return back to Inventory</a></td>
         {% else %}
         <td><a class="btn btn-primary" style="text-decoration:none;" target="">ALREADY SOLD</a></td>
         {% endif%}
@@ -69,10 +70,12 @@
     {% endfor %}
 </table>
 
-{% endblock  %}
+{% endblock %}
 {% block container1 %}
 <div class="sale_export">
-    <a class="btn btn-primary btn-sm" style ="text-decoration: none;margin-right: 20px;" href="{% url 'displaysalesreturn_cs' %}">View Sales Return</a>
-    <a class="btn btn-primary btn-sm" style ="text-decoration: none;margin-left: 20px;" href="{% url 'ExportSalesofcolorstones' %}">Export Records</a>
+    <a class="btn btn-primary btn-sm" style="text-decoration: none;margin-right: 20px;"
+        href="{% url 'displaysalesreturn_cs' %}">View Sales Return</a>
+    <a class="btn btn-primary btn-sm" style="text-decoration: none;margin-left: 20px;"
+        href="{% url 'ExportSalesofcolorstones' %}">Export Records</a>
 </div>
 {% endblock %}

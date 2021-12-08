@@ -12,21 +12,21 @@
     <tr>
         <th style="background-color:#e7d896;color:#000000bf;">STOCK ID</th>
         <th style="background-color:#e7d896;color:#000000bf;">LOCATION</th>
-        <th style="background-color:#e7d896;color:#000000bf;">JEWELLERY</th>
+        <th style="background-color:#e7d896;color:#000000bf;">JEWELLERY TYPE</th>
         <th style="background-color:#e7d896;color:#000000bf;">CENTER STONE</th>
         <th style="background-color:#e7d896;color:#000000bf;">COLOUR OF CENTER STONE</th>
         <th style="background-color:#e7d896;color:#000000bf;">SHAPE</th>
-        <th style="background-color:#e7d896;color:#000000bf;">Metal</th>
-        <th style="background-color:#e7d896;color:#000000bf;">CENTER STONE WEIGHT</th>
+        <th style="background-color:#e7d896;color:#000000bf;">METAL</th>
+        <th style="background-color:#e7d896;color:#000000bf;">CENTER STONE WEIGHT (g)</th>
         <th style="background-color:#e7d896;color:#000000bf;">CENTER STONE PIECES</th>
-        <th style="background-color:#e7d896;color:#000000bf;">GROSS WEIGHT</th>
+        <th style="background-color:#e7d896;color:#000000bf;">GROSS WEIGHT (g)</th>
         <th style="background-color:#e7d896;color:#000000bf;">PIECES</th>
-        <th style="background-color:#e7d896;color:#000000bf;">TAG PRICE</th>
-        <th style="background-color:#e7d896;color:#000000bf;">CERTIFICATE TYPE</th>
+        <th style="background-color:#e7d896;color:#000000bf;">LAB</th>
         <th style="background-color:#e7d896;color:#000000bf;">CERTIFICATE</th>
+        <th style="background-color:#e7d896;color:#000000bf;">TAG PRICE</th>
         <th style="background-color:#e7d896;color:#000000bf;">CART</th>
-        <th style="background-color:#e7d896;color:#000000bf;">Home Page</th>
-        <th style="background-color:#e7d896;color:#000000bf;">CHECK</th>
+        <th style="background-color:#e7d896;color:#000000bf;">HOME PAGE</th>
+        <th style="background-color:#e7d896;color:#000000bf;">RETURN</th>
     </tr>
     {% csrf_token %}
     {% for obj in productsj %}
@@ -43,9 +43,9 @@
         <td>{{obj.center_stone_pieces}}</td>
         <td>{{obj.grosswt}}</th>
         <td>{{obj.pcs}}</td>
-        <td>{{obj.tag_price}}</td>
         <td>{{obj.cert}}</td>
         <td><a href="" id="stock_id{{ forloop.counter }}_cert">See Certificate</a></td>
+        <td>{{obj.tag_price}}</td>
         {% if obj.cartstatus is False %}
         <td style="padding: 10px 20px;"><a class="btn btn-primary" style="text-decoration: none;"
                 href="{% url 'addtocart' id=obj.id %}">ADD TO CART</a></td>
@@ -102,7 +102,7 @@
     }
     $(document).ready(function () {
         $('#delete_btn').click(function () {
-            if (confirm("You want to delete this")) {
+            if (confirm("You want to return this")) {
                 var id = [];
                 var csrf = $('input[name=csrfmiddlewaretoken').val()
                 $(':checkbox:checked').each(function (i) {
@@ -168,6 +168,7 @@
                         else {
                             document.getElementById("stock_id" + i + "_cert").innerHTML = "Not Available";
                             console.log(data.certificate);
+
                         }
                     }
                 }

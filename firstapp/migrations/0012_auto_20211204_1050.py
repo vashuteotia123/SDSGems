@@ -304,7 +304,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='salesofcolorstones',
             name='DIS_amount_cs',
-            field=models.DecimalField(blank=True, decimal_places=2, max_digits=9, null=True, verbose_name='Discounted Amount'),
+            field=models.DecimalField(blank=True, decimal_places=2, max_digits=9, null=True, verbose_name='DISCOUNT Amount'),
         ),
         migrations.AlterField(
             model_name='salesofcolorstones',
@@ -374,7 +374,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='salesofdiamond',
             name='DIS_Amount_d',
-            field=models.DecimalField(decimal_places=2, max_digits=9, verbose_name='Discounted Amount'),
+            field=models.DecimalField(decimal_places=2, max_digits=9, verbose_name='DISCOUNT Amount'),
         ),
         migrations.AlterField(
             model_name='salesofdiamond',
@@ -544,7 +544,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='salesofjewellery',
             name='DIS_amount',
-            field=models.DecimalField(blank=True, decimal_places=2, max_digits=9, verbose_name='Discounted Amount'),
+            field=models.DecimalField(blank=True, decimal_places=2, max_digits=9, verbose_name='DISCOUNT Amount'),
         ),
         migrations.AlterField(
             model_name='salesofjewellery',

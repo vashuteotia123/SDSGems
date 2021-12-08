@@ -8,32 +8,32 @@
 </form>
 {% endblock%}
 {% block table %}
-<table class="table table-responsive" >
-    <tr class="bg-primary bg-opacity-50" >
+<table class="table table-responsive">
+    <tr class="bg-primary bg-opacity-50">
         <th class="bg-primary">STOCK ID</th>
-        <th class="bg-primary" >LOCATION</th>
+        <th class="bg-primary">LOCATION</th>
         <th class="bg-primary" style="text-align:center;">SHAPE</th>
         <th class="bg-primary" style="text-align:center;">GEM TYPE</th>
         <th class="bg-primary">ORIGIN</th>
         <th class="bg-primary" style="text-align:center;">TREATMENT</th>
         <th class="bg-primary">CLARITY</th>
         <th class="bg-primary">CERTIFICATE NUMBER</th>
-        <th class="bg-primary">CERTIFICATE</th>
-        <th class="bg-primary">COLOURS</th>
-        <th class="bg-primary">MEASUREMENTS</th>
         <th class="bg-primary">LAB</th>
+        <th class="bg-primary">CERTIFICATE FILE</th>
+        <th class="bg-primary">COLOUR</th>
+        <th class="bg-primary">MEASUREMENTS</th>
         <th class="bg-primary">PIECES</th>
-        <th class="bg-primary">WEIGHT</th>
+        <th class="bg-primary">WEIGHT (g)</th>
+        <th class="bg-primary">BOUGHT</th>
         <th class="bg-primary">TAG PRICE</th>
-        <th class="bg-primary">BOUGHT COLOURSTONE</th>
         <th class="bg-primary" style="text-align:center;">CART</th>
-        <th class="bg-primary" style="text-align:center;">Home Page</th>
-        <th class="bg-primary" style="text-align:center;">CHECK</th>
+        <th class="bg-primary" style="text-align:center;">HOME PAGE</th>
+        <th class="bg-primary" style="text-align:center;">RETURN</th>
     </tr>
     {% csrf_token %}
-                {% for obj in products_cs %}
-                {% if obj.appvreturnstatus is False  %}
-    <tr  id="{{obj.id}}">
+    {% for obj in products_cs %}
+    {% if obj.appvreturnstatus is False %}
+    <tr id="{{obj.id}}">
         <td style="text-align:center;" id="stock_id{{ forloop.counter }}">{{obj.stockid}}</td>
         <td>{{obj.location.place.capitalize}}</td>
         <td>{{obj.shape.shape.capitalize}}</td>
@@ -42,77 +42,86 @@
         <td>{{obj.treatment.treatment.capitalize}}</td>
         <td>{{obj.Clarity.capitalize}}</td>
         <td>{{obj.certificate_no}}</td>
+        <td>{{obj.lab.lab.capitalize}}</td>
         <td><a href="" id="stock_id{{ forloop.counter }}_cert">See Certificate</a></td>
         <td>{{obj.color.color.capitalize}}</td>
         <td>{{obj.measurements}}</td>
-        <td>{{obj.lab.lab.capitalize}}</td>
         <td>{{obj.PCS}}</td>
         <td>{{obj.Weight}}</td>
-        <td>{{obj.tag_price}}</td>
         {% if obj.status %}
         <td>YES</td>
         {% else %}
         <td>NO</td>
         {%endif%}
+        <td>{{obj.tag_price}}</td>
         {% if obj.cartstatus is False %}
-        <td style="padding: 10px 20px;"><a class="btn btn-primary"style="text-decoration: none;" href="{% url 'addtocart_cs' id=obj.id %}">ADD TO CART</a></td>
-        
+        <td style="padding: 10px 20px;"><a class="btn btn-primary" style="text-decoration: none;"
+                href="{% url 'addtocart_cs' id=obj.id %}">ADD TO CART</a></td>
+
         {% endif %}
         {% if obj.cartstatus is True %}
-        <td style="padding: 10px 30px;"><a class="btn btn-primary" style="text-decoration: none;" href="{% url 'displaycart2_cs' %}" >Go To CART</a></td>
+        <td style="padding: 10px 30px;"><a class="btn btn-primary" style="text-decoration: none;"
+                href="{% url 'displaycart2_cs' %}">Go To CART</a></td>
         {% endif %}
         {% if obj.frontend is False %}
-        <td style="padding: 10px 50px;"><a class="btn btn-primary"style="text-decoration: none;" href="{% url 'show_on_frontend_cs' id=obj.id %}">Show on Home Page</a></td>
-        
+        <td style="padding: 10px 50px;"><a class="btn btn-primary" style="text-decoration: none;"
+                href="{% url 'show_on_frontend_cs' id=obj.id %}">Show on Home Page</a></td>
+
         {% endif %}
         {% if obj.frontend is True %}
-        <td style="padding: 10px 30px;"><a class="btn btn-primary" style="text-decoration: none;" href="{% url 'hide_from_frontend_cs' id=obj.id %}" >Remove From Home Page</a></td>
+        <td style="padding: 10px 30px;"><a class="btn btn-primary" style="text-decoration: none;"
+                href="{% url 'hide_from_frontend_cs' id=obj.id %}">Remove From Home Page</a></td>
         {% endif %}
 
         {% if obj.appvreturnstatus is False and obj.purchaseapv is False %}
-        <td style="padding-top: 17px;padding-left: 28px;"><input type="checkbox" name="cs_id[]" value="{{obj.id}}" class="save-cb-state" id="inventory_color_stone" style="    height: 20px;width: 20px;" ></td>
+        <td style="padding-top: 17px;padding-left: 28px;"><input type="checkbox" name="cs_id[]" value="{{obj.id}}"
+                class="save-cb-state" id="inventory_color_stone" style="    height: 20px;width: 20px;"></td>
         {% endif %}
     </tr>
     {% endif %}
     {% endfor %}
 </table>
 
-{% endblock  %}
+{% endblock %}
 {% block container1 %}
 <div id="button-allignment">
-    <button class="btn btn-primary btn-sm btnedit"  type="submit" id="delete_btn" style="text-decoration:none">Add to return table</button>
-    <a class="btn btn-primary btn-sm btnedit"  href="{% url 'retobj_cs' %}" style="text-decoration: none;">View returned objects</a>
-    <a class="btn btn-primary btn-sm btnedit"  href="{% url 'displaycart2_cs' %}" style="text-decoration: none;">View Cart</a>
-    <a class="btn btn-primary btn-sm btnedit"  href="{% url 'ExportInventoryofcolorstones' %}" style="text-decoration: none;">Export Inventory</a>
+    <button class="btn btn-primary btn-sm btnedit" type="submit" id="delete_btn" style="text-decoration:none">Add to
+        return table</button>
+    <a class="btn btn-primary btn-sm btnedit" href="{% url 'retobj_cs' %}" style="text-decoration: none;">View returned
+        objects</a>
+    <a class="btn btn-primary btn-sm btnedit" href="{% url 'displaycart2_cs' %}" style="text-decoration: none;">View
+        Cart</a>
+    <a class="btn btn-primary btn-sm btnedit" href="{% url 'ExportInventoryofcolorstones' %}"
+        style="text-decoration: none;">Export Inventory</a>
 
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     var length_cs = "{{length_cs}}";
     console.log(length_cs);
-    for(var i=1;i<=length_cs;i++){
-        var query=document.getElementById("stock_id"+i);
-        if(query){
-            var stockid=document.getElementById("stock_id"+i).innerHTML;
-            $.ajax({type: 'GET',async:false,url: '{% url "get_certificate_of_colorstone" %}',
-            data: {'stockid': stockid},success: function(data) {
-                
-                var query2=document.getElementById("stock_id"+i+"_cert");
-                if(data!="" && query2){
-                    console.log(data,i);
-                    if(data.certificate!="0"){
-                        document.getElementById("stock_id"+i+"_cert").href="/media/"+data.certificate;
-                        
-                    }
-                    else{
-                        document.getElementById("stock_id"+i+"_cert").innerHTML="Not Available";
-                        console.log(data.certificate);
+    for (var i = 1; i <= length_cs; i++) {
+        var query = document.getElementById("stock_id" + i);
+        if (query) {
+            var stockid = document.getElementById("stock_id" + i).innerHTML;
+            $.ajax({
+                type: 'GET', async: false, url: '{% url "get_certificate_of_colorstone" %}',
+                data: { 'stockid': stockid }, success: function (data) {
+
+                    var query2 = document.getElementById("stock_id" + i + "_cert");
+                    if (data != "" && query2) {
+                        console.log(data, i);
+                        if (data.certificate != "0") {
+                            document.getElementById("stock_id" + i + "_cert").href = "/media/" + data.certificate;
+
+                        }
+                        else {
+                            document.getElementById("stock_id" + i + "_cert").innerHTML = "Not Available";
+                            console.log(data.certificate);
+                        }
                     }
                 }
-            }});
+            });
         }
     }
 </script>
 {% endblock %}
-
-    

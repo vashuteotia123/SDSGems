@@ -19,16 +19,16 @@
         <th style="background-color:#a01b1b;color:#fff;">POLISH</th>
         <th style="background-color:#a01b1b;color:#fff;">SYMMETRY</th>
         <th style="background-color:#a01b1b;color:#fff;">MEASUREMENTS</th>
-        <th style="background-color:#a01b1b;color:#fff;">DEPTH</th>
-        <th style="background-color:#a01b1b;color:#fff;">TABLE</th>
+        <th style="background-color:#a01b1b;color:#fff;">DEPTH %</th>
+        <th style="background-color:#a01b1b;color:#fff;">TABLE %</th>
         <th style="background-color:#a01b1b;color:#fff;">FLUORESCENCE INTENSITY</th>
         <th style="background-color:#a01b1b;color:#fff;">FLUORESCENCE COLOUR</th>
-        <th style="background-color:#a01b1b;color:#fff;">CERTIFICATE NO.</th>
-        <th style="background-color:#a01b1b;color:#fff;">C TYPE</th>
-        <th style="background-color:#a01b1b;color:#fff;">C FILE</th>
+        <th style="background-color:#a01b1b;color:#fff;">CERTIFICATE NUMBER</th>
+        <th style="background-color:#a01b1b;color:#fff;">LAB</th>
+        <th style="background-color:#a01b1b;color:#fff;">CERTIFICATE FILE</th>
         <th style="background-color:#a01b1b;color:#fff;">LASER INSCRIPTION</th>
         <th style="background-color:#a01b1b;color:#fff;">PIECES</th>
-        <th style="background-color:#a01b1b;color:#fff;">WEIGHT</th>
+        <th style="background-color:#a01b1b;color:#fff;">WEIGHT (g)</th>
         <th style="background-color:#a01b1b;color:#fff;">UNITS</th>
         <th style="background-color:#a01b1b;color:#fff;">TAG PRICE</th>
         <th style="background-color:#a01b1b;color:#fff;">ADD TO CART</th>
@@ -46,7 +46,8 @@
         <td>{{obj.clarity}}</td>
         <td>{{obj.color_origin1}}</td>
         <td>{% if obj.white_color_grade1%}{{obj.white_color_grade1}}{% endif%}{%if obj.fancycolor_grade%},
-            {{obj.fancycolor_grade}}{% endif%}</td>
+            {{obj.fancycolor_grade}}{% endif%}
+        </td>
         <td>{{obj.cut}}</td>
         <td>{{obj.polish}}</td>
         <td>{{obj.symmetry}}</td>
@@ -116,7 +117,7 @@
     }
     $(document).ready(function () {
         $('#delete_btn').click(function () {
-            if (confirm("You want to delete this")) {
+            if (confirm("You want to return this")) {
                 var id = [];
                 var csrf = $('input[name=csrfmiddlewaretoken').val()
                 $(':checkbox:checked').each(function (i) {

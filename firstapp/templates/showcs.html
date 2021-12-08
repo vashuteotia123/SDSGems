@@ -15,20 +15,20 @@
         <th class="bg-primary">CLARITY</th>
         <th class="bg-primary">COLOUR</th>
         <th class="bg-primary">MEASUREMENTS</th>
+        <th class="bg-primary">CERTIFICATE NUMBER</th>
         <th class="bg-primary">LAB</th>
         <th class="bg-primary">PIECES</th>
-        <th class="bg-primary">WEIGHT</th>
-        <th class="bg-primary">PRICE PER CARAT</th>
+        <th class="bg-primary">WEIGHT (g)</th>
+        <th class="bg-primary">PRICE</th>
         <th class="bg-primary">UNITS</th>
         <th class="bg-primary">AMOUNT</th>
-        <th class="bg-primary">Discount %</th>
-        <th class="bg-primary">DISCOUNTED AMOUNT</th>
-        <th class="bg-primary">TOTAL</th>
-        <th class="bg-primary">BOUGHT COLOURSTONE</th>
+        <th class="bg-primary">DISCOUNT %</th>
+        <th class="bg-primary">DISCOUNT AMOUNT</th>
+        <th class="bg-primary">TOTAL AMOUNT</th>
+        <th class="bg-primary">BOUGHT</th>
         <th class="bg-primary">CURRENCY</th>
         <th class="bg-primary">TAG PRICE</th>
         <th class="bg-primary">RATE</th>
-        <th class="bg-primary">CERTIFICATE NUMBER</th>
         <th class="bg-primary" colspan="2">ACTION</th>
     </tr>
     {% for obj in show_cs %}
@@ -44,6 +44,7 @@
         <td>{{obj.Clarity.capitalize}}</td>
         <td>{{obj.colour.color.capitalize}}</td>
         <td>{{obj.measurements}}</th>
+        <td>{{obj.certificate_no}}</td>
         <td>{{obj.lab}}</td>
         <td>{{obj.PCS}}</td>
         <td>{{obj.Weight}}</td>
@@ -61,7 +62,6 @@
         <td>{{obj.currency}}</td>
         <td>{{obj.tag_price}}</td>
         <td>{{obj.rate}}</td>
-        <td>{{obj.certificate_no}}</td>
         {% if obj.id in invobjectscs %}
         <td style="padding: 10px 10px;"><a class="btn btn-danger" id="delete-btn"
                 style="text-decoration: none;padding: 6px 35px;" onclick='return delete_alert()'

@@ -345,7 +345,7 @@ class Salesofjewellery(models.Model):
     DIS =models.DecimalField(
         decimal_places=2, max_digits=9, blank=True, verbose_name="Discount %")
     DIS_amount = models.DecimalField(
-        decimal_places=2, max_digits=9, blank=True, verbose_name="Discounted Amount")
+        decimal_places=2, max_digits=9, blank=True, verbose_name="DISCOUNT Amount")
     total_value = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True, verbose_name="Total Value")
     currency = models.ForeignKey(
@@ -782,8 +782,8 @@ class Salesofdiamond(models.Model):
     table = models.DecimalField(decimal_places=2, max_digits=9, verbose_name="Table")
     fluorescence_intensity = models.ForeignKey('fluorescence_intensity', on_delete=models.PROTECT, verbose_name="Fluorescence Intensity")
     fluorescence_color = models.ForeignKey('fluorescence_color', on_delete=models.PROTECT, verbose_name="Fluorescence Color")
-    certificate_no_d = models.CharField(max_length=30, verbose_name="Certificate No.")
-    certificate_d = models.ForeignKey('certificate_d', on_delete=models.PROTECT, verbose_name="Certificate Type")
+    certificate_no_d = models.CharField(max_length=30, verbose_name="Certificate Number")
+    certificate_d = models.ForeignKey('certificate_d', on_delete=models.PROTECT, verbose_name="Lab")
     laser_inscription = models.BooleanField(default=False, verbose_name="Laser Inscription")
     PCS_d = models.IntegerField(null=True, blank=True, verbose_name="Pieces")
     weight_d = models.DecimalField(decimal_places=2, max_digits=9, verbose_name="Weight")
@@ -791,7 +791,7 @@ class Salesofdiamond(models.Model):
     units = models.CharField(max_length=30, blank=True, null=True, verbose_name="Units")
     amount_d = models.DecimalField(decimal_places=2, max_digits=9, verbose_name="Amount")
     DIS_d = models.DecimalField(decimal_places=2, max_digits=9, verbose_name = "Discount %")
-    DIS_Amount_d = models.DecimalField(decimal_places=2, max_digits=9, verbose_name="Discounted Amount")
+    DIS_Amount_d = models.DecimalField(decimal_places=2, max_digits=9, verbose_name="Discount Amount")
     total_value_d = models.DecimalField(decimal_places=2, max_digits=9, verbose_name="Total Value")
     currency = models.ForeignKey(currencies,on_delete=models.PROTECT, verbose_name="Currency")
     tag_price_d = models.DecimalField(decimal_places=2, max_digits=9, verbose_name="Tag Price")
@@ -1143,7 +1143,7 @@ class Salesofcolorstones(models.Model):
     DIS_cs = models.DecimalField(
         verbose_name="Discount %", null=True, blank=True, decimal_places=2, max_digits=9)
     DIS_amount_cs = models.DecimalField(
-        verbose_name="Discounted Amount", null=True, blank=True, decimal_places=2, max_digits=9)
+        verbose_name="DISCOUNT Amount", null=True, blank=True, decimal_places=2, max_digits=9)
     total_value_cs = models.DecimalField(
         verbose_name="Total Value", null=True, blank=True, decimal_places=2, max_digits=9)
     currency_cs = models.ForeignKey(
@@ -1197,7 +1197,7 @@ class cloneInvofcolorstones(models.Model):
     DIS_cs = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True, null=True, verbose_name="Discount %")
     DIS_amount_cs = models.DecimalField(
-        decimal_places=2, max_digits=9, blank=True, null=True, verbose_name="Discounted Amount")
+        decimal_places=2, max_digits=9, blank=True, null=True, verbose_name="DISCOUNT Amount")
     total_value_cs = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True, null=True, verbose_name="Total Value")
     currency_cs = models.ForeignKey(

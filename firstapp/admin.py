@@ -153,6 +153,15 @@ if deploy_color_stone:
         changelist_actions = ('HomePage',)
 
 
+    @admin.register(gemtype)
+    class gemtypeadmin(ImportExportModelAdmin):
+        def HomePage(gemtypeadmin, request, queryset):
+            return redirect('/index')
+
+        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
+        changelist_actions = ('HomePage',)
+
+
 
 #Jewellery models here
 if deploy_jewellery:
@@ -284,18 +293,18 @@ if deploy_diamond:
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
 
-    @admin.register(fancy_color_intensity)
-    class fancy_color_intensityadmin(ImportExportModelAdmin,admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
+    # @admin.register(fancy_color_intensity)
+    # class fancy_color_intensityadmin(ImportExportModelAdmin,admin.ModelAdmin):
+    #     def HomePage(LocAdmin, request, queryset):
+    #         return redirect('/index')
 
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
 
-    @admin.register(fancycolor_grade)
-    class fancycolor_gradeadmin(ImportExportModelAdmin,admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
+    # @admin.register(fancycolor_grade)
+    # class fancycolor_gradeadmin(ImportExportModelAdmin,admin.ModelAdmin):
+    #     def HomePage(LocAdmin, request, queryset):
+    #         return redirect('/index')
 
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
@@ -344,6 +353,40 @@ if deploy_diamond:
 
         def has_delete_permission(self, request, obj=None):
             return False
+
+        @admin.register(location)
+        class LocAdmin(ImportExportModelAdmin):
+            def HomePage(LocAdmin, request, queryset):
+                return redirect('/index')
+
+            HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
+            changelist_actions = ('HomePage',)
+        
+        @admin.register(cut)
+        class cutadmin(DjangoObjectActions, admin.ModelAdmin):
+            def HomePage(LocAdmin, request, queryset):
+                return redirect('/index')
+
+            HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
+            changelist_actions = ('HomePage',)
+
+
+        @admin.register(polish)
+        class polishadmin(DjangoObjectActions, admin.ModelAdmin):
+            def HomePage(LocAdmin, request, queryset):
+                return redirect('/index')
+
+            HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
+            changelist_actions = ('HomePage',)
+
+
+        @admin.register(symmetry)
+        class symmetryadmin(DjangoObjectActions, admin.ModelAdmin):
+            def HomePage(LocAdmin, request, queryset):
+                return redirect('/index')
+
+            HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
+            changelist_actions = ('HomePage',)
 
 
 if development_mode:
@@ -430,57 +473,7 @@ if development_mode:
 
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
-
-    @admin.register(gemtype)
-    class gemtypeadmin(ImportExportModelAdmin):
-        def HomePage(gemtypeadmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
-
-
-    @admin.register(cut)
-    class cutadmin(DjangoObjectActions, admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
-
-
-    @admin.register(polish)
-    class polishadmin(DjangoObjectActions, admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
-
-
-    @admin.register(symmetry)
-    class symmetryadmin(DjangoObjectActions, admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
-
-
-    @admin.register(location)
-    class LocAdmin(ImportExportModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
-
-
-    
-
-   
-
-   
+      
 
     @admin.register(cloneInvofjewellery)
     class cloneInvofjewadmin(DjangoObjectActions, admin.ModelAdmin):
