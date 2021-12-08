@@ -1477,7 +1477,8 @@ def jewellery_upload(request):
         try:
             f.company_name = companyinfo.objects.get(company_name=column[2].lower())
         except ObjectDoesNotExist:
-            messages.error(request, "Company Details not found! Please Create one.")
+            messages.error(
+                request, "Company Name does not exist, Add company from top bar!")
             return redirect(request.META.get('HTTP_REFERER'))
         try:
             f.location, lcobj = location.objects.get_or_create(
