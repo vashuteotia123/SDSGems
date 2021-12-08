@@ -24,7 +24,6 @@
         <th class="bg-primary">MEASUREMENTS</th>
         <th class="bg-primary">PIECES</th>
         <th class="bg-primary">WEIGHT (g)</th>
-        <th class="bg-primary">BOUGHT</th>
         <th class="bg-primary">TAG PRICE</th>
         <th class="bg-primary" style="text-align:center;">CART</th>
         <th class="bg-primary" style="text-align:center;">HOME PAGE</th>
@@ -48,7 +47,6 @@
         <td>{{obj.measurements}}</td>
         <td>{{obj.PCS}}</td>
         <td>{{obj.Weight}}</td>
-        {% if obj.status %}
         <td>YES</td>
         {% else %}
         <td>NO</td>
@@ -85,8 +83,8 @@
 {% endblock %}
 {% block container1 %}
 <div id="button-allignment">
-    <button class="btn btn-primary btn-sm btnedit" type="submit" id="delete_btn" style="text-decoration:none">Add to
-        return table</button>
+    <button class="btn btn-primary btn-sm btnedit" type="submit" id="delete_btn" style="text-decoration:none">Return
+        selected</button>
     <a class="btn btn-primary btn-sm btnedit" href="{% url 'retobj_cs' %}" style="text-decoration: none;">View returned
         objects</a>
     <a class="btn btn-primary btn-sm btnedit" href="{% url 'displaycart2_cs' %}" style="text-decoration: none;">View
