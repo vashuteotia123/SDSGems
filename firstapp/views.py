@@ -1507,7 +1507,6 @@ def jewellery_upload(request):
                 f.color_of_center_stone.save()
         except Exception as e:
             raise e
-        f.color_of_center_stone = colorofcstone.objects.get(color=column[6])
         try:
             f.shape, sobj = shape1.objects.get_or_create(
                 shape=column[7].lower())
@@ -2036,7 +2035,7 @@ def diamond_upload(request):
         PCS_d=column[20],
         weight_d=float(column[21]),
         price=float(column[22]),
-        units=float(column[23]),
+        units=column[23],
         amount_d=float(column[24]),
         DIS_Amount_d=float(column[26]),
         DIS_d=float(column[25]),
