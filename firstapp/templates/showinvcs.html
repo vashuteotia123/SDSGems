@@ -24,7 +24,6 @@
         <th class="bg-primary">MEASUREMENTS</th>
         <th class="bg-primary">PIECES</th>
         <th class="bg-primary">WEIGHT (g)</th>
-        <th class="bg-primary">BOUGHT</th>
         <th class="bg-primary">TAG PRICE</th>
         <th class="bg-primary" style="text-align:center;">CART</th>
         <th class="bg-primary" style="text-align:center;">HOME PAGE</th>
@@ -48,7 +47,7 @@
         <td>{{obj.measurements}}</td>
         <td>{{obj.PCS}}</td>
         <td>{{obj.Weight}}</td>
-        {% if obj.status %}
+        {% if obj.purchaseapv %}
         <td>YES</td>
         {% else %}
         <td>NO</td>
