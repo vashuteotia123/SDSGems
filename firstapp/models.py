@@ -42,7 +42,7 @@ class location(models.Model):
 
 class gemtype(models.Model):
     class Meta:
-        verbose_name_plural = "ColourStone - Gem"
+        verbose_name_plural = "ColourStone - Gemtype"
 
     gem = models.CharField(max_length=50)
 
@@ -415,10 +415,12 @@ class Salesreturn(models.Model):
     class Meta:
         verbose_name_plural = "Jewellery - Sales Return"
     date = models.DateField(auto_now_add=True)
-    stockid = models.CharField(max_length=30)
-    company_name = models.CharField(max_length=30)
-    location = models.CharField(max_length=30)
-    jewellery_type = models.CharField(max_length=30)
+    stockid = models.CharField(max_length=30,blank=True, null=True,)
+    company_name = models.CharField(max_length=30,blank=True, null=True,)
+    location = models.CharField(max_length=30,blank=True, null=True,)
+    grosswt=models.DecimalField(null=True,blank=True,decimal_places=2, max_digits=9,default=1)
+    jewellery_type = models.CharField(max_length=30,blank=True, null=True,)
+    total_amount=models.DecimalField(null=True,blank=True,decimal_places=2, max_digits=9,default=1)
 
 
 class Jewel_media(models.Model):
@@ -481,7 +483,7 @@ class clarity(models.Model):
 
 class color_origin(models.Model):
     class Meta:
-        verbose_name_plural = "Diamonds - Color Origin"
+        verbose_name_plural = "Diamond - Colour Origin"
 
     c_o = models.CharField(max_length=30)
 
@@ -850,10 +852,13 @@ class Salesreturn_d(models.Model):
     class Meta:
         verbose_name_plural = "Diamond - Sales Return"
     date = models.DateField(auto_now_add=True)
-    stockid = models.CharField(max_length=30)
-    company_name = models.CharField(max_length=30)
-    location = models.CharField(max_length=30)
-    shape = models.CharField(max_length=30)
+    stockid = models.CharField(max_length=30,blank=True, null=True,)
+    company_name = models.CharField(max_length=30,blank=True, null=True,)
+    location = models.CharField(max_length=30,blank=True, null=True,)
+    shape = models.CharField(max_length=30,blank=True, null=True,)
+    weight=models.DecimalField(blank=True, null=True, verbose_name="Weight", decimal_places=2, max_digits=9)
+    colour=models.CharField(max_length=30,blank=True, null=True,)
+    clarity=models.CharField(max_length=30,null=True,blank=True)
     totalamount=models.DecimalField(blank=True, null=True, verbose_name="Total Value", decimal_places=2, max_digits=9)
 
 
@@ -900,7 +905,7 @@ class Diamond_media(models.Model):
 
 class color_of_colorstone(models.Model):
     class Meta:
-        verbose_name_plural = "ColourStone - Color"
+        verbose_name_plural = "ColourStone - Colour"
 
     color = models.CharField(max_length=30)
 
@@ -1222,16 +1227,17 @@ class cloneInvofcolorstones(models.Model):
 class Salesreturn_cs(models.Model):
     class Meta:
         verbose_name_plural = "ColourStone - Sales Return"
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(auto_now_add=True,blank=True, null=True,)
     stockid = models.CharField(max_length=30)
-    company_name = models.CharField(max_length=30)
+    company_name = models.CharField(max_length=30,blank=True, null=True,)
+    weight=models.DecimalField(blank=True, null=True, default=1, decimal_places=2, max_digits=9)
+    total_amount=models.DecimalField(blank=True, null=True, default=1, decimal_places=2, max_digits=9)
+    colour=models.CharField(max_length=30,blank=True, null=True,)
     location = models.ForeignKey(
         'location', on_delete=models.PROTECT, null=True, blank=True)
     gem_type = models.ForeignKey(
         'gemtype', on_delete=models.PROTECT, blank=True)
-    weight = models.FloatField(null=True)
-    tag_price_cs = models.FloatField(null=True)
-
+    clarity=models.CharField(max_length=30,blank=True,null=True)
 
 class ColorStone_media(models.Model):
     class Meta:

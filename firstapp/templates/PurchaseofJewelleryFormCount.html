@@ -28,7 +28,7 @@
     <div class="main-block" id="csv">
         <form action="show_jewel_form" method="get" enctype="multipart/form-data">
             {% csrf_token %}
-            <input type="number" name="form_count">
+            <input type="number" min="1" max="25" name="form_count">
             <button id="button" class="btn btn-success" type="submit" href="/">Submit</button>
         </form>
     </div>

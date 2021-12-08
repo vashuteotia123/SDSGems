@@ -110,7 +110,7 @@ ADCFormSet = modelformset_factory(cloneInvofjewellery, form=ADCForm, extra=0)
 
 class ADCForm_cs(forms.ModelForm):
     disabled_fields = ['stockid', 'location', 'shape', 'gem_type', 'origin', 'treatment',
-                       'certificate_no', 'color', 'measurements', 'lab', 'Weight_cs']
+                       'certificate_no', 'color', 'measurements', 'lab', 'Weight_cs','Clarity','PCS']
 
     class Meta:
         model = cloneInvofcolorstones
@@ -122,7 +122,7 @@ class ADCForm_cs(forms.ModelForm):
         for field in self.disabled_fields:
             self.fields[field].disabled = True
         for field in self.fields:
-            if self.fields[field].label == 'Sold Item' or self.fields[field]=="Clarity":
+            if self.fields[field].label == 'Sold Item' or self.fields[field].label=="Clarity":
                 continue
             self.fields[field].required = True
 

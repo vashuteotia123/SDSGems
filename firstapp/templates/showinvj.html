@@ -80,8 +80,7 @@
 {% block container1 %}
 <div id="button-allignment">
     <button class="btn btn-sm btnedit" type="submit" id="delete_btn"
-        style="background-color:#e7d896;color:#000000bf;border : 2px solid black;text-decoration:none"><b>Add to return
-            table</b></button>
+        style="background-color:#e7d896;color:#000000bf;border : 2px solid black;text-decoration:none"><b>Return Selected Items</b></button>
     <a class="btn btn-sm btnedit" href="{% url 'retobj_j' %}"
         style="background-color:#e7d896;color:#000000bf;border : 2px solid black;text-decoration: none;"><b>View
             returned objects</b></a>
@@ -102,7 +101,7 @@
     }
     $(document).ready(function () {
         $('#delete_btn').click(function () {
-            if (confirm("You want to return this")) {
+            if (confirm("Are you sure you want to return these items?")) {
                 var id = [];
                 var csrf = $('input[name=csrfmiddlewaretoken').val()
                 $(':checkbox:checked').each(function (i) {

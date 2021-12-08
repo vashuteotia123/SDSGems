@@ -37,7 +37,7 @@ width: 100%;
     }
     $(document).ready(function () {
         $('#delete_btn').click(function () {
-            if (confirm("You want to return selected items")) {
+            if (confirm("Are you sure you want to return these items?")) {
                 var id = [];
                 var csrf = $('input[name=csrfmiddlewaretoken').val()
                 $(':checkbox:checked').each(function (i) {
