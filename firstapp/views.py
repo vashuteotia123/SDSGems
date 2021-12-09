@@ -47,7 +47,6 @@ def showform(request):
     latest = POJ.objects.last()
     form = POJForm(request.POST, initial={'stockid': latest.id})
     # countone=POJ.objects.all().count()
-    # print(countone)
     if(form.is_valid()):
         form.save()
         return render(request, "index.html")
@@ -95,14 +94,11 @@ def updateJ(request, pk):
     browser_type = request.user_agent.browser.family
     if (browser_type == 'Edge' or browser_type == 'Chrome' or browser_type == 'Brave'):
         change_css = True
-    # print("7")
     if request.method == 'POST':
-        # print("2")
         form3 = POJForm(request.POST, instance=jewel_obj)
         if(form3.is_valid()):
             Inventoryofjewellery.objects.filter(
                 stockid=str("J-")+str(pk)).delete()
-            # print("3")
             form3.save()
             messages.success(
             request, "Stock ID->{} is Modified  Successfully".format(str("J-")+str(pk)))
@@ -185,7 +181,6 @@ def returninv_cs(request, id1):
 # def search(request):
 #     posts = Inventoryofjewellery.objects.all()
 #     search_term = ''
-#     print("ABCD")
 #     if 'search' in request.GET:
 #         search_term = request.GET['search']
 #         posts = posts.filter(Q(id__icontains=search_term) | Q(jewellery_type__icontains=search_term))
@@ -218,7 +213,6 @@ def returninv_cs(request, id1):
 #     if request.method == "POST":
 
 #         for item in form_list:
-#             print(item)
 #         return render(request, "showcart.html")
 #     context = {
 #         "totalitems": form_list,
@@ -304,7 +298,7 @@ class Jewellery_view(View):
                                                         center_stone_weight=j_obj.center_stone_weight,
                                                         center_stone_pieces=j_obj.center_stone_pieces,
                                                         gross_wt=j_obj.grosswt, certificate=j_obj.cert,
-                                                        PCS=j_obj.pcs)
+                                                        PCS=j_obj.pcs, tag_price = j_obj.tag_price)
         if j_obj.purchaseapv is False:
             j_obj2.update(purchase_approval=True)
         return redirect('delete-jewell')
@@ -638,14 +632,11 @@ def update_cs(request, ck):
     browser_type = request.user_agent.browser.family
     if (browser_type == 'Edge' or browser_type == 'Chrome' or browser_type == 'Brave'):
         change_css = True
-    # print("7")
     if request.method == 'POST':
-        # print("2")
         form5 = POCSForm(request.POST, instance=cs_obj)
         if(form5.is_valid()):
             Inventoryofcolorstones.objects.filter(
                 stockid=str("C-")+str(ck)).delete()
-        # print("3")
             form5.save()
             messages.success(
                 request, "Stock ID->{} is Modified  Successfully".format(str("C-")+str(ck)))
@@ -801,7 +792,6 @@ def allsellcsrecords(request):
 
 @login_required
 def return_colorstone_Inventory(request, id):
-    print("called sales cs")
     object = Salesofcolorstones.objects.get(id=id)
     Inventoryofcolorstones.objects.create(
         stockid=object.stockid,
@@ -944,7 +934,7 @@ class colorstone_view(View):
                                                           origin=j_obj.origin, treatment=j_obj.treatment, certificate_no=j_obj. certificate_no,
                                                           color=j_obj.color, measurements=j_obj.measurements, lab=j_obj.lab, PCS=j_obj.PCS,
                                                           Weight_cs=j_obj.Weight, Clarity=j_obj.Clarity,
-                                                          )
+                                                          tag_price_cs = j_obj.tag_price, units_cs = j_obj.units)
         if j_obj.purchaseapv is False:
             j_obj2.update(purchaseapv=True)
         return redirect('/inventory_color_stone')
@@ -1040,14 +1030,11 @@ def update_d(request, dk):
     browser_type = request.user_agent.browser.family
     if (browser_type == 'Edge' or browser_type == 'Chrome' or browser_type == 'Brave'):
         change_css = True
-    # print("7")
     if request.method == 'POST':
-        # print("2")
         form4 = PODForm(request.POST, instance=diamond_obj)
         if(form4.is_valid()):
             Inventoryofdiamond.objects.filter(
                 stockid=str("D-")+str(dk)).delete()
-            # print("3")
             form4.save()
             messages.success(
                 request, "Stock ID->{} is Modified  Successfully".format(str("D-")+str(dk)))
@@ -1255,8 +1242,7 @@ class Diamond_view(View):
         new_object = cloneInvofdiamond.objects.create(stockid=j_obj.stockid, location=j_obj.location, shape=j_obj.shape, clarity=j_obj.clarity,
                                                       white_color_grade1=j_obj.white_color_grade1,color_origin1=j_obj.color_origin1,  fancycolor_grade=j_obj.fancycolor_grade,
                                                       cut=j_obj.cut, polish=j_obj.polish, symmetry=j_obj.symmetry, measurements=j_obj.measurements, depth=j_obj.depth, table=j_obj.table,
-                                                      fluorescence_intensity=j_obj.fluorescence_intensity, fluorescence_color=j_obj.fluorescence_color, certificate_no_d=j_obj. certificate_no_d,
-                                                      certificate_d=j_obj.certificate_d, laser_inscription=j_obj.laser_inscription, PCS_d=j_obj.PCS_d, weight_d=j_obj.weight_d, units=j_obj.units)
+                                                      fluorescence_intensity=j_obj.fluorescence_intensity, fluorescence_color=j_obj.fluorescence_color, certificate_no_d=j_obj. certificate_no_d, certificate_d=j_obj.certificate_d, laser_inscription=j_obj.laser_inscription, PCS_d=j_obj.PCS_d, weight_d=j_obj.weight_d, units=j_obj.units, tag_price_d = j_obj.tag_price_d)
                                                       
            
         if j_obj.purchaseapv_d is False:
@@ -1466,7 +1452,6 @@ def jewellery_upload(request):
         # date_value=list(datere[0])
         # final_date=datetime.date(int(''.join(date_value[6:])),int(''.join(date_value[3:4])),int(''.join(date_value[0:2])))
         temp_date = datetime.datetime.strptime(str(column[0]), "%m-%d-%Y").date()
-        # print(final_date)
         f = clonePOJ
         for i in range(len(column)):
             if(i==1 or i==8 or i==12):
@@ -1815,7 +1800,6 @@ def colorstone_upload(request):
         except Exception as e:
             raise e
         # f.Treatment=Treatment_cs.objects.get(Treatment=column[7])
-        # print(f.Treatment)
 
         # try:
         #     f.certificate_no,cerobj = cert_no_cs.objects.get_or_create(cert=column[9].lower())
@@ -1824,7 +1808,6 @@ def colorstone_upload(request):
         # except Exception as e:
         #     raise e
 
-        # print(f.certificate_no)
 
         try:
             f.lab, mobj = Lab_cs.objects.get_or_create(lab=column[12].lower())
@@ -1887,8 +1870,8 @@ def colorstone_upload(request):
                                                      units=column[16],
                                                      amount=float(column[17]),
                                                      discount_amount=float(
-                                                         column[18]),
-                                                     discount=float(column[19]),
+                                                         column[19]),
+                                                     discount=float(column[18]),
                                                      total_val=float(
                                                          column[20]),
                                                      purchaseapv=y,
@@ -2481,12 +2464,12 @@ def ExportPurchaseOfColorStones(request):
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['Date', 'Stock id', 'Company Name', 'Location', 'Shape', 'Gem Type', 
-    'Origin', 'Treatment', 'Clarity', 'Certificate Number',
-                    'Lab', 'Colour', 'Measurement', 'PCS', 'Weight (g)', 'Price', 'Units', 'Amount', 'Discount %', 'Dicount Amount',  'Total Amount', 'Bought', 'Currency', 'Tag Price', 'Rate'])
+    writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME', 'LOCATION', 'SHAPE', 'GEM TYPE', 
+    'ORIGIN', 'TREATMENT', 'CLARITY', 'CERTIFICATE NUMBER',
+                    'LAB', 'COLOUR', 'MEASUREMENT', 'PCS', 'WEIGHT', 'PRICE', 'UNITS', 'AMOUNT', 'DISCOUNT %', 'DICOUNT AMOUNT',  'TOTAL AMOUNT', 'BOUGHT', 'CURRENCY', 'TAG PRICE', 'RATE'])
     for item in objects:
-        output.append([item.date, 'C-' + str(item.id), item.company_name.title(), item.location.place, item.shape.shape, item.gem_type.gem, item.origin.org, item.Treatment.treatment, item.Clarity.title(), item.certificate_no ,item.lab.title(), item.colour,
-                      item.measurements.title(),  item.PCS, item.Weight, item.Price, item.units, item.amount, str(item.discount), item.discount_amount, item.total_val, item.purchaseapv, item.currency.currency, item.tag_price, item.rate])
+        output.append([item.date, 'C-' + str(item.id), item.company_name, item.location, item.shape.shape, item.gem_type.gem, item.origin.org, item.Treatment.treatment, item.Clarity, item.certificate_no ,item.lab, item.colour,
+                      item.measurements,  item.PCS, item.Weight, item.Price, item.units, item.amount, str(item.discount), item.discount_amount, item.total_val, item.purchaseapv, item.currency, item.tag_price, item.rate])
 
     writer.writerows(output)
     return response
@@ -2503,11 +2486,11 @@ def ExportInventoryofcolorstones(request):
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['Stock id', 'Location', 'Shape', 'Gem Type', 'Origin', 'Treatment',
-                    'Clarity', 'Certificate Number','Lab', 'Colour', 'Measurement',  'PCS', 'Weight (g)', 'Tag Price'])
+    writer.writerow(['STOCK ID', 'LOCATION', 'SHAPE', 'GEM TYPE', 'ORIGIN', 'TREATMENT',
+                    'CLARITY', 'CERTIFICATE NUMBER','LAB', 'COLOUR', 'MEASUREMENT',  'PCS', 'WEIGHT', 'UNITS', 'TAG PRICE'])
     for item in objects:
-        output.append([item.stockid, item.location.title(), item.shape.title(), item.gem_type.title(), item.origin.title(), item.treatment.title(), item.Clarity.title(),
-                      item.certificate_no, item.lab.title(), item.color.title(), item.measurements,  item.PCS, item.Weight, item.tag_price])
+        output.append([item.stockid, item.location, item.shape, item.gem_type, item.origin, item.treatment, item.Clarity,
+                      item.certificate_no, item.lab, item.color, item.measurements,  item.PCS, item.Weight, item.units, item.tag_price])
 
     writer.writerows(output)
     return response
@@ -2524,10 +2507,10 @@ def ExportSalesofcolorstones(request):
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['Date', 'Stock id', 'Company Name', 'Location', 'Shape', 'Gem Type', 'Origin', 'Treatment', 'Clarity', 'Certificate',  'Lab',
-                    'Colour', 'Measurement', 'PCS', 'Weight (g)', 'Amount', 'Discount %', 'Dicount Amount', 'Total Amount', 'Currency', 'Tag Price', 'Rate'])
+    writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME', 'LOCATION', 'SHAPE', 'GEM TYPE', 'ORIGIN', 'TREATMENT', 'CLARITY', 'CERTIFICATE',  'LAB',
+                    'COLOUR', 'MEASUREMENT', 'PCS', 'WEIGHT', 'AMOUNT', 'DISCOUNT %', 'DICOUNT AMOUNT', 'TOTAL AMOUNT', 'CURRENCY', 'TAG PRICE', 'RATE'])
     for item in objects:
-        output.append([item.date, 'C-' + str(item.id), item.company_name.title(), item.location.title(), item.shape.title(), item.gem_type.title(), item.origin.title(), item.treatment.title(), item.Clarity.title(), item.certificate_no, item.lab.title(), item.color,
+        output.append([item.date, 'C-' + str(item.id), item.company_name, item.location, item.shape, item.gem_type, item.origin, item.treatment, item.Clarity, item.certificate_no, item.lab, item.color,
                       item.measurements,  item.PCS, item.Weight_cs, item.amount_cs, (item.DIS_cs), item.DIS_amount_cs, item.total_value_cs, item.currency_cs, item.tag_price_cs, item.rate_cs])
 
     writer.writerows(output)
@@ -2557,8 +2540,8 @@ def ExportSalesreturncolorstones(request):
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['Date', 'Stock id', 'Company Name',
-                    'Location', 'Gem Type', 'Weight ', 'Tag Price'])
+    writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME',
+                    'LOCATION', 'GEM TYPE', 'WEIGHT ', 'TAG PRICE'])
     for item in objects:
         output.append([item.date, 'C-' + str(item.id), item.company_name,
                       item.location, item.gem_type, item.weight, item.tag_price_cs])
@@ -2577,8 +2560,8 @@ def ExportSalesReturnCS(request):
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['Date', 'Stock ID', 'Company', 'Location',
-                    'Gem Type', 'Weight','Colour', 'Total Amount'])
+    writer.writerow(['DATE', 'STOCK ID', 'COMPANY', 'LOCATION',
+                    'GEM TYPE', 'WEIGHT','COLOUR', 'TOTAL AMOUNT'])
     for item in objects:
         output.append([item.date, item.stockid, item.company_name,
                       item.location, item.gem_type, item.weight, item.colour,item.total_amount])
@@ -2597,7 +2580,7 @@ def ExportPOJ(request):
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['Date','Stock id', 'Company Name','Location','Jewellery Type','Center Stone', 'Color Of Center Stone','Shape', 'Metal','Center Stone Pieces','Center Stone Weight (g)', 'Gross Weight (g)','Certificate Type', 'PCS',  'Amount', 'Discount %', 'Dicount Amount', 'Total Amount', 'Bought', 'Currency', 'Tag Price', 'Rate'])
+    writer.writerow(['DATE','STOCK ID', 'COMPANY NAME','LOCATION','JEWELLERY TYPE','CENTER STONE', 'COLOR OF CENTER STONE','SHAPE', 'METAL','CENTER STONE PIECES','CENTER STONE WEIGHT', 'GROSS WEIGHT','CERTIFICATE TYPE', 'PCS',  'AMOUNT', 'DISCOUNT %', 'DICOUNT AMOUNT', 'TOTAL AMOUNT', 'BOUGHT', 'CURRENCY', 'TAG PRICE', 'RATE'])
     for item in objects:
         if item.purchase_approval:
             z="Yes"
@@ -2616,7 +2599,7 @@ def ExportInventoryofjewellery(request):
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['Stock id', 'Location','Jewellery','Center Stone', 'Color Of Center Stone','Shape', 'Metal', 'Center Stone Pieces','Center Stone Weight (g)','Gross Weight (g)', 'Lab', 'PCS',  'Tag Price'])
+    writer.writerow(['STOCK ID', 'LOCATION','JEWELLERY','CENTER STONE', 'COLOR OF CENTER STONE','SHAPE', 'METAL', 'CENTER STONE PIECES','CENTER STONE WEIGHT','GROSS WEIGHT', 'LAB', 'PCS',  'TAG PRICE'])
     for item in objects:
         output.append([ item.stockid, item.location.place.title(),item.jewellery_type.jewel.title(),item.center_stone.stone.title(),item.color_of_center_stone.color.title(), item.shape.shape.title(),item.metal.metal.title(),item.center_stone_pieces,item.center_stone_weight, item.grosswt, item.cert.cert.upper(),item.pcs, item.tag_price])
 
@@ -2633,7 +2616,7 @@ def ExportSalesofjewellery(request):
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
 
-    writer.writerow(['Date','Stock id', 'Company Name','Location','Jewellery','Center Stone','Colour of Center Stone','Shape', 'Metal', 'Center Stone Pieces','Center Stone Weight (g)','Gross Weight (g)','Certificate Type', 'PCS',  'Amount', 'Discount %', 'Dicount Amount', 'Total Amount','Currency', 'Tag Price', 'Rate','Sold Item'])
+    writer.writerow(['DATE','STOCK ID', 'COMPANY NAME','LOCATION','JEWELLERY','CENTER STONE','COLOUR OF CENTER STONE','SHAPE', 'METAL', 'CENTER STONE PIECES','CENTER STONE WEIGHT','GROSS WEIGHT','CERTIFICATE TYPE', 'PCS',  'AMOUNT', 'DISCOUNT %', 'DICOUNT AMOUNT', 'TOTAL AMOUNT','CURRENCY', 'TAG PRICE', 'RATE','SOLD ITEM'])
     for item in objects:
         if item.salesapprovalstatus:
             z="Yes"
@@ -2652,7 +2635,7 @@ def ExportSalesReturn(request):
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['Date','Stock id', 'Company Name','Location','Jewellery','Gross Weight (g)','Total Amount'])
+    writer.writerow(['DATE','STOCK ID', 'COMPANY NAME','LOCATION','JEWELLERY','GROSS WEIGHT','TOTAL AMOUNT'])
     for item in objects:
         output.append([item.date,item.stockid, item.company_name, item.location.title(),item.jewellery_type.title(),item.grosswt,item])
 
@@ -2668,7 +2651,7 @@ def ExportPOD(request):
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['Date','Stock ID', 'Company Name','Location','Shape', 'Clarity', 'Color Origin', 'White Color Grade','Fancy Color Grade ','Cut','Polish','Symmetry','Measurements','Depth %','Table %','Fluorescence Intensity','Fluorescence Color','Certificate Number','Certificate Type','Laser Inscription', 'PCS','Weight (g)', 'Price','Units','Amount', 'Discount %', 'Discount Amount', 'Total Amount', 'Currency', 'Tag Price', 'Rate','Bought'])
+    writer.writerow(['DATE','STOCK ID', 'COMPANY NAME','LOCATION','SHAPE', 'CLARITY', 'COLOR ORIGIN', 'WHITE COLOR GRADE','FANCY COLOR GRADE ','CUT','POLISH','SYMMETRY','MEASUREMENTS','DEPTH %','TABLE %','FLUORESCENCE INTENSITY','FLUORESCENCE COLOR','CERTIFICATE NUMBER','CERTIFICATE TYPE','LASER INSCRIPTION', 'PCS','WEIGHT', 'PRICE','UNITS','AMOUNT', 'DISCOUNT %', 'DISCOUNT AMOUNT', 'TOTAL AMOUNT', 'CURRENCY', 'TAG PRICE', 'RATE','BOUGHT'])
     for item in objects:
 
         if item.laser_inscription is True:
@@ -2695,7 +2678,7 @@ def ExportInventoryofdiamond(request):
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['Stock ID','Location','Shape', 'Clarity','Colour Origin', 'White Colour Grade', 'Fancy Colour Grade','cut','polish','Symmetry','Measurements', 'Depth %',  'Table %', 'Fluorescence Intensity', 'Fluoresecene Colour', 'Certificate Number', ' Lab', 'Laser Inscription', 'PCS', 'Weight (g)','Units','Tag price'])
+    writer.writerow(['STOCK ID','LOCATION','SHAPE', 'CLARITY','COLOUR ORIGIN', 'WHITE COLOUR GRADE', 'FANCY COLOUR GRADE','CUT','POLISH','SYMMETRY','MEASUREMENTS', 'DEPTH %',  'TABLE %', 'FLUORESCENCE INTENSITY', 'FLUORESECENE COLOUR', 'CERTIFICATE NUMBER', ' LAB', 'LASER INSCRIPTION', 'PCS', 'WEIGHT','UNITS','TAG PRICE'])
     for item in objects:
         if item.laser_inscription is True:
             bools="Yes"
@@ -2716,7 +2699,7 @@ def ExportSalesofdiamond(request):
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['Date','Stock ID', 'Company Name','Location','Shape', 'Clarity', 'Color Origin', 'White Colour Grade','Fancy Colour Grade ','Cut','Polish','Symmetry', 'Measurements',  'Depth %', 'Table %', 'Fluorescence Intensity', 'Fluorescence Color','Certificate Number', 'Lab', 'Laser Inscription', 'PCS','Weight','Price','Units','Amount','Discount %','Discount Amount','Total Amount','Currency','Tag Price','Rate','Sold'])
+    writer.writerow(['DATE','STOCK ID', 'COMPANY NAME','LOCATION','SHAPE', 'CLARITY', 'COLOR ORIGIN', 'WHITE COLOUR GRADE','FANCY COLOUR GRADE ','CUT','POLISH','SYMMETRY', 'MEASUREMENTS',  'DEPTH %', 'TABLE %', 'FLUORESCENCE INTENSITY', 'FLUORESCENCE COLOR','CERTIFICATE NUMBER', 'LAB', 'LASER INSCRIPTION', 'PCS','WEIGHT','PRICE','UNITS','AMOUNT','DISCOUNT %','DISCOUNT AMOUNT','TOTAL AMOUNT','CURRENCY','TAG PRICE','RATE','SOLD'])
     for item in objects:
         if item.laser_inscription is True:
             bools="Yes"
@@ -2768,7 +2751,7 @@ def ExportSalesReturnDiamonds(request):
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['Date','Stock id', 'Company Name','Location','Shape','Weight (g)','Colour','Clarity','Total Amount'])
+    writer.writerow(['DATE','STOCK ID', 'COMPANY NAME','LOCATION','SHAPE','WEIGHT','COLOUR','CLARITY','TOTAL AMOUNT'])
     for item in objects:
         output.append([item.date,item.stockid, item.company_name, item.location,item.shape,item.weight,item.colour,item.clarity,item.totalamount])
 

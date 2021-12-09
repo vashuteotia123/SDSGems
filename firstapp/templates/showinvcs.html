@@ -23,7 +23,8 @@
         <th class="bg-primary">COLOUR</th>
         <th class="bg-primary">MEASUREMENTS</th>
         <th class="bg-primary">PIECES</th>
-        <th class="bg-primary">WEIGHT (g)</th>
+        <th class="bg-primary">WEIGHT</th>
+        <th class="bg-primary">UNITS</th>
         <th class="bg-primary">TAG PRICE</th>
         <th class="bg-primary" style="text-align:center;">CART</th>
         <th class="bg-primary" style="text-align:center;">HOME PAGE</th>
@@ -47,11 +48,7 @@
         <td>{{obj.measurements}}</td>
         <td>{{obj.PCS}}</td>
         <td>{{obj.Weight}}</td>
-        {% if obj.purchaseapv %}
-        <td>YES</td>
-        {% else %}
-        <td>NO</td>
-        {%endif%}
+        <td>{{obj.units}}</td>
         <td>{{obj.tag_price}}</td>
         {% if obj.cartstatus is False %}
         <td style="padding: 10px 20px;"><a class="btn btn-primary" style="text-decoration: none;"
@@ -84,7 +81,8 @@
 {% endblock %}
 {% block container1 %}
 <div id="button-allignment">
-    <button class="btn btn-primary btn-sm btnedit" type="submit" id="delete_btn" style="text-decoration:none">Return Objects</button>
+    <button class="btn btn-primary btn-sm btnedit" type="submit" id="delete_btn" style="text-decoration:none">Return
+        Objects</button>
     <a class="btn btn-primary btn-sm btnedit" href="{% url 'retobj_cs' %}" style="text-decoration: none;">View returned
         objects</a>
     <a class="btn btn-primary btn-sm btnedit" href="{% url 'displaycart2_cs' %}" style="text-decoration: none;">View

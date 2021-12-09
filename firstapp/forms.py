@@ -110,7 +110,7 @@ ADCFormSet = modelformset_factory(cloneInvofjewellery, form=ADCForm, extra=0)
 
 class ADCForm_cs(forms.ModelForm):
     disabled_fields = ['stockid', 'location', 'shape', 'gem_type', 'origin', 'treatment',
-                       'certificate_no', 'color', 'measurements', 'lab', 'Weight_cs','Clarity','PCS']
+                       'certificate_no', 'color', 'measurements', 'lab','Clarity']
 
     class Meta:
         model = cloneInvofcolorstones
@@ -133,7 +133,7 @@ ADCFormSet_cs = modelformset_factory(
 
 class ADCForm_d(forms.ModelForm):
     disabled_fields = ['stockid', 'location', 'shape', 'white_color_grade1', 'fancycolor_grade', 'cut', 'polish', 'symmetry',
-                       'measurements', 'depth', 'table', 'fluorescence_intensity', 'fluorescence_color', 'certificate_no_d', 'certificate_d', 'laser_inscription', 'PCS_d']
+                       'measurements', 'depth', 'table', 'fluorescence_intensity', 'fluorescence_color', 'certificate_no_d', 'certificate_d', 'laser_inscription', 'color_origin1', 'clarity', 'units']
 
     class Meta:
         model = cloneInvofdiamond

@@ -995,7 +995,7 @@ class clonePurchaseOfColorStones(models.Model):
     Price = models.FloatField()
     units = models.CharField(max_length=30, blank=True, null=True)
     amount = models.DecimalField(decimal_places=2, max_digits=9)
-    discount = models.PositiveSmallIntegerField(blank=True, null=True)
+    discount = models.DecimalField(decimal_places = 2, max_digits= 9, blank=True, null=True)
     discount_amount = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True, null=True)
     total_val = models.DecimalField(
@@ -1052,7 +1052,7 @@ class PurchaseOfColorStones(models.Model):
     Price = models.FloatField()
     units = models.CharField(max_length=30, blank=True, null=True)
     amount = models.DecimalField(decimal_places=2, max_digits=9)
-    discount = models.PositiveSmallIntegerField(blank=True, null=True)
+    discount = models.DecimalField(decimal_places = 2, max_digits= 9, blank=True, null=True)
     discount_amount = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True, null=True)
     total_val = models.DecimalField(
@@ -1076,7 +1076,7 @@ class PurchaseOfColorStones(models.Model):
         # self.total_value_c_s = self.amount-self.discount_amount
         super(PurchaseOfColorStones, self).save(*args, **kwargs)
         obj1 = Inventoryofcolorstones.objects.create(stockid=str('C-')+str(self.id), location=self.location, shape=self.shape,
-                                                     Clarity=self.Clarity, PCS=self.PCS, gem_type=self.gem_type, Weight=self.Weight, origin=self.origin, treatment=self.Treatment, certificate_no=self.certificate_no, color=self.colour, measurements=self.measurements, lab=self.lab, tag_price=self.tag_price, purchaseapv=self.purchaseapv)
+                                                     Clarity=self.Clarity, PCS=self.PCS, gem_type=self.gem_type, Weight=self.Weight, origin=self.origin, treatment=self.Treatment, certificate_no=self.certificate_no, color=self.colour, measurements=self.measurements, lab=self.lab, tag_price=self.tag_price, purchaseapv=self.purchaseapv, units = self.units)
 
 
 class Inventoryofcolorstones(models.Model):
@@ -1099,6 +1099,7 @@ class Inventoryofcolorstones(models.Model):
     measurements = models.CharField(max_length=30, blank=True, null=True)
     lab = models.ForeignKey('Lab_cs', on_delete=models.PROTECT, blank=True)
     PCS = models.IntegerField(null=True)
+    units = models.CharField(max_length=30, blank=True, null=True)
     Weight = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True, null=True, verbose_name="Weight")
     tag_price = models.FloatField(null=True)

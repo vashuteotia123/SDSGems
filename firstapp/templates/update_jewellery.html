@@ -5,9 +5,11 @@
     flex-direction: column;
     height: 100%;
   }
+
   #id_purchase_approval {
     margin-top: 10px;
   }
+
   @media only screen and (min-width: 723px) and (max-width: 841px) {
     #id_purchase_approval {
       margin-top: 5px;
@@ -15,43 +17,43 @@
   }
 </style>
 {% endblock %} {% block update_form %}
-<p style="margin-top: 18px"><label for="id_date">Date:</label>{{form3.date}}</p>
-<p><label for="id_company_name">Company name:</label>{{form3.company_name}}</p>
-<p><label for="id_location">Location:</label>{{form3.location}}</p>
-<p><label for="id_jewellery">Jewellery:</label>{{form3.jewellery}}</p>
-<p><label for="id_center_stone">Center stone:</label>{{form3.center_stone}}</p>
+<p style="margin-top: 18px"><label for="id_date">DATE:</label>{{form3.date}}</p>
+<p><label for="id_company_name">COMPANY NAME:</label>{{form3.company_name}}</p>
+<p><label for="id_location">LOCATION:</label>{{form3.location}}</p>
+<p><label for="id_jewellery">JEWELLERY TYPE:</label>{{form3.jewellery}}</p>
+<p><label for="id_center_stone">CENTER STONE:</label>{{form3.center_stone}}</p>
 <p>
-  <label for="id_color_of_center_stone">Color of center stone:</label>
+  <label for="id_color_of_center_stone">COLOR OF CENTER STONE:</label>
   {{form3.color_of_center_stone}}
 </p>
-<p><label for="id_shape">Shape:</label>{{form3.shape}}</p>
-<p><label for="id_metal">Metal:</label>{{form3.metal}}</p>
+<p><label for="id_shape">SHAPE:</label>{{form3.shape}}</p>
+<p><label for="id_metal">METAL:</label>{{form3.metal}}</p>
 <p>
-  <label for="id_center_stone_weight">Center stone weight:</label>
+  <label for="id_center_stone_weight">CENTER STONE WEIGHT (g):</label>
   {{form3.center_stone_weight}}
 </p>
 <p>
-  <label for="id_center_stone_pieces">Center stone pieces:</label>
+  <label for="id_center_stone_pieces">CENTER STONE PIECES:</label>
   {{form3.center_stone_pieces}}
 </p>
-<p><label for="id_grosswt">Grosswt:</label>{{form3.grosswt}}</p>
-<p><label for="id_cert">Cert:</label>{{form3.cert}}</p>
-<p><label for="id_pcs">Pcs:</label>{{form3.pcs}}</p>
-<p><label for="id_amount">Amount:</label>{{form3.amount}}</p>
-<p><label for="id_discount">Discount:</label>{{form3.discount}}</p>
+<p><label for="id_grosswt">GROSS WEIGHT (g):</label>{{form3.grosswt}}</p>
+<p><label for="id_cert">LAB:</label>{{form3.cert}}</p>
+<p><label for="id_pcs">PIECES:</label>{{form3.pcs}}</p>
+<p><label for="id_amount">AMOUNT:</label>{{form3.amount}}</p>
+<p><label for="id_discount">DISCOUNT %:</label>{{form3.discount}}</p>
 <p>
-  <label for="id_discount_amount">Discount amount:</label>
+  <label for="id_discount_amount">DISCOUNT AMOUNT:</label>
   {{form3.discount_amount}}
 </p>
-<p><label for="id_total">Total:</label>{{form3.total}}</p>
+<p><label for="id_total">TOTAL AMOUNT:</label>{{form3.total}}</p>
 <p id="purchase_approval">
-  <label for="id_purchase_approval">Bought Jewell:</label>
+  <label for="id_purchase_approval">BOUGHT:</label>
   {{form3.purchase_approval}}
 </p>
-<p><label for="id_currency">Currency:</label>{{form3.currency}}</p>
-<p><label for="id_tag_price">Tag price:</label>{{form3.tag_price}}</p>
-<p><label for="id_rate">Rate:</label>{{form3.rate}}</p>
-<p><label for="id_comment">Comment:</label>{{form3.comment}}</p>
+<p><label for="id_currency">CURRENCY:</label>{{form3.currency}}</p>
+<p><label for="id_tag_price">TAG PRICE:</label>{{form3.tag_price}}</p>
+<p><label for="id_rate">RATE:</label>{{form3.rate}}</p>
+<p><label for="id_comment">COMMENT:</label>{{form3.comment}}</p>
 {% endblock %} {% block script %}
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
