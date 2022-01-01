@@ -41,7 +41,7 @@
     {% if obj.appvreturnstatus_d is False %}
     <tr id="{{obj.id}}">
         <td style="text-align:center;" id="stock_id{{ forloop.counter }}">{{obj.stockid}}</td>
-        <td>{{obj.location.place.capitalize}}</td>
+        <td>{{obj.location.place.upper}}</td>
         <td>{{obj.shape}}</td>
         <td>{{obj.clarity}}</td>
         <td>{{obj.color_origin1}}</td>
@@ -62,7 +62,7 @@
         <td>{%if obj.laser_inscription%}YES{% else %}NO{% endif %}</td>
         <td>{{obj.PCS_d}}</td>
         <td>{{obj.weight_d}}</td>
-        <td>{{obj.units}}</td>
+        <td>{{obj.units.upper}}</td>
         <td>{{obj.tag_price_d}}</td>
         {% if obj.cartstatus is False %}
         <td style="padding: 10px 20px;"><a class="btn btn-primary" style="text-decoration: none;"

@@ -122,7 +122,7 @@ class ADCForm_cs(forms.ModelForm):
         for field in self.disabled_fields:
             self.fields[field].disabled = True
         for field in self.fields:
-            if self.fields[field].label == 'Sold Item' or self.fields[field].label=="Clarity":
+            if self.fields[field].label == 'Sold Item' or self.fields[field].label=='Clarity':
                 continue
             self.fields[field].required = True
 
@@ -138,14 +138,15 @@ class ADCForm_d(forms.ModelForm):
     class Meta:
         model = cloneInvofdiamond
         fields = '__all__'
-        labels = {'salesapprovalstatus_d': 'Sold Item'}
+        labels = {'salesapprovalstatus_d': 'Sold Item',
+        'white_color_grade1':'white_color_grade1'}
 
     def __init__(self, *args, **kwargs):
         super(ADCForm_d, self).__init__(*args, **kwargs)
         for field in self.disabled_fields:
             self.fields[field].disabled = True
         for field in self.fields:
-            if self.fields[field].label == "Sold Item":
+            if self.fields[field].label == "Sold Item" or self.fields[field].label=='white_color_grade1':
                 continue
             self.fields[field].required = True
 

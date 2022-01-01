@@ -44,7 +44,7 @@ class gemtype(models.Model):
     class Meta:
         verbose_name_plural = "ColourStone - Gemtype"
 
-    gem = models.CharField(max_length=50)
+    gem = models.CharField(max_length=50,unique=True)
 
     def __str__(self):
         return self.gem.title()
@@ -211,7 +211,6 @@ class clonePOJ(models.Model):
         decimal_places=2, max_digits=9, blank=True)
     rate = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True)
-    comment = models.TextField(max_length=3000, blank=True, null=True)
     def save(self, *args, **kwargs):
         super(clonePOJ, self).save(*args, **kwargs)
         obj = POJ.objects.create(date = self.date,company_name=self.company_name, location=self.location, jewellery=self.jewellery, center_stone=self.center_stone,
@@ -815,7 +814,7 @@ class cloneInvofdiamond(models.Model):
     shape = models.ForeignKey(shape_d,on_delete=models.PROTECT)
     clarity = models.ForeignKey(clarity, on_delete=models.PROTECT)
     color_origin1 = models.ForeignKey(color_origin ,on_delete=models.PROTECT)
-    white_color_grade1 = models.ForeignKey(white_color_grade ,on_delete=models.PROTECT)
+    white_color_grade1 = models.ForeignKey(white_color_grade ,on_delete=models.PROTECT,null=True,blank=True)
     fancycolor_grade = models.CharField(max_length=30)
     cut = models.ForeignKey('cut', on_delete=models.PROTECT) 
     polish = models.ForeignKey('polish', on_delete=models.PROTECT)
@@ -1002,8 +1001,8 @@ class clonePurchaseOfColorStones(models.Model):
         decimal_places=2, max_digits=9, blank=True, null=True)
     purchaseapv = models.BooleanField(default=False)
     currency = models.ForeignKey('currencies', on_delete=models.PROTECT)
-    tag_price = models.FloatField()
-    rate = models.FloatField(null=True, blank=True)
+    tag_price = models.DecimalField(decimal_places = 2, max_digits= 9,blank=True, null=True)
+    rate = models.DecimalField(decimal_places = 2, max_digits= 9,blank=True, null=True)
 
     # comment Field
     comment = models.TextField(
@@ -1021,7 +1020,7 @@ class clonePurchaseOfColorStones(models.Model):
         obj1 = PurchaseOfColorStones.objects.create(date= self.date, company_name= self.company_name, location=self.location, shape=self.shape,
                                                      Clarity=self.Clarity, PCS=self.PCS, gem_type=self.gem_type, Weight=self.Weight, origin=self.origin, Treatment=self.Treatment, certificate_no=self.certificate_no, colour=self.colour, measurements=self.measurements, lab=self.lab, tag_price=self.tag_price, purchaseapv=self.purchaseapv,
                                                      Price = self.Price,units=self.units,amount=self.amount, discount = self.discount,
-                                                     discount_amount=self.discount_amount,total_val=self.total_val, currency=self.currency, rate = self.rate)
+                                                     discount_amount=self.discount_amount,total_val=self.total_val, currency=self.currency, rate = self.rate,comment=self.comment)
 
 
 
@@ -1059,8 +1058,8 @@ class PurchaseOfColorStones(models.Model):
         decimal_places=2, max_digits=9, blank=True, null=True)
     purchaseapv = models.BooleanField(default=False)
     currency = models.ForeignKey('currencies', on_delete=models.PROTECT)
-    tag_price = models.FloatField()
-    rate = models.FloatField(null=True, blank=True)
+    tag_price = models.DecimalField(decimal_places = 2, max_digits= 9,blank=True, null=True)
+    rate = models.DecimalField(decimal_places = 2, max_digits= 9,blank=True, null=True)
 
     # comment Field
     comment = models.TextField(
@@ -1102,7 +1101,7 @@ class Inventoryofcolorstones(models.Model):
     units = models.CharField(max_length=30, blank=True, null=True)
     Weight = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True, null=True, verbose_name="Weight")
-    tag_price = models.FloatField(null=True)
+    tag_price = models.DecimalField(decimal_places = 2, max_digits= 9,blank=True, null=True)
     status = models.BooleanField(default=False)
     purchaseapv = models.BooleanField(blank=True)
     appvreturnstatus = models.BooleanField(default=False)

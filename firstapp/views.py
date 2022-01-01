@@ -99,6 +99,8 @@ def updateJ(request, pk):
         if(form3.is_valid()):
             Inventoryofjewellery.objects.filter(
                 stockid=str("J-")+str(pk)).delete()
+            cloneInvofjewellery.objects.filter(
+                stockid=str("J-")+str(pk)).delete()
             form3.save()
             messages.success(
             request, "Stock ID->{} is Modified  Successfully".format(str("J-")+str(pk)))
@@ -637,6 +639,8 @@ def update_cs(request, ck):
         if(form5.is_valid()):
             Inventoryofcolorstones.objects.filter(
                 stockid=str("C-")+str(ck)).delete()
+            cloneInvofcolorstones.objects.filter(
+                stockid=str("C-")+str(ck)).delete()
             form5.save()
             messages.success(
                 request, "Stock ID->{} is Modified  Successfully".format(str("C-")+str(ck)))
@@ -1034,6 +1038,8 @@ def update_d(request, dk):
         form4 = PODForm(request.POST, instance=diamond_obj)
         if(form4.is_valid()):
             Inventoryofdiamond.objects.filter(
+                stockid=str("D-")+str(dk)).delete()
+            cloneInvofdiamond.objects.filter(
                 stockid=str("D-")+str(dk)).delete()
             form4.save()
             messages.success(
@@ -1722,10 +1728,10 @@ def colorstone_upload(request):
         # datere=re.findall(r'\d{2}/\d{2}/\d{4}',column[0])
         # date_value=list(datere[0])
         # final_date=datetime.date(int(''.join(date_value[6:])),int(''.join(date_value[3:4])),int(''.join(date_value[0:2])))
-        temp_date = datetime.datetime.strptime(str(column[0]), "%m-%d-%Y").date()
+        temp_date = datetime.datetime.strptime(str(column[0]), "%m/%d/%Y").date()
         f = clonePurchaseOfColorStones
         for i in range(len(column)):
-            if(i==1 or i==8 or i==12):
+            if(i==1 or i==8 or i==12 or i==25):
                 continue
             if(column[i] == ""):
                 messages.error(request, "ERROR: {} cannot be empty for entry:  {}. Please remove all the entries from 1 to {} in the CSV file and try again.".format(column_names[i],str(counter), str(counter-1)))
@@ -1878,6 +1884,7 @@ def colorstone_upload(request):
                                                      currency_id=f.currency.id,
                                                      tag_price=f.tag_price,
                                                      rate=f.rate,
+                                                     comment=column[25]
                                                      )
     messages.success(request, "Successfully uploaded records")
     return redirect(request.META.get('HTTP_REFERER'))
