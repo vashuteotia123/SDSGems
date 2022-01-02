@@ -5,9 +5,6 @@ from django.forms import formset_factory, modelformset_factory
 from django.contrib.admin.widgets import AdminDateWidget
 
 
-
-
-
 class CompanyForm(forms.ModelForm):
     class Meta:
         model = companyinfo
@@ -110,7 +107,7 @@ ADCFormSet = modelformset_factory(cloneInvofjewellery, form=ADCForm, extra=0)
 
 class ADCForm_cs(forms.ModelForm):
     disabled_fields = ['stockid', 'location', 'shape', 'gem_type', 'origin', 'treatment',
-                       'certificate_no', 'color', 'measurements', 'lab','Clarity']
+                       'certificate_no', 'color', 'measurements', 'lab', 'Clarity']
 
     class Meta:
         model = cloneInvofcolorstones
@@ -122,7 +119,7 @@ class ADCForm_cs(forms.ModelForm):
         for field in self.disabled_fields:
             self.fields[field].disabled = True
         for field in self.fields:
-            if self.fields[field].label == 'Sold Item' or self.fields[field].label=='Clarity':
+            if self.fields[field].label == 'Sold Item' or self.fields[field].label == 'Clarity':
                 continue
             self.fields[field].required = True
 
@@ -139,14 +136,15 @@ class ADCForm_d(forms.ModelForm):
         model = cloneInvofdiamond
         fields = '__all__'
         labels = {'salesapprovalstatus_d': 'Sold Item',
-        'white_color_grade1':'white_color_grade1'}
+                  'white_color_grade1': 'white_color_grade1',
+                  'laser_inscription': 'laser_inscription', }
 
     def __init__(self, *args, **kwargs):
         super(ADCForm_d, self).__init__(*args, **kwargs)
         for field in self.disabled_fields:
             self.fields[field].disabled = True
         for field in self.fields:
-            if self.fields[field].label == "Sold Item" or self.fields[field].label=='white_color_grade1':
+            if self.fields[field].label == "Sold Item" or self.fields[field].label == 'white_color_grade1' or self.fields[field].label == 'laser_inscription':
                 continue
             self.fields[field].required = True
 
