@@ -40,8 +40,6 @@ def index(request):
     return render(request, 'index.html', context=context)
 
 
-
-
 @login_required
 def showform(request):
     latest = POJ.objects.last()
@@ -103,10 +101,10 @@ def updateJ(request, pk):
                 stockid=str("J-")+str(pk)).delete()
             form3.save()
             messages.success(
-            request, "Stock ID->{} is Modified  Successfully".format(str("J-")+str(pk)))
+                request, "Stock ID->{} is Modified  Successfully".format(str("J-")+str(pk)))
             return redirect('/showj')
 
-    context = {'form3': form3,"b_s_c": change_css, "update_type": "POJ"}
+    context = {'form3': form3, "b_s_c": change_css, "update_type": "POJ"}
     return render(request, 'update_jewellery.html', context)
 
 
@@ -124,7 +122,7 @@ def showjewell(request):
     else:
         change = False
     context = {
-        "invobjects_jewellery" : invobjects_jewellery,
+        "invobjects_jewellery": invobjects_jewellery,
         "showjewellery": objjewell,
         "css_adjust": change,
         "table_type": "Edit Purchased Items of Jewellery",
@@ -135,6 +133,7 @@ def showjewell(request):
 #     query = Inventoryofjewellery.objects.get(pk=idno)
 #     query.delete()
 #     return HttpResponse("Deleted!")
+
 
 @login_required
 def cform(request):
@@ -264,9 +263,9 @@ class Jewellery_view(View):
 
         length_jewel = Inventoryofjewellery.objects.all().count()
         if length_jewel <= 6:
-           change = True
+            change = True
         else:
-           change = False
+            change = False
         context = {
             "productsj": allproduct,
             "length_jewel": length_jewel,
@@ -296,14 +295,15 @@ class Jewellery_view(View):
         j_obj.cartstatus = True
         j_obj.save()
         new_object = cloneInvofjewellery.objects.create(stockid=j_obj.stockid, location=j_obj.location, jewellery_type=j_obj.jewellery_type, center_stone=j_obj.center_stone,
-                                                        color_of_center_stone=j_obj.color_of_center_stone,shape=j_obj.shape, metal=j_obj.metal,
+                                                        color_of_center_stone=j_obj.color_of_center_stone, shape=j_obj.shape, metal=j_obj.metal,
                                                         center_stone_weight=j_obj.center_stone_weight,
                                                         center_stone_pieces=j_obj.center_stone_pieces,
                                                         gross_wt=j_obj.grosswt, certificate=j_obj.cert,
-                                                        PCS=j_obj.pcs, tag_price = j_obj.tag_price)
+                                                        PCS=j_obj.pcs, tag_price=j_obj.tag_price)
         if j_obj.purchaseapv is False:
             j_obj2.update(purchase_approval=True)
         return redirect('delete-jewell')
+
 
 def allselljewellrecords(request):
     sold_items = Salesofjewellery.objects.all()
@@ -317,6 +317,7 @@ def allselljewellrecords(request):
         "table_type": "Sales Record of Jewellery Table",
     }
     return render(request, "show_sell_jewel_table.html", context=context)
+
 
 @login_required
 def backtoinv(request, id):
@@ -360,26 +361,26 @@ def saving_jewel_cart(request):
         if(curr_formset.is_valid()):
             curr_formset.save()
             context = {
-            "totalitems": curr_formset,
-            'itemcount': len(curr_formset),
-            "is_valid":True,
-            "css_adjust_displaycart2_cs": change,
-            "displaycart2_cs": initial_change,
-            "css_adjust": change,
-            "table_type": "Jewellery Cart",}
-            return render(request,"showcart.html",context=context)
+                "totalitems": curr_formset,
+                'itemcount': len(curr_formset),
+                "is_valid": True,
+                "css_adjust_displaycart2_cs": change,
+                "displaycart2_cs": initial_change,
+                "css_adjust": change,
+                "table_type": "Jewellery Cart", }
+            return render(request, "showcart.html", context=context)
         else:
             context = {
-            "totalitems": curr_formset,
-            'itemcount': len(curr_formset),
-            "is_valid":False,
-            "css_adjust_displaycart2_cs": change,
-            "displaycart2_cs": initial_change,
-            "css_adjust": change,
-            "table_type": "Jewellery Cart",}
-            return render(request,"showcart.html",context=context)
-    context={
-       
+                "totalitems": curr_formset,
+                'itemcount': len(curr_formset),
+                "is_valid": False,
+                "css_adjust_displaycart2_cs": change,
+                "displaycart2_cs": initial_change,
+                "css_adjust": change,
+                "table_type": "Jewellery Cart", }
+            return render(request, "showcart.html", context=context)
+    context = {
+
         "totalitems": jewel_formset,
         'itemcount': len(total),
         "css_adjust_displaycart2_cs": change,
@@ -387,10 +388,7 @@ def saving_jewel_cart(request):
         "css_adjust": change,
         "table_type": "Jewellery Cart",
     }
-    return render(request,"showcart.html",context=context)
-
-
-
+    return render(request, "showcart.html", context=context)
 
 
 @login_required
@@ -432,8 +430,8 @@ def sell_jewel(request):
             change = False
         context = {
             "sold_items": Salesofjewellery.objects.all(),
-             "css_adjust": change,
-        "table_type": "Sales Records of Jewellery",
+            "css_adjust": change,
+            "table_type": "Sales Records of Jewellery",
 
 
         }
@@ -498,7 +496,7 @@ def save_jewel_forms(request):
             curr_formset.save()
     context = {
         "totalitems": poj_formset,
-         "table_type":"Purchase of Jewellery"
+        "table_type": "Purchase of Jewellery"
     }
     return render(request, "show_jewel_form.html", context=context)
 
@@ -509,24 +507,26 @@ def PurchaseofJewelleryFormCount(request):
 
 class BirdAddView(TemplateView):
     template_name = "show_jewel_form.html"
+
     @method_decorator(login_required)
     def get(self, *args, **kwargs):
         # formset = POJFormSet(queryset=POJ.objects.none(),)
         form_count = self.request.GET.get('form_count')
-        try: 
+        try:
             form_count = int(form_count)
         except:
             pass
         if form_count == 0:
-            messages.error(self.request, "Zero forms cannot be greated due to your IQ.")
+            messages.error(
+                self.request, "Zero forms cannot be greated due to your IQ.")
             return redirect(self.request.META.get('HTTP_REFERER'))
         if form_count is None:
             return redirect('/PurchaseofJewelleryFormCount')
         form_count = int(form_count)
         formset_factory = modelformset_factory(POJ, POJForm, extra=form_count)
         formset = formset_factory(queryset=POJ.objects.none(), )
-        
-        return self.render_to_response({'totalitems': formset, "table_type":"Purchase Form of Jewellery","total":len(formset)})
+
+        return self.render_to_response({'totalitems': formset, "table_type": "Purchase Form of Jewellery", "total": len(formset)})
 
     # @login_required
 # define method to handle POST request
@@ -539,15 +539,13 @@ class BirdAddView(TemplateView):
         if formset.is_valid():
             for i in range(len(formset)):
                 if formset[i].cleaned_data == {}:
-                    messages.error(self.request,"Please fill up the form.")
+                    messages.error(self.request, "Please fill up the form.")
                     return self.render_to_response({'totalitems': formset})
             formset.save()
             messages.success(self.request, "Forms saved successfully!")
             return redirect("/showj")
 
         return self.render_to_response({'totalitems': formset})
-
-
 
 
 @login_required
@@ -569,11 +567,11 @@ def displaycart2(request):
         initial_change = True
         change = False
     context = {
-             "css_adjust_displaycart2_cs": change,
-             "displaycart2_cs": initial_change,
-             "tjcart": tjcart,
-             "table_type": "Jewellery Cart",
-        }
+        "css_adjust_displaycart2_cs": change,
+        "displaycart2_cs": initial_change,
+        "tjcart": tjcart,
+        "table_type": "Jewellery Cart",
+    }
     return render(request, "displaycart.html", context=context)
 
 
@@ -646,7 +644,8 @@ def update_cs(request, ck):
                 request, "Stock ID->{} is Modified  Successfully".format(str("C-")+str(ck)))
             return redirect('/showcs')
 
-    context = {'form5': form5, "b_s_c": change_css, "update_type": "Purchase of Colour Stones"}
+    context = {'form5': form5, "b_s_c": change_css,
+               "update_type": "Purchase of Colour Stones"}
     return render(request, 'update_cs.html', context)
 
 
@@ -669,7 +668,7 @@ def deleteid_cs(request, idno):
         messages.success(request, "Data record not found in Inventory!")
         return redirect(request.META.get('HTTP_REFERER'))
     current.delete()
-    cloneInvofcolorstones.objects.filter(stockid = c_str).delete()
+    cloneInvofcolorstones.objects.filter(stockid=c_str).delete()
     messages.success(request, "Deleted Successfully")
     return redirect(request.META.get('HTTP_REFERER'))
 
@@ -849,6 +848,7 @@ def save_colorstone_forms(request):
 def purchaseOfColorStoneFormCount(request):
     return render(request, "purchaseOfColorStoneFormCount.html")
 
+
 class CSAddView(TemplateView):
 
     template_name = "show_colorstone_form.html"
@@ -856,19 +856,22 @@ class CSAddView(TemplateView):
     @method_decorator(login_required)
     def get(self, *args, **kwargs):
         form_count = self.request.GET.get('form_count')
-        try: 
+        try:
             form_count = int(form_count)
         except:
             pass
         if form_count == 0:
-            messages.error(self.request, "Zero forms cannot be greated due to your IQ.")
+            messages.error(
+                self.request, "Zero forms cannot be greated due to your IQ.")
             return redirect(self.request.META.get('HTTP_REFERER'))
         if form_count is None:
             return redirect('/purchaseOfColorStoneFormCount')
         form_count = int(form_count)
-        formset_factory = modelformset_factory(PurchaseOfColorStones, POCSForm, extra=form_count)
-        formset = formset_factory(queryset=PurchaseOfColorStones.objects.none(), )
-        return self.render_to_response({'totalitems_cs': formset,"table_type":"Purchase Form of Colourstone","total":len(formset)})
+        formset_factory = modelformset_factory(
+            PurchaseOfColorStones, POCSForm, extra=form_count)
+        formset = formset_factory(
+            queryset=PurchaseOfColorStones.objects.none(), )
+        return self.render_to_response({'totalitems_cs': formset, "table_type": "Purchase Form of Colourstone", "total": len(formset)})
 
     def post(self, request, *args, **kwargs):
 
@@ -877,7 +880,7 @@ class CSAddView(TemplateView):
         # Check if submitted forms are valid
         if formset.is_valid():
             if formset[0].cleaned_data == {}:
-                messages.error(request,"Please fill up the form.")
+                messages.error(request, "Please fill up the form.")
                 return self.render_to_response({'totalitems_cs': formset})
             formset.save()
             return redirect("/index")
@@ -938,7 +941,7 @@ class colorstone_view(View):
                                                           origin=j_obj.origin, treatment=j_obj.treatment, certificate_no=j_obj. certificate_no,
                                                           color=j_obj.color, measurements=j_obj.measurements, lab=j_obj.lab, PCS=j_obj.PCS,
                                                           Weight_cs=j_obj.Weight, Clarity=j_obj.Clarity,
-                                                          tag_price_cs = j_obj.tag_price, units_cs = j_obj.units)
+                                                          tag_price_cs=j_obj.tag_price, units_cs=j_obj.units)
         if j_obj.purchaseapv is False:
             j_obj2.update(purchaseapv=True)
         return redirect('/inventory_color_stone')
@@ -1008,19 +1011,19 @@ def showdiamond(request):
     diamondobj = POD.objects.all()
     invobj = list(Inventoryofdiamond.objects.values_list(
         'stockid', flat=True))
-    if len(diamondobj)<8:
-        change=True
+    if len(diamondobj) < 8:
+        change = True
     else:
-        change=False
+        change = False
     invobjects_diamonds = []
     for i in invobj:
         z = i.replace("D-", "")
         invobjects_diamonds.append(int(z))
     context = {
-        "invobjects_diamonds":invobjects_diamonds,
+        "invobjects_diamonds": invobjects_diamonds,
         "showdia": diamondobj,
-        "table_type":"Purchase Records of Diamonds",
-        "css_adjust":change
+        "table_type": "Purchase Records of Diamonds",
+        "css_adjust": change
     }
     return render(request, "showd.html", context=context)
 
@@ -1046,7 +1049,8 @@ def update_d(request, dk):
                 request, "Stock ID->{} is Modified  Successfully".format(str("D-")+str(dk)))
             return redirect('/showd')
 
-    context = {'form4': form4, "b_s_c": change_css, "update_type": "Purchase of Diamonds"}
+    context = {'form4': form4, "b_s_c": change_css,
+               "update_type": "Purchase of Diamonds"}
     return render(request, 'update_diamond.html', context)
 
 
@@ -1066,8 +1070,8 @@ def deleteid_d(request, idno):
     current_invd = Inventoryofdiamond.objects.get(stockid=d_str)
     current.delete()
     current_invd.delete()
-    cloneInvofdiamond.objects.filter(stockid = d_str).delete()
-    messages.success(request,d_str+ " Deleted Successfully")
+    cloneInvofdiamond.objects.filter(stockid=d_str).delete()
+    messages.success(request, d_str + " Deleted Successfully")
     return redirect(request.META.get('HTTP_REFERER'))
 
 
@@ -1098,33 +1102,33 @@ def saving_diamond_cart(request):
     total = cloneInvofdiamond.objects.all()
     total_diamond = list(total.values())
     diamond_formset = ADCFormSet_d(initial=total_diamond)
-    if(len(total)<=7):
-        change=True
+    if(len(total) <= 7):
+        change = True
     else:
-        change=False
+        change = False
     if request.method == "POST":
         curr_formset = ADCFormSet_d(data=request.POST)
         if(curr_formset.is_valid()):
             curr_formset.save()
-            context={
-                "totalitems_d":curr_formset,
-                "itemcount":len(curr_formset),
+            context = {
+                "totalitems_d": curr_formset,
+                "itemcount": len(curr_formset),
                 "is_valid": True,
-                "table_type": "Cart Items", 
+                "table_type": "Cart Items",
                 "css_adjust": change,
             }
             return render(request, "showcart_d.html", context=context)
         else:
             context = {
-                "itemcount":len(curr_formset),
+                "itemcount": len(curr_formset),
                 "totalitems_d": curr_formset,
-                "table_type": "Cart Items", 
+                "table_type": "Cart Items",
                 "css_adjust": change,
             }
             return render(request, "showcart_d.html", context=context)
     context = {
         "totalitems_d": diamond_formset,
-        "itemcount":len(total),
+        "itemcount": len(total),
         "table_type": "Cart Items",
         "css_adjust": change,
     }
@@ -1148,32 +1152,34 @@ def save_diamond_forms(request):
 def purchaseOfDiamondFormCount(request):
     return render(request, "purchaseOfDiamondFormCount.html")
 
+
 class DiamondAddView(TemplateView):
     template_name = "show_diamond_form.html"
 
     @method_decorator(login_required)
     def get(self, *args, **kwargs):
         form_count = self.request.GET.get('form_count')
-        try: 
+        try:
             form_count = int(form_count)
         except:
             pass
         if form_count == 0:
-            messages.error(self.request, "Zero forms cannot be greated due to your IQ.")
+            messages.error(
+                self.request, "Zero forms cannot be greated due to your IQ.")
             return redirect(self.request.META.get('HTTP_REFERER'))
         if form_count is None:
             return redirect('/purchaseOfDiamondFormCount')
         form_count = int(form_count)
         formset_factory = modelformset_factory(POD, PODForm, extra=form_count)
         formset = formset_factory(queryset=POD.objects.none(), )
-        return self.render_to_response({'totalitems_d': formset,"table_type":"Purchase Form of Diamonds","total":len(formset)})
+        return self.render_to_response({'totalitems_d': formset, "table_type": "Purchase Form of Diamonds", "total": len(formset)})
 
     def post(self, *args, **kwargs):
 
         formset = PODFormSet(data=self.request.POST)
         if formset.is_valid():
             if formset[0].cleaned_data == {}:
-                messages.error(self.request,"Please fill up the form.")
+                messages.error(self.request, "Please fill up the form.")
                 return self.render_to_response({'totalitems_d': formset})
             formset.save()
             messages.success(self.request, "Forms saved successfully!")
@@ -1211,11 +1217,12 @@ class Diamond_view(View):
             product = Inventoryofdiamond.objects.get(stockid=j)
             allproduct.append(product)
         # allclone_d = cloneInvofdiamond.objects.all()
-        length_diamond = Inventoryofdiamond.objects.filter(appvreturnstatus_d=False).count()
-        if length_diamond <=6:
-           change = True
+        length_diamond = Inventoryofdiamond.objects.filter(
+            appvreturnstatus_d=False).count()
+        if length_diamond <= 6:
+            change = True
         else:
-           change = False
+            change = False
         context = {
             "products_d": allproduct,
             "table_type": "Inventory of Diamonds",
@@ -1232,7 +1239,7 @@ class Diamond_view(View):
                 j = Inventoryofdiamond.objects.get(id=id)
                 j.appvreturnstatus_d = True
                 j.cartstatus = False
-                cloneInvofdiamond.objects.filter(stockid = j.stockid).delete()
+                cloneInvofdiamond.objects.filter(stockid=j.stockid).delete()
                 j.save()
         return redirect('delete-d')
 
@@ -1246,13 +1253,12 @@ class Diamond_view(View):
         j_obj.cartstatus = True
         j_obj.save()
         new_object = cloneInvofdiamond.objects.create(stockid=j_obj.stockid, location=j_obj.location, shape=j_obj.shape, clarity=j_obj.clarity,
-                                                      white_color_grade1=j_obj.white_color_grade1,color_origin1=j_obj.color_origin1,  fancycolor_grade=j_obj.fancycolor_grade,
+                                                      white_color_grade1=j_obj.white_color_grade1, color_origin1=j_obj.color_origin1,  fancycolor_grade=j_obj.fancycolor_grade,
                                                       cut=j_obj.cut, polish=j_obj.polish, symmetry=j_obj.symmetry, measurements=j_obj.measurements, depth=j_obj.depth, table=j_obj.table,
-                                                      fluorescence_intensity=j_obj.fluorescence_intensity, fluorescence_color=j_obj.fluorescence_color, certificate_no_d=j_obj. certificate_no_d, certificate_d=j_obj.certificate_d, laser_inscription=j_obj.laser_inscription, PCS_d=j_obj.PCS_d, weight_d=j_obj.weight_d, units=j_obj.units, tag_price_d = j_obj.tag_price_d)
-                                                      
-           
+                                                      fluorescence_intensity=j_obj.fluorescence_intensity, fluorescence_color=j_obj.fluorescence_color, certificate_no_d=j_obj. certificate_no_d, certificate_d=j_obj.certificate_d, laser_inscription=j_obj.laser_inscription, PCS_d=j_obj.PCS_d, weight_d=j_obj.weight_d, units=j_obj.units, tag_price_d=j_obj.tag_price_d)
+
         if j_obj.purchaseapv_d is False:
-            j_obj2.update(purchaseapv_d=True)                                              
+            j_obj2.update(purchaseapv_d=True)
         return redirect('/inventory_of_diamonds')
 
 
@@ -1322,10 +1328,10 @@ def sell_diamond(request):
 
 
 def allselldiamondsrecords(request):
-    if(Salesofdiamond.objects.all().count()<=6):
-        change=True
+    if(Salesofdiamond.objects.all().count() <= 6):
+        change = True
     else:
-        change=False
+        change = False
     context = {
         "sold_items": Salesofdiamond.objects.all(),
         "css_adjust": change,
@@ -1334,12 +1340,11 @@ def allselldiamondsrecords(request):
     return render(request, "show_sell_diamond_table.html", context=context)
 
 
-
 @login_required
 def return_diamond_Inventory(request, id):
     object = Salesofdiamond.objects.get(pk=id)
     Inventoryofdiamond.objects.create(stockid=object.stockid,
-                                    #   fancy_color_intensity1=object.fancy_color_intensity1,
+                                      #   fancy_color_intensity1=object.fancy_color_intensity1,
                                       location=object.location,
                                       shape=object.shape,
                                       clarity=object.clarity,
@@ -1424,7 +1429,7 @@ def displaysalesreturn_d(request):
 @login_required
 def displaycart2_d(request):
     tdcart = cloneInvofdiamond.objects.all()
-    if len(tdcart) <=6:
+    if len(tdcart) <= 6:
         initial_change = False
         change = True
     else:
@@ -1457,19 +1462,22 @@ def jewellery_upload(request):
         # datere=re.findall(r'\d{2}/\d{2}/\d{4}',column[0])
         # date_value=list(datere[0])
         # final_date=datetime.date(int(''.join(date_value[6:])),int(''.join(date_value[3:4])),int(''.join(date_value[0:2])))
-        temp_date = datetime.datetime.strptime(str(column[0]), "%m-%d-%Y").date()
+        temp_date = datetime.datetime.strptime(
+            str(column[0]), "%m-%d-%Y").date()
         f = clonePOJ
         for i in range(len(column)):
-            if(i==1 or i==8 or i==12):
+            if(i == 1 or i == 8 or i == 12):
                 continue
             if(column[i] == ""):
-                messages.error(request, "ERROR: {} cannot be empty for entry:  {}. Please remove all the entries from 1 to {} in the CSV file and try again.".format(column_names[i],str(counter), str(counter-1)))
+                messages.error(request, "ERROR: {} cannot be empty for entry:  {}. Please remove all the entries from 1 to {} in the CSV file and try again.".format(
+                    column_names[i], str(counter), str(counter-1)))
                 return redirect(request.META.get('HTTP_REFERER'))
         try:
-            f.company_name = companyinfo.objects.get(company_name=column[2].lower())
+            f.company_name = companyinfo.objects.get(
+                company_name=column[2].lower())
         except ObjectDoesNotExist:
             messages.error(
-                request, "Company Name does not exist, Add company from top bar!")
+                request, "Company Name -> {} does not exist, Add company from top bar!\n Also remove all the enteries prior to {}".format(column[2], str(counter - 1)))
             return redirect(request.META.get('HTTP_REFERER'))
         try:
             f.location, lcobj = location.objects.get_or_create(
@@ -1540,30 +1548,30 @@ def jewellery_upload(request):
                 pass
         except:
             return HttpResponse("enter float ")
-        counter+=1
+        counter += 1
 
         myibj = clonePOJ.objects.create(date=temp_date,
-                                   company_name_id=f.company_name.id,
-                                   location_id=f.location.id,
-                                   jewellery_id=f.jewellery.id,
-                                   center_stone_id=f.center_stone.id,
-                                   color_of_center_stone_id=f.color_of_center_stone.id,
-                                   shape_id=f.shape.id,
-                                   metal_id=f.metal.id,
-                                   center_stone_pieces=column[9],
-                                   center_stone_weight=column[10],
-                                   grosswt=column[11],
-                                   cert_id=f.cert.id,
-                                   pcs=column[13],
-                                   amount=float(column[14]),
-                                   discount_amount=float(column[16]),
-                                   discount=float(column[15]),
-                                   total=float(column[17]),
-                                   purchase_approval=y,
-                                   currency_id=f.currency.id,
-                                   tag_price=float(column[19]),
-                                   rate=float(column[20]),
-                                   )
+                                        company_name_id=f.company_name.id,
+                                        location_id=f.location.id,
+                                        jewellery_id=f.jewellery.id,
+                                        center_stone_id=f.center_stone.id,
+                                        color_of_center_stone_id=f.color_of_center_stone.id,
+                                        shape_id=f.shape.id,
+                                        metal_id=f.metal.id,
+                                        center_stone_pieces=column[9],
+                                        center_stone_weight=column[10],
+                                        grosswt=column[11],
+                                        cert_id=f.cert.id,
+                                        pcs=column[13],
+                                        amount=float(column[14]),
+                                        discount_amount=float(column[16]),
+                                        discount=float(column[15]),
+                                        total=float(column[17]),
+                                        purchase_approval=y,
+                                        currency_id=f.currency.id,
+                                        tag_price=float(column[19]),
+                                        rate=float(column[20]),
+                                        )
     messages.success(request, "Successfully uploaded records")
     return redirect(request.META.get('HTTP_REFERER'))
 
@@ -1728,24 +1736,27 @@ def colorstone_upload(request):
         # datere=re.findall(r'\d{2}/\d{2}/\d{4}',column[0])
         # date_value=list(datere[0])
         # final_date=datetime.date(int(''.join(date_value[6:])),int(''.join(date_value[3:4])),int(''.join(date_value[0:2])))
-        temp_date = datetime.datetime.strptime(str(column[0]), "%m/%d/%Y").date()
+        temp_date = datetime.datetime.strptime(
+            str(column[0]), "%m/%d/%Y").date()
         f = clonePurchaseOfColorStones
         for i in range(len(column)):
-            if(i==1 or i==8 or i==12 or i==25):
+            if(i == 1 or i == 8 or i == 12 or i == 25):
                 continue
             if(column[i] == ""):
-                messages.error(request, "ERROR: {} cannot be empty for entry:  {}. Please remove all the entries from 1 to {} in the CSV file and try again.".format(column_names[i],str(counter), str(counter-1)))
+                messages.error(request, "ERROR: {} cannot be empty for entry:  {}. Please remove all the entries from 1 to {} in the CSV file and try again.".format(
+                    column_names[i], str(counter), str(counter-1)))
                 return redirect(request.META.get('HTTP_REFERER'))
         try:
             f.company_name = companyinfo.objects.get(
                 company_name=column[2].lower())
         except ObjectDoesNotExist:
             messages.error(
-                request, "Company Name does not exist, Add company from top bar!")
+                request, "Company Name -> {} does not exist, Add company from top bar!\n Also remove all the enteries prior to {}".format(column[2], str(counter - 1)))
             return redirect(request.META.get('HTTP_REFERER'))
         try:
             if(column[3] == ""):
-                messages.error(request, "ERROR: Location cannot be empty.For entry number: "+ str(counter))
+                messages.error(
+                    request, "ERROR: Location cannot be empty.For entry number: " + str(counter))
                 return redirect(request.META.get('HTTP_REFERER'))
             f.location, lcobj = location.objects.get_or_create(
                 place=column[3].lower())
@@ -1755,7 +1766,8 @@ def colorstone_upload(request):
             raise e
         try:
             if(column[4] == ""):
-                messages.error(request, "ERROR: Shape cannot be empty.For entry number: "+ str(counter))
+                messages.error(
+                    request, "ERROR: Shape cannot be empty.For entry number: " + str(counter))
                 return redirect(request.META.get('HTTP_REFERER'))
             f.shape, sobj = shape_cs.objects.get_or_create(
                 shape=column[4].lower())
@@ -1765,7 +1777,8 @@ def colorstone_upload(request):
             raise e
         try:
             if(column[5] == ""):
-                messages.error(request, "ERROR: GEM Type cannot be empty.For entry number: "+ str(counter))
+                messages.error(
+                    request, "ERROR: GEM Type cannot be empty.For entry number: " + str(counter))
                 return redirect(request.META.get('HTTP_REFERER'))
             f.gem_type, jlobj = gemtype.objects.get_or_create(
                 gem=column[5].lower())
@@ -1775,19 +1788,21 @@ def colorstone_upload(request):
             raise e
         try:
             if(column[10] == ""):
-                messages.error(request, "ERROR: Colour cannot be empty.For entry number: "+ str(counter))
+                messages.error(
+                    request, "ERROR: Colour cannot be empty.For entry number: " + str(counter))
                 return redirect(request.META.get('HTTP_REFERER'))
             f.colour, colourobj = color_of_colorstone.objects.get_or_create(
                 color=column[10].lower())
             if colourobj:
                 f.colour.save()
-        
+
         except Exception as e:
             raise e
-        
+
         try:
             if(column[6] == ""):
-                messages.error(request, "ERROR: Origin cannot be empty.For entry number: "+ str(counter))
+                messages.error(
+                    request, "ERROR: Origin cannot be empty.For entry number: " + str(counter))
                 return redirect(request.META.get('HTTP_REFERER'))
             f.origin, clobj = Origin_cs.objects.get_or_create(
                 org=column[6].lower())
@@ -1797,7 +1812,8 @@ def colorstone_upload(request):
             raise e
         try:
             if(column[7] == ""):
-                messages.error(request, "ERROR: Treatment cannot be empty.For entry number: "+ str(counter))
+                messages.error(
+                    request, "ERROR: Treatment cannot be empty.For entry number: " + str(counter))
                 return redirect(request.META.get('HTTP_REFERER'))
             f.Treatment, clsobj = Treatment_cs.objects.get_or_create(
                 treatment=column[7].lower())
@@ -1814,7 +1830,6 @@ def colorstone_upload(request):
         # except Exception as e:
         #     raise e
 
-
         try:
             f.lab, mobj = Lab_cs.objects.get_or_create(lab=column[12].lower())
             if mobj:
@@ -1822,10 +1837,10 @@ def colorstone_upload(request):
         except Exception as e:
             raise e
 
-
         try:
             if(column[22] == ""):
-                messages.error(request, "ERROR: Currency cannot be empty.For entry number: "+ str(counter))
+                messages.error(
+                    request, "ERROR: Currency cannot be empty.For entry number: " + str(counter))
                 return redirect(request.META.get('HTTP_REFERER'))
             f.currency, crobj = currencies.objects.get_or_create(
                 currency=column[22].lower())
@@ -1853,138 +1868,151 @@ def colorstone_upload(request):
         except:
             messages.error(request, "Rate cannot be empty. Provide any value")
             return redirect(request.META.get('HTTP_REFERER'))
-        
 
-            
         counter += 1
         myibj = clonePurchaseOfColorStones.objects.create(date=temp_date,
-                                                     company_name_id=f.company_name.id,
-                                                     location_id=f.location.id,
-                                                     shape_id=f.shape.id,
-                                                     gem_type_id=f.gem_type.id,
-                                                     origin_id=f.origin.id,
-                                                     Treatment_id=f.Treatment.id,
-                                                     Clarity=f.Clarity,
-                                                     certificate_no=column[9].lower(
-                                                     ),
-                                                     colour_id=f.colour.id,
-                                                     measurements=column[11],
-                                                     lab_id=f.lab.id,
-                                                     PCS=column[13],
-                                                     Weight=column[14],
-                                                     Price=column[15],
-                                                     units=column[16],
-                                                     amount=float(column[17]),
-                                                     discount_amount=float(
-                                                         column[19]),
-                                                     discount=float(column[18]),
-                                                     total_val=float(
-                                                         column[20]),
-                                                     purchaseapv=y,
-                                                     currency_id=f.currency.id,
-                                                     tag_price=f.tag_price,
-                                                     rate=f.rate,
-                                                     comment=column[25]
-                                                     )
+                                                          company_name_id=f.company_name.id,
+                                                          location_id=f.location.id,
+                                                          shape_id=f.shape.id,
+                                                          gem_type_id=f.gem_type.id,
+                                                          origin_id=f.origin.id,
+                                                          Treatment_id=f.Treatment.id,
+                                                          Clarity=f.Clarity,
+                                                          certificate_no=column[9].lower(
+                                                          ),
+                                                          colour_id=f.colour.id,
+                                                          measurements=column[11],
+                                                          lab_id=f.lab.id,
+                                                          PCS=column[13],
+                                                          Weight=column[14],
+                                                          Price=column[15],
+                                                          units=column[16],
+                                                          amount=float(
+                                                              column[17]),
+                                                          discount_amount=float(
+                                                              column[19]),
+                                                          discount=float(
+                                                              column[18]),
+                                                          total_val=float(
+                                                              column[20]),
+                                                          purchaseapv=y,
+                                                          currency_id=f.currency.id,
+                                                          tag_price=f.tag_price,
+                                                          rate=f.rate,
+                                                          comment=column[25]
+                                                          )
     messages.success(request, "Successfully uploaded records")
     return redirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required
 def diamond_upload(request):
-    template="diamondupload.html"
-    if request.method=="GET":
-        return render(request,template)
+    template = "diamondupload.html"
+    if request.method == "GET":
+        return render(request, template)
 
-    csv_file=request.FILES['file']
+    csv_file = request.FILES['file']
     if not csv_file.name.endswith('.csv'):
-        messages.error(request,"This is not a CSV file")
-    dataset=csv_file.read().decode('UTF-8')
-    io_string=io.StringIO(dataset)
+        messages.error(request, "This is not a CSV file")
+    dataset = csv_file.read().decode('UTF-8')
+    io_string = io.StringIO(dataset)
     column_names = str(next(io_string))
     counter = 1
     column_names = column_names.split(",")
-    for column in csv.reader(io_string,delimiter=','):
-        temp_date = datetime.datetime.strptime(str(column[0]), "%m-%d-%Y").date()
-        
-        f=clonePOD
+    for column in csv.reader(io_string, delimiter=','):
+        temp_date = datetime.datetime.strptime(
+            str(column[0]), "%m-%d-%Y").date()
+
+        f = clonePOD
         for i in range(len(column)):
-            if(i==1 or i==8 or i==12):
+            if(i == 1 or i == 8 or i == 12):
                 continue
             if(column[i] == ""):
-                messages.error(request, "ERROR: {} cannot be empty for entry:  {}. Please remove all the entries from 1 to {} in the CSV file and try again.".format(column_names[i],str(counter), str(counter-1)))
+                messages.error(request, "ERROR: {} cannot be empty for entry:  {}. Please remove all the entries from 1 to {} in the CSV file and try again.".format(
+                    column_names[i], str(counter), str(counter-1)))
                 return redirect(request.META.get('HTTP_REFERER'))
         try:
-            f.company_name = companyinfo.objects.get(company_name=column[2].lower())
+            f.company_name = companyinfo.objects.get(
+                company_name=column[2].lower())
         except ObjectDoesNotExist:
             messages.error(
-                request, "Company Name does not exist, Add company from top bar!")
+                request, "Company Name -> {} does not exist, Add company from top bar!\n Also remove all the enteries prior to {}".format(column[2], str(counter - 1)))
             return redirect(request.META.get('HTTP_REFERER'))
         try:
-            f.location,lcobj = location.objects.get_or_create(place=column[3].lower())
-            if lcobj :
+            f.location, lcobj = location.objects.get_or_create(
+                place=column[3].lower())
+            if lcobj:
                 f.location.save()
         except Exception as e:
             raise e
         try:
-            f.shape,slobj = shape_d.objects.get_or_create(shape=column[4].lower())
-            if slobj :
+            f.shape, slobj = shape_d.objects.get_or_create(
+                shape=column[4].lower())
+            if slobj:
                 f.shape.save()
         except Exception as e:
             raise e
         try:
-            f.clarity,clobj = clarity.objects.get_or_create(clarity=column[5].lower())
-            if clobj :
+            f.clarity, clobj = clarity.objects.get_or_create(
+                clarity=column[5].lower())
+            if clobj:
                 f.clarity.save()
         except Exception as e:
             raise e
         try:
-            f.color_origin1,colobj=color_origin.objects.get_or_create(c_o=column[6].lower())
-            if colobj :
+            f.color_origin1, colobj = color_origin.objects.get_or_create(
+                c_o=column[6].lower())
+            if colobj:
                 f.color_origin1.save()
         except Exception as e:
             raise e
         try:
-            f.white_color_grade1,fgobj = white_color_grade.objects.get_or_create(w_c_g=column[7].lower())
-            if fgobj :
+            f.white_color_grade1, fgobj = white_color_grade.objects.get_or_create(
+                w_c_g=column[7].lower())
+            if fgobj:
                 f.white_color_grade1.save()
         except Exception as e:
             raise e
 
         try:
-            f.cut,cobj = cut.objects.get_or_create(cut=column[9].lower())
-            if cobj :
+            f.cut, cobj = cut.objects.get_or_create(cut=column[9].lower())
+            if cobj:
                 f.cut.save()
         except Exception as e:
             raise e
 
         try:
-            f.polish,plobj = polish.objects.get_or_create(polish=column[10].lower())
-            if plobj :
+            f.polish, plobj = polish.objects.get_or_create(
+                polish=column[10].lower())
+            if plobj:
                 f.polish.save()
         except Exception as e:
             raise e
         try:
-            f.symmetry,syobj = symmetry.objects.get_or_create(symmetry=column[11].lower())
-            if syobj :
+            f.symmetry, syobj = symmetry.objects.get_or_create(
+                symmetry=column[11].lower())
+            if syobj:
                 f.symmetry.save()
         except Exception as e:
             raise e
         try:
-            f.fluorescence_intensity,fiobj = fluorescence_intensity.objects.get_or_create(f_intensity=column[15].lower())
-            if fiobj :
+            f.fluorescence_intensity, fiobj = fluorescence_intensity.objects.get_or_create(
+                f_intensity=column[15].lower())
+            if fiobj:
                 f.fluorescence_intensity.save()
         except Exception as e:
             raise e
         try:
-            f.fluorescence_color,fcobj = fluorescence_color.objects.get_or_create(f_color=column[16].lower())
-            if fcobj :
+            f.fluorescence_color, fcobj = fluorescence_color.objects.get_or_create(
+                f_color=column[16].lower())
+            if fcobj:
                 f.fluorescence_color.save()
         except Exception as e:
             raise e
         try:
-            f.certificate_d,ceobj = certificate_d.objects.get_or_create(certd=column[18].lower())
-            if ceobj :
+            f.certificate_d, ceobj = certificate_d.objects.get_or_create(
+                certd=column[18].lower())
+            if ceobj:
                 f.certificate_d.save()
         except Exception as e:
             raise e
@@ -1995,55 +2023,59 @@ def diamond_upload(request):
                 f.currency.save()
         except Exception as e:
             raise e
-        if column[19].lower()=="yes":
-            bools1=True
+        if column[19].lower() == "yes":
+            bools1 = True
         else:
-            bools1=False
-        if column[31].lower()=="yes":
-            bools=True
+            bools1 = False
+        if column[31].lower() == "yes":
+            bools = True
         else:
-            bools=False
-        counter+=1
-        myibj=clonePOD.objects.create(date=temp_date,
-        company_name_id=f.company_name.id,
-        location_id=f.location.id,
-        shape_id=f.shape.id,
-        clarity_id=f.clarity.id,
-        color_origin1_id=f.color_origin1.id,
-        white_color_grade1_id=f.white_color_grade1.id,
-        fancycolor_grade=column[8],
-        cut_id=f.cut.id,
-        polish_id=f.polish.id,
-        symmetry_id=f.symmetry.id,
-        measurements=column[12],
-        depth=column[13],
-        table_perc=column[14],
-        fluorescence_intensity_id=f.fluorescence_intensity.id,
-        fluorescence_color_id=f.fluorescence_color.id,
-        certificate_no_d=column[17],
-        certificate_d_id=f.certificate_d.id,
-        laser_inscription=bools1,
-        PCS_d=column[20],
-        weight_d=float(column[21]),
-        price=float(column[22]),
-        units=column[23],
-        amount_d=float(column[24]),
-        DIS_Amount_d=float(column[26]),
-        DIS_d=float(column[25]),
-        total_val_d=float(column[27]),
-        currency_id=f.currency.id,
-        tag_price_d=float(column[29]),
-        rate_d=float(column[30]),
-        purchaseapv_d=bools,
-        )
+            bools = False
+        counter += 1
+        myibj = clonePOD.objects.create(date=temp_date,
+                                        company_name_id=f.company_name.id,
+                                        location_id=f.location.id,
+                                        shape_id=f.shape.id,
+                                        clarity_id=f.clarity.id,
+                                        color_origin1_id=f.color_origin1.id,
+                                        white_color_grade1_id=f.white_color_grade1.id,
+                                        fancycolor_grade=column[8],
+                                        cut_id=f.cut.id,
+                                        polish_id=f.polish.id,
+                                        symmetry_id=f.symmetry.id,
+                                        measurements=column[12],
+                                        depth=column[13],
+                                        table_perc=column[14],
+                                        fluorescence_intensity_id=f.fluorescence_intensity.id,
+                                        fluorescence_color_id=f.fluorescence_color.id,
+                                        certificate_no_d=column[17],
+                                        certificate_d_id=f.certificate_d.id,
+                                        laser_inscription=bools1,
+                                        PCS_d=column[20],
+                                        weight_d=float(column[21]),
+                                        price=float(column[22]),
+                                        units=column[23],
+                                        amount_d=float(column[24]),
+                                        DIS_Amount_d=float(column[26]),
+                                        DIS_d=float(column[25]),
+                                        total_val_d=float(column[27]),
+                                        currency_id=f.currency.id,
+                                        tag_price_d=float(column[29]),
+                                        rate_d=float(column[30]),
+                                        purchaseapv_d=bools,
+                                        )
     messages.success(request, "Successfully uploaded records")
     return redirect(request.META.get('HTTP_REFERER'))
+
+
 @login_required
 def show_on_frontend_d(request, id):
     obj = Inventoryofdiamond.objects.get(id=id)
     obj.frontend = True
     obj.save()
     return redirect('delete-d')
+
+
 @login_required
 def hide_from_frontend_d(request, id):
     obj = Inventoryofdiamond.objects.get(id=id)
@@ -2067,12 +2099,14 @@ def hide_from_frontend_cs(request, id):
     obj.save()
     return redirect('delete-cs')
 
+
 @login_required
 def show_on_frontend_jewel(request, id):
     obj = Inventoryofjewellery.objects.get(id=id)
     obj.frontend = True
     obj.save()
     return redirect('delete-jewell')
+
 
 @login_required
 def hide_from_frontend_jewel(request, id):
@@ -2295,7 +2329,7 @@ def diamond_filter(request, value, category):
             center_stone_types = set(
                 Inventoryofjewellery.objects.values_list('center_stone', flat=True))
             # diam_fci = set(Inventoryofdiamond.objects.values_list(
-                # 'fancy_color_intensity1', flat=True))
+            # 'fancy_color_intensity1', flat=True))
             diam_pol = set(
                 Inventoryofdiamond.objects.values_list('polish', flat=True))
             diam_wcg1 = set(Inventoryofdiamond.objects.values_list(
@@ -2465,17 +2499,18 @@ def ExportPurchaseOfColorStones(request):
     objects = PurchaseOfColorStones.objects.all()
     output = []
     response = HttpResponse(content_type='text/csv')
-    filename = "PurchaseRecordsofColourStones"+str(datetime.datetime.now())+".csv"
+    filename = "PurchaseRecordsofColourStones" + \
+        str(datetime.datetime.now())+".csv"
     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
         filename)
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME', 'LOCATION', 'SHAPE', 'GEM TYPE', 
-    'ORIGIN', 'TREATMENT', 'CLARITY', 'CERTIFICATE NUMBER',
+    writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME', 'LOCATION', 'SHAPE', 'GEM TYPE',
+                     'ORIGIN', 'TREATMENT', 'CLARITY', 'CERTIFICATE NUMBER',
                     'LAB', 'COLOUR', 'MEASUREMENT', 'PCS', 'WEIGHT', 'PRICE', 'UNITS', 'AMOUNT', 'DISCOUNT %', 'DICOUNT AMOUNT',  'TOTAL AMOUNT', 'BOUGHT', 'CURRENCY', 'TAG PRICE', 'RATE'])
     for item in objects:
-        output.append([item.date, 'C-' + str(item.id), item.company_name, item.location, item.shape.shape, item.gem_type.gem, item.origin.org, item.Treatment.treatment, item.Clarity, item.certificate_no ,item.lab, item.colour,
+        output.append([item.date, 'C-' + str(item.id), item.company_name, item.location, item.shape.shape, item.gem_type.gem, item.origin.org, item.Treatment.treatment, item.Clarity, item.certificate_no, item.lab, item.colour,
                       item.measurements,  item.PCS, item.Weight, item.Price, item.units, item.amount, str(item.discount), item.discount_amount, item.total_val, item.purchaseapv, item.currency, item.tag_price, item.rate])
 
     writer.writerows(output)
@@ -2487,14 +2522,14 @@ def ExportInventoryofcolorstones(request):
     objects = Inventoryofcolorstones.objects.filter(appvreturnstatus=False)
     output = []
     response = HttpResponse(content_type='text/csv')
-    filename ="InventoryofColourStones"+str(datetime.datetime.now())+".csv"
+    filename = "InventoryofColourStones"+str(datetime.datetime.now())+".csv"
     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
         filename)
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
     writer.writerow(['STOCK ID', 'LOCATION', 'SHAPE', 'GEM TYPE', 'ORIGIN', 'TREATMENT',
-                    'CLARITY', 'CERTIFICATE NUMBER','LAB', 'COLOUR', 'MEASUREMENT',  'PCS', 'WEIGHT', 'UNITS', 'TAG PRICE'])
+                    'CLARITY', 'CERTIFICATE NUMBER', 'LAB', 'COLOUR', 'MEASUREMENT',  'PCS', 'WEIGHT', 'UNITS', 'TAG PRICE'])
     for item in objects:
         output.append([item.stockid, item.location, item.shape, item.gem_type, item.origin, item.treatment, item.Clarity,
                       item.certificate_no, item.lab, item.color, item.measurements,  item.PCS, item.Weight, item.units, item.tag_price])
@@ -2568,14 +2603,13 @@ def ExportSalesReturnCS(request):
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
     writer.writerow(['DATE', 'STOCK ID', 'COMPANY', 'LOCATION',
-                    'GEM TYPE', 'WEIGHT','COLOUR', 'TOTAL AMOUNT'])
+                    'GEM TYPE', 'WEIGHT', 'COLOUR', 'TOTAL AMOUNT'])
     for item in objects:
         output.append([item.date, item.stockid, item.company_name,
-                      item.location, item.gem_type, item.weight, item.colour,item.total_amount])
+                      item.location, item.gem_type, item.weight, item.colour, item.total_amount])
 
     writer.writerows(output)
     return response
-
 
 
 def ExportPOJ(request):
@@ -2583,145 +2617,173 @@ def ExportPOJ(request):
     output = []
     response = HttpResponse(content_type='text/csv')
     filename = "PurchaseRecordsofJewellery"+str(datetime.datetime.now())+".csv"
-    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
+        filename)
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['DATE','STOCK ID', 'COMPANY NAME','LOCATION','JEWELLERY TYPE','CENTER STONE', 'COLOR OF CENTER STONE','SHAPE', 'METAL','CENTER STONE PIECES','CENTER STONE WEIGHT', 'GROSS WEIGHT','CERTIFICATE TYPE', 'PCS',  'AMOUNT', 'DISCOUNT %', 'DICOUNT AMOUNT', 'TOTAL AMOUNT', 'BOUGHT', 'CURRENCY', 'TAG PRICE', 'RATE'])
+    writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME', 'LOCATION', 'JEWELLERY TYPE', 'CENTER STONE', 'COLOR OF CENTER STONE', 'SHAPE', 'METAL', 'CENTER STONE PIECES',
+                    'CENTER STONE WEIGHT', 'GROSS WEIGHT', 'CERTIFICATE TYPE', 'PCS',  'AMOUNT', 'DISCOUNT %', 'DICOUNT AMOUNT', 'TOTAL AMOUNT', 'BOUGHT', 'CURRENCY', 'TAG PRICE', 'RATE'])
     for item in objects:
         if item.purchase_approval:
-            z="Yes"
+            z = "Yes"
         else:
-            z="No"
-        output.append([item.date, 'J-' + str(item.id), item.company_name, item.location.place.title(),item.jewellery.jewel.title(),item.center_stone.stone.title(),item.color_of_center_stone.color.title(), item.shape.shape.title(),item.metal.metal.title(),item.center_stone_pieces,item.center_stone_weight, item.grosswt,item.cert.cert.upper(),item.pcs,item.amount,item.discount,item.discount_amount , item.total, z,item.currency.currency.upper(), item.tag_price, item.rate])
+            z = "No"
+        output.append([item.date, 'J-' + str(item.id), item.company_name, item.location.place.title(), item.jewellery.jewel.title(), item.center_stone.stone.title(), item.color_of_center_stone.color.title(), item.shape.shape.title(), item.metal.metal.title(),
+                      item.center_stone_pieces, item.center_stone_weight, item.grosswt, item.cert.cert.upper(), item.pcs, item.amount, item.discount, item.discount_amount, item.total, z, item.currency.currency.upper(), item.tag_price, item.rate])
 
     writer.writerows(output)
     return response
+
+
 def ExportInventoryofjewellery(request):
     objects = Inventoryofjewellery.objects.filter(appvreturnstatus=False)
     output = []
     response = HttpResponse(content_type='text/csv')
     filename = "Inventoryofjewellery"+str(datetime.datetime.now())+".csv"
-    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
+        filename)
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['STOCK ID', 'LOCATION','JEWELLERY','CENTER STONE', 'COLOR OF CENTER STONE','SHAPE', 'METAL', 'CENTER STONE PIECES','CENTER STONE WEIGHT','GROSS WEIGHT', 'LAB', 'PCS',  'TAG PRICE'])
+    writer.writerow(['STOCK ID', 'LOCATION', 'JEWELLERY', 'CENTER STONE', 'COLOR OF CENTER STONE', 'SHAPE',
+                    'METAL', 'CENTER STONE PIECES', 'CENTER STONE WEIGHT', 'GROSS WEIGHT', 'LAB', 'PCS',  'TAG PRICE'])
     for item in objects:
-        output.append([ item.stockid, item.location.place.title(),item.jewellery_type.jewel.title(),item.center_stone.stone.title(),item.color_of_center_stone.color.title(), item.shape.shape.title(),item.metal.metal.title(),item.center_stone_pieces,item.center_stone_weight, item.grosswt, item.cert.cert.upper(),item.pcs, item.tag_price])
+        output.append([item.stockid, item.location.place.title(), item.jewellery_type.jewel.title(), item.center_stone.stone.title(), item.color_of_center_stone.color.title(
+        ), item.shape.shape.title(), item.metal.metal.title(), item.center_stone_pieces, item.center_stone_weight, item.grosswt, item.cert.cert.upper(), item.pcs, item.tag_price])
 
     writer.writerows(output)
     return response
-    
+
+
 def ExportSalesofjewellery(request):
     objects = Salesofjewellery.objects.all()
     output = []
     response = HttpResponse(content_type='text/csv')
     filename = "Salesofjewellery"+str(datetime.datetime.now())+".csv"
-    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
+        filename)
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
 
-    writer.writerow(['DATE','STOCK ID', 'COMPANY NAME','LOCATION','JEWELLERY','CENTER STONE','COLOUR OF CENTER STONE','SHAPE', 'METAL', 'CENTER STONE PIECES','CENTER STONE WEIGHT','GROSS WEIGHT','CERTIFICATE TYPE', 'PCS',  'AMOUNT', 'DISCOUNT %', 'DICOUNT AMOUNT', 'TOTAL AMOUNT','CURRENCY', 'TAG PRICE', 'RATE','SOLD ITEM'])
+    writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME', 'LOCATION', 'JEWELLERY', 'CENTER STONE', 'COLOUR OF CENTER STONE', 'SHAPE', 'METAL', 'CENTER STONE PIECES',
+                    'CENTER STONE WEIGHT', 'GROSS WEIGHT', 'CERTIFICATE TYPE', 'PCS',  'AMOUNT', 'DISCOUNT %', 'DICOUNT AMOUNT', 'TOTAL AMOUNT', 'CURRENCY', 'TAG PRICE', 'RATE', 'SOLD ITEM'])
     for item in objects:
         if item.salesapprovalstatus:
-            z="Yes"
+            z = "Yes"
         else:
-            z="No"
-        output.append([item.date,item.stockid, item.company_name, item.location.place.title(),item.jewellery_type.jewel.title(),item.center_stone.stone.title(),item.color_of_center_stone.color.title(), item.shape.shape.title(),item.metal.metal.title(),item.center_stone_pieces,item.center_stone_weight,item.gross_wt, item.certificate.cert.upper(),item.PCS,item.amount,item.DIS,item.DIS_amount , item.total_value, item.currency.currency.upper(), item.tag_price, item.rate,z])
-    
-    writer.writerows(output)
-    return response
-def ExportSalesReturn(request):
-    objects=Salesreturn.objects.all()
-    output=[]
-    response = HttpResponse(content_type='text/csv')
-    filename = "Salesreturnjewellery"+str(datetime.datetime.now())+".csv"
-    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
-    writer = csv.writer(response)
-    writer.writerow(['SDS GEMS'])
-    writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['DATE','STOCK ID', 'COMPANY NAME','LOCATION','JEWELLERY','GROSS WEIGHT','TOTAL AMOUNT'])
-    for item in objects:
-        output.append([item.date,item.stockid, item.company_name, item.location.title(),item.jewellery_type.title(),item.grosswt,item])
+            z = "No"
+        output.append([item.date, item.stockid, item.company_name, item.location.place.title(), item.jewellery_type.jewel.title(), item.center_stone.stone.title(), item.color_of_center_stone.color.title(), item.shape.shape.title(), item.metal.metal.title(
+        ), item.center_stone_pieces, item.center_stone_weight, item.gross_wt, item.certificate.cert.upper(), item.PCS, item.amount, item.DIS, item.DIS_amount, item.total_value, item.currency.currency.upper(), item.tag_price, item.rate, z])
 
     writer.writerows(output)
     return response
+
+
+def ExportSalesReturn(request):
+    objects = Salesreturn.objects.all()
+    output = []
+    response = HttpResponse(content_type='text/csv')
+    filename = "Salesreturnjewellery"+str(datetime.datetime.now())+".csv"
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
+        filename)
+    writer = csv.writer(response)
+    writer.writerow(['SDS GEMS'])
+    writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
+    writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME',
+                    'LOCATION', 'JEWELLERY', 'GROSS WEIGHT', 'TOTAL AMOUNT'])
+    for item in objects:
+        output.append([item.date, item.stockid, item.company_name, item.location.title(
+        ), item.jewellery_type.title(), item.grosswt, item])
+
+    writer.writerows(output)
+    return response
+
 
 def ExportPOD(request):
     objects = POD.objects.all()
     output = []
     response = HttpResponse(content_type='text/csv')
     filename = "PurchaseOfDiamonds"+str(datetime.datetime.now())+".csv"
-    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
+        filename)
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['DATE','STOCK ID', 'COMPANY NAME','LOCATION','SHAPE', 'CLARITY', 'COLOR ORIGIN', 'WHITE COLOR GRADE','FANCY COLOR GRADE ','CUT','POLISH','SYMMETRY','MEASUREMENTS','DEPTH %','TABLE %','FLUORESCENCE INTENSITY','FLUORESCENCE COLOR','CERTIFICATE NUMBER','CERTIFICATE TYPE','LASER INSCRIPTION', 'PCS','WEIGHT', 'PRICE','UNITS','AMOUNT', 'DISCOUNT %', 'DISCOUNT AMOUNT', 'TOTAL AMOUNT', 'CURRENCY', 'TAG PRICE', 'RATE','BOUGHT'])
+    writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME', 'LOCATION', 'SHAPE', 'CLARITY', 'COLOR ORIGIN', 'WHITE COLOR GRADE', 'FANCY COLOR GRADE ', 'CUT', 'POLISH', 'SYMMETRY', 'MEASUREMENTS', 'DEPTH %', 'TABLE %', 'FLUORESCENCE INTENSITY',
+                    'FLUORESCENCE COLOR', 'CERTIFICATE NUMBER', 'CERTIFICATE TYPE', 'LASER INSCRIPTION', 'PCS', 'WEIGHT', 'PRICE', 'UNITS', 'AMOUNT', 'DISCOUNT %', 'DISCOUNT AMOUNT', 'TOTAL AMOUNT', 'CURRENCY', 'TAG PRICE', 'RATE', 'BOUGHT'])
     for item in objects:
 
         if item.laser_inscription is True:
-            bools="Yes"
+            bools = "Yes"
         else:
-            bools="No"
+            bools = "No"
         if item.purchaseapv_d is False:
-            bools1="No"
+            bools1 = "No"
         else:
-            bools1="Yes"
-        output.append([item.date, 'D-' + str(item.id), item.company_name.company_name.title(), item.location.place.title(), item.shape.shape.title(),item.clarity.clarity.title(), item.color_origin1.c_o.title(), item.white_color_grade1.w_c_g.title(),item.fancycolor_grade.title(),item.cut.cut.title(),item.polish.polish.title(),item.symmetry.symmetry.title(),item.measurements,item.depth,item.table_perc,item.fluorescence_intensity.f_intensity.title(),item.fluorescence_color.f_color.title(),item.certificate_no_d,item.certificate_d.certd,bools,item.PCS_d,item.weight_d,item.price,item.units,item.amount_d, (item.DIS_d),item.DIS_Amount_d , item.total_val_d, item.currency.currency.upper(), item.tag_price_d, item.rate_d,bools1])
-    
+            bools1 = "Yes"
+        output.append([item.date, 'D-' + str(item.id), item.company_name.company_name.title(), item.location.place.title(), item.shape.shape.title(), item.clarity.clarity.title(), item.color_origin1.c_o.title(), item.white_color_grade1.w_c_g.title(), item.fancycolor_grade.title(), item.cut.cut.title(), item.polish.polish.title(), item.symmetry.symmetry.title(), item.measurements,
+                      item.depth, item.table_perc, item.fluorescence_intensity.f_intensity.title(), item.fluorescence_color.f_color.title(), item.certificate_no_d, item.certificate_d.certd, bools, item.PCS_d, item.weight_d, item.price, item.units, item.amount_d, (item.DIS_d), item.DIS_Amount_d, item.total_val_d, item.currency.currency.upper(), item.tag_price_d, item.rate_d, bools1])
+
     writer.writerows(output)
 
-
     return response
+
 
 def ExportInventoryofdiamond(request):
     objects = Inventoryofdiamond.objects.filter(appvreturnstatus_d=False)
     output = []
     response = HttpResponse(content_type='text/csv')
     filename = "Inventoryofdiamond"+str(datetime.datetime.now())+".csv"
-    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
+        filename)
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['STOCK ID','LOCATION','SHAPE', 'CLARITY','COLOUR ORIGIN', 'WHITE COLOUR GRADE', 'FANCY COLOUR GRADE','CUT','POLISH','SYMMETRY','MEASUREMENTS', 'DEPTH %',  'TABLE %', 'FLUORESCENCE INTENSITY', 'FLUORESECENE COLOUR', 'CERTIFICATE NUMBER', ' LAB', 'LASER INSCRIPTION', 'PCS', 'WEIGHT','UNITS','TAG PRICE'])
+    writer.writerow(['STOCK ID', 'LOCATION', 'SHAPE', 'CLARITY', 'COLOUR ORIGIN', 'WHITE COLOUR GRADE', 'FANCY COLOUR GRADE', 'CUT', 'POLISH', 'SYMMETRY', 'MEASUREMENTS',
+                    'DEPTH %',  'TABLE %', 'FLUORESCENCE INTENSITY', 'FLUORESECENE COLOUR', 'CERTIFICATE NUMBER', ' LAB', 'LASER INSCRIPTION', 'PCS', 'WEIGHT', 'UNITS', 'TAG PRICE'])
     for item in objects:
         if item.laser_inscription is True:
-            bools="Yes"
+            bools = "Yes"
         else:
-            bools="No"
+            bools = "No"
 
-        output.append([item.stockid, item.location.place.title(),item.shape.shape.title(),item.clarity.clarity.title(),item.color_origin1.c_o,item.white_color_grade1, item.fancycolor_grade,item.cut,item.polish, item.symmetry, item.measurements,item.depth,item.table,item.fluorescence_intensity, item.fluorescence_color, item.certificate_no_d, item.certificate_d,bools,item.PCS_d,item.weight_d,item.units,item.tag_price_d])
-    
+        output.append([item.stockid, item.location.place.title(), item.shape.shape.title(), item.clarity.clarity.title(), item.color_origin1.c_o, item.white_color_grade1, item.fancycolor_grade, item.cut, item.polish, item.symmetry,
+                      item.measurements, item.depth, item.table, item.fluorescence_intensity, item.fluorescence_color, item.certificate_no_d, item.certificate_d, bools, item.PCS_d, item.weight_d, item.units, item.tag_price_d])
+
     writer.writerows(output)
     return response
-   
+
+
 def ExportSalesofdiamond(request):
     objects = Salesofdiamond.objects.all()
     output = []
     response = HttpResponse(content_type='text/csv')
     filename = "SalesofDiamonds"+str(datetime.datetime.now())+".csv"
-    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
+        filename)
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['DATE','STOCK ID', 'COMPANY NAME','LOCATION','SHAPE', 'CLARITY', 'COLOR ORIGIN', 'WHITE COLOUR GRADE','FANCY COLOUR GRADE ','CUT','POLISH','SYMMETRY', 'MEASUREMENTS',  'DEPTH %', 'TABLE %', 'FLUORESCENCE INTENSITY', 'FLUORESCENCE COLOR','CERTIFICATE NUMBER', 'LAB', 'LASER INSCRIPTION', 'PCS','WEIGHT','PRICE','UNITS','AMOUNT','DISCOUNT %','DISCOUNT AMOUNT','TOTAL AMOUNT','CURRENCY','TAG PRICE','RATE','SOLD'])
+    writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME', 'LOCATION', 'SHAPE', 'CLARITY', 'COLOR ORIGIN', 'WHITE COLOUR GRADE', 'FANCY COLOUR GRADE ', 'CUT', 'POLISH', 'SYMMETRY', 'MEASUREMENTS',  'DEPTH %', 'TABLE %',
+                    'FLUORESCENCE INTENSITY', 'FLUORESCENCE COLOR', 'CERTIFICATE NUMBER', 'LAB', 'LASER INSCRIPTION', 'PCS', 'WEIGHT', 'PRICE', 'UNITS', 'AMOUNT', 'DISCOUNT %', 'DISCOUNT AMOUNT', 'TOTAL AMOUNT', 'CURRENCY', 'TAG PRICE', 'RATE', 'SOLD'])
     for item in objects:
         if item.laser_inscription is True:
-            bools="Yes"
+            bools = "Yes"
         else:
-            bools="No"
+            bools = "No"
         if item.salesapprovalstatus_d is True:
-            bools1="Yes"
+            bools1 = "Yes"
         else:
-            bools1="No"
-        
+            bools1 = "No"
 
-        output.append([item.date,item.stockid, item.company_name, item.location, item.shape,item.clarity, item.color_origin1, item.white_color_grade1,item.fancycolor_grade,item.cut,item.polish,item.symmetry,item.measurements,item.depth,item.table,item.fluorescence_intensity,item.fluorescence_color,item.certificate_no_d,item.certificate_d,bools,item.PCS_d,item.weight_d,item.price,item.units,item.amount_d,item.DIS_d,item.DIS_Amount_d , item.total_value_d, item.currency, item.tag_price_d, item.rate_d,bools1])
+        output.append([item.date, item.stockid, item.company_name, item.location, item.shape, item.clarity, item.color_origin1, item.white_color_grade1, item.fancycolor_grade, item.cut, item.polish, item.symmetry, item.measurements, item.depth, item.table, item.fluorescence_intensity,
+                      item.fluorescence_color, item.certificate_no_d, item.certificate_d, bools, item.PCS_d, item.weight_d, item.price, item.units, item.amount_d, item.DIS_d, item.DIS_Amount_d, item.total_value_d, item.currency, item.tag_price_d, item.rate_d, bools1])
 
     writer.writerows(output)
     return response
+
 
 @login_required
 def get_certificate_of_jewellery(request):
@@ -2729,12 +2791,11 @@ def get_certificate_of_jewellery(request):
     try:
         value = Inventoryofjewellery.objects.get(stockid=stockid)
         data = Jewel_media.objects.get(jewel_object=value.id)
-        
+
         return JsonResponse({'certificate': str(data.certificate)}, status=200)
     except:
         data = {}
     return JsonResponse({'certificate': '0'}, status=200)
-
 
 
 @login_required
@@ -2743,24 +2804,28 @@ def get_certificate_of_diamond(request):
     try:
         value = Inventoryofdiamond.objects.get(stockid=stockid)
         data = Diamond_media.objects.get(Diamond_object=value.id)
-        
+
         return JsonResponse({'certificate': str(data.certificate)}, status=200)
     except:
         data = {}
     return JsonResponse({'certificate': '0'}, status=200)
 
+
 def ExportSalesReturnDiamonds(request):
-    objects=Salesreturn_d.objects.all()
-    output=[]
+    objects = Salesreturn_d.objects.all()
+    output = []
     response = HttpResponse(content_type='text/csv')
     filename = "Salesreturndiamonds"+str(datetime.datetime.now())+".csv"
-    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
+        filename)
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['DATE','STOCK ID', 'COMPANY NAME','LOCATION','SHAPE','WEIGHT','COLOUR','CLARITY','TOTAL AMOUNT'])
+    writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME', 'LOCATION',
+                    'SHAPE', 'WEIGHT', 'COLOUR', 'CLARITY', 'TOTAL AMOUNT'])
     for item in objects:
-        output.append([item.date,item.stockid, item.company_name, item.location,item.shape,item.weight,item.colour,item.clarity,item.totalamount])
+        output.append([item.date, item.stockid, item.company_name, item.location,
+                      item.shape, item.weight, item.colour, item.clarity, item.totalamount])
 
     writer.writerows(output)
     return response
