@@ -577,14 +577,14 @@
                 {% if user_login %}
                 {% if only_cs%}
                 <li class="position-static">
-                  <a href="shop-grid-3-column.html">Diamonds<i class="ion-ios-arrow-down"></i></a>
+                  <a href="{%url 'allDiamonds' %}">Diamonds<i class="ion-ios-arrow-down"></i></a>
                   <ul class="mega-menu row">
                     <li class="col-3">
                       <ul>
                         <li class="mega-menu-title"><a href="#">Diamonds by Shapes</a></li>
                         {% for shape in diamond_shapes %}
                         <li>
-                          <a href="">{{shape}}</a>
+                          <a href="{% url 'diamondByShapeFilter' shape_id=shape.id %}">{{shape}}</a>
                         </li>
                         {% endfor %}
 
@@ -592,9 +592,9 @@
                     </li>
                     <li class="col-3">
                       <ul>
-                        <li class="mega-menu-title"><a href="#">Diamonds by Clarity</a></li>
+                        <li class="mega-menu-title"><a href="#">Diamonds by Cut</a></li>
                         {% for cut in diamond_cuts%}
-                        <li><a href="">{{cut}}</a></li>
+                        <li><a href="{% url 'diamondByCutFilter' cut_id=cut.id %}">{{cut}}</a></li>
                         {% endfor %}
                       </ul>
                     </li>
@@ -603,7 +603,8 @@
                         <li class="mega-menu-title"><a href="#">Diamonds by Colour Origin</a>
                         </li>
                         {% for c_origin in diamond_origins %}
-                        <li><a href="">{{c_origin}}</a></li>
+                        <li><a href="{% url 'diamondByColorOriginFilter' color_origin_id=c_origin.id%}">{{c_origin}}</a>
+                        </li>
                         {% endfor %}
                       </ul>
                     </li>
@@ -622,14 +623,15 @@
                 {% if user_login %}
                 {% if only_cs%}
                 <li class="position-static">
-                  <a href="shop-grid-3-column.html">Jewellery<i class="ion-ios-arrow-down"></i></a>
+                  <a href="{% url 'allJewellery' %}">Jewellery<i class="ion-ios-arrow-down"></i></a>
                   <ul class="mega-menu row">
 
                     <li class="col-3">
                       <ul>
                         <li class="mega-menu-title"><a href="#">Jewellery by Center Stones</a></li>
                         {% for stone in jewellery_centerstones%}
-                        <li><a href="">{{stone}}</a></li>
+                        <li><a href="{% url 'JewelleryByCenterStoneFilter' center_stone_id=stone.id %}">{{stone}}</a>
+                        </li>
                         {% endfor %}
                       </ul>
                     </li>
@@ -638,7 +640,8 @@
                         <li class="mega-menu-title"><a href="#">Jewellery by Types</a>
                         </li>
                         {% for type in jewellery_types %}
-                        <li><a href="">{{type}}</a></li>
+                        <li><a href="{% url 'JewelleryByJewelleryTypeFilter' jewellery_type_id=type.id %}">{{type}}</a>
+                        </li>
                         {% endfor %}
                       </ul>
                     </li>
@@ -646,7 +649,7 @@
                       <ul>
                         <li class="mega-menu-title"><a href="#">Jewellery by Metal</a></li>
                         {% for metal in jewellery_metals %}
-                        <li><a href="">{{metal}} </a></li>
+                        <li><a href="{%url 'JewelleryByMetalFilter' metal_id=metal.id %}">{{metal}} </a></li>
                         {% endfor %}
                       </ul>
                     </li>
@@ -664,7 +667,7 @@
                 {% endif %}
                 {% if user_login %}
                 <li class="position-static">
-                  <a href="shop-grid-3-column.html">Colour Stones<i class="ion-ios-arrow-down"></i></a>
+                  <a href='{% url "allColorStones" %}'>Colour Stones<i class="ion-ios-arrow-down"></i></a>
                   <ul class="mega-menu row">
                     <li class="col-3">
                       <ul>
@@ -681,7 +684,7 @@
                       <ul>
                         <li class="mega-menu-title"><a href="#">By Gem Types</a></li>
                         {% for type in colorstone_gemtypes%}
-                        <li><a href="">{{type}}</a></li>
+                        <li><a href="{% url 'colorStoneGemTypeFilter' gemtype_id=type.id %}">{{type}}</a></li>
                         {% endfor %}
                       </ul>
                     </li>
@@ -690,7 +693,7 @@
                         <li class="mega-menu-title"><a href="#">By Origin</a>
                         </li>
                         {% for c_origin in colorstone_origins %}
-                        <li><a href="">{{c_origin}}</a></li>
+                        <li><a href='{% url "colorStoneByOriginFilter" origin_id=c_origin.id %}'>{{c_origin}}</a></li>
                         {% endfor %}
                       </ul>
                     </li>
@@ -698,7 +701,7 @@
                       <ul>
                         <li class="mega-menu-title"><a href="#">By Colours</a></li>
                         {% for colour in colorstone_colors %}
-                        <li><a href="">{{colour}} </a></li>
+                        <li><a href='{% url "colorStoneByColourFilter" colour_id=colour.id %}'>{{colour}} </a></li>
                         {% endfor %}
                       </ul>
                     </li>

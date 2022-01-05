@@ -7,7 +7,7 @@ from django.shortcuts import redirect, render, get_list_or_404, get_object_or_40
 from django.utils.regex_helper import Group
 from django.views.generic.base import TemplateView
 
-from user.views import BlogList
+from user.views.common_views import BlogList
 from .models import *
 from .forms import *
 from django.urls import reverse_lazy

@@ -15,7 +15,7 @@ def diamond_common_context(request):
         'diamond_origins': diamond_origins,
         'diamond_polishes': diamond_polishes,
         'user_login' : user_login,
-        'only_cs': False,
+        'only_cs': True,
     }
 
 def jewellery_common_context(request):

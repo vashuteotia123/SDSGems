@@ -8,8 +8,8 @@ from django.utils.regex_helper import Group
 from django.views.generic.base import TemplateView
 
 from firstapp.models import Inventoryofcolorstones
-from .models import *
-from .forms import *
+from ..models import *
+from ..forms import *
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView
@@ -137,13 +137,3 @@ class MyAccount(View):
         return render(request, self.template_name)
 
 
-
-def colorStoneByShapeFilter(request, shape_id):
-    context = {
-        "all_objects": Inventoryofcolorstones.objects.filter(shape=shape_id, frontend = True).all(),
-    }
-    return render(request, 'colorstone_shop_list.html', context=context)
-
-def custom_404(request):
-    
-    return render(request, '404.html')

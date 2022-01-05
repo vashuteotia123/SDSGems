@@ -14,22 +14,25 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
 from SDSDiamonds import settings
 from django.conf.urls.static import static
 from django.views.static import serve
 from firstapp import views as dash_views
-from  django.contrib.auth import views as auth_views
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('user.urls')),
-    path('',include('firstapp.urls')),
+    path('', include('firstapp.urls')),
     path('tinymce/', include('tinymce.urls')),
-    path('login/',auth_views.LoginView.as_view(template_name="login.html"),name="login"),
 
-
+    # User specific
+    path('', include('user.urls.common_urls')),
+    path('', include('user.urls.colorstone_urls')),
+    path('', include('user.urls.diamonds_urls')),
+    path('', include('user.urls.jewellery_urls')),
+    path('login/', auth_views.LoginView.as_view(template_name="login.html"), name="login"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.STATIC_ROOT)
