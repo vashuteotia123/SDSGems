@@ -35,10 +35,7 @@ from django.template.loader import get_template
 def allDiamonds(request, page=1):
     all_objects = Inventoryofdiamond.objects.filter(frontend=True).all()
     paginator = Paginator(all_objects, 12)
-    try:
-        all_objects = paginator.page(page)
-    except:
-        all_objects = paginator.page(1)
+    all_objects = paginator.page(page)
     context = {
         "all_objects": all_objects,
     }
@@ -49,10 +46,7 @@ def diamondByShapeFilter(request, shape_id, page=1):
     all_objects = Inventoryofdiamond.objects.filter(
         shape=shape_id, frontend=True).all()
     paginator = Paginator(all_objects, 12)
-    try:
-        all_objects = paginator.page(page)
-    except:
-        all_objects = paginator.page(1)
+    all_objects = paginator.page(page)
     context = {
         "all_objects": all_objects,
     }
@@ -63,10 +57,7 @@ def diamondByCutFilter(request, cut_id, page=1):
     all_objects = Inventoryofdiamond.objects.filter(
         cut=cut_id, frontend=True).all()
     paginator = Paginator(all_objects, 12)
-    try:
-        all_objects = paginator.page(page)
-    except:
-        all_objects = paginator.page(1)
+    all_objects = paginator.page(page)
 
     context = {
         "all_objects": all_objects,
@@ -78,10 +69,7 @@ def diamondByColorOriginFilter(request, color_origin_id, page=1):
     all_objects = Inventoryofdiamond.objects.filter(
         color_origin1=color_origin_id, frontend=True).all()
     paginator = Paginator(all_objects, 12)
-    try:
-        all_objects = paginator.page(page)
-    except:
-        all_objects = paginator.page(1)
+    all_objects = paginator.page(page)
     context = {
         "all_objects": all_objects,
     }

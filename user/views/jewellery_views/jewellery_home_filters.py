@@ -49,10 +49,7 @@ def JewelleryByCenterStoneFilter(request, center_stone_id, page=1):
     all_objects = Inventoryofjewellery.objects.filter(
         center_stone=center_stone_id, frontend=True).all()
     paginator = Paginator(all_objects, 12)
-    try:
-        all_objects = paginator.page(page)
-    except:
-        all_objects = paginator.page(1)
+    all_objects = paginator.page(page)
     context = {
         "all_objects": all_objects,
     }
@@ -63,10 +60,7 @@ def JewelleryByMetalFilter(request, metal_id, page=1):
     all_objects = Inventoryofjewellery.objects.filter(
         metal=metal_id, frontend=True).all()
     paginator = Paginator(all_objects, 12)
-    try:
-        all_objects = paginator.page(page)
-    except:
-        all_objects = paginator.page(1)
+    all_objects = paginator.page(page)
 
     context = {
         "all_objects": all_objects,
@@ -78,10 +72,7 @@ def JewelleryByJewelleryTypeFilter(request, jewellery_type_id, page=1):
     all_objects = Inventoryofjewellery.objects.filter(
         jewellery_type=jewellery_type_id, frontend=True).all()
     paginator = Paginator(all_objects, 12)
-    try:
-        all_objects = paginator.page(page)
-    except:
-        all_objects = paginator.page(1)
+    all_objects = paginator.page(page)
     context = {
         "all_objects": all_objects,
     }

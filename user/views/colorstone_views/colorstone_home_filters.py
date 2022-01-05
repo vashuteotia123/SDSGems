@@ -8,7 +8,7 @@ from django.shortcuts import redirect, render, get_list_or_404, get_object_or_40
 from django.utils.regex_helper import Group
 from django.views.generic.base import TemplateView
 
-from firstapp.models import Inventoryofcolorstones
+from firstapp.models import ColorStone_media, Inventoryofcolorstones
 from user.models import *
 from user.forms import *
 from django.urls import reverse_lazy
@@ -34,6 +34,9 @@ from django.template.loader import get_template
 
 def allColorStones(request, page=1):
     all_objects = Inventoryofcolorstones.objects.filter(frontend=True).all()
+    for object in all_objects:
+        object.union(ColorStone_media.objects.filter(stock_id=object).first())
+        print(object)
     paginator = Paginator(all_objects, 12)
     try:
         all_objects = paginator.page(page)
@@ -50,10 +53,7 @@ def colorStoneByShapeFilter(request, shape_id, page=1):
     all_objects = Inventoryofcolorstones.objects.filter(
         shape=shape_id, frontend=True).all()
     paginator = Paginator(all_objects, 12)
-    try:
-        all_objects = paginator.page(page)
-    except:
-        all_objects = paginator.page(1)
+    all_objects = paginator.page(page)
     context = {
         "all_objects": all_objects,
     }
@@ -64,10 +64,7 @@ def colorStoneGemTypeFilter(request, gemtype_id, page=1):
     all_objects = Inventoryofcolorstones.objects.filter(
         gem_type=gemtype_id, frontend=True).all()
     paginator = Paginator(all_objects, 12)
-    try:
-        all_objects = paginator.page(page)
-    except:
-        all_objects = paginator.page(1)
+    all_objects = paginator.page(page)
     context = {
         "all_objects": all_objects,
     }
@@ -78,10 +75,7 @@ def colorStoneByOriginFilter(request, origin_id, page=1):
     all_objects = Inventoryofcolorstones.objects.filter(
         origin=origin_id, frontend=True).all()
     paginator = Paginator(all_objects, 12)
-    try:
-        all_objects = paginator.page(page)
-    except:
-        all_objects = paginator.page(1)
+    all_objects = paginator.page(page)
     context = {
         "all_objects": all_objects,
     }
@@ -92,10 +86,7 @@ def colorStoneByColourFilter(request, colour_id, page=1):
     all_objects = Inventoryofcolorstones.objects.filter(
         color=colour_id, frontend=True).all()
     paginator = Paginator(all_objects, 12)
-    try:
-        all_objects = paginator.page(page)
-    except:
-        all_objects = paginator.page(1)
+    all_objects = paginator.page(page)
     context = {
         "all_objects": all_objects,
     }
