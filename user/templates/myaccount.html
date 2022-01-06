@@ -29,9 +29,10 @@
           <div class="tab-pane fade active show" id="account-info" role="tabpanel">
             <div class="myaccount-content">
               <h3>Account Details</h3>
-
+              {{message}}
               <div class="account-details-form">
-                <form action="#">
+                <form method="post">
+                  {% csrf_token %}
                   <div class="row">
                     <div class="col-lg-6 col-12 mb-30">
                       <input id="first-name" name="first-name" placeholder="First Name" type="text"
@@ -45,8 +46,8 @@
 
 
                     <div class="col-12 mb-30">
-                      <input id="email" name="email" placeholder="Email Address" type="email"
-                        value="{{user.email_id}}" />
+                      <input id="email" name="email-id" placeholder="Email Address" type="email"
+                        value="{{user.email_id}}" disabled />
                     </div>
 
                     <div class="col-12 mb-30">

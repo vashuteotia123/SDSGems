@@ -141,12 +141,17 @@ class MyAccount(View):
 
     def post(self, request):
         user = User_table.objects.get(email_id=request.session['user_email'])
-        user_email = request.POST.get('email')
-        user_email = user_email.lower()
         user_password = request.POST.get('current-pwd')
         user_new_password = request.POST.get('new-pwd')
         user_confirm_password = request.POST.get('confirm-pwd')
         user_first_name = request.POST.get('first-name')
         user_last_name = request.POST.get('last-name')
-        if user_email != user.email_id:
-            return render(request, self.template_name, {'user': user, 'message': "You cannot change your email id!"})
+        if user_password != user.password:
+            return render(request, self.template_name, {'user': user, 'message': "You entered wrong password!"})
+        if user_new_password != user_confirm_password:
+            return render(request, self.template_name, {'user': user, 'message': "New Password and Confirm password does not match!"})
+        user.first_name = user_first_name
+        user.last_name = user_last_name
+        user.password = user_new_password
+        user.save()
+        return render(request, self.template_name, {'user': user, 'message': "Your account has been updated successfully!"})
