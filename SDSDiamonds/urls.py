@@ -30,8 +30,9 @@ urlpatterns = [
     # User specific
     path('', include('user.urls.common_urls')),
     path('', include('user.urls.colorstone_urls')),
-    path('', include('user.urls.diamonds_urls')),
+    path('', include('user.urls.diamond_urls')),
     path('', include('user.urls.jewellery_urls')),
+    path('', include('user.urls.blog_urls')),
     path('login/', auth_views.LoginView.as_view(template_name="login.html"), name="login"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

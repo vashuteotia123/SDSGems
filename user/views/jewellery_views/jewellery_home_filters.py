@@ -34,6 +34,7 @@ from django.template.loader import get_template
 
 def allJewellery(request, page=1):
     all_objects = Inventoryofjewellery.objects.filter(frontend=True).all()
+    total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     try:
         all_objects = paginator.page(page)
@@ -41,39 +42,53 @@ def allJewellery(request, page=1):
         all = paginator.page(1)
     context = {
         "all_objects": all_objects,
+        "total_count": total_count,
+        "current_url": "allJewellery",
     }
-    return render(request, 'jewellery_shop_list.html', context=context)
+    return render(request, 'jewellery_templates/jewellery_shop_list.html', context=context)
 
 
 def JewelleryByCenterStoneFilter(request, center_stone_id, page=1):
     all_objects = Inventoryofjewellery.objects.filter(
         center_stone=center_stone_id, frontend=True).all()
+    total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
     context = {
         "all_objects": all_objects,
+        "total_count": total_count,
+        "current_url": "JewelleryByCenterStoneFilter",
+        "center_stone_id": center_stone_id,
     }
-    return render(request, 'jewellery_shop_list.html', context=context)
+    return render(request, 'jewellery_templates/JewelleryByCenterStoneFilter.html', context=context)
 
 
 def JewelleryByMetalFilter(request, metal_id, page=1):
     all_objects = Inventoryofjewellery.objects.filter(
         metal=metal_id, frontend=True).all()
+    total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
 
     context = {
         "all_objects": all_objects,
+        "total_count": total_count,
+        "current_url": "JewelleryByMetalFilter",
+        "metal_id": metal_id,
     }
-    return render(request, 'jewellery_shop_list.html', context=context)
+    return render(request, 'jewellery_templates/JewelleryByMetalFilter.html', context=context)
 
 
 def JewelleryByJewelleryTypeFilter(request, jewellery_type_id, page=1):
     all_objects = Inventoryofjewellery.objects.filter(
         jewellery_type=jewellery_type_id, frontend=True).all()
+    total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
     context = {
         "all_objects": all_objects,
+        "total_count": total_count,
+        "current_url": "JewelleryByJewelleryTypeFilter",
+        "jewellery_type_id": jewellery_type_id,
     }
-    return render(request, 'jewellery_shop_list.html', context=context)
+    return render(request, 'jewellery_templates/JewelleryByJewelleryTypeFilter.html', context=context)

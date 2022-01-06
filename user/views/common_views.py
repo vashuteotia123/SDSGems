@@ -29,9 +29,10 @@ from django.views.generic.edit import CreateView
 import datetime
 from django.core.mail import EmailMessage
 from django.contrib import messages
-from django.template.loader import  get_template
+from django.template.loader import get_template
 
 # Create your views here.
+
 
 class SignUpView(CreateView):
     template_name = 'user_register.html'
@@ -55,7 +56,8 @@ def user_login(request):
             if(user_details.password == user_password):
                 if(user_details.permit_user):
                     request.session['is_logedin'] = True
-                    request.session['logdin_time'] = str(datetime.datetime.now())
+                    request.session['logdin_time'] = str(
+                        datetime.datetime.now())
                     request.session['user_email'] = user_details.email_id
                     request.session['business_type'] = user_details.Businesstype
                     return redirect('/')
@@ -79,14 +81,14 @@ def user_Logout(request):
     return redirect("/")
 
 
-
 def home(request):
     if(request.method == 'POST'):
         email = request.POST.get('email')
-        Subscribed_users.objects.create(email = email)
+        Subscribed_users.objects.create(email=email)
         return render(request, 'coming_soon_message.html')
     context = {}
     return render(request, 'coming_soon.html', context)
+
 
 class ShopList(View):
     template_name = 'shop_list.html'
@@ -102,12 +104,13 @@ class BlogList(View):
         all_blogs = Blog.objects.all()
         return render(request, self.template_name, {'all_blogs': all_blogs})
 
+
 class ContactUs(View):
     template_name = 'contactus.html'
 
     def get(self, request):
         return render(request, self.template_name)
-    
+
     def post(self, request):
         from_name = request.POST.get('name')
         from_mail = request.POST.get('email').lower()
@@ -115,25 +118,35 @@ class ContactUs(View):
         mail_message = request.POST.get('contactMessage')
         to_mail = "sdsgems9@gmail.com"
 
-        ctx={
-            'from_name' : from_name,
-            'from_mail' : from_mail,
+        ctx = {
+            'from_name': from_name,
+            'from_mail': from_mail,
             'mail_message': mail_message,
         }
-        msg=get_template('mail.html').render(ctx)
+        msg = get_template('mail.html').render(ctx)
         email = EmailMessage(
             mail_subject, msg, to=[to_mail]
         )
         email.content_subtype = "html"
         email.send()
         return render(request, self.template_name)
-        
-                
+
 
 class MyAccount(View):
     template_name = 'myaccount.html'
 
     def get(self, request):
-        return render(request, self.template_name)
+        user = User_table.objects.get(email_id=request.session['user_email'])
+        return render(request, self.template_name, {'user': user})
 
-
+    def post(self, request):
+        user = User_table.objects.get(email_id=request.session['user_email'])
+        user_email = request.POST.get('email')
+        user_email = user_email.lower()
+        user_password = request.POST.get('current-pwd')
+        user_new_password = request.POST.get('new-pwd')
+        user_confirm_password = request.POST.get('confirm-pwd')
+        user_first_name = request.POST.get('first-name')
+        user_last_name = request.POST.get('last-name')
+        if user_email != user.email_id:
+            return render(request, self.template_name, {'user': user, 'message': "You cannot change your email id!"})

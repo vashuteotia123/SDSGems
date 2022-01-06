@@ -34,43 +34,58 @@ from django.template.loader import get_template
 
 def allDiamonds(request, page=1):
     all_objects = Inventoryofdiamond.objects.filter(frontend=True).all()
+    total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
     context = {
         "all_objects": all_objects,
+        "total_count": total_count,
+        "current_url": "allDiamonds",
     }
-    return render(request, 'diamonds_shop_list.html', context=context)
+    return render(request, 'diamond_templates/diamonds_shop_list.html', context=context)
 
 
 def diamondByShapeFilter(request, shape_id, page=1):
     all_objects = Inventoryofdiamond.objects.filter(
         shape=shape_id, frontend=True).all()
+    total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
     context = {
         "all_objects": all_objects,
+        "total_count": total_count,
+        "current_url": "diamondByShapeFilter",
+        "shape_id": shape_id,
     }
-    return render(request, 'diamonds_shop_list.html', context=context)
+    return render(request, 'diamond_templates/diamondByShapeFilter.html', context=context)
 
 
 def diamondByCutFilter(request, cut_id, page=1):
     all_objects = Inventoryofdiamond.objects.filter(
         cut=cut_id, frontend=True).all()
+    total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
 
     context = {
         "all_objects": all_objects,
+        "total_count": total_count,
+        "current_url": "diamondByCutFilter",
+        "cut_id": cut_id,
     }
-    return render(request, 'diamonds_shop_list.html', context=context)
+    return render(request, 'diamond_templates/diamondByCutFilter.html', context=context)
 
 
 def diamondByColorOriginFilter(request, color_origin_id, page=1):
     all_objects = Inventoryofdiamond.objects.filter(
         color_origin1=color_origin_id, frontend=True).all()
+    total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
     context = {
         "all_objects": all_objects,
+        "total_count": total_count,
+        "current_url": "diamondByColorOriginFilter",
+        "color_origin_id": color_origin_id,
     }
-    return render(request, 'diamonds_shop_list.html', context=context)
+    return render(request, 'diamond_templates/diamondByColorOriginFilter.html', context=context)

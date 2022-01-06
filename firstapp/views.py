@@ -635,11 +635,9 @@ def update_cs(request, ck):
     if request.method == 'POST':
         form5 = POCSForm(request.POST, instance=cs_obj)
         if(form5.is_valid()):
-            Inventoryofcolorstones.objects.filter(
-                stockid=str("C-")+str(ck)).delete()
+            form5.save()
             cloneInvofcolorstones.objects.filter(
                 stockid=str("C-")+str(ck)).delete()
-            form5.save()
             messages.success(
                 request, "Stock ID->{} is Modified  Successfully".format(str("C-")+str(ck)))
             return redirect('/showcs')

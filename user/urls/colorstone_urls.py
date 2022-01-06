@@ -27,4 +27,5 @@ urlpatterns = [
          name="colorStoneByColourFilter"),
     path('colorStoneByColourFilter/<int:colour_id>/<int:page>',
          colorStoneByColourFilter, name="colorStoneByColourFilter"),
+
 ]

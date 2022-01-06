@@ -34,63 +34,78 @@ from django.template.loader import get_template
 
 def allColorStones(request, page=1):
     all_objects = Inventoryofcolorstones.objects.filter(frontend=True).all()
-    for object in all_objects:
-        object.union(ColorStone_media.objects.filter(stock_id=object).first())
-        print(object)
+    total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     try:
         all_objects = paginator.page(page)
     except:
         all_objects = paginator.page(1)
-
     context = {
         "all_objects": all_objects,
+        "total_count": total_count,
+        "current_url": "allColorStones",
     }
-    return render(request, 'colorstone_shop_list.html', context=context)
+    return render(request, 'colorstone_templates/colorstone_shop_list.html', context=context)
 
 
 def colorStoneByShapeFilter(request, shape_id, page=1):
     all_objects = Inventoryofcolorstones.objects.filter(
         shape=shape_id, frontend=True).all()
+    total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
     context = {
         "all_objects": all_objects,
+        "total_count": total_count,
+        "current_url": "colorStoneByShapeFilter",
+        "shape_id": shape_id,
     }
-    return render(request, 'colorstone_shop_list.html', context=context)
+    return render(request, 'colorstone_templates/colorStoneByShapeFilter.html', context=context)
 
 
 def colorStoneGemTypeFilter(request, gemtype_id, page=1):
     all_objects = Inventoryofcolorstones.objects.filter(
         gem_type=gemtype_id, frontend=True).all()
+    total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
     context = {
         "all_objects": all_objects,
+        "total_count": total_count,
+        "current_url": "colorStoneGemTypeFilter",
+        "gemtype_id": gemtype_id,
     }
-    return render(request, 'colorstone_shop_list.html', context=context)
+    return render(request, 'colorstone_templates/colorStoneGemTypeFilter.html', context=context)
 
 
 def colorStoneByOriginFilter(request, origin_id, page=1):
     all_objects = Inventoryofcolorstones.objects.filter(
         origin=origin_id, frontend=True).all()
+    total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
     context = {
         "all_objects": all_objects,
+        "total_count": total_count,
+        "current_url": "colorStoneByOriginFilter",
+        "origin_id": origin_id,
     }
-    return render(request, 'colorstone_shop_list.html', context=context)
+    return render(request, 'colorstone_templates/colorStoneByOriginFilter.html', context=context)
 
 
 def colorStoneByColourFilter(request, colour_id, page=1):
     all_objects = Inventoryofcolorstones.objects.filter(
         color=colour_id, frontend=True).all()
+    total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
     context = {
         "all_objects": all_objects,
+        "total_count": total_count,
+        "current_url": "colorStoneByColourFilter",
+        "colour_id": colour_id,
     }
-    return render(request, 'colorstone_shop_list.html', context=context)
+    return render(request, 'colorstone_templates/colorStoneByColourFilter.html', context=context)
 
 
 def custom_404(request):

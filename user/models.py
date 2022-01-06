@@ -1,6 +1,7 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from tinymce.models import HTMLField
+from taggit.managers import TaggableManager
 
 
 class countries(models.Model):
@@ -15,12 +16,15 @@ class countries(models.Model):
         self.country = self.country.lower()
         super(countries, self).save(*args, **kwargs)
 
+
 class State(models.Model):
     state = models.CharField(max_length=30)
 
     def __str__(self):
         return self.state
 # Create your models here.
+
+
 class User_table(models.Model):
     class Meta:
         verbose_name = "User"
@@ -32,7 +36,7 @@ class User_table(models.Model):
 
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    email_id = models.EmailField(primary_key = True, unique=True)
+    email_id = models.EmailField(primary_key=True, unique=True)
     phone = PhoneNumberField(null=False, blank=False, unique=True)
     fax = models.CharField(max_length=100, null=True, blank=True)
     Businesstype = models.CharField(
@@ -44,20 +48,23 @@ class User_table(models.Model):
     country = models.ForeignKey('countries', on_delete=models.PROTECT)
     state = models.ForeignKey('State', on_delete=models.PROTECT)
     password = models.CharField(max_length=100)
-    
+
     permit_user = models.BooleanField(default=False)
 
     def ___str__(self):
         return self.first_name + self.last_name
+
 
 class Blog(models.Model):
     date = models.DateField(auto_now_add=True)
     image = models.ImageField(upload_to="blog_images/", blank=True, null=True)
     title = models.CharField(max_length=30)
     subject = HTMLField(blank=True, null=True)
+    tags = TaggableManager(blank=True)
 
     def __str__(self):
         return (self.title)
+
 
 class Subscribed_users(models.Model):
     email = models.EmailField(max_length=90)

@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-import environ 
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,8 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-#Environment variables
-env = environ.Env( DEBUG = (bool, True))
+# Environment variables
+env = environ.Env(DEBUG=(bool, True))
 
 env_file = os.path.join(BASE_DIR, "SDSDiamonds/.env")
 environ.Env.read_env(env_file)
@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_object_actions',
     'django_user_agents',
+    'taggit',
 
 ]
 
@@ -86,8 +87,6 @@ TEMPLATES = [
                 'user.context_processors.diamond_common_context',
                 'user.context_processors.jewellery_common_context',
                 'user.context_processors.colorstone_common_context',
-
-
             ],
         },
     },
@@ -130,15 +129,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'Asia/Kolkata'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -150,7 +144,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 TINYMCE_DEFAULT_CONFIG = {
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 20,
-    'width' : '100%',
+    'width': '100%',
     'height': 1000,
     'selector': 'textarea',
     'theme': 'silver',
@@ -177,10 +171,9 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 
-#Jazzmin settings
+# Jazzmin settings
 JAZZMIN_SETTINGS = {
     "topmenu_links": [
-
         # Url that gets reversed (Permissions can be added)
         {"name": "Home",  "url": "/index", "permissions": ["auth.view_user"]},
     ],
@@ -188,19 +181,18 @@ JAZZMIN_SETTINGS = {
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-LOGIN_REDIRECT_URL='/'
-LOGIN_URL='/admin/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/admin/login/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT=587
-EMAIL_USE_TLS=True
-EMAIL_HOST_USER=env("EMAIL_HOST")
-EMAIL_HOST_PASSWORD=env("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = env("EMAIL_HOST")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 
-
-#Error handler
+# Error handler
 handler404 = 'user.views.custom_404'
