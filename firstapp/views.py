@@ -95,11 +95,9 @@ def updateJ(request, pk):
     if request.method == 'POST':
         form3 = POJForm(request.POST, instance=jewel_obj)
         if(form3.is_valid()):
-            Inventoryofjewellery.objects.filter(
-                stockid=str("J-")+str(pk)).delete()
+            form3.save()
             cloneInvofjewellery.objects.filter(
                 stockid=str("J-")+str(pk)).delete()
-            form3.save()
             messages.success(
                 request, "Stock ID->{} is Modified  Successfully".format(str("J-")+str(pk)))
             return redirect('/showj')
@@ -1038,11 +1036,9 @@ def update_d(request, dk):
     if request.method == 'POST':
         form4 = PODForm(request.POST, instance=diamond_obj)
         if(form4.is_valid()):
-            Inventoryofdiamond.objects.filter(
-                stockid=str("D-")+str(dk)).delete()
+            form4.save()
             cloneInvofdiamond.objects.filter(
                 stockid=str("D-")+str(dk)).delete()
-            form4.save()
             messages.success(
                 request, "Stock ID->{} is Modified  Successfully".format(str("D-")+str(dk)))
             return redirect('/showd')

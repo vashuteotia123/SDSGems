@@ -268,12 +268,22 @@ class POJ(models.Model):
 
     def save(self, *args, **kwargs):
         super(POJ, self).save(*args, **kwargs)
-        obj = Inventoryofjewellery.objects.create(stockid=str('J-')+str(self.id), location=self.location, jewellery_type=self.jewellery, center_stone=self.center_stone,
+        inventory_jewelleryobj = Inventoryofjewellery.objects.filter(
+            stockid="J-"+str(self.id))
+        if inventory_jewelleryobj:
+            inventory_jewelleryobj.update(stockid=str('J-')+str(self.id), location=self.location, jewellery_type=self.jewellery, center_stone=self.center_stone,
                                                   color_of_center_stone=self.color_of_center_stone, shape=self.shape,
                                                   metal=self.metal, center_stone_weight=self.center_stone_weight, center_stone_pieces=self.center_stone_pieces,
                                                   grosswt=self.grosswt, cert=self.cert, pcs=self.pcs, tag_price=self.tag_price,
                                                   purchaseapv=self.purchase_approval)
-    # salesapproval
+
+        else:
+            obj = Inventoryofjewellery.objects.create(stockid=str('J-')+str(self.id), location=self.location, jewellery_type=self.jewellery, center_stone=self.center_stone,
+                                                    color_of_center_stone=self.color_of_center_stone, shape=self.shape,
+                                                    metal=self.metal, center_stone_weight=self.center_stone_weight, center_stone_pieces=self.center_stone_pieces,
+                                                    grosswt=self.grosswt, cert=self.cert, pcs=self.pcs, tag_price=self.tag_price,
+                                                    purchaseapv=self.purchase_approval)
+        # salesapproval
 
     def __str__(self):
         return str("J-"+str(self.id))
@@ -735,11 +745,20 @@ class POD(models.Model):
         # self.DIS_Amount_d = (self.amount_d * self.DIS_d) // 100
         # self.total_val_d = self.amount_d - self.DIS_Amount_d
         super(POD, self).save(*args, **kwargs)
-        obj2 = Inventoryofdiamond.objects.create(stockid=str('D-')+str(self.id), location=self.location, shape=self.shape, color_origin1=self.color_origin1,
+        inventory_diaobj = Inventoryofdiamond.objects.filter(
+            stockid="D-"+str(self.id))
+        if inventory_diaobj:
+            inventory_diaobj.update(stockid=str('D-')+str(self.id), location=self.location, shape=self.shape, color_origin1=self.color_origin1,
                                                  clarity=self.clarity, white_color_grade1=self.white_color_grade1,
                                                  fancycolor_grade=self.fancycolor_grade, cut=self.cut, weight_d=self.weight_d,  polish=self.polish, symmetry=self.symmetry, measurements=self.measurements,
                                                  depth=self.depth, table=self.table_perc, fluorescence_intensity=self.fluorescence_intensity, fluorescence_color=self.fluorescence_color, certificate_no_d=self.certificate_no_d,
                                                  certificate_d=self.certificate_d, units=self.units, laser_inscription=self.laser_inscription, PCS_d=self.PCS_d, tag_price_d=self.tag_price_d, purchaseapv_d=self.purchaseapv_d)
+        else:
+            obj2 = Inventoryofdiamond.objects.create(stockid=str('D-')+str(self.id), location=self.location, shape=self.shape, color_origin1=self.color_origin1,
+                                                    clarity=self.clarity, white_color_grade1=self.white_color_grade1,
+                                                    fancycolor_grade=self.fancycolor_grade, cut=self.cut, weight_d=self.weight_d,  polish=self.polish, symmetry=self.symmetry, measurements=self.measurements,
+                                                    depth=self.depth, table=self.table_perc, fluorescence_intensity=self.fluorescence_intensity, fluorescence_color=self.fluorescence_color, certificate_no_d=self.certificate_no_d,
+                                                    certificate_d=self.certificate_d, units=self.units, laser_inscription=self.laser_inscription, PCS_d=self.PCS_d, tag_price_d=self.tag_price_d, purchaseapv_d=self.purchaseapv_d)
 
     def __str__(self):
         return str(self.id)
