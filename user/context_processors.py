@@ -1,4 +1,5 @@
 from firstapp.models import *
+from user.models import *
 
 
 def diamond_common_context(request):
@@ -14,22 +15,24 @@ def diamond_common_context(request):
         'diamond_cuts': diamond_cuts,
         'diamond_origins': diamond_origins,
         'diamond_polishes': diamond_polishes,
-        'user_login' : user_login,
+        'user_login': user_login,
         'only_cs': True,
     }
 
+
 def jewellery_common_context(request):
     return {
-    'jewellery_types' : jewell.objects.all()[:4],
-    'jewellery_centerstones' : centerstone.objects.all()[:4],
-    'jewellery_shapes' : shape1.objects.all()[:4],
-    'jewellery_metals' : metal1.objects.all()[:4],
+        'jewellery_types': jewell.objects.all()[:4],
+        'jewellery_centerstones': centerstone.objects.all()[:4],
+        'jewellery_shapes': shape1.objects.all()[:4],
+        'jewellery_metals': metal1.objects.all()[:4],
     }
+
 
 def colorstone_common_context(request):
     return {
-    'colorstone_origins' : Origin_cs.objects.all()[:4],
-    'colorstone_gemtypes' : gemtype.objects.all()[:4],
-    'colorstone_shapes' : shape_cs.objects.all()[:4],
-    'colorstone_colors' : color_of_colorstone.objects.all()[:4],
-    } 
+        'colorstone_origins': Origin_cs.objects.all()[:4],
+        'colorstone_gemtypes': gemtype.objects.all()[:4],
+        'colorstone_shapes': shape_cs.objects.all()[:4],
+        'colorstone_colors': color_of_colorstone.objects.all()[:4],
+    }

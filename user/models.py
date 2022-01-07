@@ -54,6 +54,8 @@ class User_table(models.Model):
     def ___str__(self):
         return self.first_name + self.last_name
 
+    
+
 
 class Blog(models.Model):
     date = models.DateField(auto_now_add=True)

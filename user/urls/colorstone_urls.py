@@ -4,6 +4,8 @@ from user.views import common_views
 from django.urls.resolvers import URLPattern
 from user.views.common_views import *
 from user.views.colorstone_views.colorstone_home_filters import *
+from user.views.colorstone_views.colostone_product import *
+
 
 urlpatterns = [
     # All objects of colorstones
@@ -28,4 +30,7 @@ urlpatterns = [
     path('colorStoneByColourFilter/<int:colour_id>/<int:page>',
          colorStoneByColourFilter, name="colorStoneByColourFilter"),
 
+    # ColorStone Details
+    path('showColorStone/<int:product_id>',
+         showColorStone, name="showColorStone"),
 ]

@@ -31,7 +31,10 @@ import datetime
 from django.contrib import messages
 from django.template.loader import get_template
 
+from user.views.common_views import myuser_login_required, user_login
 
+
+@myuser_login_required
 def allColorStones(request, page=1):
     all_objects = Inventoryofcolorstones.objects.filter(frontend=True).all()
     total_count = all_objects.count()
@@ -44,10 +47,12 @@ def allColorStones(request, page=1):
         "all_objects": all_objects,
         "total_count": total_count,
         "current_url": "allColorStones",
+        "user": User_table.objects.get(pk=request.session['user_email']),
     }
     return render(request, 'colorstone_templates/colorstone_shop_list.html', context=context)
 
 
+@myuser_login_required
 def colorStoneByShapeFilter(request, shape_id, page=1):
     all_objects = Inventoryofcolorstones.objects.filter(
         shape=shape_id, frontend=True).all()
@@ -58,11 +63,13 @@ def colorStoneByShapeFilter(request, shape_id, page=1):
         "all_objects": all_objects,
         "total_count": total_count,
         "current_url": "colorStoneByShapeFilter",
+        "user": User_table.objects.get(pk=request.session['user_email']),
         "shape_id": shape_id,
     }
     return render(request, 'colorstone_templates/colorStoneByShapeFilter.html', context=context)
 
 
+@myuser_login_required
 def colorStoneGemTypeFilter(request, gemtype_id, page=1):
     all_objects = Inventoryofcolorstones.objects.filter(
         gem_type=gemtype_id, frontend=True).all()
@@ -73,11 +80,13 @@ def colorStoneGemTypeFilter(request, gemtype_id, page=1):
         "all_objects": all_objects,
         "total_count": total_count,
         "current_url": "colorStoneGemTypeFilter",
+        "user": User_table.objects.get(pk=request.session['user_email']),
         "gemtype_id": gemtype_id,
     }
     return render(request, 'colorstone_templates/colorStoneGemTypeFilter.html', context=context)
 
 
+@myuser_login_required
 def colorStoneByOriginFilter(request, origin_id, page=1):
     all_objects = Inventoryofcolorstones.objects.filter(
         origin=origin_id, frontend=True).all()
@@ -89,10 +98,12 @@ def colorStoneByOriginFilter(request, origin_id, page=1):
         "total_count": total_count,
         "current_url": "colorStoneByOriginFilter",
         "origin_id": origin_id,
+        "user": User_table.objects.get(pk=request.session['user_email']),
     }
     return render(request, 'colorstone_templates/colorStoneByOriginFilter.html', context=context)
 
 
+@myuser_login_required
 def colorStoneByColourFilter(request, colour_id, page=1):
     all_objects = Inventoryofcolorstones.objects.filter(
         color=colour_id, frontend=True).all()
@@ -104,6 +115,7 @@ def colorStoneByColourFilter(request, colour_id, page=1):
         "total_count": total_count,
         "current_url": "colorStoneByColourFilter",
         "colour_id": colour_id,
+        "user": User_table.objects.get(pk=request.session['user_email']),
     }
     return render(request, 'colorstone_templates/colorStoneByColourFilter.html', context=context)
 

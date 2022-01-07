@@ -1,0 +1,392 @@
+{% extends 'user_base.html' %}
+{% load price_tags %}
+{% block content %}
+
+<body>
+    <section class="product-single theme1 pt-60">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <div>
+                        <div class="position-relative">
+                            <span class="badge badge-danger top-right">New</span>
+                        </div>
+                        <div class="product-sync-init mb-20">
+                            {% if product.media.image1 %}
+                            <div class="single-product">
+                                <div class="product-thumb">
+                                    <img src="/media/{{product.media.image1}}" alt="product-thumb" />
+                                </div>
+                            </div>
+                            {% endif %} {% if product.media.image2 %}
+                            <!-- single-product end -->
+                            <div class="single-product">
+                                <div class="product-thumb">
+                                    <img src="/media/{{product.media.image2}}" alt="product-thumb" />
+                                </div>
+                            </div>
+                            {% endif %} {% if product.media.image3 %}
+                            <!-- single-product end -->
+                            <div class="single-product">
+                                <div class="product-thumb">
+                                    <img src="/media/{{product.media.image3}}" alt="product-thumb" />
+                                </div>
+                            </div>
+                            {% endif %} {% if product.media.image4 %}
+                            <!-- single-product end -->
+                            <div class="single-product">
+                                <div class="product-thumb">
+                                    <img src="/media/{{product.media.image4}}" alt="product-thumb" />
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if product.media.image5 %}
+                            <!-- single-product end -->
+                            <div class="single-product">
+                                <div class="product-thumb">
+                                    <img src="/media/{{product.media.image5}}" alt="product-thumb" />
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if product.media.image6 %}
+                            <!-- single-product end -->
+                            <div class="single-product">
+                                <div class="product-thumb">
+                                    <img src="/media/{{product.media.image6}}" alt="product-thumb" />
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if product.media.image7 %}
+                            <!-- single-product end -->
+                            <div class="single-product">
+                                <div class="product-thumb">
+                                    <img src="/media/{{product.media.image7}}" alt="product-thumb" />
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if product.media.image8 %}
+                            <!-- single-product end -->
+                            <div class="single-product">
+                                <div class="product-thumb">
+                                    <img src="/media/{{product.media.image8}}" alt="product-thumb" />
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if product.media.image9 %}
+                            <!-- single-product end -->
+                            <div class="single-product">
+                                <div class="product-thumb">
+                                    <img src="/media/{{product.media.image9}}" alt="product-thumb" />
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if product.media.image10 %}
+                            <!-- single-product end -->
+                            <div class="single-product">
+                                <div class="product-thumb">
+                                    <img src="/media/{{product.media.image10}}" alt="product-thumb" />
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if product.media.video_embed_link%}
+
+                            <div class="single-product">
+                                <div class="product-thumb">
+                                    {{product.media.video_embed_link | safe}}
+
+                                </div>
+                            </div>
+                            {% endif %}
+                            <!-- single-product end -->
+                        </div>
+                    </div>
+                    <div class="product-sync-nav single-product">
+                        {% if product.media.image1 %}
+                        <div class="single-product">
+                            <div class="product-thumb">
+                                <a href="javascript:void(0)">
+                                    <img src="/media/{{product.media.image1}}" /></a>
+                            </div>
+                        </div>
+                        {%endif%} {% if product.media.image2 %}
+                        <!-- single-product end -->
+                        <div class="single-product">
+                            <div class="product-thumb">
+                                <a href="javascript:void(0)">
+                                    <img src="/media/{{product.media.image2}}" alt="product-thumb" /></a>
+                            </div>
+                        </div>
+                        {% endif %} {% if product.media.image3%}
+                        <!-- single-product end -->
+                        <div class="single-product">
+                            <div class="product-thumb">
+                                <a href="javascript:void(0)"><img src="/media/{{product.media.image3}}"
+                                        alt="product-thumb" /></a>
+                            </div>
+                        </div>
+                        {% endif %} {% if product.media.image4 %}
+                        <!-- single-product end -->
+                        <div class="single-product">
+                            <div class="product-thumb">
+                                <a href="javascript:void(0)"><img src="/media/{{product.media.image4}}"
+                                        alt="product-thumb" /></a>
+                            </div>
+                        </div>
+                        {% endif %}{% if product.media.image5 %}
+                        <!-- single-product end -->
+                        <div class="single-product">
+                            <div class="product-thumb">
+                                <a href="javascript:void(0)"><img src="/media/{{product.media.image5}}"
+                                        alt="product-thumb" /></a>
+                            </div>
+                        </div>
+                        {% endif %}{% if product.media.image6 %}
+                        <!-- single-product end -->
+                        <div class="single-product">
+                            <div class="product-thumb">
+                                <a href="javascript:void(0)"><img src="/media/{{product.media.image6}}"
+                                        alt="product-thumb" /></a>
+                            </div>
+                        </div>
+                        {% endif %}{% if product.media.image7 %}
+                        <!-- single-product end -->
+                        <div class="single-product">
+                            <div class="product-thumb">
+                                <a href="javascript:void(0)"><img src="/media/{{product.media.image7}}"
+                                        alt="product-thumb" /></a>
+                            </div>
+                        </div>
+                        {% endif %}{% if product.media.image8 %}
+                        <!-- single-product end -->
+                        <div class="single-product">
+                            <div class="product-thumb">
+                                <a href="javascript:void(0)"><img src="/media/{{product.media.image8}}"
+                                        alt="product-thumb" /></a>
+                            </div>
+                        </div>
+                        {% endif %}{% if product.media.image9 %}
+                        <!-- single-product end -->
+                        <div class="single-product">
+                            <div class="product-thumb">
+                                <a href="javascript:void(0)"><img src="/media/{{product.media.image9}}"
+                                        alt="product-thumb" /></a>
+                            </div>
+                        </div>
+                        {% endif %}{% if product.media.image10 %}
+                        <!-- single-product end -->
+                        <div class="single-product">
+                            <div class="product-thumb">
+                                <a href="javascript:void(0)"><img src="/media/{{product.media.image10}}"
+                                        alt="product-thumb" /></a>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if product.media.video_embed_link%}
+                        <div class="single-product">
+                            <div class="product-thumb">
+                                <a href="javascript:void(0)"><img
+                                        src="//img.youtube.com/vi/{{youtube_video_id| safe}}/0.jpg"></a>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <!-- single-product end -->
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="single-product-info">
+                        <div class="single-product-head">
+                            <h2 class="title mb-20">
+                                {{product.gem_type}}, {{product.origin}}, {{product.shape}}, {{product.color}}
+                            </h2>
+                        </div>
+
+                        <div class="product-body mb-40">
+                            <div class="d-flex align-items-center mb-30">
+                                {% if user.Businesstype == "Customer" %}
+                                <span class="product-price mr-20">
+                                    <span class="onsale" id="tag_price">${% customer_price product.tag_price %}
+                                    </span></span>
+                                {% elif user.Businesstype == "Broker"%}
+                                <span class="product-price mr-20">
+                                    <span class="onsale" id="tag_price">${% broker_price product.tag_price %}
+                                    </span></span>
+                                {% else %}
+                                <span class="product-price mr-20">
+                                    <span class="onsale" id="tag_price">${% wholesaler_price product.tag_price %}
+                                    </span></span>
+                                {% endif %}
+                                <!-- Certificate type  -->
+
+                            </div>
+                            <p>
+                                {{product.media.description | safe | truncatewords:100}}
+                            </p>
+                            <br>
+                            <div>
+                                <button class="btn btn-dark btn--xl mt-5 mt-sm-0">
+                                    <a href="/media/{{product.media.certificate}}">
+                                        <span class="mr-2"><i class="ion-android"></i></span>
+                                        View Certificate
+                                    </a>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-footer">
+                            <div class="pro-social-links mt-10">
+                                <ul class="d-flex align-items-center">
+                                    <li class="share">Share</li>
+                                    <li>
+                                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"
+                                            target="_blank"><i class="ion-social-facebook"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="https://twitter.com/intent/tweet?url={{request.build_absolute_uri}}&text=See this Gem from SDS Gems {{product.gem_type}}, {{product.origin}}, {{product.shape}}, {{product.color}}"
+                                            target="_blank"><i class="ion-social-twitter"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="https://api.whatsapp.com/send?text={{ request.build_absolute_uri }}"
+                                            target="_blank"><i class="ion-social-whatsapp"></i></a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- product-single end -->
+    <!-- product tab start -->
+    <div class="product-tab theme1 bg-white pt-60 pb-80">
+        <div class="container">
+            <div class="product-tab-nav">
+                <div class="row align-items-center">
+                    <div class="col-12">
+                        <nav class="product-tab-menu single-product">
+                            <ul class="nav nav-pills justify-content-center" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-home"
+                                        role="tab" aria-controls="pills-home" aria-selected="true">Description</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-profile-tab" data-toggle="pill"
+                                        href="#pills-profile" role="tab" aria-controls="pills-profile"
+                                        aria-selected="false">Product
+                                        Details</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- product-tab-nav end -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="tab-content" id="pills-tabContent">
+                        <!-- first tab-pane -->
+                        <div class="tab-pane fade " id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                            <div class="single-product-desc">
+                                <p>
+                                    {{product.media.description | safe}}
+                                </p>
+                            </div>
+                        </div>
+                        <!-- second tab-pane -->
+                        <div class="tab-pane fade show active" id="pills-profile" role="tabpanel"
+                            aria-labelledby="pills-profile-tab">
+                            <div class="single-product-desc">
+                                <div class="product-anotherinfo-wrapper">
+                                    <ul>
+                                        <li><span>Weight</span> {{product.Weight}} carat</li>
+                                        <li><span>Dimensions</span>{{product.measurements}}</li>
+                                        <li><span>Shape</span> {{product.shape}}</li>
+                                        <li><span>Origin</span> {{product.origin}}</li>
+                                        <li><span>Colour</span> {{product.color}}</li>
+                                        <li><span>Gem Type</span> {{product.gem_type}}</li>
+                                        <li><span>Clarity </span> {{product.Clarity}}</li>
+                                        <li><span>Lab </span> {{product.lab}}</li>
+                                        <li><span>Treatment </span> {{product.treatment}}</li>
+
+                                        <li>
+                                            <span>Other Info</span> American heirloom jean shorts pug
+                                            seitan letterpress
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- third tab-pane -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- product tab end -->
+    <!-- new arrival section start -->
+    <section class="theme1 bg-white pb-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title text-center">
+                        <h2 class="title pb-3 mb-3">You might also like</h2>
+                        <p class="text mt-10">Add Related products to weekly line up</p>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="product-slider-init theme1 slick-nav">
+                        {% for product in related_products %}
+                        <div class="slider-item">
+                            <div class="card product-card">
+                                <div class="card-body p-0">
+                                    <div class="media flex-column">
+                                        <div class="product-thumbnail position-relative">
+                                            <span class="badge badge-danger top-right">New</span>
+                                            <a href="">
+                                                {% if product.media.image1 %}
+                                                <img class="first-img" src="/media/{{product.media.image1}}"
+                                                    alt="thumbnail" />
+                                                {% else %}
+                                                <br><br>
+                                                <h5>No image for this object.</h5>
+                                                {% endif %}
+                                            </a>
+                                            <!-- product links -->
+                                            <!-- product links end-->
+                                        </div>
+                                        <div class="media-body">
+                                            <div class="product-desc">
+                                                <h3 class="title">
+                                                    <a href="{% url 'showColorStone' product_id=product.id %}">
+                                                        {{product.gem_type}},
+                                                        {{product.origin}}, {{product.shape}}, {{product.color}}
+                                                    </a>
+                                                </h3>
+
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    {% if user.Businesstype == "Customer" %}
+                                                    <span class="product-price" id="tag_price">
+                                                        ${% customer_price product.tag_price %}</span>
+                                                    {% elif user.Businesstype == "Broker"%}
+                                                    <span class="product-price" id="tag_price">
+                                                        ${% broker_price product.tag_price %}</span>
+                                                    {% else %}
+                                                    <span class="product-price" id="tag_price">
+                                                        ${% wholesaler_price product.tag_price %}</span>
+                                                    {% endif %}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+{% endblock content %}

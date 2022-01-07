@@ -30,8 +30,10 @@ from django.views.generic.edit import CreateView
 import datetime
 from django.contrib import messages
 from django.template.loader import get_template
+from user.views.common_views import *
 
 
+@myuser_login_required
 def allDiamonds(request, page=1):
     all_objects = Inventoryofdiamond.objects.filter(frontend=True).all()
     total_count = all_objects.count()
@@ -45,6 +47,7 @@ def allDiamonds(request, page=1):
     return render(request, 'diamond_templates/diamonds_shop_list.html', context=context)
 
 
+@myuser_login_required
 def diamondByShapeFilter(request, shape_id, page=1):
     all_objects = Inventoryofdiamond.objects.filter(
         shape=shape_id, frontend=True).all()
@@ -60,6 +63,7 @@ def diamondByShapeFilter(request, shape_id, page=1):
     return render(request, 'diamond_templates/diamondByShapeFilter.html', context=context)
 
 
+@myuser_login_required
 def diamondByCutFilter(request, cut_id, page=1):
     all_objects = Inventoryofdiamond.objects.filter(
         cut=cut_id, frontend=True).all()
@@ -76,6 +80,7 @@ def diamondByCutFilter(request, cut_id, page=1):
     return render(request, 'diamond_templates/diamondByCutFilter.html', context=context)
 
 
+@myuser_login_required
 def diamondByColorOriginFilter(request, color_origin_id, page=1):
     all_objects = Inventoryofdiamond.objects.filter(
         color_origin1=color_origin_id, frontend=True).all()

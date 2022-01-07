@@ -20,7 +20,6 @@
     <!-- cdn links -->
 
     <link rel="stylesheet" href="/static/assets/css/fontawesome.min.css" />
-    <link rel="stylesheet" href="/static/assets/css/ionicons.min.css" />
     <link rel="stylesheet" href="/static/assets/css/simple-line-icons.css" />
     <link rel="stylesheet" href="/static/assets/css/plugins/jquery-ui.min.css">
     <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css" />
@@ -415,8 +414,8 @@
                       <i class="ion
                         ion-ios-arrow-down"></i></a>
                     <ul class="topnav-submenu dropdown-menu" aria-labelledby="dropdown1">
-                      <li><a href="{% url 'myaccount' %}">Account Details</a></li>
                       {% if user_login %}
+                      <li><a href="{% url 'myaccount' %}">Account Details</a></li>
                       <li><a href="/user_logout">Logout</a></li>
                       {% else %}
                       <li><a href="/user_register">Register</a></li>
@@ -424,14 +423,14 @@
                       {% endif %}
                     </ul>
                   </li>
-                  <li>
-                    <a href="#" id="dropdown2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">INR ₹<i
+                  <li onload="checkcurrency()">
+                    <a href="#" id="dropdown2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
                         class="ion
                         ion-ios-arrow-down"></i>
                     </a>
                     <ul class="topnav-submenu dropdown-menu" aria-labelledby="dropdown2">
-                      <li class="active"><a href="#">USD $</a></li>
-                      <li><a href="#">INR ₹</a></li>
+                      <li onclick=" setLocal('usd')" class="active"><a href="#">USD $</a></li>
+                      <li onclick=" setLocal('inr');"><a href="#">INR ₹</a></li>
                     </ul>
                   </li>
                   <li class="english">
@@ -1248,6 +1247,64 @@
     <!-- <script src="/static/assets/js/vendor/vendor.min.js"></script>
     <script src="/static/assets/js/plugins/plugins.min.js"></script>
     <script src="/static/assets/js/main.js"></script> -->
+
+    <script>
+      function checkcurrency() {
+        var curr = localStorage.getItem("currency");
+        console.log(curr);
+        if (curr) {
+          if (curr == 'usd') {
+            document.getElementById("dropdown2").innerText = "USD $"
+          } else {
+            document.getElementById("dropdown2").innerText = "INR ₹"
+          }
+
+        } else {
+          localStorage.setItem("currency", "usd");
+          document.getElementById("dropdown2").innerText = "USD $"
+        }
+      }
+      function setLocal(a) {
+        if (a == 'usd') {
+          document.getElementById("dropdown2").innerText = "USD $"
+          localStorage.setItem("currency", "usd")
+        } else {
+          document.getElementById("dropdown2").innerText = "INR ₹"
+          localStorage.setItem("currency", "inr")
+        }
+        setPrice();
+      }
+
+      function setPrice() {
+        var curr = localStorage.getItem("currency");
+        if (curr) {
+          if (curr == "usd") {
+            allPrices = document.querySelectorAll('#tag_price')
+            for (var i = 0; i < allPrices.length; i++) {
+              console.log(allPrices[i].innerText)
+              if (allPrices[i].innerText.includes("RS")) {
+                var price = parseInt(allPrices[i].innerText.replace("RS", "")) / 70
+                allPrices[i].innerText = "$" + price;
+              }
+            }
+          }
+          if (curr == "inr") {
+            allPrices = document.querySelectorAll('#tag_price')
+            for (var i = 0; i < allPrices.length; i++) {
+              if (allPrices[i].innerText.includes("$")) {
+                var price = parseInt(allPrices[i].innerText.replace("$", "")) * 70
+                allPrices[i].innerText = "RS" + price;
+              }
+            }
+          }
+        }
+      }
+      function price_set() {
+        checkcurrency();
+        setPrice();
+      }
+      window.onload = price_set;
+    </script>
   </body>
 
 </html>

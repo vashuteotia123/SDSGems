@@ -5,7 +5,7 @@ from django.shortcuts import *
 
 
 def allBlogs(request, page=1):
-    all_objects = Blog.objects.all()
+    all_objects = Blog.objects.all().order_by('-date')
     paginator = Paginator(all_objects, 12)
     try:
         all_objects = paginator.page(page)
@@ -18,7 +18,7 @@ def allBlogs(request, page=1):
 
 
 def blogByTags(request, tag_name, page=1):
-    all_objects = Blog.objects.filter(tags__name=tag_name)
+    all_objects = Blog.objects.filter(tags__name=tag_name).order_by('-date')
     paginator = Paginator(all_objects, 12)
     try:
         all_objects = paginator.page(page)

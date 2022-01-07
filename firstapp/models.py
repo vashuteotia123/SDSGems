@@ -9,6 +9,7 @@ from tinymce.models import HTMLField
 import datetime
 from decimal import Decimal
 from phonenumber_field.modelfields import PhoneNumberField
+from ckeditor.fields import RichTextField
 
 
 class countries(models.Model):
@@ -272,17 +273,17 @@ class POJ(models.Model):
             stockid="J-"+str(self.id))
         if inventory_jewelleryobj:
             inventory_jewelleryobj.update(stockid=str('J-')+str(self.id), location=self.location, jewellery_type=self.jewellery, center_stone=self.center_stone,
-                                                  color_of_center_stone=self.color_of_center_stone, shape=self.shape,
-                                                  metal=self.metal, center_stone_weight=self.center_stone_weight, center_stone_pieces=self.center_stone_pieces,
-                                                  grosswt=self.grosswt, cert=self.cert, pcs=self.pcs, tag_price=self.tag_price,
-                                                  purchaseapv=self.purchase_approval)
+                                          color_of_center_stone=self.color_of_center_stone, shape=self.shape,
+                                          metal=self.metal, center_stone_weight=self.center_stone_weight, center_stone_pieces=self.center_stone_pieces,
+                                          grosswt=self.grosswt, cert=self.cert, pcs=self.pcs, tag_price=self.tag_price,
+                                          purchaseapv=self.purchase_approval)
 
         else:
             obj = Inventoryofjewellery.objects.create(stockid=str('J-')+str(self.id), location=self.location, jewellery_type=self.jewellery, center_stone=self.center_stone,
-                                                    color_of_center_stone=self.color_of_center_stone, shape=self.shape,
-                                                    metal=self.metal, center_stone_weight=self.center_stone_weight, center_stone_pieces=self.center_stone_pieces,
-                                                    grosswt=self.grosswt, cert=self.cert, pcs=self.pcs, tag_price=self.tag_price,
-                                                    purchaseapv=self.purchase_approval)
+                                                      color_of_center_stone=self.color_of_center_stone, shape=self.shape,
+                                                      metal=self.metal, center_stone_weight=self.center_stone_weight, center_stone_pieces=self.center_stone_pieces,
+                                                      grosswt=self.grosswt, cert=self.cert, pcs=self.pcs, tag_price=self.tag_price,
+                                                      purchaseapv=self.purchase_approval)
         # salesapproval
 
     def __str__(self):
@@ -443,7 +444,7 @@ class Jewel_media(models.Model):
         verbose_name_plural = "Jewellery - Media"
     jewel_object = models.OneToOneField(
         Inventoryofjewellery, on_delete=models.CASCADE,
-        related_name='jewel_media', primary_key=True)
+        related_name='media', primary_key=True)
     image1 = models.ImageField(
         upload_to="JewelleryMedia/", blank=True, null=True)
     image2 = models.ImageField(
@@ -749,16 +750,16 @@ class POD(models.Model):
             stockid="D-"+str(self.id))
         if inventory_diaobj:
             inventory_diaobj.update(stockid=str('D-')+str(self.id), location=self.location, shape=self.shape, color_origin1=self.color_origin1,
-                                                 clarity=self.clarity, white_color_grade1=self.white_color_grade1,
-                                                 fancycolor_grade=self.fancycolor_grade, cut=self.cut, weight_d=self.weight_d,  polish=self.polish, symmetry=self.symmetry, measurements=self.measurements,
-                                                 depth=self.depth, table=self.table_perc, fluorescence_intensity=self.fluorescence_intensity, fluorescence_color=self.fluorescence_color, certificate_no_d=self.certificate_no_d,
-                                                 certificate_d=self.certificate_d, units=self.units, laser_inscription=self.laser_inscription, PCS_d=self.PCS_d, tag_price_d=self.tag_price_d, purchaseapv_d=self.purchaseapv_d)
+                                    clarity=self.clarity, white_color_grade1=self.white_color_grade1,
+                                    fancycolor_grade=self.fancycolor_grade, cut=self.cut, weight_d=self.weight_d,  polish=self.polish, symmetry=self.symmetry, measurements=self.measurements,
+                                    depth=self.depth, table=self.table_perc, fluorescence_intensity=self.fluorescence_intensity, fluorescence_color=self.fluorescence_color, certificate_no_d=self.certificate_no_d,
+                                    certificate_d=self.certificate_d, units=self.units, laser_inscription=self.laser_inscription, PCS_d=self.PCS_d, tag_price_d=self.tag_price_d, purchaseapv_d=self.purchaseapv_d)
         else:
             obj2 = Inventoryofdiamond.objects.create(stockid=str('D-')+str(self.id), location=self.location, shape=self.shape, color_origin1=self.color_origin1,
-                                                    clarity=self.clarity, white_color_grade1=self.white_color_grade1,
-                                                    fancycolor_grade=self.fancycolor_grade, cut=self.cut, weight_d=self.weight_d,  polish=self.polish, symmetry=self.symmetry, measurements=self.measurements,
-                                                    depth=self.depth, table=self.table_perc, fluorescence_intensity=self.fluorescence_intensity, fluorescence_color=self.fluorescence_color, certificate_no_d=self.certificate_no_d,
-                                                    certificate_d=self.certificate_d, units=self.units, laser_inscription=self.laser_inscription, PCS_d=self.PCS_d, tag_price_d=self.tag_price_d, purchaseapv_d=self.purchaseapv_d)
+                                                     clarity=self.clarity, white_color_grade1=self.white_color_grade1,
+                                                     fancycolor_grade=self.fancycolor_grade, cut=self.cut, weight_d=self.weight_d,  polish=self.polish, symmetry=self.symmetry, measurements=self.measurements,
+                                                     depth=self.depth, table=self.table_perc, fluorescence_intensity=self.fluorescence_intensity, fluorescence_color=self.fluorescence_color, certificate_no_d=self.certificate_no_d,
+                                                     certificate_d=self.certificate_d, units=self.units, laser_inscription=self.laser_inscription, PCS_d=self.PCS_d, tag_price_d=self.tag_price_d, purchaseapv_d=self.purchaseapv_d)
 
     def __str__(self):
         return str(self.id)
@@ -983,7 +984,7 @@ class Diamond_media(models.Model):
         upload_to="Certificates/Diamond/", blank=True, null=True)
     description = models.TextField(
         null=True, blank=True, max_length=5000, verbose_name="Description")
-    jewellery_info = models.TextField(
+    diamond_info = models.TextField(
         null=True, blank=True,  max_length=3000, verbose_name="Diamond Information")
 
 
@@ -1374,7 +1375,7 @@ class ColorStone_media(models.Model):
     video_embed_link = models.TextField(null=True, blank=True)
     certificate = models.FileField(
         upload_to="Certificates/ColorStone/", blank=True, null=True)
-    description = models.TextField(
-        null=True, blank=True, max_length=5000, verbose_name="Description")
-    colorstone_info = models.TextField(
-        null=True, blank=True,  max_length=3000, verbose_name="Colour Stone Information")
+    description = RichTextField(
+        null=True, blank=True, verbose_name="Description")
+    colorstone_info = RichTextField(
+        null=True, blank=True,  verbose_name="Colour Stone Information")

@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django_object_actions',
     'django_user_agents',
     'taggit',
+    'ckeditor',
 
 ]
 

@@ -58,7 +58,11 @@
         <td>{{obj.fluorescence_color}}</td>
         <td>{{obj.certificate_no_d}}</td>
         <td>{{obj.certificate_d}}</td>
-        <td><a href="" id="stock_id{{ forloop.counter }}_cert">See Certificate</a></td>
+        {% if obj.media.certificate %}
+        <td><a href="/media/{{obj.media.certificate}}">See Certificate</a>
+            {% else %}
+        <td>No Certificate</td>
+        {% endif %}
         <td>{%if obj.laser_inscription%}YES{% else %}NO{% endif %}</td>
         <td>{{obj.PCS_d}}</td>
         <td>{{obj.weight_d}}</td>
@@ -163,32 +167,8 @@
 
     });
 
-    var length_diamond = "{{length_diamond}}";
-    for (var i = 1; i <= length_diamond; i++) {
-        var query = document.getElementById("stock_id" + i);
-        if (query) {
-            // console.log(query);
-            var stockid = document.getElementById("stock_id" + i).innerHTML;
-            // console.log(stockid);
-            $.ajax({
-                type: 'GET', async: false, url: '{% url "get_certificate_of_diamond" %}',
-                data: { 'stockid': stockid }, success: function (data) {
 
-                    var query2 = document.getElementById("stock_id" + i + "_cert");
-                    if (data != "" && query2) {
-                        // console.log(data,i);
-                        if (data.certificate != "0") {
-                            document.getElementById("stock_id" + i + "_cert").href = "/media/" + data.certificate;
-                        }
-                        else {
-                            document.getElementById("stock_id" + i + "_cert").innerHTML = "Not Available";
-                            document.getElementById("stock_id" + i + "_cert").classList.add("disabled-link");
-                        }
-                    }
-                }
-            });
-        }
-    }
+
 </script>
 </body>
 

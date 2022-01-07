@@ -43,7 +43,12 @@
         <td>{{obj.Clarity.capitalize}}</td>
         <td>{{obj.certificate_no}}</td>
         <td>{{obj.lab.lab.capitalize}}</td>
-        <td><a href="" id="stock_id{{ forloop.counter }}_cert">See Certificate</a></td>
+        {% if obj.media.certificate %}
+        <td><a href="/media/{{obj.media.certificate}}">See Certificate</a>
+            {% else %}
+        <td>No Certificate</td>
+        {% endif %}
+        </td>
         <td>{{obj.color.color.capitalize}}</td>
         <td>{{obj.measurements}}</td>
         <td>{{obj.PCS}}</td>
@@ -92,32 +97,5 @@
 
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>
-    var length_cs = "{{length_cs}}";
-    console.log(length_cs);
-    for (var i = 1; i <= length_cs; i++) {
-        var query = document.getElementById("stock_id" + i);
-        if (query) {
-            var stockid = document.getElementById("stock_id" + i).innerHTML;
-            $.ajax({
-                type: 'GET', async: false, url: '{% url "get_certificate_of_colorstone" %}',
-                data: { 'stockid': stockid }, success: function (data) {
 
-                    var query2 = document.getElementById("stock_id" + i + "_cert");
-                    if (data != "" && query2) {
-                        console.log(data, i);
-                        if (data.certificate != "0") {
-                            document.getElementById("stock_id" + i + "_cert").href = "/media/" + data.certificate;
-
-                        }
-                        else {
-                            document.getElementById("stock_id" + i + "_cert").innerHTML = "Not Available";
-                            console.log(data.certificate);
-                        }
-                    }
-                }
-            });
-        }
-    }
-</script>
 {% endblock %}

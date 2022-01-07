@@ -34,6 +34,16 @@ from django.template.loader import get_template
 # Create your views here.
 
 
+def myuser_login_required(f):
+    def wrap(request, *args, **kwargs):
+        if 'is_logedin' not in request.session.keys():
+            return HttpResponseRedirect("/user_login")
+        return f(request, *args, **kwargs)
+    wrap.__doc__ = f.__doc__
+    wrap.__name__ = f.__name__
+    return wrap
+
+
 class SignUpView(CreateView):
     template_name = 'user_register.html'
     success_url = reverse_lazy('user_login')
@@ -44,7 +54,7 @@ def user_login(request):
     message = None
 
     if 'is_logedin' not in request.session and request.method != 'POST':
-        message = "Please Enter your Email  and password "
+        message = "You are not logged in. Please login to continue."
         return render(request, 'user_login.html', {'message': message})
     elif request.method == 'POST':
 
@@ -136,6 +146,8 @@ class MyAccount(View):
     template_name = 'myaccount.html'
 
     def get(self, request):
+        if 'is_logedin' not in request.session.keys():
+            return HttpResponseRedirect("/user_login")
         user = User_table.objects.get(email_id=request.session['user_email'])
         return render(request, self.template_name, {'user': user})
 

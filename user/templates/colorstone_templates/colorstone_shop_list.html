@@ -1,5 +1,6 @@
 {% extends 'user_base.html' %}
 {% block content %}
+{% load price_tags %}
 
 <div class="product-tab bg-white pt-80 pb-80">
   <div class="container">
@@ -42,47 +43,35 @@
           <div class="col-sm-6 col-lg-4 col-xl-3 mb-30">
             <div class="card product-card">
               <div class="card-body">
-                <div class="product-thumbnail position-relative">
-                  <span class="badge badge-danger top-right">{{object.lab}}</span>
-                  {% if object.media.image1 %}
-                  <a href="#">
-                    <img class="first-img" src="/media/{{object.media.image1}}" alt="{{object.shape}}" /></a>
-                  {% else %}
-                  <br><br>
-                  <h5>No image for this object.</h5><br><br>
-                  {% endif %}
-                  <!-- product links -->
-                  <!-- <ul class="actions d-flex justify-content-center">
-                    <li>
-                      <a class="action" href="#">
-                        <span data-toggle="tooltip" data-placement="bottom" title="add to wishlist" class="icon-heart">
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="action" href="#" data-toggle="modal" data-target="#compare">
-                        <span data-toggle="tooltip" data-placement="bottom" title="Add to compare"
-                          class="icon-shuffle"></span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="action" href="#" data-toggle="modal" data-target="#quick-view">
-                        <span data-toggle="tooltip" data-placement="bottom" title="Quick view"
-                          class="icon-magnifier"></span>
-                      </a>
-                    </li>
-                  </ul> -->
-                  <!-- product links end-->
-                </div>
+                <a href="{% url 'showColorStone' product_id=object.id %}">
+
+                  <div class="product-thumbnail position-relative">
+                    <span class="badge badge-danger top-right">{{object.lab}}</span>
+                    {% if object.media.image1 %}
+                    <img class="first-img" src="/media/{{object.media.image1}}" alt="{{object.shape}}" />
+                    {% else %}
+                    <br><br>
+                    <h5>No image for this object.</h5><br><br>
+                    {% endif %}
+                  </div>
+                </a>
                 <div class="product-desc py-0 px-0">
                   <h3 class="title">
-                    <a href="#">{{object.gem_type}}</a>
-                    <a href="#">{{object.origin}}</a>
+                    <a href="{% url 'showColorStone' product_id=object.id %}">{{object.gem_type}},
+                      {{object.origin}}, {{object.shape}}, {{object.color}}</a>
                   </h3>
 
                   <div class="d-flex align-items-center justify-content-between">
-                    <span class="product-price">${{object.tag_price}}</span>
-
+                    {% if user.Businesstype == "Customer" %}
+                    <span class="product-price" id="tag_price">
+                      ${% customer_price object.tag_price %}</span>
+                    {% elif user.Businesstype == "Broker"%}
+                    <span class="product-price" id="tag_price">
+                      ${% broker_price object.tag_price %}</span>
+                    {% else %}
+                    <span class="product-price" id="tag_price">
+                      ${% wholesaler_price object.tag_price %}</span>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -122,4 +111,5 @@
     </div>
   </div>
 </div>
+
 {% endblock content %}

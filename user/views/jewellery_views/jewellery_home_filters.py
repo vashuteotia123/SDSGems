@@ -30,8 +30,10 @@ from django.views.generic.edit import CreateView
 import datetime
 from django.contrib import messages
 from django.template.loader import get_template
+from user.views.common_views import *
 
 
+@myuser_login_required
 def allJewellery(request, page=1):
     all_objects = Inventoryofjewellery.objects.filter(frontend=True).all()
     total_count = all_objects.count()
@@ -48,6 +50,7 @@ def allJewellery(request, page=1):
     return render(request, 'jewellery_templates/jewellery_shop_list.html', context=context)
 
 
+@myuser_login_required
 def JewelleryByCenterStoneFilter(request, center_stone_id, page=1):
     all_objects = Inventoryofjewellery.objects.filter(
         center_stone=center_stone_id, frontend=True).all()
@@ -63,6 +66,7 @@ def JewelleryByCenterStoneFilter(request, center_stone_id, page=1):
     return render(request, 'jewellery_templates/JewelleryByCenterStoneFilter.html', context=context)
 
 
+@myuser_login_required
 def JewelleryByMetalFilter(request, metal_id, page=1):
     all_objects = Inventoryofjewellery.objects.filter(
         metal=metal_id, frontend=True).all()
@@ -79,6 +83,7 @@ def JewelleryByMetalFilter(request, metal_id, page=1):
     return render(request, 'jewellery_templates/JewelleryByMetalFilter.html', context=context)
 
 
+@myuser_login_required
 def JewelleryByJewelleryTypeFilter(request, jewellery_type_id, page=1):
     all_objects = Inventoryofjewellery.objects.filter(
         jewellery_type=jewellery_type_id, frontend=True).all()
