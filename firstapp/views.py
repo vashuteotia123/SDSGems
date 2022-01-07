@@ -1457,7 +1457,7 @@ def jewellery_upload(request):
         # date_value=list(datere[0])
         # final_date=datetime.date(int(''.join(date_value[6:])),int(''.join(date_value[3:4])),int(''.join(date_value[0:2])))
         temp_date = datetime.datetime.strptime(
-            str(column[0]), "%m-%d-%Y").date()
+            str(column[0]), "%d-%m-%Y").date()
         f = clonePOJ
         for i in range(len(column)):
             if(i == 1 or i == 8 or i == 12):
@@ -1731,7 +1731,7 @@ def colorstone_upload(request):
         # date_value=list(datere[0])
         # final_date=datetime.date(int(''.join(date_value[6:])),int(''.join(date_value[3:4])),int(''.join(date_value[0:2])))
         temp_date = datetime.datetime.strptime(
-            str(column[0]), "%m/%d/%Y").date()
+            str(column[0]), "%d-%m-%Y").date()
         f = clonePurchaseOfColorStones
         for i in range(len(column)):
             if(i == 1 or i == 8 or i == 12 or i == 25):
@@ -1915,7 +1915,7 @@ def diamond_upload(request):
     column_names = column_names.split(",")
     for column in csv.reader(io_string, delimiter=','):
         temp_date = datetime.datetime.strptime(
-            str(column[0]), "%m-%d-%Y").date()
+            str(column[0]), "%d-%m-%Y").date()
 
         f = clonePOD
         for i in range(len(column)):
