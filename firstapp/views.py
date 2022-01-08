@@ -804,6 +804,7 @@ def return_colorstone_Inventory(request, id):
         Clarity=object.Clarity,
         lab=object.lab,
         color=object.color,
+        units=object.units_cs,
         purchaseapv=True,
         Weight=object.Weight_cs,
         cartstatus=False,
@@ -1532,7 +1533,7 @@ def jewellery_upload(request):
                 f.currency.save()
         except Exception as e:
             raise e
-        if(column[21] == "NO"):
+        if(column[21].lower() == "no"):
 
             y = False
         else:
@@ -1843,7 +1844,7 @@ def colorstone_upload(request):
         except Exception as e:
             raise e
 
-        if(column[21] == "NO"):
+        if(column[21].lower()=="no"):
             y = False
         else:
             y = True

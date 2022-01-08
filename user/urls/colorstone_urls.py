@@ -33,4 +33,6 @@ urlpatterns = [
     # ColorStone Details
     path('showColorStone/<int:product_id>',
          showColorStone, name="showColorStone"),
+
+    # Colorstone filter
 ]

@@ -35,7 +35,8 @@ from user.views.common_views import *
 
 @myuser_login_required
 def allJewellery(request, page=1):
-    all_objects = Inventoryofjewellery.objects.filter(frontend=True).all()
+    all_objects = Inventoryofjewellery.objects.select_related(
+        'media').filter(frontend=True).all().order_by('-id')
     total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     try:
@@ -46,14 +47,15 @@ def allJewellery(request, page=1):
         "all_objects": all_objects,
         "total_count": total_count,
         "current_url": "allJewellery",
+        "user": User_table.objects.get(pk=request.session['user_email']),
     }
     return render(request, 'jewellery_templates/jewellery_shop_list.html', context=context)
 
 
 @myuser_login_required
 def JewelleryByCenterStoneFilter(request, center_stone_id, page=1):
-    all_objects = Inventoryofjewellery.objects.filter(
-        center_stone=center_stone_id, frontend=True).all()
+    all_objects = Inventoryofjewellery.objects.select_related('media').filter(
+        center_stone=center_stone_id, frontend=True).all().order_by('-id')
     total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
@@ -61,6 +63,7 @@ def JewelleryByCenterStoneFilter(request, center_stone_id, page=1):
         "all_objects": all_objects,
         "total_count": total_count,
         "current_url": "JewelleryByCenterStoneFilter",
+        "user": User_table.objects.get(pk=request.session['user_email']),
         "center_stone_id": center_stone_id,
     }
     return render(request, 'jewellery_templates/JewelleryByCenterStoneFilter.html', context=context)
@@ -68,8 +71,8 @@ def JewelleryByCenterStoneFilter(request, center_stone_id, page=1):
 
 @myuser_login_required
 def JewelleryByMetalFilter(request, metal_id, page=1):
-    all_objects = Inventoryofjewellery.objects.filter(
-        metal=metal_id, frontend=True).all()
+    all_objects = Inventoryofjewellery.objects.select_related('media').filter(
+        metal=metal_id, frontend=True).all().order_by('-id')
     total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
@@ -78,6 +81,7 @@ def JewelleryByMetalFilter(request, metal_id, page=1):
         "all_objects": all_objects,
         "total_count": total_count,
         "current_url": "JewelleryByMetalFilter",
+        "user": User_table.objects.get(pk=request.session['user_email']),
         "metal_id": metal_id,
     }
     return render(request, 'jewellery_templates/JewelleryByMetalFilter.html', context=context)
@@ -85,8 +89,8 @@ def JewelleryByMetalFilter(request, metal_id, page=1):
 
 @myuser_login_required
 def JewelleryByJewelleryTypeFilter(request, jewellery_type_id, page=1):
-    all_objects = Inventoryofjewellery.objects.filter(
-        jewellery_type=jewellery_type_id, frontend=True).all()
+    all_objects = Inventoryofjewellery.objects.select_related('media').filter(
+        jewellery_type=jewellery_type_id, frontend=True).all().order_by('-id')
     total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
@@ -94,6 +98,7 @@ def JewelleryByJewelleryTypeFilter(request, jewellery_type_id, page=1):
         "all_objects": all_objects,
         "total_count": total_count,
         "current_url": "JewelleryByJewelleryTypeFilter",
+        "user": User_table.objects.get(pk=request.session['user_email']),
         "jewellery_type_id": jewellery_type_id,
     }
     return render(request, 'jewellery_templates/JewelleryByJewelleryTypeFilter.html', context=context)

@@ -35,7 +35,8 @@ from user.views.common_views import *
 
 @myuser_login_required
 def allDiamonds(request, page=1):
-    all_objects = Inventoryofdiamond.objects.filter(frontend=True).all()
+    all_objects = Inventoryofdiamond.objects.select_related('media').filter(
+        frontend=True).all().order_by('-id')
     total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
@@ -50,8 +51,8 @@ def allDiamonds(request, page=1):
 
 @myuser_login_required
 def diamondByShapeFilter(request, shape_id, page=1):
-    all_objects = Inventoryofdiamond.objects.filter(
-        shape=shape_id, frontend=True).all()
+    all_objects = Inventoryofdiamond.objects.select_related('media').filter(
+        shape=shape_id, frontend=True).all().order_by('-id')
     total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
@@ -68,8 +69,8 @@ def diamondByShapeFilter(request, shape_id, page=1):
 
 @myuser_login_required
 def diamondByCutFilter(request, cut_id, page=1):
-    all_objects = Inventoryofdiamond.objects.filter(
-        cut=cut_id, frontend=True).all()
+    all_objects = Inventoryofdiamond.objects.select_related('media').filter(
+        cut=cut_id, frontend=True).all().order_by('-id')
     total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
@@ -86,8 +87,8 @@ def diamondByCutFilter(request, cut_id, page=1):
 
 @myuser_login_required
 def diamondByColorOriginFilter(request, color_origin_id, page=1):
-    all_objects = Inventoryofdiamond.objects.filter(
-        color_origin1=color_origin_id, frontend=True).all()
+    all_objects = Inventoryofdiamond.objects.select_related('media').filter(
+        color_origin1=color_origin_id, frontend=True).all().order_by('-id')
     total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
@@ -96,7 +97,6 @@ def diamondByColorOriginFilter(request, color_origin_id, page=1):
         "total_count": total_count,
         "current_url": "diamondByColorOriginFilter",
         "user": User_table.objects.get(pk=request.session['user_email']),
-
         "color_origin_id": color_origin_id,
     }
     return render(request, 'diamond_templates/diamondByColorOriginFilter.html', context=context)

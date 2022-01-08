@@ -9,6 +9,7 @@ from django_object_actions import DjangoObjectActions
 # Register your models here.
 from .models import *
 
+
 @admin.register(User_table)
 class User(admin.ModelAdmin):
     pass
@@ -18,14 +19,17 @@ class User(admin.ModelAdmin):
 class CountryAdmin(ImportExportModelAdmin):
     pass
 
+
 @admin.register(State)
 class StateAdmin(admin.ModelAdmin):
     pass
+
 
 @admin.register(Blog)
 class blogadmin(DjangoObjectActions, admin.ModelAdmin):
 
     search_fields = ['title', 'subject']
+
     def response_change(self, request, obj):
         messages.success(request, "Blog changed successfully!")
         return redirect('/index')
@@ -34,6 +38,12 @@ class blogadmin(DjangoObjectActions, admin.ModelAdmin):
         messages.success(request, "Blog added successfully!")
         return redirect('/index')
 
+
 @admin.register(Subscribed_users)
 class SubscribedAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(ConversionRate)
+class ConversionAdmin(admin.ModelAdmin):
     pass

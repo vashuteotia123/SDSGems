@@ -1,6 +1,7 @@
 
 from django.contrib.messages.api import MessageFailure
 from django.core import paginator
+from django.http import response
 from django.views.generic import View
 from django.db.models import Q
 from django.http.response import HttpResponse, JsonResponse
@@ -36,7 +37,8 @@ from user.views.common_views import myuser_login_required, user_login
 
 @myuser_login_required
 def allColorStones(request, page=1):
-    all_objects = Inventoryofcolorstones.objects.filter(frontend=True).all()
+    all_objects = Inventoryofcolorstones.objects.select_related(
+        'media').filter(frontend=True).all().order_by('-id')
     total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     try:
@@ -52,10 +54,10 @@ def allColorStones(request, page=1):
     return render(request, 'colorstone_templates/colorstone_shop_list.html', context=context)
 
 
-@myuser_login_required
+@ myuser_login_required
 def colorStoneByShapeFilter(request, shape_id, page=1):
-    all_objects = Inventoryofcolorstones.objects.filter(
-        shape=shape_id, frontend=True).all()
+    all_objects = Inventoryofcolorstones.objects.select_related('media').filter(
+        shape=shape_id, frontend=True).all().order_by('-id')
     total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
@@ -69,10 +71,10 @@ def colorStoneByShapeFilter(request, shape_id, page=1):
     return render(request, 'colorstone_templates/colorStoneByShapeFilter.html', context=context)
 
 
-@myuser_login_required
+@ myuser_login_required
 def colorStoneGemTypeFilter(request, gemtype_id, page=1):
-    all_objects = Inventoryofcolorstones.objects.filter(
-        gem_type=gemtype_id, frontend=True).all()
+    all_objects = Inventoryofcolorstones.objects.select_related('media').filter(
+        gem_type=gemtype_id, frontend=True).all().order_by('-id')
     total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
@@ -86,10 +88,10 @@ def colorStoneGemTypeFilter(request, gemtype_id, page=1):
     return render(request, 'colorstone_templates/colorStoneGemTypeFilter.html', context=context)
 
 
-@myuser_login_required
+@ myuser_login_required
 def colorStoneByOriginFilter(request, origin_id, page=1):
-    all_objects = Inventoryofcolorstones.objects.filter(
-        origin=origin_id, frontend=True).all()
+    all_objects = Inventoryofcolorstones.objects.select_related('media').filter(
+        origin=origin_id, frontend=True).all().order_by('-id')
     total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)
@@ -103,10 +105,10 @@ def colorStoneByOriginFilter(request, origin_id, page=1):
     return render(request, 'colorstone_templates/colorStoneByOriginFilter.html', context=context)
 
 
-@myuser_login_required
+@ myuser_login_required
 def colorStoneByColourFilter(request, colour_id, page=1):
-    all_objects = Inventoryofcolorstones.objects.filter(
-        color=colour_id, frontend=True).all()
+    all_objects = Inventoryofcolorstones.objects.select_related('media').filter(
+        color=colour_id, frontend=True).all().order_by('-id')
     total_count = all_objects.count()
     paginator = Paginator(all_objects, 12)
     all_objects = paginator.page(page)

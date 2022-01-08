@@ -19,7 +19,7 @@ urlpatterns = [
 
     # Filters for ColorStones
     path('colorStoneByShapeFilter/<int:shape_id>',
-         colorStoneByShapeFilter, name="colorStoneByShapeFilter")
+         colorStoneByShapeFilter, name="colorStoneByShapeFilter"),
 
-
+    # Conversion Rate
 ]

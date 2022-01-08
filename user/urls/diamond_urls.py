@@ -3,6 +3,7 @@ from django.urls import path
 from user.views import common_views
 from django.urls.resolvers import URLPattern
 from user.views.common_views import *
+from user.views.diamonds_views.diamond_product import *
 from user.views.diamonds_views.diamonds_home_filters import *
 
 urlpatterns = [
@@ -23,4 +24,7 @@ urlpatterns = [
          diamondByCutFilter, name="diamondByCutFilter"),
     path('diamondByCutFilter/<int:cut_id>/<int:page>',
          diamondByCutFilter, name="diamondByCutFilter"),
+
+    # Single Diamond
+    path('showDiamond/<int:product_id>', showDiamond, name='showDiamond'),
 ]

@@ -1,5 +1,7 @@
+from django.http.response import JsonResponse
 from firstapp.models import *
 from user.models import *
+from user.views.common_views import getConversionRate
 
 
 def diamond_common_context(request):

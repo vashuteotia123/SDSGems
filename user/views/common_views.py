@@ -55,7 +55,7 @@ def user_login(request):
 
     if 'is_logedin' not in request.session and request.method != 'POST':
         message = "You are not logged in. Please login to continue."
-        return render(request, 'user_login.html', {'message': message})
+        return render(request, 'user_templates/user_login.html', {'message': message})
     elif request.method == 'POST':
 
         user_email = request.POST.get('email')
@@ -78,7 +78,7 @@ def user_login(request):
         except User_table.DoesNotExist:
             message = "No user found...!!"
 
-        return render(request, 'user_login.html', {'message': message})
+        return render(request, 'user_templates/user_login.html', {'message': message})
 
     return redirect("/")
 
@@ -143,7 +143,7 @@ class ContactUs(View):
 
 
 class MyAccount(View):
-    template_name = 'myaccount.html'
+    template_name = 'user_templates/myaccount.html'
 
     def get(self, request):
         if 'is_logedin' not in request.session.keys():
@@ -167,3 +167,16 @@ class MyAccount(View):
         user.password = user_new_password
         user.save()
         return render(request, self.template_name, {'user': user, 'message': "Your account has been updated successfully!"})
+
+
+def sortLowToHigh(all_objects):
+    return all_objects.order_by('price')
+
+
+def sortHighToLow(all_objects):
+    return all_objects.order_by('-price')
+
+
+def getConversionRate():
+    latest_rate = ConversionRate.objects.all().order_by('-id').first()
+    return latest_rate

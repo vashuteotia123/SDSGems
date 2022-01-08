@@ -54,8 +54,6 @@ class User_table(models.Model):
     def ___str__(self):
         return self.first_name + self.last_name
 
-    
-
 
 class Blog(models.Model):
     date = models.DateField(auto_now_add=True)
@@ -73,3 +71,12 @@ class Subscribed_users(models.Model):
 
     def __str__(self):
         return str(self.email)
+
+
+class ConversionRate(models.Model):
+    class Meta:
+        verbose_name_plural = "Conversion Rate"
+    conversion_rate = models.FloatField()
+
+    def __str__(self):
+        return str(self.coversionrate)

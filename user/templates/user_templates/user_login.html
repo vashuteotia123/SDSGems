@@ -1,0 +1,44 @@
+{% extends 'user_base.html' %}
+{% block content %}
+<!-- login area start -->
+<div class="login-register-area pt-80 pb-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-12 ml-auto mr-auto">
+                <div class="login-register-wrapper">
+                    <div class="login-register-tab-list nav">
+                        <a class="active" data-toggle="tab" href="#lg1">
+                            <h4>login</h4>
+                        </a>
+                    </div>
+                    <center>
+                        <span>{% if message %}{{message}}{% endif %}</span>
+                    </center>
+                    <div class="tab-content">
+                        <div id="lg1" class="tab-pane active">
+                            <div class="login-form-container">
+                                <div class="login-register-form">
+                                    <form action="" method="post">
+                                        {% csrf_token %}
+                                        <input type="email" name="email" placeholder="Email" />
+                                        <input type="password" name="password" placeholder="Password" />
+                                        <div class="button-box">
+                                            <div class="login-toggle-btn">
+                                                <a href="#">Forgot Password?</a>
+                                            </div>
+                                            <button type="submit" class="btn btn-dark btn--md">
+                                                <span>Login</span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- login area end -->
+{% endblock content %}

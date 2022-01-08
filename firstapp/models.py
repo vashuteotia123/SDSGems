@@ -15,7 +15,7 @@ from ckeditor.fields import RichTextField
 class countries(models.Model):
     class Meta:
         verbose_name_plural = "Countries"
-    country = models.CharField(max_length=50)
+    country = models.CharField(max_length=50,unique=True)
 
     def __str__(self):
         return self.country.title()
@@ -28,7 +28,7 @@ class countries(models.Model):
 class location(models.Model):
     class Meta:
         verbose_name_plural = "Locations"
-    place = models.CharField(max_length=30)
+    place = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.place.title()
@@ -56,7 +56,7 @@ class companyinfo(models.Model):
     class Meta:
         verbose_name_plural = "Company Details"
     date = models.DateField(auto_now_add=True)
-    company_name = models.CharField(max_length=100)
+    company_name = models.CharField(max_length=100,unique=True)
     contact = models.CharField(max_length=20)
     address = models.TextField()
     country = models.ForeignKey(countries, on_delete=models.PROTECT)
@@ -80,7 +80,7 @@ class companyinfo(models.Model):
 class jewell(models.Model):
     class Meta:
         verbose_name_plural = "Jewellery -Type"
-    jewel = models.CharField(max_length=30)
+    jewel = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.jewel.title()
@@ -94,7 +94,7 @@ class centerstone(models.Model):
     class Meta:
         verbose_name_plural = "Jewellery - Center Stone"
 
-    stone = models.CharField(max_length=30)
+    stone = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.stone.title()
@@ -107,7 +107,7 @@ class centerstone(models.Model):
 class colorofcstone(models.Model):
     class Meta:
         verbose_name_plural = "Jewellery - Colour of Center Stone"
-    color = models.CharField(max_length=30)
+    color = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.color.title()
@@ -120,7 +120,7 @@ class colorofcstone(models.Model):
 class shape1(models.Model):
     class Meta:
         verbose_name_plural = "Jewellery - Shape"
-    shape = models.CharField(max_length=30)
+    shape = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.shape.title()
@@ -147,7 +147,7 @@ class certificate(models.Model):
 
     class Meta:
         verbose_name_plural = "Jewellery - Certificates Types"
-    cert = models.CharField(max_length=30)
+    cert = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.cert.upper()
@@ -160,7 +160,7 @@ class certificate(models.Model):
 class currencies(models.Model):
     class Meta:
         verbose_name_plural = "Currencies"
-    currency = models.CharField(max_length=30)
+    currency = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.currency.upper()
@@ -479,7 +479,7 @@ class Jewel_media(models.Model):
 class certificate_d(models.Model):
     class Meta:
         verbose_name_plural = "Diamond - Certificates Types"
-    certd = models.CharField(max_length=30)
+    certd = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.certd.upper()
@@ -492,7 +492,7 @@ class certificate_d(models.Model):
 class clarity(models.Model):
     class Meta:
         verbose_name_plural = "Diamond - Clarity"
-    clarity = models.CharField(max_length=30)
+    clarity = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.clarity.title()
@@ -506,7 +506,7 @@ class color_origin(models.Model):
     class Meta:
         verbose_name_plural = "Diamond - Colour Origin"
 
-    c_o = models.CharField(max_length=30)
+    c_o = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.c_o.title()
@@ -519,7 +519,7 @@ class color_origin(models.Model):
 class white_color_grade(models.Model):
     class Meta:
         verbose_name_plural = "Diamond - White Colour Grades"
-    w_c_g = models.CharField(max_length=30)
+    w_c_g = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.w_c_g.title()
@@ -532,7 +532,7 @@ class white_color_grade(models.Model):
 class fancy_color_intensity(models.Model):
     class Meta:
         verbose_name_plural = "Diamond - Fancy Color Intensities"
-    f_c_i = models.CharField(max_length=30)
+    f_c_i = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.f_c_i.title()
@@ -545,7 +545,7 @@ class fancy_color_intensity(models.Model):
 class fancycolor_grade(models.Model):
     class Meta:
         verbose_name_plural = "Diamond - Fancy Colour Grades"
-    f_c_grade = models.CharField(max_length=30)
+    f_c_grade = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.f_c_grade.title()
@@ -558,7 +558,7 @@ class fancycolor_grade(models.Model):
 class cut(models.Model):
     class Meta:
         verbose_name_plural = "Diamond - Cuts"
-    cut = models.CharField(max_length=30)
+    cut = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.cut.title()
@@ -571,7 +571,7 @@ class cut(models.Model):
 class polish(models.Model):
     class Meta:
         verbose_name_plural = "Diamond - Polishes"
-    polish = models.CharField(max_length=30)
+    polish = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.polish.title()
@@ -584,7 +584,7 @@ class polish(models.Model):
 class symmetry(models.Model):
     class Meta:
         verbose_name_plural = "Diamond - Symmetries"
-    symmetry = models.CharField(max_length=30)
+    symmetry = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.symmetry.title()
@@ -597,7 +597,7 @@ class symmetry(models.Model):
 class fluorescence_intensity(models.Model):
     class Meta:
         verbose_name_plural = "Diamond - Fluorescence Intensities"
-    f_intensity = models.CharField(max_length=30)
+    f_intensity = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.f_intensity.title()
@@ -610,7 +610,7 @@ class fluorescence_intensity(models.Model):
 class fluorescence_color(models.Model):
     class Meta:
         verbose_name_plural = "Diamond - Fluorescence Colours"
-    f_color = models.CharField(max_length=30)
+    f_color = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.f_color.title()
@@ -623,7 +623,7 @@ class fluorescence_color(models.Model):
 class shape_d(models.Model):
     class Meta:
         verbose_name_plural = "Diamond - Shapes"
-    shape = models.CharField(max_length=30)
+    shape = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.shape.title()
@@ -994,7 +994,7 @@ class color_of_colorstone(models.Model):
     class Meta:
         verbose_name_plural = "ColourStone - Colour"
 
-    color = models.CharField(max_length=30)
+    color = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.color.title()
@@ -1007,7 +1007,7 @@ class color_of_colorstone(models.Model):
 class Origin_cs(models.Model):
     class Meta:
         verbose_name_plural = "ColourStone - Origin"
-    org = models.CharField(max_length=30)
+    org = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.org.title()
@@ -1020,7 +1020,7 @@ class Origin_cs(models.Model):
 class Lab_cs(models.Model):
     class Meta:
         verbose_name_plural = "ColourStone - Labs"
-    lab = models.CharField(max_length=20)
+    lab = models.CharField(max_length=20,unique=True)
 
     def __str__(self):
         return self.lab.upper()
@@ -1033,7 +1033,7 @@ class Lab_cs(models.Model):
 class Treatment_cs(models.Model):
     class Meta:
         verbose_name_plural = "ColourStone - Treatment"
-    treatment = models.CharField(max_length=30)
+    treatment = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.treatment.title()
@@ -1046,7 +1046,7 @@ class Treatment_cs(models.Model):
 class shape_cs(models.Model):
     class Meta:
         verbose_name_plural = "ColourStone - Shape"
-    shape = models.CharField(max_length=30)
+    shape = models.CharField(max_length=30,unique=True)
 
     def __str__(self):
         return self.shape.title()
