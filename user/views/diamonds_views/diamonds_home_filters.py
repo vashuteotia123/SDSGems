@@ -43,6 +43,7 @@ def allDiamonds(request, page=1):
         "all_objects": all_objects,
         "total_count": total_count,
         "current_url": "allDiamonds",
+        "user": User_table.objects.get(pk=request.session['user_email']),
     }
     return render(request, 'diamond_templates/diamonds_shop_list.html', context=context)
 
@@ -58,6 +59,8 @@ def diamondByShapeFilter(request, shape_id, page=1):
         "all_objects": all_objects,
         "total_count": total_count,
         "current_url": "diamondByShapeFilter",
+        "user": User_table.objects.get(pk=request.session['user_email']),
+
         "shape_id": shape_id,
     }
     return render(request, 'diamond_templates/diamondByShapeFilter.html', context=context)
@@ -74,6 +77,7 @@ def diamondByCutFilter(request, cut_id, page=1):
     context = {
         "all_objects": all_objects,
         "total_count": total_count,
+        "user": User_table.objects.get(pk=request.session['user_email']),
         "current_url": "diamondByCutFilter",
         "cut_id": cut_id,
     }
@@ -91,6 +95,8 @@ def diamondByColorOriginFilter(request, color_origin_id, page=1):
         "all_objects": all_objects,
         "total_count": total_count,
         "current_url": "diamondByColorOriginFilter",
+        "user": User_table.objects.get(pk=request.session['user_email']),
+
         "color_origin_id": color_origin_id,
     }
     return render(request, 'diamond_templates/diamondByColorOriginFilter.html', context=context)
