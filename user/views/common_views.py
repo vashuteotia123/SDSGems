@@ -7,7 +7,7 @@ from django.shortcuts import redirect, render, get_list_or_404, get_object_or_40
 from django.utils.regex_helper import Group
 from django.views.generic.base import TemplateView
 
-from firstapp.models import Inventoryofcolorstones
+from firstapp.models import Inventoryofcolorstones, Inventoryofdiamond, Inventoryofjewellery, certificate, color_of_colorstone
 from ..models import *
 from ..forms import *
 from django.urls import reverse_lazy
@@ -180,3 +180,119 @@ def sortHighToLow(all_objects):
 def getConversionRate():
     latest_rate = ConversionRate.objects.all().order_by('-id').first()
     return latest_rate
+
+
+def get_youtube_id(product):
+    try:
+        pattern = r'<iframe .* src="[^"]*/([^"]+)"'
+        search = re.search(pattern, product.media.video_embed_link)
+        youtube_video_id = search[1]
+    except:
+        youtube_video_id = None
+    return youtube_video_id
+
+
+def get_Jewellery_with_stockid(stock_id):
+    try:
+        product = Inventoryofjewellery.objects.select_related(
+            'media').get(stockid=stock_id, frontend=True)
+    except:
+        product = None
+    print(product)
+    if product:
+        return product
+    else:
+        return None
+
+
+def get_diamond_with_stockid(stock_id):
+    try:
+        product = Inventoryofdiamond.objects.select_related(
+            'media').get(stockid=stock_id, frontend=True)
+    except:
+        product = None
+    print(product)
+    if product:
+        return product
+    else:
+        return None
+
+
+def get_colorstone_with_stockid(stock_id):
+    try:
+        product = Inventoryofcolorstones.objects.select_related(
+            'media').get(stockid=stock_id, frontend=True)
+    except:
+        product = None
+    print(product)
+    if product:
+        return product
+    else:
+        return None
+
+
+def get_jewellery_with_keyword(keyword):
+    try:
+        product = Inventoryofjewellery.objects.select_related(
+            'media').filter(Q(jewellery_type__jewel__icontains=keyword) | Q(center_stone__stone__icontains=keyword) | Q(color_of_center_stone__color__icontains=keyword) | Q(shape__shape__icontains=keyword) | Q(metal__metal__icontains=keyword), frontend=True)
+    except:
+        product = None
+    if product:
+        return product
+    else:
+        return None
+
+
+def get_diamond_with_keyword(keyword):
+    try:
+        product = Inventoryofdiamond.objects.select_related(
+            'media').filter(Q(shape__shape__icontains=keyword) | Q(color_origin1__c_o__icontains=keyword) | Q(clarity__clarity__icontains=keyword) | Q(cut__cut__icontains=keyword) | Q(polish__polish__icontains=keyword) | Q(symmetry__symmetry__icontains=keyword), frontend=True)
+    except:
+        product = None
+    if product:
+        return product
+    else:
+        return None
+
+
+def get_colorstone_with_keyword(keyword):
+    try:
+        product = Inventoryofcolorstones.objects.select_related(
+            'media').filter(Q(shape__shape__icontains=keyword) | Q(gem_type__gem__icontains=keyword) | Q(origin__org__icontains=keyword) | Q(treatment__treatment__icontains=keyword) | Q(color__color__icontains=keyword) | Q(lab__lab__icontains=keyword), frontend=True)
+    except:
+        product = None
+    if product:
+        return product
+    else:
+        return None
+
+
+def SearchForUser(request):
+    search_keyword = request.GET.get('search_keyword')
+    search_keyword = search_keyword.lower()
+    if search_keyword.startswith("j-"):
+        product = get_Jewellery_with_stockid(search_keyword.capitalize())
+        if product:
+
+            return render(request, 'jewellery_templates/jewellery_product_page.html', {'product': product, 'user': User_table.objects.get(email_id=request.session['user_email']), 'youtube_video_id': get_youtube_id(product)})
+        else:
+            return render(request, '404.html')
+    if search_keyword.startswith("d-"):
+        product = get_diamond_with_stockid(search_keyword.capitalize())
+        if product:
+            return render(request, 'diamond_templates/diamond_product_page.html', {'product': product, 'user': User_table.objects.get(email_id=request.session['user_email']), 'youtube_video_id': get_youtube_id(product)})
+        else:
+            return render(request, '404.html')
+    if search_keyword.startswith("c-"):
+        product = get_colorstone_with_stockid(search_keyword.capitalize())
+        if product:
+            return render(request, 'colorstone_templates/colorstone_product_page.html', {'product': product, 'user': User_table.objects.get(email_id=request.session['user_email']), 'youtube_video_id': get_youtube_id(product)})
+        else:
+            return render(request, '404.html')
+
+    else:
+        all_jewellery_with_keyword = get_jewellery_with_keyword(search_keyword)
+        all_diamond_with_keyword = get_diamond_with_keyword(search_keyword)
+        all_colorstone_with_keyword = get_colorstone_with_keyword(
+            search_keyword)
+        return render(request, 'search_result.html', {'all_jewellery_with_keyword': all_jewellery_with_keyword, 'all_diamond_with_keyword': all_diamond_with_keyword, 'all_colorstone_with_keyword': all_colorstone_with_keyword, 'user': User_table.objects.get(email_id=request.session['user_email'])})

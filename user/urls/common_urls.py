@@ -21,5 +21,6 @@ urlpatterns = [
     path('colorStoneByShapeFilter/<int:shape_id>',
          colorStoneByShapeFilter, name="colorStoneByShapeFilter"),
 
-    # Conversion Rate
+    # Searching
+    path('SearchForUser', SearchForUser, name="SearchForUser"),
 ]
