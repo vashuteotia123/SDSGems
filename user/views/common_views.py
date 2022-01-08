@@ -45,7 +45,7 @@ def myuser_login_required(f):
 
 
 class SignUpView(CreateView):
-    template_name = 'user_register.html'
+    template_name = 'user_templates/user_register.html'
     success_url = reverse_lazy('user_login')
     form_class = UserForm
 
