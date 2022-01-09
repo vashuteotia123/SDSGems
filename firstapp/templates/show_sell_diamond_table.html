@@ -24,7 +24,7 @@
         <th style="background-color:#a01b1b;color:#fff;">LASER INSCRIPTION</th>
         <th style="background-color:#a01b1b;color:#fff;">PIECES</th>
         <th style="background-color:#a01b1b;color:#fff;">WEIGHT</th>
-        <th style="background-color:#a01b1b;color:#fff;">PRICE</th>
+        <th style="background-color:#a01b1b;color:#fff;">PRICE/CT</th>
         <th style="background-color:#a01b1b;color:#fff;">UNITS</th>
         <th style="background-color:#a01b1b;color:#fff;">AMOUNT</th>
         <th style="background-color:#a01b1b;color:#fff;">DISCOUNT %</th>
@@ -48,7 +48,17 @@
         <td>{{item.shape}}</td>
         <td>{{item.clarity}}</td>
         <td>{{item.color_origin1}}</td>
-        <td>{{item.white_color_grade1}}, {{item.fancycolor_grade}}</td>
+        {% if item.white_color_grade1 %}
+        {% if item.fancycolor_grade %}
+        <td>{{item.white_color_grade1}},{{item.fancycolor_grade}}</td>
+        {%else%}
+        <td>{{item.white_color_grade1}}</td>
+        {%endif%}
+        {%else%}
+        {% if item.fancycolor_grade %}
+        <td>{{item.fancycolor_grade}}</td>
+        {%endif%}
+        {% endif %}
         <td>{{item.cut}}</td>
         <td>{{item.polish}}</td>
         <td>{{item.symmetry}}</td>
@@ -59,7 +69,7 @@
         <td>{{item.fluorescence_color}}</td>
         <td>{{item.certificate_no_d}}</td>
         <td>{{item.certificate_d}}</td>
-        <td>{{item.laser_inscription}}</td>
+        <td>{%if item.laser_inscription%}YES{% else %}NO{% endif %}</td>
         <td>{{item.PCS_d}}</td>
         <td>{{item.weight_d}}</td>
         <td>{{item.price}}</td>

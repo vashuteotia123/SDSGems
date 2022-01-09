@@ -10,7 +10,7 @@
 {% endblock %}
 {% block container %}
 <div style="text-align: center;">
-  <h2>Sales Returns of ColourStones</h2>
+  <h2>Sales Return of Colourstone</h2>
 </div>
 <div id="allign_center"><a class="btn btn-success" style="text-decoration:none;margin-top: 30px;"
     href="ExportSalesReturnCS" target="">Export Entry</a></div>
@@ -24,7 +24,9 @@
       <th scope="col">GEM TYPE</th>
       <th scope="col">COLOUR</th>
       <th scope="col">WEIGHT</th>
+      <th scope="col">PRICE/CT</th>
       <th scope="col">TOTAL AMOUNT</th>
+      <th scope="col">CURRENCY</th>
 
     </tr>
   </thead>
@@ -38,8 +40,9 @@
       <td>{{p.gem_type}}</td>
       <td>{{p.colour}}</td>
       <td>{{p.weight}}</td>
+      <td>{{p.price}}</td>
       <td>{{p.total_amount}}</td>
-
+      <td>{{p.currency}}</td>
     </tr>
   </tbody>
   {%endfor%}

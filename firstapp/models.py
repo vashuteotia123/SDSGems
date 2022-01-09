@@ -374,7 +374,6 @@ class Salesofjewellery(models.Model):
     def __str__(self):
         return self.stockid
 
-
 class cloneInvofjewellery(models.Model):
     class Meta:
         verbose_name_plural = "Jewellery - Cart"
@@ -437,12 +436,13 @@ class Salesreturn(models.Model):
     jewellery_type = models.CharField(max_length=30, blank=True, null=True,)
     total_amount = models.DecimalField(
         null=True, blank=True, decimal_places=2, max_digits=9, default=1)
+    currency=models.CharField(max_length=30)
 
 
 class Jewel_media(models.Model):
     class Meta:
         verbose_name_plural = "Jewellery - Media"
-    jewel_object = models.OneToOneField(
+    stockid = models.OneToOneField(
         Inventoryofjewellery, on_delete=models.CASCADE,
         related_name='media', primary_key=True)
     image1 = models.ImageField(
@@ -951,12 +951,15 @@ class Salesreturn_d(models.Model):
     clarity = models.CharField(max_length=30, null=True, blank=True)
     totalamount = models.DecimalField(
         blank=True, null=True, verbose_name="Total Value", decimal_places=2, max_digits=9)
+    price=models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True, null=True)
+    currency=models.CharField(max_length=30)
 
 
 class Diamond_media(models.Model):
     class Meta:
         verbose_name_plural = "Diamond - Media"
-    Diamond_object = models.OneToOneField(
+    stockid = models.OneToOneField(
         Inventoryofdiamond, on_delete=models.CASCADE,
         related_name="media", primary_key=True)
     image1 = models.ImageField(
@@ -1078,8 +1081,10 @@ class clonePurchaseOfColorStones(models.Model):
     measurements = models.CharField(max_length=30, blank=True, null=True)
     lab = models.ForeignKey('Lab_cs', on_delete=models.PROTECT, blank=True)
     PCS = models.IntegerField()
-    Weight = models.FloatField(null=True)
-    Price = models.FloatField()
+    Weight = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True, null=True)
+    Price = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True, null=True)
     units = models.CharField(max_length=30, blank=True, null=True)
     amount = models.DecimalField(decimal_places=2, max_digits=9)
     discount = models.DecimalField(
@@ -1137,8 +1142,10 @@ class PurchaseOfColorStones(models.Model):
     measurements = models.CharField(max_length=30, blank=True, null=True)
     lab = models.ForeignKey('Lab_cs', on_delete=models.PROTECT, blank=True)
     PCS = models.IntegerField()
-    Weight = models.FloatField(null=True)
-    Price = models.FloatField()
+    Weight = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True, null=True)
+    Price = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True, null=True)
     units = models.CharField(max_length=30, blank=True, null=True)
     amount = models.DecimalField(decimal_places=2, max_digits=9)
     discount = models.DecimalField(
@@ -1162,6 +1169,8 @@ class PurchaseOfColorStones(models.Model):
         return str("C-" + str(self.id))
 
     def save(self, *args, **kwargs):
+        if self.Clarity:
+            self.Clarity=self.Clarity.lower()
         # self.amount = (self.Price * self.Weight)
         # self.discount_amount = (self.amount * self.discount) // 100
         self.stockid = str(str('C-')+str(self.id))
@@ -1296,7 +1305,8 @@ class cloneInvofcolorstones(models.Model):
     measurements = models.CharField(max_length=30, blank=True, null=True)
     lab = models.ForeignKey('Lab_cs', on_delete=models.PROTECT, blank=True)
     PCS = models.IntegerField(null=True, verbose_name="Pieces")
-    Weight_cs = models.FloatField(null=True, verbose_name="Weight")
+    Weight_cs = models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True, null=True,verbose_name="Weight")
     price = models.DecimalField(
         null=True, blank=True, decimal_places=2, max_digits=9)
     units_cs = models.CharField(
@@ -1344,7 +1354,9 @@ class Salesreturn_cs(models.Model):
     gem_type = models.ForeignKey(
         'gemtype', on_delete=models.PROTECT, blank=True)
     clarity = models.CharField(max_length=30, blank=True, null=True)
-
+    price=models.DecimalField(
+        decimal_places=2, max_digits=9, blank=True, null=True)
+    currency=models.CharField(max_length=30)
 
 class ColorStone_media(models.Model):
     class Meta:

@@ -278,6 +278,7 @@ class Jewellery_view(View):
             for id in jewell_ids:
                 j = Inventoryofjewellery.objects.get(id=id)
                 j.cartstatus = False
+                j.frontend=False
                 cloneInvofjewellery.objects.filter(stockid=j.stockid).delete()
                 j.appvreturnstatus = True
                 j.save()
@@ -478,7 +479,7 @@ def return_jewel_Inventory(request, id):
         grosswt=object.gross_wt,
         jewellery_type=object.jewellery_type,
         total_amount=object.total_value,
-
+        currency=object.currency,
     )
     Salesofjewellery.objects.filter(pk=id).delete()
     return redirect('delete-jewell')
@@ -822,6 +823,9 @@ def return_colorstone_Inventory(request, id):
         clarity=object.Clarity,
         total_amount=object.total_value_cs,
         colour=object.color,
+        price=object.price,
+        currency=object.currency_cs,
+
 
     )
     Salesofcolorstones.objects.filter(pk=id).delete()
@@ -922,6 +926,7 @@ class colorstone_view(View):
                 cloneInvofjewellery.objects.filter(stockid=j.stockid).delete()
                 j.cartstatus = False
                 j.appvreturnstatus = True
+                j.frontend=False
                 j.save()
         return redirect('delete-cs')
 
@@ -1234,6 +1239,7 @@ class Diamond_view(View):
                 j = Inventoryofdiamond.objects.get(id=id)
                 j.appvreturnstatus_d = True
                 j.cartstatus = False
+                j.frontend=False
                 cloneInvofdiamond.objects.filter(stockid=j.stockid).delete()
                 j.save()
         return redirect('delete-d')
@@ -1330,7 +1336,7 @@ def allselldiamondsrecords(request):
     context = {
         "sold_items": Salesofdiamond.objects.all(),
         "css_adjust": change,
-        "table_type": "Sales Records Of ColourStones",
+        "table_type": "Sales Records Of Diamonds",
     }
     return render(request, "show_sell_diamond_table.html", context=context)
 
@@ -1376,6 +1382,8 @@ def return_diamond_Inventory(request, id):
         location=object.location,
         shape=object.shape,
         totalamount=object.total_value_d,
+        price=object.price,
+        currency=object.currency,
 
     )
     Salesofdiamond.objects.filter(pk=id).delete()
@@ -2494,8 +2502,7 @@ def ExportPurchaseOfColorStones(request):
     objects = PurchaseOfColorStones.objects.all()
     output = []
     response = HttpResponse(content_type='text/csv')
-    filename = "PurchaseRecordsofColourStones" + \
-        str(datetime.datetime.now())+".csv"
+    filename = "PurchaseRecordsofColourStones " + str(datetime.date.today())+".csv"
     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
         filename)
     writer = csv.writer(response)
@@ -2503,10 +2510,14 @@ def ExportPurchaseOfColorStones(request):
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
     writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME', 'LOCATION', 'SHAPE', 'GEM TYPE',
                      'ORIGIN', 'TREATMENT', 'CLARITY', 'CERTIFICATE NUMBER',
-                    'LAB', 'COLOUR', 'MEASUREMENT', 'PCS', 'WEIGHT', 'PRICE', 'UNITS', 'AMOUNT', 'DISCOUNT %', 'DICOUNT AMOUNT',  'TOTAL AMOUNT', 'BOUGHT', 'CURRENCY', 'TAG PRICE', 'RATE'])
+                    'LAB', 'COLOUR', 'MEASUREMENTS', 'PCS', 'WEIGHT', 'PRICE/CT', 'UNITS', 'AMOUNT', 'DISCOUNT %', 'DICOUNT AMOUNT',  'TOTAL AMOUNT', 'BOUGHT', 'CURRENCY', 'TAG PRICE', 'RATE','COMMENTS'])
     for item in objects:
+        if item.purchaseapv:
+            z = "Yes"
+        else:
+            z = "No"
         output.append([item.date, 'C-' + str(item.id), item.company_name, item.location, item.shape.shape, item.gem_type.gem, item.origin.org, item.Treatment.treatment, item.Clarity, item.certificate_no, item.lab, item.colour,
-                      item.measurements,  item.PCS, item.Weight, item.Price, item.units, item.amount, str(item.discount), item.discount_amount, item.total_val, item.purchaseapv, item.currency, item.tag_price, item.rate])
+                      item.measurements,  item.PCS, item.Weight, item.Price, item.units, item.amount, item.discount, item.discount_amount, item.total_val,z, item.currency, item.tag_price, item.rate,item.comment])
 
     writer.writerows(output)
     return response
@@ -2517,14 +2528,14 @@ def ExportInventoryofcolorstones(request):
     objects = Inventoryofcolorstones.objects.filter(appvreturnstatus=False)
     output = []
     response = HttpResponse(content_type='text/csv')
-    filename = "InventoryofColourStones"+str(datetime.datetime.now())+".csv"
+    filename = "InventoryofColourStones "+str(datetime.date.today())+".csv"
     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
         filename)
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
     writer.writerow(['STOCK ID', 'LOCATION', 'SHAPE', 'GEM TYPE', 'ORIGIN', 'TREATMENT',
-                    'CLARITY', 'CERTIFICATE NUMBER', 'LAB', 'COLOUR', 'MEASUREMENT',  'PCS', 'WEIGHT', 'UNITS', 'TAG PRICE'])
+                    'CLARITY', 'CERTIFICATE NUMBER', 'LAB', 'COLOUR', 'MEASUREMENTS',  'PCS', 'WEIGHT', 'UNITS', 'TAG PRICE'])
     for item in objects:
         output.append([item.stockid, item.location, item.shape, item.gem_type, item.origin, item.treatment, item.Clarity,
                       item.certificate_no, item.lab, item.color, item.measurements,  item.PCS, item.Weight, item.units, item.tag_price])
@@ -2538,17 +2549,21 @@ def ExportSalesofcolorstones(request):
     objects = Salesofcolorstones.objects.all()
     output = []
     response = HttpResponse(content_type='text/csv')
-    filename = "SalesofColourStones"+str(datetime.datetime.now())+".csv"
+    filename = "SalesofColourStones "+str(datetime.date.today())+".csv"
     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
         filename)
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
     writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME', 'LOCATION', 'SHAPE', 'GEM TYPE', 'ORIGIN', 'TREATMENT', 'CLARITY', 'CERTIFICATE',  'LAB',
-                    'COLOUR', 'MEASUREMENT', 'PCS', 'WEIGHT', 'AMOUNT', 'DISCOUNT %', 'DICOUNT AMOUNT', 'TOTAL AMOUNT', 'CURRENCY', 'TAG PRICE', 'RATE'])
+                    'COLOUR', 'MEASUREMENTS', 'PCS', 'WEIGHT', 'PRICE/CT','AMOUNT', 'DISCOUNT %', 'DICOUNT AMOUNT', 'TOTAL AMOUNT', 'CURRENCY', 'TAG PRICE', 'RATE','SOLD','COMMENTS'])
     for item in objects:
-        output.append([item.date, 'C-' + str(item.id), item.company_name, item.location, item.shape, item.gem_type, item.origin, item.treatment, item.Clarity, item.certificate_no, item.lab, item.color,
-                      item.measurements,  item.PCS, item.Weight_cs, item.amount_cs, (item.DIS_cs), item.DIS_amount_cs, item.total_value_cs, item.currency_cs, item.tag_price_cs, item.rate_cs])
+        if item.salesapprovalstatus_cs is True:
+            z="Yes"
+        else:
+            z="No"
+        output.append([item.date,item.stockid, item.company_name, item.location, item.shape, item.gem_type, item.origin, item.treatment, item.Clarity, item.certificate_no, item.lab, item.color,
+                      item.measurements,  item.PCS, item.Weight_cs,item.price, item.amount_cs, item.DIS_cs, item.DIS_amount_cs, item.total_value_cs, item.currency_cs, item.tag_price_cs, item.rate_cs,z,item.comment])
 
     writer.writerows(output)
     return response
@@ -2567,65 +2582,46 @@ def get_certificate_of_colorstone(request):
 
 
 @login_required
-def ExportSalesreturncolorstones(request):
+def ExportSalesReturnCS(request):
     objects = Salesreturn_cs.objects.all()
     output = []
     response = HttpResponse(content_type='text/csv')
-    filename = "Salesreturncolorstones.csv"
+    filename = "Salesreturncolorstones "+str(datetime.datetime.now())+".csv"
     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
         filename)
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
     writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME',
-                    'LOCATION', 'GEM TYPE', 'WEIGHT ', 'TAG PRICE'])
+                    'LOCATION', 'GEM TYPE','COLOUR', 'WEIGHT ', 'PRICE/CT','TOTAL AMOUNT','CURRENCY'])
     for item in objects:
-        output.append([item.date, 'C-' + str(item.id), item.company_name,
-                      item.location, item.gem_type, item.weight, item.tag_price_cs])
+        output.append([item.date,item.stockid, item.company_name,
+                      item.location, item.gem_type,item.colour, item.weight, item.price,item.total_amount,item.currency])
     writer.writerows(output)
     return response
 
 
-@login_required
-def ExportSalesReturnCS(request):
-    objects = Salesreturn_cs.objects.all()
-    output = []
-    response = HttpResponse(content_type='text/csv')
-    filename = "SalesReturnofColourStones.csv"
-    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
-        filename)
-    writer = csv.writer(response)
-    writer.writerow(['SDS GEMS'])
-    writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['DATE', 'STOCK ID', 'COMPANY', 'LOCATION',
-                    'GEM TYPE', 'WEIGHT', 'COLOUR', 'TOTAL AMOUNT'])
-    for item in objects:
-        output.append([item.date, item.stockid, item.company_name,
-                      item.location, item.gem_type, item.weight, item.colour, item.total_amount])
-
-    writer.writerows(output)
-    return response
 
 
 def ExportPOJ(request):
     objects = POJ.objects.all()
     output = []
     response = HttpResponse(content_type='text/csv')
-    filename = "PurchaseRecordsofJewellery"+str(datetime.datetime.now())+".csv"
+    filename = "PurchaseRecordsofJewellery "+str(datetime.date.today())+".csv"
     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
         filename)
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
     writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME', 'LOCATION', 'JEWELLERY TYPE', 'CENTER STONE', 'COLOR OF CENTER STONE', 'SHAPE', 'METAL', 'CENTER STONE PIECES',
-                    'CENTER STONE WEIGHT', 'GROSS WEIGHT', 'CERTIFICATE TYPE', 'PCS',  'AMOUNT', 'DISCOUNT %', 'DICOUNT AMOUNT', 'TOTAL AMOUNT', 'BOUGHT', 'CURRENCY', 'TAG PRICE', 'RATE'])
+                    'CENTER STONE WEIGHT', 'GROSS WEIGHT', 'CERTIFICATE TYPE', 'PCS',  'AMOUNT', 'DISCOUNT %', 'DISCOUNT AMOUNT', 'TOTAL AMOUNT', 'BOUGHT', 'CURRENCY', 'TAG PRICE', 'RATE','COMMENTS'])
     for item in objects:
         if item.purchase_approval:
             z = "Yes"
         else:
             z = "No"
         output.append([item.date, 'J-' + str(item.id), item.company_name, item.location.place.title(), item.jewellery.jewel.title(), item.center_stone.stone.title(), item.color_of_center_stone.color.title(), item.shape.shape.title(), item.metal.metal.title(),
-                      item.center_stone_pieces, item.center_stone_weight, item.grosswt, item.cert.cert.upper(), item.pcs, item.amount, item.discount, item.discount_amount, item.total, z, item.currency.currency.upper(), item.tag_price, item.rate])
+                      item.center_stone_pieces, item.center_stone_weight, item.grosswt, item.cert.cert.upper(), item.pcs, item.amount, item.discount, item.discount_amount, item.total, z, item.currency.currency.upper(), item.tag_price, item.rate,item.comment])
 
     writer.writerows(output)
     return response
@@ -2635,13 +2631,13 @@ def ExportInventoryofjewellery(request):
     objects = Inventoryofjewellery.objects.filter(appvreturnstatus=False)
     output = []
     response = HttpResponse(content_type='text/csv')
-    filename = "Inventoryofjewellery"+str(datetime.datetime.now())+".csv"
+    filename = "InventoryofJewellery "+str(datetime.date.today())+".csv"
     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
         filename)
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['STOCK ID', 'LOCATION', 'JEWELLERY', 'CENTER STONE', 'COLOR OF CENTER STONE', 'SHAPE',
+    writer.writerow(['STOCK ID', 'LOCATION', 'JEWELLERY TYPE', 'CENTER STONE', 'COLOR OF CENTER STONE', 'SHAPE',
                     'METAL', 'CENTER STONE PIECES', 'CENTER STONE WEIGHT', 'GROSS WEIGHT', 'LAB', 'PCS',  'TAG PRICE'])
     for item in objects:
         output.append([item.stockid, item.location.place.title(), item.jewellery_type.jewel.title(), item.center_stone.stone.title(), item.color_of_center_stone.color.title(
@@ -2655,22 +2651,22 @@ def ExportSalesofjewellery(request):
     objects = Salesofjewellery.objects.all()
     output = []
     response = HttpResponse(content_type='text/csv')
-    filename = "Salesofjewellery"+str(datetime.datetime.now())+".csv"
+    filename = "SalesofJewellery "+str(datetime.date.today())+".csv"
     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
         filename)
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
 
-    writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME', 'LOCATION', 'JEWELLERY', 'CENTER STONE', 'COLOUR OF CENTER STONE', 'SHAPE', 'METAL', 'CENTER STONE PIECES',
-                    'CENTER STONE WEIGHT', 'GROSS WEIGHT', 'CERTIFICATE TYPE', 'PCS',  'AMOUNT', 'DISCOUNT %', 'DICOUNT AMOUNT', 'TOTAL AMOUNT', 'CURRENCY', 'TAG PRICE', 'RATE', 'SOLD ITEM'])
+    writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME', 'LOCATION', 'JEWELLERY TYPE', 'CENTER STONE', 'COLOUR OF CENTER STONE', 'SHAPE', 'METAL', 'CENTER STONE PIECES',
+                    'CENTER STONE WEIGHT', 'GROSS WEIGHT', 'CERTIFICATE TYPE', 'PCS',  'AMOUNT', 'DISCOUNT %', 'DISCOUNT AMOUNT', 'TOTAL AMOUNT', 'CURRENCY', 'TAG PRICE', 'RATE', 'SOLD ITEM','COMMENTS'])
     for item in objects:
         if item.salesapprovalstatus:
             z = "Yes"
         else:
             z = "No"
         output.append([item.date, item.stockid, item.company_name, item.location.place.title(), item.jewellery_type.jewel.title(), item.center_stone.stone.title(), item.color_of_center_stone.color.title(), item.shape.shape.title(), item.metal.metal.title(
-        ), item.center_stone_pieces, item.center_stone_weight, item.gross_wt, item.certificate.cert.upper(), item.PCS, item.amount, item.DIS, item.DIS_amount, item.total_value, item.currency.currency.upper(), item.tag_price, item.rate, z])
+        ), item.center_stone_pieces, item.center_stone_weight, item.gross_wt, item.certificate.cert.upper(), item.PCS, item.amount, item.DIS, item.DIS_amount, item.total_value, item.currency.currency.upper(), item.tag_price, item.rate, z,item.comment])
 
     writer.writerows(output)
     return response
@@ -2680,17 +2676,17 @@ def ExportSalesReturn(request):
     objects = Salesreturn.objects.all()
     output = []
     response = HttpResponse(content_type='text/csv')
-    filename = "Salesreturnjewellery"+str(datetime.datetime.now())+".csv"
+    filename = "SalesreturnJewellery "+str(datetime.date.today())+".csv"
     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
         filename)
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME',
-                    'LOCATION', 'JEWELLERY', 'GROSS WEIGHT', 'TOTAL AMOUNT'])
+    writer.writerow(['RETURNED DATE', 'STOCK ID', 'COMPANY NAME',
+                    'LOCATION', 'JEWELLERY TYPE', 'GROSS WEIGHT', 'TOTAL AMOUNT','CURRENCY'])
     for item in objects:
         output.append([item.date, item.stockid, item.company_name, item.location.title(
-        ), item.jewellery_type.title(), item.grosswt, item])
+        ), item.jewellery_type.title(), item.grosswt, item.total_amount,item.currency])
 
     writer.writerows(output)
     return response
@@ -2700,14 +2696,14 @@ def ExportPOD(request):
     objects = POD.objects.all()
     output = []
     response = HttpResponse(content_type='text/csv')
-    filename = "PurchaseOfDiamonds"+str(datetime.datetime.now())+".csv"
+    filename = "PurchaseOfDiamonds "+str(datetime.date.today())+".csv"
     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
         filename)
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
     writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME', 'LOCATION', 'SHAPE', 'CLARITY', 'COLOR ORIGIN', 'WHITE COLOR GRADE', 'FANCY COLOR GRADE ', 'CUT', 'POLISH', 'SYMMETRY', 'MEASUREMENTS', 'DEPTH %', 'TABLE %', 'FLUORESCENCE INTENSITY',
-                    'FLUORESCENCE COLOR', 'CERTIFICATE NUMBER', 'CERTIFICATE TYPE', 'LASER INSCRIPTION', 'PCS', 'WEIGHT', 'PRICE', 'UNITS', 'AMOUNT', 'DISCOUNT %', 'DISCOUNT AMOUNT', 'TOTAL AMOUNT', 'CURRENCY', 'TAG PRICE', 'RATE', 'BOUGHT'])
+                    'FLUORESCENCE COLOR', 'CERTIFICATE NUMBER', 'CERTIFICATE TYPE', 'LASER INSCRIPTION', 'PCS', 'WEIGHT', 'PRICE', 'UNITS', 'AMOUNT', 'DISCOUNT %', 'DISCOUNT AMOUNT', 'TOTAL AMOUNT', 'CURRENCY', 'TAG PRICE', 'RATE', 'BOUGHT','COMMENTS'])
     for item in objects:
 
         if item.laser_inscription is True:
@@ -2719,7 +2715,7 @@ def ExportPOD(request):
         else:
             bools1 = "Yes"
         output.append([item.date, 'D-' + str(item.id), item.company_name.company_name.title(), item.location.place.title(), item.shape.shape.title(), item.clarity.clarity.title(), item.color_origin1.c_o.title(), item.white_color_grade1.w_c_g.title(), item.fancycolor_grade.title(), item.cut.cut.title(), item.polish.polish.title(), item.symmetry.symmetry.title(), item.measurements,
-                      item.depth, item.table_perc, item.fluorescence_intensity.f_intensity.title(), item.fluorescence_color.f_color.title(), item.certificate_no_d, item.certificate_d.certd, bools, item.PCS_d, item.weight_d, item.price, item.units, item.amount_d, (item.DIS_d), item.DIS_Amount_d, item.total_val_d, item.currency.currency.upper(), item.tag_price_d, item.rate_d, bools1])
+                      item.depth, item.table_perc, item.fluorescence_intensity.f_intensity.title(), item.fluorescence_color.f_color.title(), item.certificate_no_d, item.certificate_d.certd.upper(), bools, item.PCS_d, item.weight_d, item.price, item.units, item.amount_d, (item.DIS_d), item.DIS_Amount_d, item.total_val_d, item.currency.currency.upper(), item.tag_price_d, item.rate_d, bools1,item.comment])
 
     writer.writerows(output)
 
@@ -2730,7 +2726,7 @@ def ExportInventoryofdiamond(request):
     objects = Inventoryofdiamond.objects.filter(appvreturnstatus_d=False)
     output = []
     response = HttpResponse(content_type='text/csv')
-    filename = "Inventoryofdiamond"+str(datetime.datetime.now())+".csv"
+    filename = "InventoryofDiamonds "+str(datetime.date.today())+".csv"
     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
         filename)
     writer = csv.writer(response)
@@ -2755,14 +2751,14 @@ def ExportSalesofdiamond(request):
     objects = Salesofdiamond.objects.all()
     output = []
     response = HttpResponse(content_type='text/csv')
-    filename = "SalesofDiamonds"+str(datetime.datetime.now())+".csv"
+    filename = "SalesofDiamonds "+str(datetime.date.today())+".csv"
     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
         filename)
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
     writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME', 'LOCATION', 'SHAPE', 'CLARITY', 'COLOR ORIGIN', 'WHITE COLOUR GRADE', 'FANCY COLOUR GRADE ', 'CUT', 'POLISH', 'SYMMETRY', 'MEASUREMENTS',  'DEPTH %', 'TABLE %',
-                    'FLUORESCENCE INTENSITY', 'FLUORESCENCE COLOR', 'CERTIFICATE NUMBER', 'LAB', 'LASER INSCRIPTION', 'PCS', 'WEIGHT', 'PRICE', 'UNITS', 'AMOUNT', 'DISCOUNT %', 'DISCOUNT AMOUNT', 'TOTAL AMOUNT', 'CURRENCY', 'TAG PRICE', 'RATE', 'SOLD'])
+                    'FLUORESCENCE INTENSITY', 'FLUORESCENCE COLOR', 'CERTIFICATE NUMBER', 'LAB', 'LASER INSCRIPTION', 'PCS', 'WEIGHT', 'PRICE/CT', 'UNITS', 'AMOUNT', 'DISCOUNT %', 'DISCOUNT AMOUNT', 'TOTAL AMOUNT', 'CURRENCY', 'TAG PRICE', 'RATE', 'SOLD','COMMENTS'])
     for item in objects:
         if item.laser_inscription is True:
             bools = "Yes"
@@ -2774,7 +2770,7 @@ def ExportSalesofdiamond(request):
             bools1 = "No"
 
         output.append([item.date, item.stockid, item.company_name, item.location, item.shape, item.clarity, item.color_origin1, item.white_color_grade1, item.fancycolor_grade, item.cut, item.polish, item.symmetry, item.measurements, item.depth, item.table, item.fluorescence_intensity,
-                      item.fluorescence_color, item.certificate_no_d, item.certificate_d, bools, item.PCS_d, item.weight_d, item.price, item.units, item.amount_d, item.DIS_d, item.DIS_Amount_d, item.total_value_d, item.currency, item.tag_price_d, item.rate_d, bools1])
+                      item.fluorescence_color, item.certificate_no_d, item.certificate_d, bools, item.PCS_d, item.weight_d, item.price, item.units, item.amount_d, item.DIS_d, item.DIS_Amount_d, item.total_value_d, item.currency, item.tag_price_d, item.rate_d, bools1,item.comment])
 
     writer.writerows(output)
     return response
@@ -2810,17 +2806,17 @@ def ExportSalesReturnDiamonds(request):
     objects = Salesreturn_d.objects.all()
     output = []
     response = HttpResponse(content_type='text/csv')
-    filename = "Salesreturndiamonds"+str(datetime.datetime.now())+".csv"
+    filename = "Salesreturndiamonds "+str(datetime.date.today())+".csv"
     response['Content-Disposition'] = u'attachment; filename="{0}"'.format(
         filename)
     writer = csv.writer(response)
     writer.writerow(['SDS GEMS'])
     writer.writerow(['EC-2050, BHARAT DIAMOND BOURSE, BKC, MUMBAI-400051'])
-    writer.writerow(['DATE', 'STOCK ID', 'COMPANY NAME', 'LOCATION',
-                    'SHAPE', 'WEIGHT', 'COLOUR', 'CLARITY', 'TOTAL AMOUNT'])
+    writer.writerow(['RETURNED DATE', 'STOCK ID', 'COMPANY NAME', 'LOCATION',
+                    'SHAPE', 'WEIGHT', 'COLOUR', 'CLARITY', 'PRICE/CT','TOTAL AMOUNT','CURRENCY'])
     for item in objects:
         output.append([item.date, item.stockid, item.company_name, item.location,
-                      item.shape, item.weight, item.colour, item.clarity, item.totalamount])
+                      item.shape, item.weight, item.colour, item.clarity, item.price,item.totalamount,item.currency])
 
     writer.writerows(output)
     return response

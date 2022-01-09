@@ -55,13 +55,14 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">Purchase Date</th>
-      <th scope="col">Stock ID</th>
-      <th scope="col">Company</th>
-      <th scope="col">Gem Type</th>
-      <th scope="col">Weight</th>
-      <th scope="col">Price</th>
-      <th scope="col">Total value</th>
+      <th scope="col">PURCHASE DATE</th>
+      <th scope="col">STOCK ID</th>
+      <th scope="col">COMPANY</th>
+      <th scope="col">GEM TYPE</th>
+      <th scope="col">WEIGHT</th>
+      <th scope="col">PRICE/CT</th>
+      <th scope="col">TOTAL AMOUNT</th>
+      <th scope="col">CURRENCY</th>
 
     </tr>
   </thead>
@@ -90,6 +91,9 @@
       <td>
         <p>{{r.total_val}}</p>
       </td>
+      <td>
+        <p>{{r.currency}}</p>
+      </td>
     </tr>
   </tbody>
   {% endfor %}
@@ -101,13 +105,14 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">Sales Date</th>
-      <th scope="col">Stock ID</th>
-      <th scope="col">Sold to Company </th>
-      <th scope="col">Gem Type</th>
-      <th scope="col">Weight</th>
-      <th scope="col">Amount</th>
-      <th scope="col">Total value</th>
+      <th scope="col">SALES DATE</th>
+      <th scope="col">STOCK ID</th>
+      <th scope="col">SOLD TO COMPANY </th>
+      <th scope="col">GEM TYPE</th>
+      <th scope="col">WEIGHT</th>
+      <th scope="col">PRICE/CT</th>
+      <th scope="col">TOTAL AMOUNT</th>
+      <th scope="col">CURRENCY</th>
 
     </tr>
   </thead>
@@ -131,11 +136,15 @@
         <p>{{r.Weight_cs}}</p>
       </td>
       <td>
-        <p>{{r.amount_cs}}</p>
+        <p>{{r.price}}</p>
       </td>
       <td>
         <p>{{r.total_value_cs}}</p>
       </td>
+      <td>
+        <p>{{r.currency_cs}}</p>
+      </td>
+
     </tr>
   </tbody>
   {% endfor %}
@@ -147,15 +156,17 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">Purchase Date</th>
-      <th scope="col">Stock ID</th>
-      <th scope="col">Company</th>
-      <th scope="col">Location</th>
-      <th scope="col">Jewellery Type</th>
-      <th scope="col">Shape</th>
-      <th scope="col">Weight (g)</th>
-      <th scope="col">Amount</th>
-      <th scope="col">Total value</th>
+      <th scope="col">PURCHASE DATE</th>
+      <th scope="col">STOCK ID</th>
+      <th scope="col">COMPANY</th>
+      <th scope="col">LOCATION</th>
+      <th scope="col">JEWELLERY TYPE</th>
+      <th scope="col">SHAPE</th>
+      <th scope="col">WEIGHT (G)</th>
+      <th scope="col">AMOUNT</th>
+      <th scope="col">TOTAL AMOUNT</th>
+      <th scope="col">CURRENCY</th>
+
 
     </tr>
   </thead>
@@ -190,6 +201,9 @@
       <td>
         <p>{{r.total}}</p>
       </td>
+      <td>
+        <p>{{r.currency}}</p>
+      </td>
     </tr>
   </tbody>
   {% endfor %}
@@ -201,14 +215,15 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">Sales Date</th>
-      <th scope="col">Stock ID</th>
-      <th scope="col">Sold to Company </th>
-      <th scope="col">Location</th>
-      <th scope="col">Jewellery Type</th>
-      <th scope="col">Weight (g)</th>
-      <th scope="col">Amount</th>
-      <th scope="col">Total value</th>
+      <th scope="col">SALES DATE</th>
+      <th scope="col">STOCK ID</th>
+      <th scope="col">SOLD TO COMPANY </th>
+      <th scope="col">LOCATION</th>
+      <th scope="col">JEWELLERY TYPE</th>
+      <th scope="col">WEIGHT (g)</th>
+      <th scope="col">AMOUNT</th>
+      <th scope="col">TOTAL AMOUNT</th>
+      <th scope="col">CURRENCY</th>
 
     </tr>
   </thead>
@@ -240,6 +255,9 @@
       <td>
         <p>{{r.total_value}}</p>
       </td>
+      <td>
+        <p>{{r.currency}}</p>
+      </td>
     </tr>
   </tbody>
   {% endfor %}
@@ -251,16 +269,17 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">Purchase Date</th>
-      <th scope="col">Stock ID</th>
-      <th scope="col">Company</th>
-      <th scope="col">Location</th>
-      <th scope="col">Shape</th>
-      <th scope="col">Colour Origin</th>
-      <th scope="col">Laser Inscription</th>
-      <th scope="col">Weight</th>
-      <th scope="col">Amount</th>
-      <th scope="col">Total value</th>
+      <th scope="col">PURCHASE DATE</th>
+      <th scope="col">STOCK ID</th>
+      <th scope="col">COMPANY</th>
+      <th scope="col">LOCATION</th>
+      <th scope="col">SHAPE</th>
+      <th scope="col">COLOUR ORIGIN</th>
+      <th scope="col">LASER INSCRIPTION</th>
+      <th scope="col">WEIGHT</th>
+      <th scope="col">PRICE/CT</th>
+      <th scope="col">TOTAL AMOUNT</th>
+      <th scope="col">CURRENCY</th>
 
     </tr>
   </thead>
@@ -299,10 +318,13 @@
         <p>{{r.weight_d}}</p>
       </td>
       <td>
-        <p>{{r.amount_d}}</p>
+        <p>{{r.price}}</p>
       </td>
       <td>
         <p>{{r.total_val_d}}</p>
+      </td>
+      <td>
+        <p>{{r.currency}}</p>
       </td>
     </tr>
   </tbody>
@@ -315,16 +337,18 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">Sales Date</th>
-      <th scope="col">Stock ID</th>
-      <th scope="col">Sold to Company </th>
-      <th scope="col">Location</th>
-      <th scope="col">Shape</th>
-      <th scope="col">Colour Origin</th>
-      <th scope="col">Laser Inscription</th>
-      <th scope="col">Weight</th>
-      <th scope="col">Amount</th>
-      <th scope="col">Total value</th>
+      <th scope="col">SALES DATE</th>
+      <th scope="col">STOCK ID</th>
+      <th scope="col">COMPANY </th>
+      <th scope="col">LOCATION</th>
+      <th scope="col">SHAPE</th>
+      <th scope="col">COLOUR ORIGIN</th>
+      <th scope="col">LASER INSCRIPTION</th>
+      <th scope="col">WEIGHT</th>
+      <th scope="col">PRICE/CT</th>
+      <th scope="col">TOTAL AMOUNT</th>
+      <th scope="col">CURRENCY</th>
+      
 
     </tr>
   </thead>
@@ -363,10 +387,13 @@
         <p>{{r.weight_d}}</p>
       </td>
       <td>
-        <p>{{r.amount_d}}</p>
+        <p>{{r.price}}</p>
       </td>
       <td>
         <p>{{r.total_value_d}}</p>
+      </td>
+      <td>
+        <p>{{r.currency}}</p>
       </td>
     </tr>
   </tbody>

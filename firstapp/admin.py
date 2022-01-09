@@ -152,9 +152,11 @@ if deploy_jewellery:
 
     @admin.register(Salesofjewellery)
     class salesofjewadmin(DjangoObjectActions, admin.ModelAdmin):
+        formfield_overrides = {models.TextField: {
+            'widget': Textarea(attrs={'rows': 4, 'cols': 40})}, }
         search_fields = ['company_name']
 
-        list_editable = ['company_name', ]
+        list_editable = ['company_name','amount','currency','total_value','comment','tag_price','salesapprovalstatus','rate','DIS','DIS_amount']
         list_display = [f.name for f in Salesofjewellery._meta.fields]
 
         def has_add_permission(self, request, obj=None):

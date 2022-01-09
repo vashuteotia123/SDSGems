@@ -23,10 +23,12 @@
       <th scope="col">COMPANY NAME</th>
       <th scope="col">LOCATION</th>
       <th scope="col">SHAPE</th>
-      <th scope="col">WEIGHT</th>
       <th scope="col">COLOUR</th>
       <th scope="col">CLARITY</th>
+      <th scope="col">WEIGHT</th>
+      <th scope="col">PRICE/CT</th>
       <th scope="col">TOTAL AMOUNT</th>
+      <th scope="col">CURRENCY</th>
     </tr>
   </thead>
   {% for p in ret_sd %}
@@ -37,10 +39,12 @@
       <td>{{p.company_name}}</td>
       <td>{{p.location}}</td>
       <td>{{p.shape}}</td>
-      <td>{{p.weight}}</td>
-      <td>{{p.colour}}</td>
+      <td>{{p.colour.upper}}</td>
       <td>{{p.clarity}}</td>
+      <td>{{p.weight}}</td>
+      <td>{{p.price}}</td>
       <td>{{p.totalamount}}</td>
+      <td>{{p.currency}}</td>
     </tr>
   </tbody>
   {%endfor%}

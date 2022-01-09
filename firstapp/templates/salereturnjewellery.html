@@ -25,6 +25,7 @@
       <th scope="col">JEWELLERY TYPE</th>
       <th scope="col">GROSS WEIGHT (g)</th>
       <th scope="col">TOTAL AMOUNT</th>
+      <th scope="col">CURRENCY</th>
     </tr>
   </thead>
   {% for p in ret_sj %}
@@ -37,6 +38,7 @@
       <td>{{p.jewellery_type}}</td>
       <td>{{p.grosswt}}</td>
       <td>{{p.total_amount}}</td>
+      <td>{{p.currency}}</td>
     </tr>
   </tbody>
   {%endfor%}

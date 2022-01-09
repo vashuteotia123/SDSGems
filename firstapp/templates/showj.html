@@ -25,7 +25,8 @@
         <th style="background-color:#e7d896;color:#000000bf;">TAG PRICE</th>
         <th style="background-color:#e7d896;color:#000000bf;">RATE</th>
         <th style="background-color:#e7d896;color:#000000bf;">CERTIFICATE TYPE</th>
-        <th style="background-color:#e7d896;color:#000000bf;" colspan="2">EDIT</th>
+        <th style="background-color:#e7d896;color:#000000bf;">COMMENTS</th>
+        <th style="background-color:#e7d896;color:#000000bf;" colspan="2">ACTION</th>
     </tr>
     {% for obj in showjewellery %}
     <tr>
@@ -55,6 +56,12 @@
         <td>{{obj.tag_price}}</td>
         <td>{{obj.rate}}</td>
         <td>{{obj.cert}}</td>
+        <td>
+            <details>
+                <summary>Click to see comment</summary>
+                <p>{{obj.comment|linebreaks}}</p>
+            </details>
+        </td>
         {% if obj.id in invobjects_jewellery %}
         <td style="padding: 10px 10px;"><a class="btn btn-danger" id="delete-btn"
                 style="text-decoration: none;padding: 6px 35px;" onclick='return delete_alert()'
@@ -76,7 +83,7 @@
 {% block container1 %}
 <div id="purchase_export">
     <a class="btn btn-sm" style="background-color: #e7d896;color:#000000bf;text-decoration: none;"
-        href="/ExportPOJ"><b>Export Purchase Items</b></a>
+        href="/ExportPOJ"><b>Export Purchased Items</b></a>
 </div>
 {% endblock %}
 

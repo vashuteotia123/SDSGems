@@ -19,7 +19,7 @@
         <th class="bg-primary">LAB</th>
         <th class="bg-primary">PIECES</th>
         <th class="bg-primary">WEIGHT</th>
-        <th class="bg-primary">PRICE</th>
+        <th class="bg-primary">PRICE/CT</th>
         <th class="bg-primary">UNITS</th>
         <th class="bg-primary">AMOUNT</th>
         <th class="bg-primary">DISCOUNT %</th>
@@ -29,6 +29,7 @@
         <th class="bg-primary">CURRENCY</th>
         <th class="bg-primary">TAG PRICE</th>
         <th class="bg-primary">RATE</th>
+        <th class="bg-primary">COMMENTS</th>
         <th class="bg-primary" colspan="2">ACTION</th>
     </tr>
     {% for obj in show_cs %}
@@ -62,6 +63,12 @@
         <td>{{obj.currency}}</td>
         <td>{{obj.tag_price}}</td>
         <td>{{obj.rate}}</td>
+        <td>
+            <details>
+                <summary>Click to see comment</summary>
+                <p>{{obj.comment|linebreaks}}</p>
+            </details>
+        </td>
         {% if obj.id in invobjectscs %}
         <td style="padding: 10px 10px;"><a class="btn btn-danger" id="delete-btn"
                 style="text-decoration: none;padding: 6px 35px;" onclick='return delete_alert()'
@@ -83,7 +90,7 @@
 {% block container1 %}
 <div id="purchase_export">
     <a class="btn btn-primary btn-sm" href="{% url 'ExportPurchaseOfColorStones' %}"
-        style="text-decoration: none;">Export Purchase Items</a>
+        style="text-decoration: none;">Export Purchased Items</a>
 </div>
 {% endblock %}
 {% block script %}
