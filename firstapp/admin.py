@@ -53,18 +53,18 @@ if deploy_color_stone:
         search_fields = [f.name for f in shape_cs._meta.fields]
 
     @admin.register(companyinfo)
-    class CompanyAdmin(DjangoObjectActions, admin.ModelAdmin):
+    class CompanyAdmin(admin.ModelAdmin):
         search_fields = [f.name for f in companyinfo._meta.fields]
         list_display_links = [f.name for f in companyinfo._meta.fields]
         list_display = [f.name for f in companyinfo._meta.fields]
 
     @admin.register(ColorStone_media)
-    class ColorStone_media_admin(DjangoObjectActions, admin.ModelAdmin):
+    class ColorStone_media_admin(admin.ModelAdmin):
         list_display = [entry.name for entry in ColorStone_media._meta.fields]
         search_fields = [f.name for f in ColorStone_media._meta.fields]
 
     @admin.register(Salesofcolorstones)
-    class salesofcsadmin(DjangoObjectActions, admin.ModelAdmin):
+    class salesofcsadmin(admin.ModelAdmin):
 
         formfield_overrides = {models.TextField: {
             'widget': Textarea(attrs={'rows': 4, 'cols': 40})}, }
@@ -143,7 +143,7 @@ if deploy_jewellery:
         changelist_actions = ('HomePage',)
 
     # @admin.register(currencies)
-    # class curradmin(DjangoObjectActions, admin.ModelAdmin):
+    # class curradmin( admin.ModelAdmin):
     #     def HomePage(LocAdmin, request, queryset):
         # return redirect('/index')
 
@@ -151,12 +151,14 @@ if deploy_jewellery:
     # changelist_actions = ('HomePage',)
 
     @admin.register(Salesofjewellery)
-    class salesofjewadmin(DjangoObjectActions, admin.ModelAdmin):
+    class salesofjewadmin(admin.ModelAdmin):
         formfield_overrides = {models.TextField: {
             'widget': Textarea(attrs={'rows': 4, 'cols': 40})}, }
-        search_fields = ['company_name']
+        search_fields = ['company_name__company_name', 'stockid', 'jewellery_type__jewel',
+                         'center_stone__stone', 'color_of_center_stone__color', 'shape__shape', 'metal__metal']
 
-        list_editable = ['company_name','amount','currency','total_value','comment','tag_price','salesapprovalstatus','rate','DIS','DIS_amount']
+        list_editable = ['company_name', 'amount', 'currency', 'total_value',
+                         'comment', 'tag_price', 'salesapprovalstatus', 'rate', 'DIS', 'DIS_amount']
         list_display = [f.name for f in Salesofjewellery._meta.fields]
 
         def has_add_permission(self, request, obj=None):
@@ -174,8 +176,8 @@ if deploy_jewellery:
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
 
-    @admin.register(Jewel_media)
-    class mediaJ(DjangoObjectActions, admin.ModelAdmin):
+    @ admin.register(Jewel_media)
+    class mediaJ(admin.ModelAdmin):
         def HomePage(LocAdmin, request, queryset):
             return redirect('/index')
 
@@ -183,15 +185,15 @@ if deploy_jewellery:
         changelist_actions = ('HomePage',)
 
 if deploy_diamond:
-    @admin.register(Diamond_media)
-    class diamondMediaAdmin(DjangoObjectActions, admin.ModelAdmin):
+    @ admin.register(Diamond_media)
+    class diamondMediaAdmin(admin.ModelAdmin):
         def HomePage(LocAdmin, request, queryset):
             return redirect('/index')
 
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
 
-    @admin.register(shape_d)
+    @ admin.register(shape_d)
     class shapedadmin(ImportExportModelAdmin, admin.ModelAdmin):
         def HomePage(LocAdmin, request, queryset):
             return redirect('/index')
@@ -199,7 +201,7 @@ if deploy_diamond:
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
 
-    @admin.register(clarity)
+    @ admin.register(clarity)
     class clarityadmin(ImportExportModelAdmin, admin.ModelAdmin):
         def HomePage(LocAdmin, request, queryset):
             return redirect('/index')
@@ -207,7 +209,7 @@ if deploy_diamond:
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
 
-    @admin.register(color_origin)
+    @ admin.register(color_origin)
     class color_originadmin(ImportExportModelAdmin, admin.ModelAdmin):
         def HomePage(LocAdmin, request, queryset):
             return redirect('/index')
@@ -215,7 +217,7 @@ if deploy_diamond:
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
 
-    @admin.register(white_color_grade)
+    @ admin.register(white_color_grade)
     class white_color_gradeadmin(ImportExportModelAdmin, admin.ModelAdmin):
         def HomePage(LocAdmin, request, queryset):
             return redirect('/index')
@@ -239,7 +241,7 @@ if deploy_diamond:
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
 
-    @admin.register(fluorescence_intensity)
+    @ admin.register(fluorescence_intensity)
     class fluoroscence_intensityadmin(ImportExportModelAdmin, admin.ModelAdmin):
         def HomePage(LocAdmin, request, queryset):
             return redirect('/index')
@@ -247,7 +249,7 @@ if deploy_diamond:
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
 
-    @admin.register(fluorescence_color)
+    @ admin.register(fluorescence_color)
     class fluorescence_intensityadmin(ImportExportModelAdmin, admin.ModelAdmin):
         def HomePage(LocAdmin, request, queryset):
             return redirect('/index')
@@ -255,7 +257,7 @@ if deploy_diamond:
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
 
-    @admin.register(certificate_d)
+    @ admin.register(certificate_d)
     class certificate_dadmin(ImportExportModelAdmin, admin.ModelAdmin):
         def HomePage(LocAdmin, request, queryset):
             return redirect('/index')
@@ -263,9 +265,11 @@ if deploy_diamond:
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
 
-    @admin.register(Salesofdiamond)
-    class salesofdiaadmin(DjangoObjectActions, admin.ModelAdmin):
-        search_fields = [f.name for f in Salesofdiamond._meta.fields]
+    @ admin.register(Salesofdiamond)
+    class salesofdiaadmin(admin.ModelAdmin):
+        search_fields = ['company_name__company_name', 'stockid',
+                         'location__place', 'shape__shape', 'clarity__clarity', 'color_origin1__c_o',
+                         'white_color_grade1__w_c_g', 'fancycolor_grade', 'cut__cut', 'polish__polish', 'symmetry__symmetry', ]
         list_editable = ['date', 'company_name', 'price', 'amount_d', 'DIS_d', 'DIS_Amount_d',
                          'total_value_d', 'currency', 'tag_price_d', 'rate_d', 'salesapprovalstatus_d', 'comment']
         list_display = [f.name for f in Salesofdiamond._meta.fields]
@@ -285,7 +289,7 @@ if deploy_diamond:
         def has_delete_permission(self, request, obj=None):
             return False
 
-        @admin.register(location)
+        @ admin.register(location)
         class LocAdmin(ImportExportModelAdmin):
             def HomePage(LocAdmin, request, queryset):
                 return redirect('/index')
@@ -293,24 +297,24 @@ if deploy_diamond:
             HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
             changelist_actions = ('HomePage',)
 
-        @admin.register(cut)
-        class cutadmin(DjangoObjectActions, admin.ModelAdmin):
+        @ admin.register(cut)
+        class cutadmin(admin.ModelAdmin):
             def HomePage(LocAdmin, request, queryset):
                 return redirect('/index')
 
             HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
             changelist_actions = ('HomePage',)
 
-        @admin.register(polish)
-        class polishadmin(DjangoObjectActions, admin.ModelAdmin):
+        @ admin.register(polish)
+        class polishadmin(admin.ModelAdmin):
             def HomePage(LocAdmin, request, queryset):
                 return redirect('/index')
 
             HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
             changelist_actions = ('HomePage',)
 
-        @admin.register(symmetry)
-        class symmetryadmin(DjangoObjectActions, admin.ModelAdmin):
+        @ admin.register(symmetry)
+        class symmetryadmin(admin.ModelAdmin):
             def HomePage(LocAdmin, request, queryset):
                 return redirect('/index')
 
@@ -319,29 +323,29 @@ if deploy_diamond:
 
 
 if development_mode:
-    @admin.register(POJ)
-    class PurchaseOFJewell(DjangoObjectActions, admin.ModelAdmin):
+    @ admin.register(POJ)
+    class PurchaseOFJewell(admin.ModelAdmin):
         list_editable = ['company_name']
         list_display = [f.name for f in POJ._meta.fields]
         readonly_fields = ['total', 'discount_amount']
 
-    @admin.register(Inventoryofjewellery)
-    class iojadmin(DjangoObjectActions, admin.ModelAdmin):
+    @ admin.register(Inventoryofjewellery)
+    class iojadmin(admin.ModelAdmin):
         def HomePage(LocAdmin, request, queryset):
             return redirect('/index')
 
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
 
-    @admin.register(PurchaseOfColorStones)
-    class pcosadmin(DjangoObjectActions, admin.ModelAdmin):
+    @ admin.register(PurchaseOfColorStones)
+    class pcosadmin(admin.ModelAdmin):
         def HomePage(LocAdmin, request, queryset):
             return redirect('/index')
 
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
 
-    @admin.register(Inventoryofcolorstones)
+    @ admin.register(Inventoryofcolorstones)
     class inventoryofcsadmin(ImportExportModelAdmin):
         def HomePage(LocAdmin, request, queryset):
             return redirect('/index')
@@ -349,36 +353,36 @@ if development_mode:
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
 
-    @admin.register(POD)
-    class PODadmin(DjangoObjectActions, admin.ModelAdmin):
+    @ admin.register(POD)
+    class PODadmin(admin.ModelAdmin):
         def HomePage(LocAdmin, request, queryset):
             return redirect('/index')
 
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
 
-    @admin.register(Inventoryofdiamond)
-    class inventoryofdiamondadmin(DjangoObjectActions, admin.ModelAdmin):
+    @ admin.register(Inventoryofdiamond)
+    class inventoryofdiamondadmin(admin.ModelAdmin):
         def HomePage(LocAdmin, request, queryset):
             return redirect('/index')
 
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
         changelist_actions = ('HomePage',)
 
-    @admin.register(cloneInvofjewellery)
-    class cloneInvofjewadmin(DjangoObjectActions, admin.ModelAdmin):
+    @ admin.register(cloneInvofjewellery)
+    class cloneInvofjewadmin(admin.ModelAdmin):
         list_display = [
             entry.name for entry in cloneInvofjewellery._meta.fields]
         list_editable = ["tag_price", "rate"]
 
-    @admin.register(cloneInvofcolorstones)
-    class cloneInvofcsadmin(DjangoObjectActions, admin.ModelAdmin):
+    @ admin.register(cloneInvofcolorstones)
+    class cloneInvofcsadmin(admin.ModelAdmin):
         list_display = [
             entry.name for entry in cloneInvofcolorstones._meta.fields]
         list_editable = ["tag_price_cs", "rate_cs"]
 
     # @admin.register(Salesofcolorstones)
-    # class salesofcsadmin(DjangoObjectActions,admin.ModelAdmin):
+    # class salesofcsadmin(admin.ModelAdmin):
     #     def HomePage(salesofcsadmin, request, queryset):
     #         return redirect('/index')
 
@@ -396,13 +400,13 @@ if development_mode:
     #     def has_delete_permission(self, request, obj=None):
     #         return False
 
-    @admin.register(cloneInvofdiamond)
-    class cloneInvofdadmin(DjangoObjectActions, admin.ModelAdmin):
+    @ admin.register(cloneInvofdiamond)
+    class cloneInvofdadmin(admin.ModelAdmin):
         list_display = [entry.name for entry in cloneInvofdiamond._meta.fields]
         list_editable = ["tag_price_d", "rate_d"]
 
     # @admin.register(ColorStone_media)
-    # class ColorStone_media_admin(DjangoObjectActions, admin.ModelAdmin):
+    # class ColorStone_media_admin( admin.ModelAdmin):
     #     list_display = [entry.name for entry in ColorStone_media._meta.fields]
 
     #     def response_change(self, request, obj=None):
