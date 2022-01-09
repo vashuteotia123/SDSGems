@@ -42,7 +42,7 @@
         <td>{{obj.treatment.treatment.capitalize}}</td>
         <td>{{obj.Clarity.capitalize}}</td>
         <td>{{obj.certificate_no}}</td>
-        <td>{{obj.lab.lab.capitalize}}</td>
+        <td>{{obj.lab.lab.upper}}</td>
         {% if obj.media.certificate %}
         <td><a href="/media/{{obj.media.certificate}}">See Certificate</a>
             {% else %}
@@ -87,9 +87,9 @@
 {% block container1 %}
 <div id="button-allignment">
     <button class="btn btn-primary btn-sm btnedit" type="submit" id="delete_btn" style="text-decoration:none">Return
-        Objects</button>
+        Selected Items</button>
     <a class="btn btn-primary btn-sm btnedit" href="{% url 'retobj_cs' %}" style="text-decoration: none;">View returned
-        objects</a>
+        items</a>
     <a class="btn btn-primary btn-sm btnedit" href="{% url 'displaycart2_cs' %}" style="text-decoration: none;">View
         Cart</a>
     <a class="btn btn-primary btn-sm btnedit" href="{% url 'ExportInventoryofcolorstones' %}"

@@ -313,7 +313,7 @@ def allselljewellrecords(request):
     context = {
         "sold_items": Salesofjewellery.objects.all(),
         "css_adjust": change,
-        "table_type": "Sales Record of Jewellery Table",
+        "table_type": "Sales Record of Jewellery ",
     }
     return render(request, "show_sell_jewel_table.html", context=context)
 
