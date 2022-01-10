@@ -177,9 +177,12 @@ def sortHighToLow(all_objects):
     return all_objects.order_by('-price')
 
 
-def getConversionRate():
-    latest_rate = ConversionRate.objects.all().order_by('-id').first()
-    return latest_rate
+def getConversionRate(request):
+    if request.method == 'GET':
+        latest_rate = ConversionRate.objects.all().order_by('-id').first()
+        latest_rate = ConversionRateSerializer(latest_rate).data
+        return JsonResponse(latest_rate, safe=False, status=200)
+    return JsonResponse({}, safe=False, status=400)
 
 
 def get_youtube_id(product):

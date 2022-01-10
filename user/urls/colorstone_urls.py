@@ -5,6 +5,7 @@ from django.urls.resolvers import URLPattern
 from user.views.common_views import *
 from user.views.colorstone_views.colorstone_home_filters import *
 from user.views.colorstone_views.colostone_product import *
+from user.views.colorstone_views.colorstone_filters import *
 
 
 urlpatterns = [
@@ -35,4 +36,7 @@ urlpatterns = [
          showColorStone, name="showColorStone"),
 
     # Colorstone filter
+    path('colorStoneFilter', colorStoneFilter.as_view(), name="colorStoneFilter"),
+    path('colorStoneFilter/<int:page>',
+         colorStoneFilter.as_view(), name="colorStoneFilter"),
 ]

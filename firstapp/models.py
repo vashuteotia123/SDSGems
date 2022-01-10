@@ -374,6 +374,7 @@ class Salesofjewellery(models.Model):
     def __str__(self):
         return self.stockid
 
+
 class cloneInvofjewellery(models.Model):
     class Meta:
         verbose_name_plural = "Jewellery - Cart"
@@ -436,7 +437,7 @@ class Salesreturn(models.Model):
     jewellery_type = models.CharField(max_length=30, blank=True, null=True,)
     total_amount = models.DecimalField(
         null=True, blank=True, decimal_places=2, max_digits=9, default=1)
-    currency=models.CharField(max_length=30)
+    currency = models.CharField(max_length=30)
 
 
 class Jewel_media(models.Model):
@@ -951,9 +952,9 @@ class Salesreturn_d(models.Model):
     clarity = models.CharField(max_length=30, null=True, blank=True)
     totalamount = models.DecimalField(
         blank=True, null=True, verbose_name="Total Value", decimal_places=2, max_digits=9)
-    price=models.DecimalField(
+    price = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True, null=True)
-    currency=models.CharField(max_length=30)
+    currency = models.CharField(max_length=30)
 
 
 class Diamond_media(models.Model):
@@ -1170,7 +1171,7 @@ class PurchaseOfColorStones(models.Model):
 
     def save(self, *args, **kwargs):
         if self.Clarity:
-            self.Clarity=self.Clarity.lower()
+            self.Clarity = self.Clarity.lower()
         # self.amount = (self.Price * self.Weight)
         # self.discount_amount = (self.amount * self.discount) // 100
         self.stockid = str(str('C-')+str(self.id))
@@ -1306,7 +1307,7 @@ class cloneInvofcolorstones(models.Model):
     lab = models.ForeignKey('Lab_cs', on_delete=models.PROTECT, blank=True)
     PCS = models.IntegerField(null=True, verbose_name="Pieces")
     Weight_cs = models.DecimalField(
-        decimal_places=2, max_digits=9, blank=True, null=True,verbose_name="Weight")
+        decimal_places=2, max_digits=9, blank=True, null=True, verbose_name="Weight")
     price = models.DecimalField(
         null=True, blank=True, decimal_places=2, max_digits=9)
     units_cs = models.CharField(
@@ -1354,9 +1355,10 @@ class Salesreturn_cs(models.Model):
     gem_type = models.ForeignKey(
         'gemtype', on_delete=models.PROTECT, blank=True)
     clarity = models.CharField(max_length=30, blank=True, null=True)
-    price=models.DecimalField(
+    price = models.DecimalField(
         decimal_places=2, max_digits=9, blank=True, null=True)
-    currency=models.CharField(max_length=30)
+    currency = models.CharField(max_length=30)
+
 
 class ColorStone_media(models.Model):
     class Meta:
