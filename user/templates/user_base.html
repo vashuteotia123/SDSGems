@@ -253,7 +253,7 @@
             </ul>
           </nav>
         </div>
-        <nav class="offcanvas-menu">
+        <!-- <nav class="offcanvas-menu">
           <ul>
 
             <a href="#"><span class="menu-text">Shop</span></a>
@@ -383,7 +383,7 @@
             </li>
             <li><a href="/contact_us">Contact Us</a></li>
           </ul>
-        </nav>
+        </nav> -->
       </div>
     </div>
     <!-- offcanvas-mobile-menu end -->
@@ -593,6 +593,7 @@
                       <ul>
                         <li class="mega-menu-title"><a href="#">Diamonds by Colour Origin</a>
                         </li>
+
                         {% for c_origin in diamond_origins %}
                         <li><a href="{% url 'diamondByColorOriginFilter' color_origin_id=c_origin.id%}">{{c_origin}}</a>
                         </li>
@@ -658,14 +659,15 @@
                 {% endif %}
                 {% if user_login %}
                 <li class="position-static">
-                  <a href='{% url "allColorStones" %}'>Colour Stones<i class="ion-ios-arrow-down"></i></a>
+                  <a href='{% url "colorStoneFilter" %}'>Colour Stones<i class="ion-ios-arrow-down"></i></a>
                   <ul class="mega-menu row">
                     <li class="col-3">
                       <ul>
+
                         <li class="mega-menu-title"><a href="#">Colour Stones by Shapes</a></li>
                         {% for shape in colorstone_shapes %}
                         <li>
-                          <a href='{% url "colorStoneByShapeFilter" shape_id=shape.id %}'>{{shape}}</a>
+                          <a href='/colorStoneFilter?shape={{shape.shape}}'>{{shape}}</a>
                         </li>
                         {% endfor %}
 
@@ -674,8 +676,8 @@
                     <li class="col-3">
                       <ul>
                         <li class="mega-menu-title"><a href="#">By Gem Types</a></li>
-                        {% for type in colorstone_gemtypes%}
-                        <li><a href="{% url 'colorStoneGemTypeFilter' gemtype_id=type.id %}">{{type}}</a></li>
+                        {% for gem in colorstone_gemtypes%}
+                        <li><a href="/colorStoneFilter?gemtype={{gem.gem}}">{{gem}}</a></li>
                         {% endfor %}
                       </ul>
                     </li>
@@ -683,16 +685,16 @@
                       <ul>
                         <li class="mega-menu-title"><a href="#">By Origin</a>
                         </li>
-                        {% for c_origin in colorstone_origins %}
-                        <li><a href='{% url "colorStoneByOriginFilter" origin_id=c_origin.id %}'>{{c_origin}}</a></li>
+                        {% for origin in colorstone_origins %}
+                        <li><a href='/colorStoneFilter?origin={{origin.org}}'>{{origin}}</a></li>
                         {% endfor %}
                       </ul>
                     </li>
                     <li class=" col-3">
                       <ul>
                         <li class="mega-menu-title"><a href="#">By Colours</a></li>
-                        {% for colour in colorstone_colors %}
-                        <li><a href='{% url "colorStoneByColourFilter" colour_id=colour.id %}'>{{colour}} </a></li>
+                        {% for color in colorstone_colors %}
+                        <li><a href='/colorStoneFilter?color={{color.color}}'>{{color}} </a></li>
                         {% endfor %}
                       </ul>
                     </li>
@@ -1240,22 +1242,30 @@
     <!-- <script src="/static/assets/js/plugins/aos.js"></script> -->
     <script src="/static/assets/js/main.js"></script>
 
-
-    <!-- Use the minified version files listed below for better performance and remove the files listed above -->
-    <!--*************************** 
-          Minified  js 
-     ***************************-->
-    <!--*********************************** 
-         vendor,plugins and main js
-      ***********************************-->
-    <!-- <script src="/static/assets/js/vendor/vendor.min.js"></script>
-    <script src="/static/assets/js/plugins/plugins.min.js"></script>
-    <script src="/static/assets/js/main.js"></script> -->
-
     <script>
+      async function getPrice() {
+        const priceResponse = await fetch("/getConversionRate", {
+          method: 'GET',
+        })
+        return priceResponse.json()
+      }
       function checkcurrency() {
+        var currPrice = localStorage.getItem("currency_price");
+        var expiry = 50000;
         var curr = localStorage.getItem("currency");
-        console.log(curr);
+        if (!currPrice) {
+
+          getPrice().then(data => {
+            var date = new Date().getTime();
+            localStorage.setItem("currency_price", `${data.conversion_rate}|${date}`)
+          });
+        } else {
+          console.log((new Date().getTime()) - parseInt(currPrice.split('|')[1]))
+          if ((new Date().getTime()) - parseInt(currPrice.split('|')[1]) > expiry) {
+            localStorage.removeItem("currency_price");
+            checkcurrency();
+          }
+        }
         if (curr) {
           if (curr == 'usd') {
             document.getElementById("dropdown2").innerText = "USD $"
@@ -1300,7 +1310,11 @@
       function setPrice() {
         var curr = localStorage.getItem("currency");
         //wait to get the conversion rate
-        var rate = 74.17;
+        if (localStorage.getItem("currency_price")) {
+          var rate = localStorage.getItem("currency_price").split('|')[0];
+        } else {
+          window.location.reload();
+        }
         if (curr) {
           if (curr == "usd") {
             allPrices = document.querySelectorAll('#tag_price')
@@ -1328,6 +1342,8 @@
         setPrice();
       }
       window.onload = price_set;
+      var context = "{{ context }}";
+      console.log(context);
     </script>
   </body>
 

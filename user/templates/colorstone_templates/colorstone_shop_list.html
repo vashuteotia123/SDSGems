@@ -4,12 +4,10 @@
 
 <div class="product-tab bg-white pt-80 pb-80">
   <div class="container">
-
-    
     <div class="grid-nav-wraper bg-lighten2 mb-30">
       <div class="row align-items-center">
         <div class="col-12 col-md-6 mb-3 mb-md-0">
-          
+
           <nav class="shop-grid-nav">
             <ul class="nav nav-pills align-items-center" id="pills-tab" role="tablist">
               <li class="nav-item">
@@ -35,89 +33,167 @@
             </select>
           </div>
         </div>
-        <div class="col-12 col-md-6 position-relative">
-          <div class="shop-grid-button d-flex align-items-center">
-            <span class="sort-by">Sort by:</span>
-            <select class="form-select custom-select" aria-label="Default select example">
-              <option selected>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-          </div>
-        </div>
+
       </div>
     </div>
-    <!-- product-tab-nav end -->
-    <div class="tab-content" id="pills-tabContent">
-      <!-- first tab-pane -->
-      <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-        <div class="row grid-view theme1">
-          {% for object in all_objects %}
-          <div class="col-sm-6 col-lg-4 col-xl-3 mb-30">
-            <div class="card product-card">
-              <div class="card-body">
-                <a href="{% url 'showColorStone' product_id=object.id %}">
-
-                  <div class="product-thumbnail position-relative">
-                    <span class="badge badge-danger top-right">{{object.lab}}</span>
-                    {% if object.media.image1 %}
-                    <img class="first-img" src="/media/{{object.media.image1}}" alt="{{object.shape}}" />
-                    {% else %}
-                    <br><br>
-                    <h5>No image for this object.</h5><br><br>
-                    {% endif %}
+    <div class="row">
+      <div class="col-lg-3 mb-30 order-lg-first">
+        <aside class="left-sidebar theme1">
+          <!-- search-filter start -->
+          <div class="search-filter">
+            <div class="sidbar-widget pt-0">
+              <h4 class="title">Filter By</h4>
+            </div>
+          </div>
+          <form method="get">
+            {% csrf_token %}
+            <ul id="offcanvas-menu2" class="blog-ctry-menu">
+              <li>
+                <a href="javascript:void(0)">Gem Types</a>
+                <ul class="category-sub-menu">
+                  {% for gem in colorStoneGemTypes %}
+                  <div class="widget-check-box color-grey">
+                    <input type="checkbox" name="gemtypes[]" class="submenu-toggle" value="{{gem.gem}}"
+                      id="{{gem.gem}}">
+                    <label for="{{gem.gem}}">{{gem}}</label>
                   </div>
-                </a>
-                <div class="product-desc py-0 px-0">
-                  <h3 class="title">
-                    <a href="{% url 'showColorStone' product_id=object.id %}">{{object.gem_type}},
-                      {{object.origin}}, {{object.shape}}, {{object.color}}</a>
-                  </h3>
+                  {% endfor %}
+                </ul>
+              </li>
+              <li>
+                <a href="javascript:void(0)">Shapes</a>
+                <ul class="category-sub-menu">
+                  {% for shape in colorStoneShapes %}
+                  <div class="widget-check-box color-grey">
+                    <input type="checkbox" name="shapes[]" class="submenu-toggle" value="{{shape.shape}}"
+                      id="{{shape.shape}}">
+                    <label for="{{shape.shape}}">{{shape}}</label>
+                  </div>
+                  {% endfor %}
 
-                  <div class="d-flex align-items-center justify-content-between">
-                    {% if user.Businesstype == "Customer" %}
-                    <span class="product-price" id="tag_price">
-                      ${% customer_price object.tag_price %}</span>
-                    {% elif user.Businesstype == "Broker"%}
-                    <span class="product-price" id="tag_price">
-                      ${% broker_price object.tag_price %}</span>
-                    {% else %}
-                    <span class="product-price" id="tag_price">
-                      ${% wholesaler_price object.tag_price %}</span>
-                    {% endif %}
+                </ul>
+              </li>
+              <li>
+                <a href="javascript:void(0)">Colors</a>
+                <ul class="category-sub-menu">
+                  {% for color in colorStoneColors %}
+                  <div class="widget-check-box color-grey">
+                    <input type="checkbox" name="colors[]" class="submenu-toggle" value="{{color.color}}"
+                      id="{{color.color}}">
+                    <label for="{{color.color}}">{{color}}</label>
+                  </div>
+                  {% endfor %}
+                </ul>
+              </li>
+              <li>
+                <a href="javascript:void(0)">Origin</a>
+                <ul class="category-sub-menu">
+                  {% for origin in colorStoneOrigins %}
+                  <div class="widget-check-box color-grey">
+                    <input type="checkbox" name="origins[]" class="submenu-toggle" value="{{origin.org}}"
+                      id="{{origin.org}}">
+                    <label for="{{origin.org}}">{{origin}}</label>
+                  </div>
+                  {% endfor %}
+                </ul>
+            </ul>
+            <button type="submit" class="btn btn-primary">Apply</button>
+          </form>
+
+
+          <!-- search-filter end -->
+
+          <!--second banner start-->
+
+          <!--second banner end-->
+        </aside>
+      </div>
+      <div class="col-lg-9 mb-30">
+        <div class="tab-content" id="pills-tabContent">
+          <!-- first tab-pane -->
+          <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+            <div class="row grid-view theme1">
+              {% for object in all_objects %}
+              <div class="col-sm-6 col-lg-4 col-xl-3 mb-30">
+                <div class="card product-card">
+                  <div class="card-body">
+                    <a href="{% url 'showColorStone' product_id=object.id %}">
+
+                      <div class="product-thumbnail position-relative">
+                        <span class="badge badge-danger top-right">{{object.lab}}</span>
+                        {% if object.media.image1 %}
+                        <img class="first-img" src="/media/{{object.media.image1}}" alt="{{object.shape}}" />
+                        {% else %}
+                        <br><br>
+                        <h5>No image for this object.</h5><br><br>
+                        {% endif %}
+                      </div>
+                    </a>
+                    <div class="product-desc py-0 px-0">
+                      <h3 class="title">
+                        <a href="{% url 'showColorStone' product_id=object.id %}">{{object.gem_type}},
+                          {{object.origin}}, {{object.shape}}, {{object.color}}</a>
+                      </h3>
+                      {% if user %}
+                      <div class="d-flex align-items-center justify-content-between">
+                        {% if user.Businesstype == "Customer" %}
+                        <span class="product-price" id="tag_price">
+                          ${% customer_price object.tag_price %}</span>
+                        {% elif user.Businesstype == "Broker"%}
+                        <span class="product-price" id="tag_price">
+                          ${% broker_price object.tag_price %}</span>
+                        {% else %}
+                        <span class="product-price" id="tag_price">
+                          ${% wholesaler_price object.tag_price %}</span>
+                        {% endif %}
+                      </div>
+                      {% endif %}
+                    </div>
                   </div>
                 </div>
               </div>
+              {% endfor %}
             </div>
           </div>
-          {% endfor %}
         </div>
       </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- product-tab-nav end -->
+
     <div class="row">
       <div class="col-12">
         <nav class="pagination-section mt-30">
           <ul class="pagination justify-content-center">
             <li class="page-item {% if not all_objects.has_previous %} disabled {% endif %}">
-              <a class="page-link"
-                href="{% if all_objects.has_previous %} {% url current_url page=all_objects.previous_page_number %}{% endif %}"><i
-                  class="ion-chevron-left"></i></a>
+              <a class="page-link" {% if all_objects.has_previous %} href="?page={{ all_objects.previous_page_number}}"
+                {% endif %}><i class="ion-chevron-left"></i></a>
             </li>
             {% for i in all_objects.paginator.page_range %}
             {% if all_objects.number == i %}
             <li class="page-item active">
-              <a class="page-link" href='{% url current_url page=i %}'>{{i}}</a>
+              <a class="page-link" href="?page={{i}}">{{i}}</a>
             </li>
             {% elif i > all_objects.number|add:'-2' and i < all_objects.number|add:'2' %} <li class="page-item">
-              <a class="page-link" href='{% url current_url page=i %}'>{{i}}</a>
+              <a class="page-link" href="?page={{i}}">{{i}}</a>
               </li>
               {% endif %}
               {% endfor %}
               <li class="page-item {% if not all_objects.has_next %} disabled {% endif %}">
-                <a class="page-link"
-                  href="{% if all_objects.has_next %} {% url current_url page=all_objects.next_page_number %} {% endif %}"><i
-                    class="ion-chevron-right"></i></a>
+                <a class="page-link" {% if all_objects.has_next %} href="?page={{all_objects.next_page_number }} "
+                  {%endif %}><i class="ion-chevron-right"></i></a>
               </li>
           </ul>
         </nav>
@@ -125,5 +201,60 @@
     </div>
   </div>
 </div>
+<script>
+  var list = {
+    shape: {},
+    gemtype: {},
+    origin: {},
+    color: {},
+  }
+  function displayRadioValue() {
+    var ele = document.getElementsByTagName('input');
+    for (i = 0; i < ele.length; i++) {
+      if (ele[i].type = "checkbox") {
+        if (ele[i].id[0] == 's') {
+          if (ele[i].checked) {
+            list.shape[ele[i].name] = 1;
+          }
+          else {
+            list.shape[ele[i].name] = 0;
+          }
+        }
+      }
+    }
+    console.log(list);
+  }
 
+  var shapes = "{{shapes | safe}}";
+  //python list string to array of strings
+  shapes = shapes.replace(/'/g, '"');
+  shapes = JSON.parse(shapes);
+  for (var i = 0; i < shapes.length; i++) {
+    document.getElementById(shapes[i]).checked = true;
+  }
+
+  var gemtypes = "{{gemtypes | safe}}";
+  //python list string to array of strings
+  gemtypes = gemtypes.replace(/'/g, '"');
+  gemtypes = JSON.parse(gemtypes);
+  for (var i = 0; i < gemtypes.length; i++) {
+    document.getElementById(gemtypes[i]).checked = true;
+  }
+
+  var origins = "{{origins | safe}}";
+  //python list string to array of strings
+  origins = origins.replace(/'/g, '"');
+  origins = JSON.parse(origins);
+  for (var i = 0; i < origins.length; i++) {
+    document.getElementById(origins[i]).checked = true;
+  }
+
+  var colors = "{{colors | safe}}";
+  //python list string to array of strings
+  colors = colors.replace(/'/g, '"');
+  colors = JSON.parse(colors);
+  for (var i = 0; i < colors.length; i++) {
+    document.getElementById(colors[i]).checked = true;
+  }
+</script>
 {% endblock content %}
