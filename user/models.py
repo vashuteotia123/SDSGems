@@ -2,6 +2,7 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from tinymce.models import HTMLField
 from taggit.managers import TaggableManager
+from rest_framework import serializers
 
 
 class countries(models.Model):
@@ -76,7 +77,14 @@ class Subscribed_users(models.Model):
 class ConversionRate(models.Model):
     class Meta:
         verbose_name_plural = "Conversion Rate"
-    conversion_rate = models.FloatField()
+    conversion_rate = models.FloatField(
+        verbose_name="Conversion Rate Value in INR ")
 
     def __str__(self):
-        return str(self.coversionrate)
+        return str(self.conversion_rate)
+
+
+class ConversionRateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ConversionRate
+        fields = '__all__'

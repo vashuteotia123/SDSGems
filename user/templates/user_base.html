@@ -1279,16 +1279,36 @@
         setPrice();
       }
 
+      //simple ajax call
+      function get_Rate() {
+        var url = "/getConversionRate";
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onload = function () {
+          if (this.status == 200) {
+            var data = JSON.parse(this.responseText);
+            var rate = data.conversion_rate;
+            return rate;
+          }
+          else {
+            return 74.17;
+          }
+        }
+        xhr.send();
+      }
+
       function setPrice() {
         var curr = localStorage.getItem("currency");
+        //wait to get the conversion rate
+        var rate = 74.17;
         if (curr) {
           if (curr == "usd") {
             allPrices = document.querySelectorAll('#tag_price')
             for (var i = 0; i < allPrices.length; i++) {
               console.log(allPrices[i].innerText)
               if (allPrices[i].innerText.includes("RS")) {
-                var price = parseInt(allPrices[i].innerText.replace("RS", "")) / 70
-                allPrices[i].innerText = "$" + price;
+                var price = parseInt(allPrices[i].innerText.replace("RS", "")) / rate;
+                allPrices[i].innerText = "$" + price.toFixed(2);
               }
             }
           }
@@ -1296,8 +1316,8 @@
             allPrices = document.querySelectorAll('#tag_price')
             for (var i = 0; i < allPrices.length; i++) {
               if (allPrices[i].innerText.includes("$")) {
-                var price = parseInt(allPrices[i].innerText.replace("$", "")) * 70
-                allPrices[i].innerText = "RS" + price;
+                var price = parseInt(allPrices[i].innerText.replace("$", "")) * rate;
+                allPrices[i].innerText = "RS" + price.toFixed(2);
               }
             }
           }

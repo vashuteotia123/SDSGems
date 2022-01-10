@@ -23,4 +23,7 @@ urlpatterns = [
 
     # Searching
     path('SearchForUser', SearchForUser, name="SearchForUser"),
+
+    # Conversion Rate for currency conversion
+    path('getConversionRate', getConversionRate, name="getConversionRate"),
 ]

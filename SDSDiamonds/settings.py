@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'django_user_agents',
     'taggit',
     'ckeditor',
+    'rest_framework',
 
 ]
 
