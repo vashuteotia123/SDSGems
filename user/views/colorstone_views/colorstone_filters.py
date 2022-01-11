@@ -32,11 +32,16 @@ class colorStoneFilter(ListView):
         context['colorStoneOrigins'] = self.colorStoneOrigins
         context['colorStoneGemTypes'] = self.colorStoneGemTypes
         context['user'] = self.get_user()
+        context['colors'] = SafeString(str([]))
+        context['shapes'] = SafeString(str([]))
+        context['origins'] = SafeString(str([]))
+        context['gemtypes'] = SafeString(str([]))
 
         # Handling Navigation Bar Filter Requests
         if self.request.GET.get('shape'):
             all_objects, shape = self.get_by_shape(
                 self.request.GET.get('shape'), all_objects)
+            context['total_count'] = self.get_object_count(all_objects)
             paginator = Paginator(all_objects, self.paginate_by)
             page = self.request.GET.get('page')
             if page:
@@ -52,6 +57,7 @@ class colorStoneFilter(ListView):
         if self.request.GET.get('color'):
             all_objects, color = self.get_by_color(
                 self.request.GET.get('color'), all_objects)
+            context['total_count'] = self.get_object_count(all_objects)
             paginator = Paginator(all_objects, self.paginate_by)
             page = self.request.GET.get('page')
             if page:
@@ -59,16 +65,15 @@ class colorStoneFilter(ListView):
             else:
                 all_objects = paginator.get_page(1)
 
-            colors = []
-            colors.append(color)
+            colors = self.request.GET.getlist('color')
             context['colors'] = SafeString(str(colors))
             context['all_objects'] = all_objects
-            print(context)
             return context
 
         if self.request.GET.get('origin'):
             all_objects, origin = self.get_by_origin(
                 self.request.GET.get('origin'), all_objects)
+            context['total_count'] = self.get_object_count(all_objects)
             paginator = Paginator(all_objects, self.paginate_by)
             page = self.request.GET.get('page')
             if page:
@@ -84,6 +89,7 @@ class colorStoneFilter(ListView):
         if self.request.GET.get('gemtype'):
             all_objects, gemtype = self.get_by_gemtype(
                 self.request.GET.get('gemtype'), all_objects)
+            context['total_count'] = self.get_object_count(all_objects)
             paginator = Paginator(all_objects, self.paginate_by)
             page = self.request.GET.get('page')
             if page:
@@ -101,6 +107,7 @@ class colorStoneFilter(ListView):
         all_objects, colors = self.get_color_filtered(all_objects)
         all_objects, origins = self.get_origin_filtered(all_objects)
         all_objects, gemtypes = self.get_gemtype_filtered(all_objects)
+        context['total_count'] = self.get_object_count(all_objects)
         paginator = Paginator(all_objects, self.paginate_by)
         page = self.request.GET.get('page')
         if page:
@@ -113,7 +120,6 @@ class colorStoneFilter(ListView):
         context['colors'] = SafeString(str(colors))
         context['origins'] = SafeString(str(origins))
         context['gemtypes'] = SafeString(str(gemtypes))
-
         return context
 
     def get_queryset(self):
@@ -166,3 +172,6 @@ class colorStoneFilter(ListView):
     def get_by_gemtype(self, gemtype, all_objects):
         all_objects = all_objects.filter(gem_type__gem=gemtype)
         return all_objects, gemtype
+
+    def get_object_count(self, all_objects):
+        return all_objects.count()
