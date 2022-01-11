@@ -227,10 +227,15 @@
                             <br>
                             <div>
                                 <button class="btn btn-dark btn--xl mt-5 mt-sm-0">
+                                    {% if product.media.certificate%}
                                     <a href="/media/{{product.media.certificate}}">
                                         <span class="mr-2"><i class="ion-android"></i></span>
                                         View Certificate
                                     </a>
+                                    {% else %}
+                                        <span class="mr-2"><i class="ion-android"></i></span>
+                                        No Certificate
+                                    {% endif %}
                                 </button>
                             </div>
                         </div>

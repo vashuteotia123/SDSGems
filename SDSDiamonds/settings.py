@@ -197,4 +197,4 @@ EMAIL_HOST_USER = env("EMAIL_HOST")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 
 # Error handler
-handler404 = 'user.views.custom_404'
+handler404 = 'user.views.common_views.custom404'

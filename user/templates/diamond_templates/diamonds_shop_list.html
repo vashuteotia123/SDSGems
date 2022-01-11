@@ -1,11 +1,13 @@
 {% extends 'user_base.html' %}
 {% block content %}
+{% load price_tags %}
 
 <div class="product-tab bg-white pt-80 pb-80">
     <div class="container">
         <div class="grid-nav-wraper bg-lighten2 mb-30">
             <div class="row align-items-center">
                 <div class="col-12 col-md-6 mb-3 mb-md-0">
+
                     <nav class="shop-grid-nav">
                         <ul class="nav nav-pills align-items-center" id="pills-tab" role="tablist">
                             <li class="nav-item">
@@ -14,10 +16,15 @@
                                     <i class="fa fa-th"></i>
                                 </a>
                             </li>
-
                             <li>
+                                {% if total_count == 1 %}
+                                <span class="total-products text-capitalize">There is {{total_count}}
+                                    product.</span>
+                                {% else %}
                                 <span class="total-products text-capitalize">There are {{total_count}}
                                     products.</span>
+                                {% endif %}
+
                             </li>
                         </ul>
                     </nav>
@@ -33,75 +40,214 @@
                         </select>
                     </div>
                 </div>
+
             </div>
         </div>
-        <!-- product-tab-nav end -->
-        <div class="tab-content" id="pills-tabContent">
-            <!-- first tab-pane -->
-            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                <div class="row grid-view theme1">
-                    {% for object in all_objects %}
-                    <div class="col-sm-6 col-lg-4 col-xl-3 mb-30">
-                        <div class="card product-card">
-                            <div class="card-body">
-                                <a href="{% url 'showDiamond' product_id=object.id %}">
-                                    <div class="product-thumbnail position-relative">
-                                        <span class="badge badge-danger top-right">{{object.shape}}</span>
-                                        {% if object.media.image1 %}
-                                        <img class="first-img" src="/media/{{object.media.image1}}"
-                                            alt="{{object.shape}}" />
-                                        {% else %}
-                                        <br><br>
-                                        <h5>No image for this object.</h5><br><br>
-                                        {% endif %}
-                                        <!-- product links end-->
+        <div class="row">
+            <div class="col-lg-3 mb-30 order-lg-first">
+                <aside class="left-sidebar theme1">
+                    <!-- search-filter start -->
+                    <div class="search-filter">
+                        <div class="sidbar-widget pt-0">
+                            <h4 class="title">Filter By</h4>
+                        </div>
+                    </div>
+                    <form method="get">
+                        {% csrf_token %}
+                        <ul id="offcanvas-menu2" class="blog-ctry-menu">
+                            <li>
+                                <a href="javascript:void(0)">Shape</a>
+                                <ul class="category-sub-menu">
+                                    {% for shape in diamondshapes %}
+                                    <div class="widget-check-box color-grey">
+                                        <input type="checkbox" name="shapes[]" class="submenu-toggle"
+                                            value="{{shape.shape}}" id="shapes-{{shape.shape}}">
+                                        <label for="shapes-{{shape.shape}}">{{shape}}</label>
                                     </div>
-                                </a>
-                                <div class="product-desc py-0 px-0">
-                                    <h3 class="title">
-                                        <a href="{% url 'showDiamond' product_id=object.id %}">{{object.shape}},
-                                            {{object.color_origin1}} {{white_color_grade1}},
-                                            {{object.fluorescence_color}}, {{object.polish}},
-                                            {{object.symmetry}}</a>
-                                    </h3>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">Cuts</a>
+                                <ul class="category-sub-menu">
+                                    {% for cut in diamondcuts %}
+                                    <div class="widget-check-box color-grey">
+                                        <input type="checkbox" name="cuts[]" class="submenu-toggle" value="{{cut.cut}}"
+                                            id="cuts-{{cut.cut}}">
+                                        <label for="cuts-{{cut.cut}}">{{cut}}</label>
+                                    </div>
+                                    {% endfor %}
 
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <span class="product-price" id="tag_price">${{object.tag_price_d}}</span>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">Symmetrys</a>
+                                <ul class="category-sub-menu">
+                                    {% for symmetry in diamondsymmetrys %}
+                                    <div class="widget-check-box color-grey">
+                                        <input type="checkbox" name="symmetrys[]" class="submenu-toggle" value="{{symmetry.symmetry}}"
+                                            id="symmetrys-{{symmetry.symmetry}}">
+                                        <label for="symmetrys-{{symmetry.symmetry}}"">{{symmetry}}</label>
+                                    </div>
+                                    {% endfor %}
 
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">Color Origins</a>
+                                <ul class="category-sub-menu">
+                                    {% for color in diamondcolororigin %}
+                                    <div class="widget-check-box color-grey">
+                                        <input type="checkbox" name="colororigins[]" class="submenu-toggle"
+                                            value="{{color.c_o}}" id="color_origins-{{color.c_o}}">
+                                        <label for="color_origins-{{color.c_o}}">{{color}}</label>
+                                    </div>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">Polish</a>
+                                <ul class="category-sub-menu">
+                                    {% for polish in diamondpolishes %}
+                                    <div class="widget-check-box color-grey">
+                                        <input type="checkbox" name="polishes[]" class="submenu-toggle"
+                                            value="{{polish.polish}}" id="polishes-{{polish.polish}}">
+                                        <label for="polishes-{{polish.polish}}">{{polish}}</label>
+                                    </div>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">Fluorescence Colour</a>
+                                <ul class="category-sub-menu">
+                                    {% for flcolor in diamondfluorescencecolors %}
+                                    <div class="widget-check-box color-grey">
+                                        <input type="checkbox" name="fluorescenceColors[]" class="submenu-toggle"
+                                            value="{{flcolor.f_color}}" id="fluorescenceColors-{{flcolor.f_color}}">
+                                        <label for="fluorescenceColors-{{flcolor.f_color}}">{{flcolor}}</label>
+                                    </div>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript:void(0)">Fluorescence Intensity</a>
+                                <ul class="category-sub-menu">
+                                    {% for flintensity in diamondfluorescenceintensitys %}
+                                    <div class="widget-check-box color-grey">
+                                        <input type="checkbox" name="fluorescenceIntensitys[]" class="submenu-toggle"
+                                            value="{{flintensity.f_intensity}}" id="fluorescenceIntensitys-{{flintensity.f_intensity}}">
+                                        <label for="fluorescenceIntensitys-{{flintensity.f_intensity}}">{{flintensity}}</label>
+                                    </div>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            
+                            <button type="submit" class="btn btn-primary">Apply</button>
+                    </form>
+
+
+                    <!-- search-filter end -->
+
+                    <!--second banner start-->
+
+                    <!--second banner end-->
+                </aside>
+            </div>
+            <div class="col-lg-9 mb-30">
+                <div class="tab-content" id="pills-tabContent">
+                    <!-- first tab-pane -->
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                        aria-labelledby="pills-home-tab">
+                        <div class="row grid-view theme1">
+                            {% for object in all_diaobjects %}
+                            <div class="col-sm-6 col-lg-4 col-xl-3 mb-30">
+                                <div class="card product-card">
+                                    <div class="card-body">
+                                        <a href="{% url 'showDiamond' product_id=object.id %}">
+
+                                            <div class="product-thumbnail position-relative">
+                                                <span class="badge badge-danger top-right">{{object.shape}}</span>
+                                                {% if object.media.image1 %}
+                                                <img class="first-img" src="/media/{{object.media.image1}}"
+                                                    alt="{{object.shape}}" />
+                                                {% else %}
+                                                <br><br>
+                                                <h5>No image for this object.</h5><br><br>
+                                                {% endif %}
+                                                <!-- product links end-->
+                                            </div>
+                                        </a>
+                                        <div class="product-desc py-0 px-0">
+                                            <h3 class="title">
+                                                <a href="{% url 'showDiamond' product_id=object.id %}">{{object.shape}},
+                                                    {{object.color_origin1}} {{white_color_grade1}},
+                                                    {{object.fluorescence_color}}, {{object.polish}},
+                                                    {{object.symmetry}}</a>
+                                            </h3>
+                                            {% if user %}
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                {% if user.Businesstype == "Customer" %}
+                                                <span class="product-price" id="tag_price">
+                                                    $ {% customer_price object.tag_price_d %}</span>
+                                                {% elif user.Businesstype == "Broker"%}
+                                                <span class="product-price" id="tag_price">
+                                                    $ {% broker_price object.tag_price_d %}</span>
+                                                {% else %}
+                                                <span class="product-price" id="tag_price">
+                                                    $ {% wholesaler_price object.tag_price_d %}</span>
+                                                {% endif %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            {% endfor %}
                         </div>
                     </div>
-                    {% endfor %}
-
-
                 </div>
             </div>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- product-tab-nav end -->
+
         <div class="row">
             <div class="col-12">
                 <nav class="pagination-section mt-30">
                     <ul class="pagination justify-content-center">
-                        <li class="page-item {% if not all_objects.has_previous %} disabled {% endif %}">
-                            <a class="page-link"
-                                href="{% if all_objects.has_previous %} {% url current_url page=all_objects.previous_page_number %}{% endif %}"><i
+                        <li class="page-item {% if not all_diaobjects.has_previous %} disabled {% endif %}">
+                            <a class="page-link" {% if all_diaobjects.has_previous %}
+                                href="?page={{ all_diaobjects.previous_page_number}}" {% endif %}><i
                                     class="ion-chevron-left"></i></a>
                         </li>
-                        {% for i in all_objects.paginator.page_range %}
-                        {% if all_objects.number == i %}
+                        {% for i in all_diaobjects.paginator.page_range %}
+                        {% if all_diaobjects.number == i %}
                         <li class="page-item active">
-                            <a class="page-link" href='{% url current_url page=i %}'>{{i}}</a>
+                            <a class="page-link" href="?page={{i}}">{{i}}</a>
                         </li>
-                        {% elif i > all_objects.number|add:'-2' and i < all_objects.number|add:'2' %} <li
+                        {% elif i > all_diaobjects.number|add:'-2' and i < all_diaobjects.number|add:'2' %} <li
                             class="page-item">
-                            <a class="page-link" href='{% url current_url page=i %}'>{{i}}</a>
+                            <a class="page-link" href="?page={{i}}">{{i}}</a>
                             </li>
                             {% endif %}
                             {% endfor %}
-                            <li class="page-item {% if not all_objects.has_next %} disabled {% endif %}">
-                                <a class="page-link"
-                                    href="{% if all_objects.has_next %} {% url current_url page=all_objects.next_page_number %} {% endif %}"><i
+                            <li class="page-item {% if not all_diaobjects.has_next %} disabled {% endif %}">
+
+                                <a class="page-link" {% if all_diaobjects.has_next %}
+                                    href="?page={{all_diaobjects.next_page_number }} " {%endif %}><i
                                         class="ion-chevron-right"></i></a>
                             </li>
                     </ul>
@@ -110,4 +256,82 @@
         </div>
     </div>
 </div>
+<script>
+    var list = {
+        shape: {},
+        cut: {},
+        colororigin: {},
+        polish:{},
+        symmetry:{},
+        fluorescencecolor:{},
+        fluorescenceintensity:{},
+
+    }
+    function displayRadioValue() {
+        var ele = document.getElementsByTagName('input');
+        for (i = 0; i < ele.length; i++) {
+            if (ele[i].type = "checkbox") {
+                if (ele[i].id[0] == 's') {
+                    if (ele[i].checked) {
+                        list.shape[ele[i].name] = 1;
+                    }
+                    else {
+                        list.shape[ele[i].name] = 0;
+                    }
+                }
+            }
+        }
+        console.log(list);
+    }
+
+    var shapes = "{{shapes | safe}}";
+    var colororigins = "{{colororigins | safe}}";
+    var cuts = "{{cuts | safe}}";
+    var polishes="{{polishes | safe}}";
+    var symmetrys="{{symmetrys | safe}}";
+    var fluorescenceColors="{{fluorescencecolors | safe }}"
+    var fluorescenceIntensitys="{{fluorescenceintensitys | safe}}"
+    console.log(polishes,shapes)
+    //python list string to array of strings
+    shapes = shapes.replace(/'/g, '"');
+    shapes = JSON.parse(shapes);
+    polishes=polishes.replace(/'/g, '"');
+    polishes=JSON.parse(polishes)
+    symmetrys=symmetrys.replace(/'/g, '"');
+    symmetrys=JSON.parse(symmetrys)
+    fluorescenceColors=fluorescenceColors.replace(/'/g, '"');
+    fluorescenceColors=JSON.parse(fluorescenceColors)
+    fluorescenceIntensitys=fluorescenceIntensitys.replace(/'/g, '"');
+    fluorescenceIntensitys=JSON.parse(fluorescenceIntensitys)
+    colororigins = colororigins.replace(/'/g, '"');
+    colororigins = JSON.parse(colororigins);
+    cuts = cuts.replace(/'/g, '"');
+    cuts = JSON.parse(cuts);
+
+    for (var i = 0; i < shapes.length; i++) {
+        document.getElementById(`shapes-${shapes[i]}`).checked = true;
+    }
+    for (var i = 0; i < colororigins.length; i++) {
+        document.getElementById(`color_origins-${colororigins[i]}`).checked = true;
+    }
+    for (var i = 0; i < cuts.length; i++) {
+        document.getElementById(`cuts-${cuts[i]}`).checked = true;
+    }
+    for(var i=0;i<polishes.length;i++)
+    {
+        document.getElementById(`polishes-${polishes[i]}`).checked = true;
+    }
+    for (var i = 0; i < symmetrys.length; i++) {
+        document.getElementById(`symmetrys-${symmetrys[i]}`).checked = true;
+    }
+    for(var i=0;i<fluorescenceColors.length;i++)
+    {
+        document.getElementById(`fluorescenceColors-${fluorescenceColors[i]}`).checked = true;
+    }
+
+    for(var i=0;i <fluorescenceIntensitys.length;i++)
+    {
+        document.getElementById(`fluorescenceIntensitys-${fluorescenceIntensitys}`).checked = true;
+    }
+</script>
 {% endblock content %}

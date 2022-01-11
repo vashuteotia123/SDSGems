@@ -1,11 +1,203 @@
-{% for object in all_jewellery_with_keyword%}
-{{object.shape}}
-{% endfor %}
+{% extends 'user_base.html' %} {% block content %}
+{% load price_tags %}
+{% if all_jewellery_with_keyword%}
+<section class="bg-white theme1 pb-80">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <!-- section-title start -->
+        <div class="section-title text-center">
+          <h2 class="title pb-3 mb-3">Jewellery</h2>
+          <p class="text">Jewellery related to searched keyword.</p>
+        </div>
+        <div class="product-slider-init theme1 slick-nav">
+          {% for product in all_jewellery_with_keyword %}
+          <div class="slider-item">
+            <div class="card product-card">
+              <div class="card-body p-0">
+                <div class="media flex-column">
+                  <div class="product-thumbnail position-relative">
+                    <!-- <span class="badge badge-danger top-right">New</span> -->
+                    <a href="">
+                      {% if product.media.image1 %}
+                      <img class="first-img" src="/media/{{product.media.image1}}" alt="thumbnail" />
+                      {% else %}
+                      <br /><br />
+                      <h5>No image for this object.</h5>
+                      {% endif %}
+                    </a>
+                    <!-- product links -->
+                    <!-- product links end-->
+                  </div>
+                  <div class="media-body">
+                    <div class="product-desc">
+                      <h3 class="title">
+                        <a href="{% url 'showJewellery' product_id=product.id %}">
+                          {{product.jewellery_type}}, {{product.center_stone}},
+                          {{product.color_of_center_stone}}, {{product.shape}},
+                          {{product.metal}}
+                        </a>
+                      </h3>
 
-{% for object in all_diamond_with_keyword%}
-{{object.cut}}
-{%endfor%}
+                      <div class="d-flex align-items-center justify-content-between">
+                        {% if user.Businesstype == "Customer" %}
+                        <span class="product-price" id="tag_price">
+                          ${% customer_price product.tag_price %}</span>
+                        {% elif user.Businesstype == "Broker"%}
+                        <span class="product-price" id="tag_price">
+                          ${% broker_price product.tag_price %}</span>
+                        {% else %}
+                        <span class="product-price" id="tag_price">
+                          ${% wholesaler_price product.tag_price %}</span>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+{%if all_diamond_with_keyword%}
+<section class="bg-white theme1 pb-80">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <!-- section-title start -->
+        <div class="section-title text-center">
+          <h2 class="title pb-3 mb-3">Diamonds</h2>
+          <p class="text">
+            Diamonds related to searched keyword.
+          </p>
+        </div>
+        <div class="product-slider-init theme1 slick-nav">
+          {% for product in all_diamond_with_keyword %}
+          <div class="slider-item">
+              <div class="card product-card">
+                  <div class="card-body p-0">
+                      <div class="media flex-column">
+                          <div class="product-thumbnail position-relative">
+                              <span class="badge badge-danger top-right">New</span>
+                              <a href="{% url 'showDiamond' product_id=product.id %}">
+                                  {% if product.media.image1 %}
+                                  <img class="first-img" src="/media/{{product.media.image1}}"
+                                      alt="thumbnail" />
+                                  {% else %}
+                                  <br><br>
+                                  <h5>No image for this object.</h5>
+                                  {% endif %}
+                              </a>
+                              <!-- product links -->
+                              <!-- product links end-->
+                          </div>
+                          <div class="media-body">
+                              <div class="product-desc">
+                                  <h3 class="title">
+                                      <a href="{% url 'showDiamond' product_id=product.id %}">
+                                          {{product.shape}},
+                                          {{product.color_origin1}} {{white_color_grade1}},
+                                          {{product.fluorescence_color}}, {{product.polish}},
+                                          {{product.symmetry}}
+                                      </a>
+                                  </h3>
 
-{% for object in all_colorstone_with_keyword %}
-{{object.color}}
-{%endfor%}
+                                  <div class="d-flex align-items-center justify-content-between">
+                                      {% if user.Businesstype == "Customer" %}
+                                      <span class="product-price" id="tag_price">
+                                          ${% customer_price product.tag_price_d %}</span>
+                                      {% elif user.Businesstype == "Broker"%}
+                                      <span class="product-price" id="tag_price">
+                                          ${% broker_price product.tag_price_d %}</span>
+                                      {% else %}
+                                      <span class="product-price" id="tag_price">
+                                          ${% wholesaler_price product.tag_price_d %}</span>
+                                      {% endif %}
+
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+{% if all_colorstone_with_keyword %}
+<section class="bg-white theme1 pb-80">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <!-- section-title start -->
+        <div class="section-title text-center">
+          <h2 class="title pb-3 mb-3">Color Stones</h2>
+          <p class="text">
+            Colour Stones related to searched keywords.
+          </p>
+        </div>
+        <div class="product-slider-init theme1 slick-nav">
+          {% for product in all_colorstone_with_keyword %}
+          <div class="slider-item">
+            <div class="card product-card">
+              <div class="card-body p-0">
+                <div class="media flex-column">
+                  <div class="product-thumbnail position-relative">
+                    <span class="badge badge-danger top-right">New</span>
+                    <a href="">
+                      {% if product.media.image1 %}
+                      <img class="first-img" src="/media/{{product.media.image1}}" alt="thumbnail" />
+                      {% else %}
+                      <br><br>
+                      <h5>No image for this object.</h5>
+                      {% endif %}
+                    </a>
+                    <!-- product links -->
+                    <!-- product links end-->
+                  </div>
+                  <div class="media-body">
+                    <div class="product-desc">
+                      <h3 class="title">
+                        <a href="{% url 'showColorStone' product_id=product.id %}">
+                          {{product.gem_type}},
+                          {{product.origin}}, {{product.shape}}, {{product.color}}
+                        </a>
+                      </h3>
+
+                      <div class="d-flex align-items-center justify-content-between">
+                        {% if user.Businesstype == "Customer" %}
+                        <span class="product-price" id="tag_price">
+                          ${% customer_price product.tag_price %}</span>
+                        {% elif user.Businesstype == "Broker"%}
+                        <span class="product-price" id="tag_price">
+                          ${% broker_price product.tag_price %}</span>
+                        {% else %}
+                        <span class="product-price" id="tag_price">
+                          ${% wholesaler_price product.tag_price %}</span>
+                        {% endif %}
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% endblock content %}

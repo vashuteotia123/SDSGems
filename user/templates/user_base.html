@@ -1250,7 +1250,7 @@
       }
       function checkcurrency() {
         var currPrice = localStorage.getItem("currency_price");
-        var expiry = 50000;
+        var expiry = 600000;
         var curr = localStorage.getItem("currency");
         if (!currPrice) {
 
@@ -1261,7 +1261,10 @@
         } else {
           if ((new Date().getTime()) - parseInt(currPrice.split('|')[1]) > expiry) {
             localStorage.removeItem("currency_price");
-            checkcurrency();
+            getPrice().then(data => {
+              var date = new Date().getTime();
+              localStorage.setItem("currency_price", `${data.conversion_rate}|${date}`)
+            }); 
           }
         }
         if (curr) {
@@ -1311,14 +1314,14 @@
         if (localStorage.getItem("currency_price")) {
           var rate = localStorage.getItem("currency_price").split('|')[0];
         } else {
-          window.location.reload();
+          var rate = 0;
         }
         if (curr) {
           if (curr == "usd") {
             allPrices = document.querySelectorAll('#tag_price')
             for (var i = 0; i < allPrices.length; i++) {
-              if (allPrices[i].innerText.includes("RS")) {
-                var price = parseInt(allPrices[i].innerText.replace("RS", "")) / rate;
+              if (allPrices[i].innerText.includes("₹ ")) {
+                var price = parseInt(allPrices[i].innerText.replace("₹ ", "")) / rate;
                 allPrices[i].innerText = "$" + price.toFixed(2);
               }
             }
@@ -1328,7 +1331,7 @@
             for (var i = 0; i < allPrices.length; i++) {
               if (allPrices[i].innerText.includes("$")) {
                 var price = parseInt(allPrices[i].innerText.replace("$", "")) * rate;
-                allPrices[i].innerText = "RS" + price.toFixed(2);
+                allPrices[i].innerText = "₹ " + price.toFixed(2);
               }
             }
           }

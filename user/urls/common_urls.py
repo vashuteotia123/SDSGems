@@ -3,7 +3,6 @@ from django.urls import path
 from user.views import common_views
 from django.urls.resolvers import URLPattern
 from user.views.common_views import *
-from user.views.colorstone_views.colorstone_home_filters import *
 
 urlpatterns = [
     # user model
@@ -18,8 +17,7 @@ urlpatterns = [
     path('myaccount', MyAccount.as_view(), name="myaccount"),
 
     # Filters for ColorStones
-    path('colorStoneByShapeFilter/<int:shape_id>',
-         colorStoneByShapeFilter, name="colorStoneByShapeFilter"),
+    
 
     # Searching
     path('SearchForUser', SearchForUser, name="SearchForUser"),

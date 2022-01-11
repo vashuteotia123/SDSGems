@@ -96,51 +96,27 @@ if deploy_color_stone:
 if deploy_jewellery:
     @admin.register(jewell)
     class jewelladmin(ImportExportModelAdmin, admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
+        search_fields = [f.name for f in jewell._meta.fields]
 
     @admin.register(centerstone)
     class CSadmin(ImportExportModelAdmin, admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
+        search_fields = [f.name for f in centerstone._meta.fields]
 
     @admin.register(colorofcstone)
     class COCSadmin(ImportExportModelAdmin, admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
+        search_fields = [f.name for f in colorofcstone._meta.fields]
 
     @admin.register(metal1)
     class metaladmin(ImportExportModelAdmin, admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
+        search_fields = [f.name for f in metal1._meta.fields]
 
     @admin.register(shape1)
     class shapeadmin(ImportExportModelAdmin, admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
+        search_fields = [f.name for f in shape1._meta.fields]
 
     @admin.register(certificate)
     class certadmin(ImportExportModelAdmin, admin.ModelAdmin):
-        def HomePage(certadmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
+        search_fields = [f.name for f in certificate._meta.fields]
 
     # @admin.register(currencies)
     # class curradmin( admin.ModelAdmin):
@@ -299,7 +275,7 @@ if deploy_diamond:
 
         @ admin.register(cut)
         class cutadmin(admin.ModelAdmin):
-            def HomePage(LocAdmin, request, queryset):
+            def HomePage(cutadmin, request, queryset):
                 return redirect('/index')
 
             HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
@@ -307,7 +283,7 @@ if deploy_diamond:
 
         @ admin.register(polish)
         class polishadmin(admin.ModelAdmin):
-            def HomePage(LocAdmin, request, queryset):
+            def HomePage(polishadmin, request, queryset):
                 return redirect('/index')
 
             HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
@@ -315,7 +291,7 @@ if deploy_diamond:
 
         @ admin.register(symmetry)
         class symmetryadmin(admin.ModelAdmin):
-            def HomePage(LocAdmin, request, queryset):
+            def HomePage(symmetryadmin, request, queryset):
                 return redirect('/index')
 
             HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
@@ -331,7 +307,7 @@ if development_mode:
 
     @ admin.register(Inventoryofjewellery)
     class iojadmin(admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
+        def HomePage(iojadmin, request, queryset):
             return redirect('/index')
 
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
@@ -339,7 +315,7 @@ if development_mode:
 
     @ admin.register(PurchaseOfColorStones)
     class pcosadmin(admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
+        def HomePage(pcosadmin, request, queryset):
             return redirect('/index')
 
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
@@ -347,7 +323,7 @@ if development_mode:
 
     @ admin.register(Inventoryofcolorstones)
     class inventoryofcsadmin(ImportExportModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
+        def HomePage(inventoryofcsadmin, request, queryset):
             return redirect('/index')
 
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
@@ -355,7 +331,7 @@ if development_mode:
 
     @ admin.register(POD)
     class PODadmin(admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
+        def HomePage(PODadmin, request, queryset):
             return redirect('/index')
 
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
@@ -363,7 +339,7 @@ if development_mode:
 
     @ admin.register(Inventoryofdiamond)
     class inventoryofdiamondadmin(admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
+        def HomePage(inventoryofdiamondadmin, request, queryset):
             return redirect('/index')
 
         HomePage.attrs = {'class': 'btn btn-outline-success float-right', }

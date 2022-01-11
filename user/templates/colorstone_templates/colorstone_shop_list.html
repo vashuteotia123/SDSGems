@@ -17,7 +17,13 @@
                 </a>
               </li>
               <li>
-                <span class="total-products text-capitalize">There are {{total_count}} products.</span>
+                {% if total_count == 1 %}
+                <span class="total-products text-capitalize">There is {{total_count}}
+                    product.</span>
+                {% else %}
+                <span class="total-products text-capitalize">There are {{total_count}}
+                    products.</span>
+                {% endif %}
               </li>
             </ul>
           </nav>

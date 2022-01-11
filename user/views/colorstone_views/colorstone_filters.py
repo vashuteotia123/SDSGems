@@ -4,7 +4,6 @@ from django.utils import safestring
 from firstapp.models import *
 from user.models import *
 from django.shortcuts import *
-from user.views.colorstone_views.colorstone_home_filters import allColorStones
 from user.views.common_views import *
 import random
 import re
@@ -123,7 +122,7 @@ class colorStoneFilter(ListView):
         return context
 
     def get_queryset(self):
-        return super().get_queryset().filter(frontend=True).all().order_by('-id')
+        return super().get_queryset().select_related('media').filter(frontend=True).all().order_by('-id')
 
     def get_user(self):
         user = User_table.objects.get(
