@@ -28,7 +28,6 @@ urlpatterns = [
 
     # Single Diamond
     path('showDiamond/<int:product_id>', showDiamond, name='showDiamond'),
-    path('diamondfilter', diamondfilter.as_view(), name="diamondfilter"),
-    path('diamondfilter/<int:page>',
-         diamondfilter.as_view(), name="diamondfilter"),
+    path('diamondFilter', diamondFilter.as_view(), name="diamondFilter"),
+
 ]

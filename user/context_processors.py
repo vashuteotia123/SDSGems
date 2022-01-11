@@ -9,7 +9,7 @@ def diamond_common_context(request):
     if 'is_logedin' in request.session:
         user_login = True
     diamond_shapes = shape_d.objects.all()[:4]
-    diamond_cuts = clarity.objects.all()[:4]
+    diamond_cuts = cut.objects.all()[:4]
     diamond_origins = color_origin.objects.all()[:4]
     diamond_polishes = polish.objects.all()[:4]
     return {

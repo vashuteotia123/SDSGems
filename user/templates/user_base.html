@@ -568,24 +568,23 @@
                 {% if user_login %}
                 {% if only_cs%}
                 <li class="position-static">
-                  <a href="{%url 'allDiamonds' %}">Diamonds<i class="ion-ios-arrow-down"></i></a>
+                  <a href="{%url 'diamondFilter' %}">Diamonds<i class="ion-ios-arrow-down"></i></a>
                   <ul class="mega-menu row">
                     <li class="col-3">
                       <ul>
                         <li class="mega-menu-title"><a href="#">Diamonds by Shapes</a></li>
                         {% for shape in diamond_shapes %}
                         <li>
-                          <a href="{% url 'diamondByShapeFilter' shape_id=shape.id %}">{{shape}}</a>
+                          <a href="/diamondFilter?shape={{shape.shape}}">{{shape}}</a>
                         </li>
                         {% endfor %}
-
                       </ul>
                     </li>
                     <li class="col-3">
                       <ul>
                         <li class="mega-menu-title"><a href="#">Diamonds by Cut</a></li>
                         {% for cut in diamond_cuts%}
-                        <li><a href="{% url 'diamondByCutFilter' cut_id=cut.id %}">{{cut}}</a></li>
+                        <li><a href="/diamondFilter?cut={{cut.cut}}">{{cut}}</a></li>
                         {% endfor %}
                       </ul>
                     </li>
@@ -595,7 +594,7 @@
                         </li>
 
                         {% for c_origin in diamond_origins %}
-                        <li><a href="{% url 'diamondByColorOriginFilter' color_origin_id=c_origin.id%}">{{c_origin}}</a>
+                        <li><a href="/diamondFilter?colororigin={{c_origin.c_o}}">{{c_origin}}</a>
                         </li>
                         {% endfor %}
                       </ul>
@@ -1260,7 +1259,6 @@
             localStorage.setItem("currency_price", `${data.conversion_rate}|${date}`)
           });
         } else {
-          console.log((new Date().getTime()) - parseInt(currPrice.split('|')[1]))
           if ((new Date().getTime()) - parseInt(currPrice.split('|')[1]) > expiry) {
             localStorage.removeItem("currency_price");
             checkcurrency();
@@ -1319,7 +1317,6 @@
           if (curr == "usd") {
             allPrices = document.querySelectorAll('#tag_price')
             for (var i = 0; i < allPrices.length; i++) {
-              console.log(allPrices[i].innerText)
               if (allPrices[i].innerText.includes("RS")) {
                 var price = parseInt(allPrices[i].innerText.replace("RS", "")) / rate;
                 allPrices[i].innerText = "$" + price.toFixed(2);
@@ -1343,7 +1340,6 @@
       }
       window.onload = price_set;
       var context = "{{ context }}";
-      console.log(context);
     </script>
   </body>
 

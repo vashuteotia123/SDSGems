@@ -37,6 +37,5 @@ urlpatterns = [
 
     # Colorstone filter
     path('colorStoneFilter', colorStoneFilter.as_view(), name="colorStoneFilter"),
-    path('colorStoneFilter/<int:page>',
-         colorStoneFilter.as_view(), name="colorStoneFilter"),
+
 ]
