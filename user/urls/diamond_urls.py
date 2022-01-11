@@ -5,6 +5,7 @@ from django.urls.resolvers import URLPattern
 from user.views.common_views import *
 from user.views.diamonds_views.diamond_product import *
 from user.views.diamonds_views.diamonds_home_filters import *
+from user.views.diamonds_views.diamonds_filters import *
 
 urlpatterns = [
     # All objects of colorstones
@@ -27,4 +28,7 @@ urlpatterns = [
 
     # Single Diamond
     path('showDiamond/<int:product_id>', showDiamond, name='showDiamond'),
+    path('diamondfilter', diamondfilter.as_view(), name="diamondfilter"),
+    path('diamondfilter/<int:page>',
+         diamondfilter.as_view(), name="diamondfilter"),
 ]
