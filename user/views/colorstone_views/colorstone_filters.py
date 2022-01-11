@@ -15,7 +15,7 @@ from django.utils.safestring import SafeString
 class colorStoneFilter(ListView):
     template_name = "colorstone_templates/colorstone_shop_list.html"
 
-    paginate_by = 1000
+    paginate_by = 12
     model = Inventoryofcolorstones
 
     def get_context_data(self, **kwargs):

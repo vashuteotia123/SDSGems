@@ -19,10 +19,10 @@
               <li>
                 {% if total_count == 1 %}
                 <span class="total-products text-capitalize">There is {{total_count}}
-                    product.</span>
+                  product.</span>
                 {% else %}
                 <span class="total-products text-capitalize">There are {{total_count}}
-                    products.</span>
+                  products.</span>
                 {% endif %}
               </li>
             </ul>
@@ -103,7 +103,7 @@
                   {% endfor %}
                 </ul>
               </li>
-            <button type="submit" class="btn btn-primary">Apply</button>
+              <button type="submit" class="btn btn-primary">Apply</button>
           </form>
 
 
@@ -184,21 +184,31 @@
         <nav class="pagination-section mt-30">
           <ul class="pagination justify-content-center">
             <li class="page-item {% if not all_objects.has_previous %} disabled {% endif %}">
-              <a class="page-link" {% if all_objects.has_previous %} href="?page={{ all_objects.previous_page_number}}"
+              <a class="page-link" {% if all_objects.has_previous %}
+                href="{% if request.path == request.get_full_path %}{{ request.get_full_path }}?page={{ all_objects.previous_page_number}}{%else%}{{ request.get_full_path }}&page={{ all_objects.previous_page_number}}{% endif %}"
                 {% endif %}><i class="ion-chevron-left"></i></a>
             </li>
             {% for i in all_objects.paginator.page_range %}
             {% if all_objects.number == i %}
             <li class="page-item active">
-              <a class="page-link" href="?page={{i}}">{{i}}</a>
+              {% if request.path == request.get_full_path %}
+              <a class="page-link" href="{{ request.get_full_path }}?page={{i}}">{{i}}</a>
+              {% else %}
+              <a class="page-link" href="{{ request.get_full_path }}&page={{i}}">{{i}}</a>
+              {%endif%}
             </li>
             {% elif i > all_objects.number|add:'-2' and i < all_objects.number|add:'2' %} <li class="page-item">
-              <a class="page-link" href="?page={{i}}">{{i}}</a>
+              {% if request.path == request.get_full_path %}
+              <a class="page-link" href="{{ request.get_full_path }}?page={{i}}">{{i}}</a>
+              {% else %}
+              <a class="page-link" href="{{ request.get_full_path }}&page={{i}}">{{i}}</a>
+              {%endif%}
               </li>
               {% endif %}
               {% endfor %}
               <li class="page-item {% if not all_objects.has_next %} disabled {% endif %}">
-                <a class="page-link" {% if all_objects.has_next %} href="?page={{all_objects.next_page_number }} "
+                <a class="page-link" {% if all_objects.has_next %}
+                  href="{% if request.path == request.get_full_path %}{{ request.get_full_path }}?page={{ all_objects.next_page_number}}{%else%}{{ request.get_full_path }}&page={{ all_objects.next_page_number}}{% endif %} "
                   {%endif %}><i class="ion-chevron-right"></i></a>
               </li>
           </ul>
