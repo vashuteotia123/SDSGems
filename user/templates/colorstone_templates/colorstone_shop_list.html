@@ -225,36 +225,32 @@
     console.log(list);
   }
 
+  var colors = "{{colors | safe}}";
   var shapes = "{{shapes | safe}}";
+  var origins = "{{origins | safe}}";
+  var gemtypes = "{{gemtypes | safe}}";
   //python list string to array of strings
+  colors = colors.replace(/'/g, '"');
+  colors = JSON.parse(colors);
   shapes = shapes.replace(/'/g, '"');
   shapes = JSON.parse(shapes);
+  origins = origins.replace(/'/g, '"');
+  origins = JSON.parse(origins);
+  gemtypes = gemtypes.replace(/'/g, '"');
+  gemtypes = JSON.parse(gemtypes);
+
+  for (var i = 0; i < colors.length; i++) {
+    document.getElementById(colors[i]).checked = true;
+  }
   for (var i = 0; i < shapes.length; i++) {
     document.getElementById(shapes[i]).checked = true;
   }
-
-  var gemtypes = "{{gemtypes | safe}}";
-  //python list string to array of strings
-  gemtypes = gemtypes.replace(/'/g, '"');
-  gemtypes = JSON.parse(gemtypes);
+  for (var i = 0; i < origins.length; i++) {
+    document.getElementById(origins[i]).checked = true;
+  }
   for (var i = 0; i < gemtypes.length; i++) {
     document.getElementById(gemtypes[i]).checked = true;
   }
 
-  var origins = "{{origins | safe}}";
-  //python list string to array of strings
-  origins = origins.replace(/'/g, '"');
-  origins = JSON.parse(origins);
-  for (var i = 0; i < origins.length; i++) {
-    document.getElementById(origins[i]).checked = true;
-  }
-
-  var colors = "{{colors | safe}}";
-  //python list string to array of strings
-  colors = colors.replace(/'/g, '"');
-  colors = JSON.parse(colors);
-  for (var i = 0; i < colors.length; i++) {
-    document.getElementById(colors[i]).checked = true;
-  }
 </script>
 {% endblock content %}
