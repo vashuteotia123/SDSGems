@@ -14,22 +14,22 @@ from django.utils.safestring import SafeString
 
 class colorStoneFilter(ListView):
     template_name = "colorstone_templates/colorstone_shop_list.html"
-    colorStoneShapes = shape_cs.objects.all()
-    colorStoneColors = color_of_colorstone.objects.all()
-    colorStoneOrigins = Origin_cs.objects.all()
-    colorStoneGemTypes = gemtype.objects.all()
 
-    paginate_by = 12
+    paginate_by = 1000
     model = Inventoryofcolorstones
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         all_objects = self.get_queryset()
         # Loading common filters
-        context['colorStoneShapes'] = self.colorStoneShapes
-        context['colorStoneColors'] = self.colorStoneColors
-        context['colorStoneOrigins'] = self.colorStoneOrigins
-        context['colorStoneGemTypes'] = self.colorStoneGemTypes
+        colorStoneShapes = shape_cs.objects.all()
+        colorStoneColors = color_of_colorstone.objects.all()
+        colorStoneOrigins = Origin_cs.objects.all()
+        colorStoneGemTypes = gemtype.objects.all()
+        context['colorStoneShapes'] = colorStoneShapes
+        context['colorStoneColors'] = colorStoneColors
+        context['colorStoneOrigins'] = colorStoneOrigins
+        context['colorStoneGemTypes'] = colorStoneGemTypes
         context['user'] = self.get_user()
         context['colors'] = SafeString(str([]))
         context['shapes'] = SafeString(str([]))
@@ -86,7 +86,7 @@ class colorStoneFilter(ListView):
             return context
 
         if self.request.GET.get('gemtype'):
-            all_objects, gemtype = self.get_by_gemtype(
+            all_objects, gem = self.get_by_gemtype(
                 self.request.GET.get('gemtype'), all_objects)
             context['total_count'] = self.get_object_count(all_objects)
             paginator = Paginator(all_objects, self.paginate_by)
@@ -96,7 +96,7 @@ class colorStoneFilter(ListView):
             else:
                 all_objects = paginator.get_page(1)
             gemtypes = []
-            gemtypes.append(gemtype)
+            gemtypes.append(gem)
             context['gemtypes'] = SafeString(str(gemtypes))
             context['all_objects'] = all_objects
             return context
