@@ -14,6 +14,7 @@ from django.utils.safestring import SafeString
 from firstapp.models import cut as diamondcuts  # import cut as diamondcuts
 from firstapp.models import polish as diamondpolish
 from firstapp.models import symmetry as diamondsymmrtry
+from django.utils.decorators import method_decorator
 
 
 class diamondFilter(ListView):
@@ -22,8 +23,12 @@ class diamondFilter(ListView):
     paginate_by = 12
     model = Inventoryofdiamond
 
-    def get_context_data(self, **kwargs):
+    def dispatch(self, *args, **kwargs):
+        if 'is_logedin' not in self.request.session.keys():
+            return redirect('/user_login')
+        return super().dispatch(*args, **kwargs)
 
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         all_diaobjects = self.get_queryset()
         diamondShapes = shape_d.objects.all()
@@ -226,11 +231,9 @@ class diamondFilter(ListView):
 
     def get_symmetry_filtered(self, all_diaobjects):
         symmetrys = self.request.GET.getlist('symmetrys[]')
-        print("Help")
         if(len(symmetrys) > 0):
             all_diaobjects = all_diaobjects.filter(
                 symmetry__symmetry__in=symmetrys)
-            print(all_diaobjects)
         return all_diaobjects, symmetrys
 
     def get_fluorescencecolor_filtered(self, all_diaobjects):

@@ -18,14 +18,6 @@ class countries(models.Model):
         super(countries, self).save(*args, **kwargs)
 
 
-class State(models.Model):
-    state = models.CharField(max_length=30)
-
-    def __str__(self):
-        return self.state
-# Create your models here.
-
-
 class User_table(models.Model):
     class Meta:
         verbose_name = "User"
@@ -47,10 +39,9 @@ class User_table(models.Model):
     city = models.CharField(max_length=100)
     postal_code = models.CharField(max_length=30)
     country = models.ForeignKey('countries', on_delete=models.PROTECT)
-    state = models.ForeignKey('State', on_delete=models.PROTECT)
     password = models.CharField(max_length=100)
-
     permit_user = models.BooleanField(default=False)
+    activate_hash = models.CharField(max_length=100, null=True, blank=True)
 
     def ___str__(self):
         return self.first_name + self.last_name
@@ -88,3 +79,17 @@ class ConversionRateSerializer(serializers.ModelSerializer):
     class Meta:
         model = ConversionRate
         fields = '__all__'
+
+
+class BirthStones(models.Model):
+    class Meta:
+        verbose_name_plural = "Birth Stones"
+
+    image = models.ImageField(upload_to="birthstones/", blank=True, null=True)
+    name = models.CharField(max_length=30, verbose_name="Stone Name")
+    month = models.CharField(max_length=30, verbose_name="Month")
+    tagline = models.CharField(max_length=300, verbose_name="Tagline")
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.month + " - " + self.name

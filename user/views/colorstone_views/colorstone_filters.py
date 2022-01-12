@@ -18,6 +18,11 @@ class colorStoneFilter(ListView):
     paginate_by = 12
     model = Inventoryofcolorstones
 
+    def dispatch(self, *args, **kwargs):
+        if 'is_logedin' not in self.request.session.keys():
+            return redirect('/user_login')
+        return super().dispatch(*args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         all_objects = self.get_queryset()

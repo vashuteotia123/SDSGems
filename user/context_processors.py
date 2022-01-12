@@ -26,7 +26,7 @@ def jewellery_common_context(request):
     return {
         'jewellery_types': jewell.objects.all()[:4],
         'jewellery_centerstones': centerstone.objects.all()[:4],
-        'jewellery_shapes': shape1.objects.all()[:4],
+        'jewellery_color_of_centerstone': colorofcstone.objects.all()[:4],
         'jewellery_metals': metal1.objects.all()[:4],
     }
 

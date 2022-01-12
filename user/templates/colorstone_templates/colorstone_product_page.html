@@ -230,15 +230,22 @@
                                         View Certificate
                                     </a>
                                 </button>
-                            </div>
-                            {% else %}
-                            <div>
+                                {% else %}
                                 <button class="btn btn-dark btn--xl mt-5 mt-sm-0">
                                     <span class="mr-2"><i class="ion-android"></i></span>
                                     No Certificate
                                 </button>
                                 {% endif %}
+                                <button class="btn btn-dark btn--xl mt-5 mt-sm-0">
+                                    <span class="mr-2"><i class="ion-social-whatsapp"></i></span>
+                                    <a
+                                        href="https://api.whatsapp.com/send?text={{ request.build_absolute_uri }} Hey there, I want to but this.">
+                                        <span class="mr-2"><i class="ion-android"></i></span>
+                                        CONTACT TO BUY
+                                    </a>
+                                </button>
                             </div>
+
                             <div class="product-footer">
                                 <div class="pro-social-links mt-10">
                                     <ul class="d-flex align-items-center">
@@ -273,7 +280,7 @@
                         <nav class="product-tab-menu single-product">
                             <ul class="nav nav-pills justify-content-center" id="pills-tab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link" id="pills-home-tab" data-toggle="pill" href="#"
+                                    <a class="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-home"
                                         role="tab" aria-controls="pills-home" aria-selected="true">Description</a>
                                 </li>
                                 <li class="nav-item">
@@ -305,6 +312,7 @@
                             <div class="single-product-desc">
                                 <div class="product-anotherinfo-wrapper">
                                     <ul>
+                                        <li><span>Stock ID</span> {{product.stockid}}</li>
                                         <li><span>Weight</span> {{product.Weight}} carat</li>
                                         <li><span>Dimensions</span>{{product.measurements}}</li>
                                         <li><span>Shape</span> {{product.shape}}</li>
@@ -313,12 +321,9 @@
                                         <li><span>Gem Type</span> {{product.gem_type}}</li>
                                         <li><span>Clarity </span> {{product.Clarity}}</li>
                                         <li><span>Lab </span> {{product.lab}}</li>
-                                        <li><span>Treatment </span> {{product.treatment}}</li>
 
-                                        <li>
-                                            <span>Other Info</span> American heirloom jean shorts pug
-                                            seitan letterpress
-                                        </li>
+
+                                        <li><span>Treatment </span> {{product.treatment}}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -338,7 +343,6 @@
                 <div class="col-12">
                     <div class="section-title text-center">
                         <h2 class="title pb-3 mb-3">You might also like</h2>
-                        <p class="text mt-10">Add Related products to weekly line up</p>
                     </div>
                 </div>
                 <div class="col-12">
@@ -349,14 +353,14 @@
                                 <div class="card-body p-0">
                                     <div class="media flex-column">
                                         <div class="product-thumbnail position-relative">
-                                            <span class="badge badge-danger top-right">New</span>
+                                            <span class="badge badge-danger top-right">{{product.lab}}</span>
                                             <a href="">
                                                 {% if product.media.image1 %}
                                                 <img class="first-img" src="/media/{{product.media.image1}}"
                                                     alt="thumbnail" />
                                                 {% else %}
-                                                <br><br>
-                                                <h5>No image for this object.</h5>
+                                                <img class="first-img" src="/static/images/default.png"
+                                                    alt="{{object.shape}}" />
                                                 {% endif %}
                                             </a>
                                             <!-- product links -->

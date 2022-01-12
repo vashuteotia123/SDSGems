@@ -1,0 +1,57 @@
+{% extends 'user_base.html' %}
+{% block content %}
+
+<nav class="breadcrumb-section theme1 bg-lighten2 pt-50 pb-50">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="section-title text-center">
+          <h2 class="title pb-4 text-dark text-capitalize">
+            Birthstones
+          </h2>
+        </div>
+      </div>
+      <div class="col-12">
+        <ol class="breadcrumb bg-transparent m-0 p-0 align-items-center justify-content-center">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Birthstones
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- breadcrumb-section end -->
+<!-- product tab start -->
+<section class="blog-section py-80">
+  <div class="container">
+    <div class="row">
+      {% for stone in birthstones %}
+      <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-30">
+        <div class="single-blog text-left">
+          <a class="blog-thumb mb-20 zoom-in d-block overflow-hidden"
+            href="{% url 'birthstone_single' birthstone_id=stone.id %}">
+            <img src="/media/{{stone.image}}" alt="blog-thumb-naile" />
+          </a>
+          <div class="blog-post-content">
+            <center>
+              <h2 class="title mb-15 mt-15">
+                <a href="{% url 'birthstone_single' birthstone_id=stone.id %}">{{stone.month | capfirst }}</a>
+              </h2>
+            </center>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+
+    </div>
+  </div>
+
+
+
+</section>
+
+
+{% endblock content %}

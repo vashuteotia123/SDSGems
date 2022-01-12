@@ -29,18 +29,6 @@
                         </ul>
                     </nav>
                 </div>
-                <div class="col-12 col-md-6 position-relative">
-                    <div class="shop-grid-button d-flex align-items-center">
-                        <span class="sort-by">Sort by:</span>
-                        <select class="form-select custom-select" aria-label="Default select example">
-                            <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                </div>
-
             </div>
         </div>
         <div class="row">
@@ -189,8 +177,8 @@
                                                 <img class="first-img" src="/media/{{object.media.image1}}"
                                                     alt="{{object.shape}}" />
                                                 {% else %}
-                                                <br><br>
-                                                <h5>No image for this object.</h5><br><br>
+                                                <img class="first-img" src="/static/images/default.png"
+                                                    alt="{{object.shape}}" />
                                                 {% endif %}
                                                 <!-- product links end-->
                                             </div>
@@ -281,32 +269,6 @@
     </div>
 </div>
 <script>
-    var list = {
-        shape: {},
-        cut: {},
-        colororigin: {},
-        polish: {},
-        symmetry: {},
-        fluorescencecolor: {},
-        fluorescenceintensity: {},
-
-    }
-    function displayRadioValue() {
-        var ele = document.getElementsByTagName('input');
-        for (i = 0; i < ele.length; i++) {
-            if (ele[i].type = "checkbox") {
-                if (ele[i].id[0] == 's') {
-                    if (ele[i].checked) {
-                        list.shape[ele[i].name] = 1;
-                    }
-                    else {
-                        list.shape[ele[i].name] = 0;
-                    }
-                }
-            }
-        }
-        console.log(list);
-    }
 
     function uncheckLowToHigh() {
         document.getElementById("LowToHigh").checked = false;

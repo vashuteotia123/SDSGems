@@ -1,3 +1,4 @@
+import random
 from django.contrib.messages.api import MessageFailure
 from django.core import paginator
 from django.views.generic import View
@@ -6,6 +7,8 @@ from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, get_list_or_404, get_object_or_404
 from django.utils.regex_helper import Group
 from django.views.generic.base import TemplateView
+from django.contrib.sites.shortcuts import get_current_site
+
 
 from firstapp.models import (
     Inventoryofcolorstones,
@@ -35,7 +38,7 @@ from django.views.generic.edit import CreateView
 import datetime
 from django.core.mail import EmailMessage
 from django.contrib import messages
-from django.template.loader import get_template
+from django.template.loader import get_template, render_to_string
 
 # Create your views here.
 
@@ -73,7 +76,8 @@ def user_login(request):
             if user_details.password == user_password:
                 if user_details.permit_user:
                     request.session["is_logedin"] = True
-                    request.session["logdin_time"] = str(datetime.datetime.now())
+                    request.session["logdin_time"] = str(
+                        datetime.datetime.now())
                     request.session["user_email"] = user_details.email_id
                     request.session["business_type"] = user_details.Businesstype
                     return redirect("/")
@@ -85,7 +89,6 @@ def user_login(request):
             message = "No user found...!!"
 
         return render(request, "user_templates/user_login.html", {"message": message})
-
     return redirect("/")
 
 
@@ -97,28 +100,33 @@ def user_Logout(request):
     return redirect("/")
 
 
-def home(request):
+def subscribe_newsletter(request):
     if request.method == "POST":
         email = request.POST.get("email")
-        Subscribed_users.objects.create(email=email)
-        return render(request, "coming_soon_message.html")
-    context = {}
-    return render(request, "coming_soon.html", context)
+        try:
+            user = Subscribed_users.objects.get(email=email)
+            return render(request, "thanks_for_subscribing.html", {"message": "You are already subscribed to our newsletter"})
+        except ObjectDoesNotExist:
+            Subscribed_users.objects.create(email=email)
+            return render(request, 'thanks_for_subscribing.html', {"message": "You have successfully subscribed to our newsletter"})
+    return render(request, "404.html")
 
 
-class ShopList(View):
-    template_name = "shop_list.html"
-
-    def get(self, request):
-        return render(request, self.template_name)
-
-
-class BlogList(View):
-    template_name = "blog_list.html"
-
-    def get(self, request):
-        all_blogs = Blog.objects.all()
-        return render(request, self.template_name, {"all_blogs": all_blogs})
+def home(request):
+    latest_blogs = Blog.objects.all().order_by('-date')[:10]
+    latest_diamonds = Inventoryofdiamond.objects.select_related('media').filter(
+        frontend=True).order_by('-id')[:4]
+    latest_jewellery = Inventoryofjewellery.objects.select_related('media').filter(
+        frontend=True).order_by('-id')[:4]
+    latest_colorstones = Inventoryofcolorstones.objects.select_related('media').filter(
+        frontend=True).order_by('-id')[:4]
+    context = {
+        "latest_blogs": latest_blogs,
+        "latest_diamonds": latest_diamonds,
+        "latest_jewellery": latest_jewellery,
+        "latest_colorstones": latest_colorstones,
+    }
+    return render(request, "home.html", context=context)
 
 
 class ContactUs(View):
@@ -291,6 +299,7 @@ def get_colorstone_with_keyword(keyword):
     return product
 
 
+@myuser_login_required
 def SearchForUser(request):
     search_keyword = request.GET.get("search_keyword")
     search_keyword = search_keyword.lower()
@@ -347,7 +356,8 @@ def SearchForUser(request):
     else:
         all_jewellery_with_keyword = get_jewellery_with_keyword(search_keyword)
         all_diamond_with_keyword = get_diamond_with_keyword(search_keyword)
-        all_colorstone_with_keyword = get_colorstone_with_keyword(search_keyword)
+        all_colorstone_with_keyword = get_colorstone_with_keyword(
+            search_keyword)
         return render(
             request,
             "search_result.html",
@@ -362,3 +372,110 @@ def SearchForUser(request):
 
 def custom_404(request):
     return render(request, "404.html")
+
+
+# hash generation for password reset
+
+
+def get_hash():
+    hash = random.getrandbits(128)
+    return hash
+
+
+def forgot_password(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        try:
+            user = User_table.objects.get(email_id=email)
+            hash = get_hash()
+            user.activate_hash = hash
+            user.save()
+            current_site = get_current_site(request)
+            subject = "Password Reset SDSGems"
+            message = render_to_string('user_templates/reset_password_mail.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': email,
+                'hash': hash,
+            })
+            send_mail(subject, message, 'sdsgems@gmail.com',
+                      [email], fail_silently=False, html_message=message)
+            return render(
+                request,
+                "user_templates/forgot_password.html",
+                {
+                    "message": "Password reset link has been sent to your email",
+                },
+            )
+        except:
+            return render(
+                request,
+                "user_templates/forgot_password.html",
+                {
+                    "message": "Email does not exist",
+                },
+            )
+    return render(request, "user_templates/forgot_password.html")
+
+
+def reset_password(request, email, hash):
+    try:
+        user = User_table.objects.get(email_id=email)
+        if user.activate_hash != hash:
+            return render(
+                request,
+                "thanks_for_subscribing.html",
+                {
+                    "message": "Invalid link",
+                },
+            )
+        if request.method == "POST":
+            password = request.POST.get("password")
+            confirm_password = request.POST.get("confirm-password")
+            if len(password) < 8:
+                return render(
+                    request,
+                    "user_templates/reset_password.html",
+                    {
+                        "message": "Password should be atleast 8 characters long",
+                    },
+                )
+            if password == confirm_password:
+                user.password = password
+                user.activate_hash = None
+                user.save()
+                messages.success(
+                    request, "Password has been reset successfully. Login to continue.")
+                return redirect('/user_login')
+            else:
+                return render(
+                    request,
+                    "user_templates/reset_password.html",
+                    {
+                        "message": "Password and confirm password does not match",
+                    },
+                )
+        return render(request, "user_templates/reset_password.html")
+    except:
+        return render(request, "404.html")
+
+
+def birthstone_list(request):
+    birthstones = BirthStones.objects.all().order_by('id')
+    context = {
+        "birthstones": birthstones,
+    }
+    return render(request, 'birthstone_templates/birthstone_list.html', context=context)
+
+
+def birthstone_single(request, birthstone_id):
+    try:
+        birthstone = BirthStones.objects.get(id=birthstone_id)
+    except:
+        return render(request, '404.html')
+    context = {
+        "birthstone": birthstone,
+    }
+    return render(request, 'birthstone_templates/birthstone_single.html', context=context)

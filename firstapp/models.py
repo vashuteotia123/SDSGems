@@ -474,6 +474,9 @@ class Jewel_media(models.Model):
     jewellery_info = models.TextField(
         null=True, blank=True,  max_length=3000, verbose_name="Jewellery Information")
 
+    def __str__(self):
+        return self.stockid
+
 
 # purchase of diamonds
 
@@ -991,6 +994,9 @@ class Diamond_media(models.Model):
     diamond_info = models.TextField(
         null=True, blank=True,  max_length=3000, verbose_name="Diamond Information")
 
+    def __str__(self):
+        return self.stockid
+
 
 # purchase of Colour Stones
 
@@ -1393,3 +1399,6 @@ class ColorStone_media(models.Model):
         null=True, blank=True, verbose_name="Description")
     colorstone_info = RichTextField(
         null=True, blank=True,  verbose_name="Colour Stone Information")
+
+    def __str__(self):
+        return self.stockid

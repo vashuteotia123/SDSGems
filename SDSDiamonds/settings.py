@@ -198,3 +198,7 @@ EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 
 # Error handler
 handler404 = 'user.views.common_views.custom404'
+
+
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

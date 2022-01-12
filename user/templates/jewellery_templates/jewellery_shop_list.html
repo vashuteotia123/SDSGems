@@ -22,55 +22,147 @@
                         </ul>
                     </nav>
                 </div>
-                <div class="col-12 col-md-6 position-relative">
-                    <div class="shop-grid-button d-flex align-items-center">
-                        <span class="sort-by">Sort by:</span>
-                        <select class="form-select custom-select" aria-label="Default select example">
-                            <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                </div>
             </div>
         </div>
-        <!-- product-tab-nav end -->
-        <div class="tab-content" id="pills-tabContent">
-            <!-- first tab-pane -->
-            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                <div class="row grid-view theme1">
-                    {% for object in all_objects %}
-                    <div class="col-sm-6 col-lg-4 col-xl-3 mb-30">
-                        <div class="card product-card">
-                            <div class="card-body">
-
-                                <a href="{% url 'showJewellery' product_id=object.id %}">
-                                    <div class="product-thumbnail position-relative">
-                                        <span class="badge badge-danger top-right">{{object.shape}}</span>
-                                        {% if object.media.image1 %}
-                                        <img class="first-img" src="/media/{{object.media.image1}}"
-                                            alt="{{object.shape}}" />
-                                        {% else %}
-                                        <br><br>
-                                        <h5>No image for this object.</h5><br><br>
-                                        {% endif %}
+        <div class="row">
+            <div class="col-lg-3 mb-30 order-lg-first">
+                <aside class="left-sidebar theme1">
+                    <!-- search-filter start -->
+                    <div class="search-filter">
+                        <div class="sidbar-widget pt-0">
+                            <h4 class="title">Filter By</h4>
+                        </div>
+                    </div>
+                    <form method="get">
+                        {% csrf_token %}
+                        <ul id="offcanvas-menu2" class="blog-ctry-menu">
+                            <li>
+                                <a href="javascript:void(0)">Jewellery Type</a>
+                                <ul class="category-sub-menu">
+                                    {% for type in jewellerytype %}
+                                    <div class="widget-check-box color-grey">
+                                        <input type="checkbox" name="types[]" class="submenu-toggle"
+                                            value="{{type.jewel}}" id="type-{{type.jewel}}">
+                                        <label for="type-{{type.jewel}}">{{type}}</label>
                                     </div>
-                                </a>
-                                <div class="product-desc py-0 px-0">
-                                    <h3 class="title">
-                                        <a href="{% url 'showJewellery' product_id=object.id %}">{{object.jewellery_type}},
-                                            {{object.center_stone}}, {{object.color_of_center_stone}}, {{object.shape}},
-                                            {{object.metal}} </a>
-                                    </h3>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <span class="product-price" id="tag_price">${{object.tag_price}}</span>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">Center Stone</a>
+                                <ul class="category-sub-menu">
+                                    {% for centerstone in jewellerycenterstone %}
+                                    <div class="widget-check-box color-grey">
+                                        <input type="checkbox" name="centerstones[]" class="submenu-toggle"
+                                            value="{{centerstone.stone}}" id="centerstone-{{centerstone.stone}}">
+                                        <label for="centerstone-{{centerstone.stone}}">{{centerstone}}</label>
+                                    </div>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">Metal</a>
+                                <ul class="category-sub-menu">
+                                    {% for metal in jewellerymetal %}
+                                    <div class="widget-check-box color-grey">
+                                        <input type="checkbox" name="metals[]" class="submenu-toggle"
+                                            value="{{metal.metal}}" id="metal-{{metal.metal}}">
+                                        <label for="metal-{{metal.metal}}">{{metal}}</label>
+                                    </div>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">Shape</a>
+                                <ul class="category-sub-menu">
+                                    {% for shape in jewelleryshape %}
+                                    <div class="widget-check-box color-grey">
+                                        <input type="checkbox" name="shapes[]" class="submenu-toggle"
+                                            value="{{shape.shape}}" id="shape-{{shape.shape}}">
+                                        <label for="shape-{{shape.shape}}">{{shape}}</label>
+                                    </div>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">Colour of Center Stone</a>
+                                <ul class="category-sub-menu">
+                                    {% for color in jewellerycolorofcenterstone %}
+                                    <div class="widget-check-box color-grey">
+                                        <input type="checkbox" name="colorofcenterstones[]" class="submenu-toggle"
+                                            value="{{color.color}}" id="color-{{color.color}}">
+                                        <label for="color-{{color.color}}">{{color}}</label>
+                                    </div>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">Price</a>
+                                <ul class="category-sub-menu">
+                                    <div class="widget-check-box color-grey">
+                                        <input type="checkbox" name="LowToHigh[]" onclick="uncheckHighToLow()"
+                                            class="submenu-toggle" value="LowToHigh" id="LowToHigh">
+                                        <label for="LowToHigh">Low To High</label>
+                                    </div>
+                                    <div class="widget-check-box color-grey">
+                                        <input type="checkbox" name="HighToLow[]" onclick="uncheckLowToHigh()"
+                                            class="submenu-toggle" value="HighToLow" id="HighToLow">
+                                        <label for="HighToLow">High To Low</label>
+                                    </div>
+                                </ul>
+                            </li>
+
+                            <button type="submit" class="btn btn-primary">Apply</button>
+                    </form>
+
+
+                    <!-- search-filter end -->
+
+                    <!--second banner start-->
+
+                    <!--second banner end-->
+                </aside>
+            </div>
+            <div class="col-lg-9 mb-30">
+
+                <!-- product-tab-nav end -->
+                <div class="tab-content" id="pills-tabContent">
+                    <!-- first tab-pane -->
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                        aria-labelledby="pills-home-tab">
+                        <div class="row grid-view theme1">
+                            {% for object in all_jewobjects %}
+                            <div class="col-sm-6 col-lg-4 col-xl-3 mb-30">
+                                <div class="card product-card">
+                                    <div class="card-body">
+
+                                        <a href="{% url 'showJewellery' product_id=object.id %}">
+                                            <div class="product-thumbnail position-relative">
+                                                <span class="badge badge-danger top-right">{{object.shape}}</span>
+                                                {% if object.media.image1 %}
+                                                <img class="first-img" src="/media/{{object.media.image1}}"
+                                                    alt="{{object.shape}}" />
+                                                {% else %}
+                                                <img class="first-img" src="/static/images/default.png"
+                                                    alt="{{object.shape}}" />
+                                                {% endif %}
+                                            </div>
+                                        </a>
+                                        <div class="product-desc py-0 px-0">
+                                            <h3 class="title">
+                                                <a href="{% url 'showJewellery' product_id=object.id %}">{{object.media.jewellery_info}}
+                                                </a>
+                                            </h3>
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <span class="product-price" id="tag_price">${{object.tag_price}}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            {% endfor %}
                         </div>
                     </div>
-                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -78,26 +170,34 @@
             <div class="col-12">
                 <nav class="pagination-section mt-30">
                     <ul class="pagination justify-content-center">
-                        <li class="page-item {% if not all_objects.has_previous %} disabled {% endif %}">
-                            <a class="page-link"
-                                href="{% if all_objects.has_previous %} {% url current_url page=all_objects.previous_page_number %}{% endif %}"><i
-                                    class="ion-chevron-left"></i></a>
+                        <li class="page-item {% if not all_jewobjects.has_previous %} disabled {% endif %}">
+                            <a class="page-link" {% if all_jewobjects.has_previous %}
+                                href="{% if request.path == request.get_full_path %}{{ request.get_full_path }}?page={{ all_jewobjects.previous_page_number}}{%else%}{{ request.get_full_path }}&page={{ all_jewobjects.previous_page_number}}{% endif %}"
+                                {% endif %}><i class="ion-chevron-left"></i></a>
                         </li>
-                        {% for i in all_objects.paginator.page_range %}
-                        {% if all_objects.number == i %}
+                        {% for i in all_jewobjects.paginator.page_range %}
+                        {% if all_jewobjects.number == i %}
                         <li class="page-item active">
-                            <a class="page-link" href='{% url current_url page=i %}'>{{i}}</a>
+                            {% if request.path == request.get_full_path %}
+                            <a class="page-link" href="{{ request.get_full_path }}?page={{i}}">{{i}}</a>
+                            {% else %}
+                            <a class="page-link" href="{{ request.get_full_path }}&page={{i}}">{{i}}</a>
+                            {%endif%}
                         </li>
-                        {% elif i > all_objects.number|add:'-2' and i < all_objects.number|add:'2' %} <li
+                        {% elif i > all_jewobjects.number|add:'-2' and i < all_jewobjects.number|add:'2' %} <li
                             class="page-item">
-                            <a class="page-link" href='{% url current_url page=i %}'>{{i}}</a>
+                            {% if request.path == request.get_full_path %}
+                            <a class="page-link" href="{{ request.get_full_path }}?page={{i}}">{{i}}</a>
+                            {% else %}
+                            <a class="page-link" href="{{ request.get_full_path }}&page={{i}}">{{i}}</a>
+                            {%endif%}
                             </li>
                             {% endif %}
                             {% endfor %}
-                            <li class="page-item {% if not all_objects.has_next %} disabled {% endif %}">
-                                <a class="page-link"
-                                    href="{% if all_objects.has_next %} {% url current_url page=all_objects.next_page_number %} {% endif %}"><i
-                                        class="ion-chevron-right"></i></a>
+                            <li class="page-item {% if not all_jewobjects.has_next %} disabled {% endif %}">
+                                <a class="page-link" {% if all_jewobjects.has_next %}
+                                    href="{% if request.path == request.get_full_path %}{{ request.get_full_path }}?page={{ all_jewobjects.next_page_number}}{%else%}{{ request.get_full_path }}&page={{ all_jewobjects.next_page_number}}{% endif %} "
+                                    {%endif %}><i class="ion-chevron-right"></i></a>
                             </li>
                     </ul>
                 </nav>
@@ -105,4 +205,58 @@
         </div>
     </div>
 </div>
+<!-- product-area end -->
+<script>
+
+    function uncheckLowToHigh() {
+        document.getElementById("LowToHigh").checked = false;
+    }
+
+    function uncheckHighToLow() {
+        document.getElementById("HighToLow").checked = false;
+    }
+
+    var high_to_low = "{{HighToLow}}";
+    if (high_to_low) {
+        document.getElementById("HighToLow").checked = true;
+    }
+
+    var low_to_high = "{{LowToHigh}}";
+    if (low_to_high) {
+        document.getElementById("LowToHigh").checked = true;
+    }
+
+    var shapes = "{{shapes | safe}}";
+    var types = "{{types | safe}}";
+    var metals = "{{metals | safe}}";
+    var colors = "{{colorofcenterstones | safe}}";
+    var centerstones = "{{centerstones | safe}}";
+
+    shapes = shapes.replace(/'/g, '"');
+    shapes = JSON.parse(shapes);
+    types = types.replace(/'/g, '"');
+    types = JSON.parse(types);
+    metals = metals.replace(/'/g, '"');
+    metals = JSON.parse(metals);
+    colors = colors.replace(/'/g, '"');
+    colors = JSON.parse(colors);
+    centerstones = centerstones.replace(/'/g, '"');
+    centerstones = JSON.parse(centerstones);
+
+    for (var i = 0; i < shapes.length; i++) {
+        document.getElementById(`shape-${shapes[i]}`).checked = true;
+    }
+    for (var i = 0; i < types.length; i++) {
+        document.getElementById(`type-${types[i]}`).checked = true;
+    }
+    for (var i = 0; i < metals.length; i++) {
+        document.getElementById(`metal-${metals[i]}`).checked = true;
+    }
+    for (var i = 0; i < colors.length; i++) {
+        document.getElementById(`color-${colors[i]}`).checked = true;
+    }
+    for (var i = 0; i < centerstones.length; i++) {
+        document.getElementById(`centerstone-${centerstones[i]}`).checked = true;
+    }
+</script>
 {% endblock content %}

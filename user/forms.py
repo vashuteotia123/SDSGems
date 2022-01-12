@@ -4,10 +4,9 @@ from .models import *
 from django.forms import formset_factory, modelformset_factory
 from django.contrib.admin.widgets import AdminDateWidget
 
-
 class UserForm(forms.ModelForm):
     confirm_password = forms.CharField(widget=forms.PasswordInput())
-    disabled_fields = ['permit_user']
+    disabled_fields = ['permit_user', 'activate_hash']
 
     class Meta:
         model = User_table

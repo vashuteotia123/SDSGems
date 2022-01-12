@@ -20,11 +20,6 @@ class CountryAdmin(ImportExportModelAdmin):
     pass
 
 
-@admin.register(State)
-class StateAdmin(admin.ModelAdmin):
-    pass
-
-
 @admin.register(Blog)
 class blogadmin(DjangoObjectActions, admin.ModelAdmin):
 
@@ -40,10 +35,15 @@ class blogadmin(DjangoObjectActions, admin.ModelAdmin):
 
 
 @admin.register(Subscribed_users)
-class SubscribedAdmin(admin.ModelAdmin):
+class SubscribedAdmin(ImportExportModelAdmin):
     pass
 
 
 @admin.register(ConversionRate)
 class ConversionAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(BirthStones)
+class BirthStoneAdmin(admin.ModelAdmin):
     pass

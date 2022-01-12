@@ -233,9 +233,17 @@
                                         View Certificate
                                     </a>
                                     {% else %}
-                                        <span class="mr-2"><i class="ion-android"></i></span>
-                                        No Certificate
+                                    <span class="mr-2"><i class="ion-android"></i></span>
+                                    No Certificate
                                     {% endif %}
+                                </button>
+                                <button class="btn btn-dark btn--xl mt-5 mt-sm-0">
+                                    <span class="mr-2"><i class="ion-social-whatsapp"></i></span>
+                                    <a
+                                        href="https://api.whatsapp.com/send?text={{ request.build_absolute_uri }} Hey there, I want to but this.">
+                                        <span class="mr-2"><i class="ion-android"></i></span>
+                                        CONTACT TO BUY
+                                    </a>
                                 </button>
                             </div>
                         </div>
@@ -305,6 +313,8 @@
                             <div class="single-product-desc">
                                 <div class="product-anotherinfo-wrapper">
                                     <ul>
+
+                                        <li><span>Stock ID</span> {{product.stockid}} </li>
                                         <li><span>Gross Weight</span> {{product.grosswt}} grams </li>
                                         <li><span>Jewellery Type</span>{{product.jewellery_type}}</li>
                                         <li><span>Shape</span> {{product.shape}}</li>
@@ -315,10 +325,6 @@
 
 
 
-                                        <li>
-                                            <span>Other Info</span> American heirloom jean shorts pug
-                                            seitan letterpress
-                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -349,14 +355,14 @@
                                 <div class="card-body p-0">
                                     <div class="media flex-column">
                                         <div class="product-thumbnail position-relative">
-                                            <span class="badge badge-danger top-right">New</span>
+                                            <span class="badge badge-danger top-right">{{product.jewellery_type}}</span>
                                             <a href="">
                                                 {% if product.media.image1 %}
                                                 <img class="first-img" src="/media/{{product.media.image1}}"
                                                     alt="thumbnail" />
                                                 {% else %}
-                                                <br><br>
-                                                <h5>No image for this object.</h5>
+                                                <img class="first-img" src="/static/images/default.png"
+                                                    alt="{{object.shape}}" />
                                                 {% endif %}
                                             </a>
                                             <!-- product links -->
