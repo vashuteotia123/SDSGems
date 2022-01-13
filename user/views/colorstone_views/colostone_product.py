@@ -19,8 +19,11 @@ def showColorStone(request, product_id):
     related_products = Inventoryofcolorstones.objects.filter(
         id__in=random_colorstone_id_list)
 
-    # regex to extract youtube id from iframe src
+    user = None
+    if 'user_email' in request.session.keys():
+        user = User_table.objects.get(pk=request.session['user_email'])
 
+    # regex to extract youtube id from iframe src
     try:
         pattern = r'<iframe .* src="[^"]*/([^"]+)"'
         search = re.search(pattern, product.media.video_embed_link)
@@ -28,4 +31,4 @@ def showColorStone(request, product_id):
     except:
         youtube_video_id = None
 
-    return render(request, 'colorstone_templates/colorstone_product_page.html', {'product': product, 'user': User_table.objects.get(pk=request.session['user_email']), 'related_products': related_products, 'youtube_video_id': youtube_video_id})
+    return render(request, 'colorstone_templates/colorstone_product_page.html', {'product': product, 'user': user, 'related_products': related_products, 'youtube_video_id': youtube_video_id})

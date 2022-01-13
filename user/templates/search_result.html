@@ -1,5 +1,6 @@
 {% extends 'user_base.html' %} {% block content %}
 {% load price_tags %}
+{% if open_all %}
 {% if all_jewellery_with_keyword%}
 <section class="bg-white theme1 pb-80">
   <div class="container">
@@ -17,13 +18,12 @@
               <div class="card-body p-0">
                 <div class="media flex-column">
                   <div class="product-thumbnail position-relative">
-                    <!-- <span class="badge badge-danger top-right">New</span> -->
-                    <a href="">
+                    <span class="badge badge-danger top-right">Found</span>
+                    <a href="{% url 'showJewellery' product_id=product.id %}">
                       {% if product.media.image1 %}
                       <img class="first-img" src="/media/{{product.media.image1}}" alt="thumbnail" />
                       {% else %}
-                      <br /><br />
-                      <h5>No image for this object.</h5>
+                      <img class="first-img" src="/static/images/default.png" alt="thumbnail" />
                       {% endif %}
                     </a>
                     <!-- product links -->
@@ -38,7 +38,7 @@
                           {{product.metal}}
                         </a>
                       </h3>
-
+                      {% if user_login %}
                       <div class="d-flex align-items-center justify-content-between">
                         {% if user.Businesstype == "Customer" %}
                         <span class="product-price" id="tag_price">
@@ -51,6 +51,7 @@
                           ${% wholesaler_price product.tag_price %}</span>
                         {% endif %}
                       </div>
+                      {% endif %}
                     </div>
                   </div>
                 </div>
@@ -79,59 +80,58 @@
         <div class="product-slider-init theme1 slick-nav">
           {% for product in all_diamond_with_keyword %}
           <div class="slider-item">
-              <div class="card product-card">
-                  <div class="card-body p-0">
-                      <div class="media flex-column">
-                          <div class="product-thumbnail position-relative">
-                              <span class="badge badge-danger top-right">New</span>
-                              <a href="{% url 'showDiamond' product_id=product.id %}">
-                                  {% if product.media.image1 %}
-                                  <img class="first-img" src="/media/{{product.media.image1}}"
-                                      alt="thumbnail" />
-                                  {% else %}
-                                  <br><br>
-                                  <h5>No image for this object.</h5>
-                                  {% endif %}
-                              </a>
-                              <!-- product links -->
-                              <!-- product links end-->
-                          </div>
-                          <div class="media-body">
-                              <div class="product-desc">
-                                  <h3 class="title">
-                                      <a href="{% url 'showDiamond' product_id=product.id %}">
-                                          {{product.shape}},
-                                          {{product.color_origin1}} {{white_color_grade1}},
-                                          {{product.fluorescence_color}}, {{product.polish}},
-                                          {{product.symmetry}}
-                                      </a>
-                                  </h3>
-
-                                  <div class="d-flex align-items-center justify-content-between">
-                                      {% if user.Businesstype == "Customer" %}
-                                      <span class="product-price" id="tag_price">
-                                          ${% customer_price product.tag_price_d %}</span>
-                                      {% elif user.Businesstype == "Broker"%}
-                                      <span class="product-price" id="tag_price">
-                                          ${% broker_price product.tag_price_d %}</span>
-                                      {% else %}
-                                      <span class="product-price" id="tag_price">
-                                          ${% wholesaler_price product.tag_price_d %}</span>
-                                      {% endif %}
-
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
+            <div class="card product-card">
+              <div class="card-body p-0">
+                <div class="media flex-column">
+                  <div class="product-thumbnail position-relative">
+                    <span class="badge badge-danger top-right">Found</span>
+                    <a href="{% url 'showDiamond' product_id=product.id %}">
+                      {% if product.media.image1 %}
+                      <img class="first-img" src="/media/{{product.media.image1}}" alt="thumbnail" />
+                      {% else %}
+                      <img class="first-img" src="/static/images/default.png" alt="thumbnail" />
+                      {% endif %}
+                    </a>
+                    <!-- product links -->
+                    <!-- product links end-->
                   </div>
+                  <div class="media-body">
+                    <div class="product-desc">
+                      <h3 class="title">
+                        <a href="{% url 'showDiamond' product_id=product.id %}">
+                          {{product.shape}},
+                          {{product.color_origin1}} {{white_color_grade1}},
+                          {{product.fluorescence_color}}, {{product.polish}},
+                          {{product.symmetry}}
+                        </a>
+                      </h3>
+                      {% if user_login %}
+                      <div class="d-flex align-items-center justify-content-between">
+                        {% if user.Businesstype == "Customer" %}
+                        <span class="product-price" id="tag_price">
+                          ${% customer_price product.tag_price_d %}</span>
+                        {% elif user.Businesstype == "Broker"%}
+                        <span class="product-price" id="tag_price">
+                          ${% broker_price product.tag_price_d %}</span>
+                        {% else %}
+                        <span class="product-price" id="tag_price">
+                          ${% wholesaler_price product.tag_price_d %}</span>
+                        {% endif %}
+                      </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
           </div>
           {% endfor %}
-      </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
+{% endif %}
 {% endif %}
 {% if all_colorstone_with_keyword %}
 <section class="bg-white theme1 pb-80">
@@ -152,13 +152,12 @@
               <div class="card-body p-0">
                 <div class="media flex-column">
                   <div class="product-thumbnail position-relative">
-                    <span class="badge badge-danger top-right">New</span>
-                    <a href="">
+                    <span class="badge badge-danger top-right">Found</span>
+                    <a href="{% url 'showColorStone' product_id=product.id %}">
                       {% if product.media.image1 %}
                       <img class="first-img" src="/media/{{product.media.image1}}" alt="thumbnail" />
                       {% else %}
-                      <br><br>
-                      <h5>No image for this object.</h5>
+                      <img class="first-img" src="/static/images/default.png" alt="thumbnail" />
                       {% endif %}
                     </a>
                     <!-- product links -->
@@ -172,7 +171,7 @@
                           {{product.origin}}, {{product.shape}}, {{product.color}}
                         </a>
                       </h3>
-
+                      {% if user_login %}
                       <div class="d-flex align-items-center justify-content-between">
                         {% if user.Businesstype == "Customer" %}
                         <span class="product-price" id="tag_price">
@@ -184,8 +183,8 @@
                         <span class="product-price" id="tag_price">
                           ${% wholesaler_price product.tag_price %}</span>
                         {% endif %}
-
                       </div>
+                      {% endif %}
                     </div>
                   </div>
                 </div>

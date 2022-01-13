@@ -51,7 +51,7 @@
 <table class="table table-responsive">
   <tr class="bg-primary bg-opacity-50" id="table-heading" style="max-height: 10px;">
     <th style="background-color:#a01b1b;color:#fff;">STOCK ID</th>
-    <th style="background-color:#a01b1b;color:#fff;">COMPANY</th>
+    <th style="background-color:#a01b1b;color:#fff;">COMPANY NAME</th>
     <th style="background-color:#a01b1b;color:#fff;">LOCATION</th>
     <th style="background-color:#a01b1b;color:#fff;">SHAPE</th>
     <th style="background-color:#a01b1b;color:#fff;">CLARITY</th>
@@ -71,7 +71,7 @@
     <th style="background-color:#a01b1b;color:#fff;">LASER INSCRIPTION</th>
     <th style="background-color:#a01b1b;color:#fff;">PIECES</th>
     <th style="background-color:#a01b1b;color:#fff;">WEIGHT</th>
-    <th style="background-color:#a01b1b;color:#fff;">PRICE</th>
+    <th style="background-color:#a01b1b;color:#fff;">PRICE/CT</th>
     <th style="background-color:#a01b1b;color:#fff;">UNITS</th>
     <th style="background-color:#a01b1b;color:#fff;">AMOUNT</th>
     <th style="background-color:#a01b1b;color:#fff;">DISCOUNT %</th>
@@ -129,7 +129,7 @@
     k += "document.getElementById('id_form-" + i + "-company_name').value = a; ";
     discount_str += "$('#id_form-" + i + "-DIS_d').on('change keyup blur', function(){var discount = document.getElementById('id_form-" + i + "-DIS_d').value; var amount = document.getElementById('id_form-" + i + "-amount_d').value; document.getElementById('id_form-" + i + "-DIS_Amount_d').value = ((amount * discount)/100).toFixed(2); document.getElementById('id_form-" + i + "-total_value_d').value = (amount - ((amount * discount)/100)).toFixed(2);  });   ";
     total_amount += "+parseFloat(document.getElementById('id_form-" + i + "-total_value_d').value)"
-    s1 += "$('#id_form-'+i+'-DIS_Amount_d').on('change keyup blur', function(){var amount = document.getElementById('id_form-"+ i +"-amount_d').value; var discount_amount = document.getElementById('id_form-"+ i +"-DIS_Amount_d').value; document.getElementById('id_form-" + i + "-DIS_d').value = ((discount_amount/amount)*100).toFixed(2); document.getElementById('id_form-" + i + "-total_value_d').value=amount-discount_amount});";
+    s1 += "$('#id_form-'+i+'-DIS_Amount_d').on('change keyup blur', function(){var amount = document.getElementById('id_form-"+ i +"-amount_d').value; var discount_amount = document.getElementById('id_form-"+ i +"-DIS_Amount_d').value; document.getElementById('id_form-" + i + "-DIS_d').value = ((discount_amount/amount)*100).toFixed(2); document.getElementById('id_form-" + i + "-total_value_d').value=(amount-discount_amount).toFixed(2)});";
     eval(s);
     eval(k + k1);
     eval(discount_str);

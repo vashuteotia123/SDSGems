@@ -4,13 +4,14 @@ from .models import *
 from django.forms import formset_factory, modelformset_factory
 from django.contrib.admin.widgets import AdminDateWidget
 
+
 class UserForm(forms.ModelForm):
     confirm_password = forms.CharField(widget=forms.PasswordInput())
-    disabled_fields = ['permit_user', 'activate_hash']
 
     class Meta:
         model = User_table
         fields = "__all__"
+        exclude = ('activate_hash', 'permit_user',)
         widgets = {
             'password': forms.PasswordInput(),
             'permit_user': forms.HiddenInput(),
@@ -18,8 +19,6 @@ class UserForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
-        for field in self.disabled_fields:
-            self.fields[field].disabled = True
 
     def clean(self):
         cleaned_data = super(UserForm, self).clean()

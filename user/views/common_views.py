@@ -138,6 +138,7 @@ class ContactUs(View):
     def post(self, request):
         from_name = request.POST.get("name")
         from_mail = request.POST.get("email").lower()
+        mobile = request.POST.get("mobile")
         mail_subject = request.POST.get("subject")
         mail_message = request.POST.get("contactMessage")
         to_mail = "sdsgems9@gmail.com"
@@ -146,6 +147,7 @@ class ContactUs(View):
             "from_name": from_name,
             "from_mail": from_mail,
             "mail_message": mail_message,
+            "mobile": mobile,
         }
         msg = get_template("mail.html").render(ctx)
         email = EmailMessage(mail_subject, msg, to=[to_mail])
@@ -302,6 +304,9 @@ def get_colorstone_with_keyword(keyword):
 def SearchForUser(request):
     search_keyword = request.GET.get("search_keyword")
     search_keyword = search_keyword.lower()
+    user = None
+    if 'user_email' in request.session.keys():
+        user = User_table.objects.get(email_id=request.session["user_email"])
     if search_keyword.startswith("j-"):
         product = get_Jewellery_with_stockid(search_keyword.capitalize())
         if product:
@@ -311,9 +316,7 @@ def SearchForUser(request):
                 "jewellery_templates/jewellery_product_page.html",
                 {
                     "product": product,
-                    "user": User_table.objects.get(
-                        email_id=request.session["user_email"]
-                    ),
+                    "user": user,
                     "youtube_video_id": get_youtube_id(product),
                 },
             )
@@ -327,9 +330,7 @@ def SearchForUser(request):
                 "diamond_templates/diamond_product_page.html",
                 {
                     "product": product,
-                    "user": User_table.objects.get(
-                        email_id=request.session["user_email"]
-                    ),
+                    "user": user,
                     "youtube_video_id": get_youtube_id(product),
                 },
             )
@@ -343,9 +344,7 @@ def SearchForUser(request):
                 "colorstone_templates/colorstone_product_page.html",
                 {
                     "product": product,
-                    "user": User_table.objects.get(
-                        email_id=request.session["user_email"]
-                    ),
+                    "user": user,
                     "youtube_video_id": get_youtube_id(product),
                 },
             )
@@ -364,7 +363,7 @@ def SearchForUser(request):
                 "all_jewellery_with_keyword": all_jewellery_with_keyword,
                 "all_diamond_with_keyword": all_diamond_with_keyword,
                 "all_colorstone_with_keyword": all_colorstone_with_keyword,
-                "user": User_table.objects.get(email_id=request.session["user_email"]),
+                "user": user,
             },
         )
 
@@ -425,7 +424,7 @@ def reset_password(request, email, hash):
         if user.activate_hash != hash:
             return render(
                 request,
-                "thanks_for_subscribing.html",
+                "404.html",
                 {
                     "message": "Invalid link",
                 },

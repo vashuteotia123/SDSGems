@@ -204,6 +204,7 @@
                         </div>
 
                         <div class="product-body mb-40">
+                            {% if user_login %}
                             <div class="d-flex align-items-center mb-30">
                                 {% if user.Businesstype == "Customer" %}
                                 <span class="product-price mr-20">
@@ -219,8 +220,8 @@
                                     </span></span>
                                 {% endif %}
                                 <!-- Certificate type  -->
-
                             </div>
+                            {% endif %}
                             <p>
                                 {{product.media.description | safe | truncatewords:100}}
                             </p>
@@ -241,11 +242,11 @@
 
                                 </button>
                                 {% endif %}
-                                <a
-                                        href="https://wa.me/918097328109?text={{ request.build_absolute_uri }} Hey there, I want to buy this." target="_blank">
-                                <button class="btn btn-dark btn--xl mt-5 mt-sm-0">
-                                    <span class="mr-2"><i class="ion-social-whatsapp"></i></span>
-                                   <i class="ion-android"></i></span>
+                                <a href="https://wa.me/918097328109?text={{ request.build_absolute_uri }} Hey there, I want to buy this."
+                                    target="_blank">
+                                    <button class="btn btn-dark btn--xl mt-5 mt-sm-0">
+                                        <span class="mr-2"><i class="ion-social-whatsapp"></i></span>
+                                        <i class="ion-android"></i></span>
                                         CONTACT TO BUY
                                     </button>
                                 </a>
@@ -349,16 +350,6 @@
                                         <li><span>Colour</span>{{product.fancycolor_grade}}</li>
                                         {%endif%}
                                         {% endif %}
-
-
-
-
-
-
-                                        <li>
-                                            <span>Other Info</span> American heirloom jean shorts pug
-                                            seitan letterpress
-                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -409,7 +400,7 @@
                                                         {{product.symmetry}}
                                                     </a>
                                                 </h3>
-
+                                                {% if user_login %}
                                                 <div class="d-flex align-items-center justify-content-between">
                                                     {% if user.Businesstype == "Customer" %}
                                                     <span class="product-price" id="tag_price">
@@ -421,8 +412,8 @@
                                                     <span class="product-price" id="tag_price">
                                                         ${% wholesaler_price product.tag_price_d %}</span>
                                                     {% endif %}
-
                                                 </div>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>

@@ -46,6 +46,10 @@
               <a href="mailto:support@company">support@company</a>
             </p>
           </div>
+          <div class="map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.5480490037507!2d90.42897841550803!3d23.76349088458297!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c78ab2187d4d%3A0x4d5f8a6c610c144b!2sHasTech%20Digital%20Item%20%26%20Service%20Provider!5e0!3m2!1sen!2sua!4v1595747193974!5m2!1sen!2sua"></iframe>
+          </div>
 
           <!--=======  End of single contact block  =======-->
         </div>
@@ -55,7 +59,7 @@
       <div class="col-lg-6 col-12 mb-30">
         <!--  contact form content -->
         <div class="contact-form-content">
-          <h3 class="contact-page-title">Tell Us Your Message</h3>
+          <h3 class="contact-page-title">Tell Us Your Message & get an Instant Quote</h3>
           <div class="contact-form">
             <form action="" method="POST">
               {% csrf_token %}
@@ -72,8 +76,8 @@
                 <input type="tel" name="mobile" id="mobile" required />
               </div>
               <div class="form-group">
-                <label>Subject<span class="required>*</span></label>
-                <input type=" text" name="subject" id="subject" required />
+                <label>Subject</label>
+                <input type=" text" name="subject" id="subject" />
               </div>
               <div class="form-group">
                 <label>Your Message</label>

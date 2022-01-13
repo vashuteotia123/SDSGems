@@ -46,7 +46,7 @@
     <th class="bg-primary" style="text-align:center;">SHAPE</th>
     <th class="bg-primary" style="text-align:center;">GEM TYPE</th>
     <th class="bg-primary">ORIGIN</th>
-    <th class="bg-primary">Colour</th>
+    <th class="bg-primary">COLOUR</th>
     <th class="bg-primary" style="text-align:center;">TREATMENT</th>
     <th class="bg-primary">Edit Cart</th>
   </tr>
@@ -60,7 +60,7 @@
     <td>{{p.origin.org.capitalize}}</td>
     <td>{{p.color.color.capitalize}}</td>
     <td>{{p.treatment.treatment.capitalize}}</td>
-    <td><a class="btn btn-sm btn-primary" style="text-decoration: none"
+    <td style="display:flex;justify-content: center;width: 100%;"><a class="btn btn-sm btn-primary" style="text-decoration: none"
         href="{% url 'return_colorstone_cart' id=p.id %}">Return from Cart</a></td>
   </tr>
   {% endfor %}

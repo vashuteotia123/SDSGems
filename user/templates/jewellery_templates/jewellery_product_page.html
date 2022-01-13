@@ -201,6 +201,7 @@
                         </div>
 
                         <div class="product-body mb-40">
+                            {% if user_login %}
                             <div class="d-flex align-items-center mb-30">
                                 {% if user.Businesstype == "Customer" %}
                                 <span class="product-price mr-20">
@@ -216,6 +217,7 @@
                                     </span></span>
                                 {% endif %}
                             </div>
+                            {% endif %}
                             <p>
                                 {{product.media.description | safe | truncatewords:100}}
                             </p>
@@ -232,13 +234,13 @@
                                     No Certificate
                                     {% endif %}
                                 </button>
-                                <a
-                                        href="https://wa.me/918097328109?text={{ request.build_absolute_uri }} Hey there, I want to buy this." target="_blank">
-                                        <span class="mr-2">
-                                <button class="btn btn-dark btn--xl mt-5 mt-sm-0">
-                                    <span class="mr-2"><i class="ion-social-whatsapp"></i></span>
-                                    <i class="ion-android"></i></span>
-                                        CONTACT TO BUY
+                                <a href="https://wa.me/918097328109?text={{ request.build_absolute_uri }} Hey there, I want to buy this."
+                                    target="_blank">
+                                    <span class="mr-2">
+                                        <button class="btn btn-dark btn--xl mt-5 mt-sm-0">
+                                            <span class="mr-2"><i class="ion-social-whatsapp"></i></span>
+                                            <i class="ion-android"></i></span>
+                                    CONTACT TO BUY
                                     </button>
                                 </a>
                             </div>
@@ -374,7 +376,7 @@
                                                         {{product.metal}}
                                                     </a>
                                                 </h3>
-
+                                                {% if user_login %}
                                                 <div class="d-flex align-items-center justify-content-between">
                                                     {% if user.Businesstype == "Customer" %}
                                                     <span class="product-price" id="tag_price">
@@ -386,8 +388,8 @@
                                                     <span class="product-price" id="tag_price">
                                                         ${% wholesaler_price product.tag_price %}</span>
                                                     {% endif %}
-
                                                 </div>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>

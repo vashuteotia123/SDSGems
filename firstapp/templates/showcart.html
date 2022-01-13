@@ -104,6 +104,7 @@
 <script>
   var k = "$('#id_form-0-company_name').on('change keyup blur',function(){var a = document.getElementById('id_form-0-company_name').value;document.getElementById('id_form-0-company_name').value = a;"
   var k1 = ";});";
+  var s=" ";
   var discount_str = " ";
   var discount_str2 = " ";
   var total_amount = "$(document).on('keyup', function(){ var total_amount_value = 0";
@@ -115,16 +116,19 @@
     discount_str += "$('#id_form-" + i + "-DIS').on('change keyup blur', function(){var discount = document.getElementById('id_form-" + i + "-DIS').value; var amount = document.getElementById('id_form-" + i + "-amount').value; document.getElementById('id_form-" + i + "-DIS_amount').value = ((amount * discount)/100).toFixed(2); document.getElementById('id_form-" + i + "-total_value').value = (amount - ((amount * discount)/100)).toFixed(2);  });   ";
     discount_str2 += "$('#id_form-" + i + "-amount').on('change keyup blur', function(){var discount = document.getElementById('id_form-" + i + "-DIS').value; var amount = document.getElementById('id_form-" + i + "-amount').value; document.getElementById('id_form-" + i + "-DIS_amount').value = ((amount * discount)/100).toFixed(2); document.getElementById('id_form-" + i + "-total_value').value = (amount - ((amount * discount)/100)).toFixed(2);  });   ";
     total_amount += "+parseFloat(document.getElementById('id_form-" + i + "-total_value').value)"
+    s += "$('#id_form-'+i+'-DIS_amount').on('change keyup blur', function(){var amount = document.getElementById('id_form-"+ i +"-amount').value; var discount_amount = document.getElementById('id_form-"+ i +"-DIS_amount').value; document.getElementById('id_form-"+i+"-DIS').value = ((discount_amount/amount)*100).toFixed(2); document.getElementById('id_form-" + i + "-total_value').value=(amount-discount_amount).toFixed(2)});";
     eval(k + k1)
     eval(discount_str);
     eval(discount_str2);
     eval(total_amount + total_amount1);
+    eval(s)
 
   }
   eval(discount_str);
   eval(discount_str2);
   eval(total_amount + total_amount1);
-  eval(k + k1)
+  eval(k + k1);
+  eval(s);
 
 </script>
 {% endblock %}

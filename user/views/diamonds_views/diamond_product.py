@@ -19,6 +19,10 @@ def showDiamond(request, product_id):
     related_products = Inventoryofdiamond.objects.filter(
         id__in=random_diamond_id_list)
 
+    user = None
+    if 'user_email' in request.session.keys():
+        user = User_table.objects.get(pk=request.session['user_email'])
+
     # regex to extract youtube id from iframe src
     try:
         pattern = r'<iframe .* src="[^"]*/([^"]+)"'
@@ -27,4 +31,4 @@ def showDiamond(request, product_id):
     except:
         youtube_video_id = None
 
-    return render(request, 'diamond_templates/diamond_product_page.html', {'product': product, 'user': User_table.objects.get(pk=request.session['user_email']), 'related_products': related_products, 'youtube_video_id': youtube_video_id})
+    return render(request, 'diamond_templates/diamond_product_page.html', {'product': product, 'user': user, 'related_products': related_products, 'youtube_video_id': youtube_video_id})

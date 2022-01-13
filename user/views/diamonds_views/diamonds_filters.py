@@ -23,8 +23,6 @@ class diamondFilter(ListView):
     paginate_by = 12
     model = Inventoryofdiamond
 
-    
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         all_diaobjects = self.get_queryset()
@@ -196,9 +194,9 @@ class diamondFilter(ListView):
         return super().get_queryset().filter(frontend=True).all()
 
     def get_user(self):
-        user = User_table.objects.get(
-            email_id=self.request.session['user_email'])
-        return user
+        if 'user_email' in self.request.session.keys():
+            return User_table.objects.get(email_id=self.request.session['user_email'])
+        return None
 
     def get_shape_filtered(self, all_diaobjects):
         shapes = self.request.GET.getlist('shapes[]')

@@ -125,9 +125,10 @@ class colorStoneFilter(ListView):
         return super().get_queryset().select_related('media').filter(frontend=True).all().order_by('-id')
 
     def get_user(self):
-        user = User_table.objects.get(
-            email_id=self.request.session['user_email'])
-        return user
+        if 'user_email' in self.request.session.keys():
+            return User_table.objects.get(
+                email_id=self.request.session['user_email'])
+        return None
 
     def get_shape_filtered(self, all_objects):
         shapes = self.request.GET.getlist('shapes[]')

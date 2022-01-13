@@ -186,10 +186,10 @@
 
   var $productSliderInit = $(".product-slider-init");
   $productSliderInit.slick({
-    autoplay: false,
-    autoplaySpeed: 10000,
+    autoplay: true,
+    autoplaySpeed: 2000,
     dots: false,
-    infinite: false,
+    infinite: true,
     arrows: true,
     speed: 1000,
     slidesToShow: 4,
@@ -413,10 +413,10 @@
 
   var $blogInit = $(".blog-init");
   $blogInit.slick({
-    autoplay: false,
-    autoplaySpeed: 10000,
+    autoplay: true,
+    autoplaySpeed: 2000,
     dots: false,
-    infinite: false,
+    infinite: true,
     arrows: true,
     speed: 1000,
     slidesToShow: 4,

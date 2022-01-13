@@ -19,6 +19,10 @@ def showJewellery(request, product_id):
     related_products = Inventoryofjewellery.objects.filter(
         id__in=random_Jewellery_id_list)
 
+    user = None
+    if 'is_logedin' in request.session.keys():
+        user = User_table.objects.get(pk=request.session['user_email'])
+
     # regex to extract youtube id from iframe src
     try:
         pattern = r'<iframe .* src="[^"]*/([^"]+)"'
@@ -26,8 +30,5 @@ def showJewellery(request, product_id):
         youtube_video_id = search[1]
     except:
         youtube_video_id = None
-
-   if 'is_logedin' in request.session
-   
 
     return render(request, 'jewellery_templates/jewellery_product_page.html', {'product': product, 'user': user, 'related_products': related_products, 'youtube_video_id': youtube_video_id})

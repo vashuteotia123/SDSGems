@@ -9,7 +9,7 @@
                 <div class="col-lg-6 mb-5 mb-lg-0">
                     <div>
                         <div class="position-relative">
-                            <span class="badge badge-danger top-right">New</span>
+                            <span class="badge badge-danger top-right">{{product.gem_type}}</span>
                         </div>
                         <div class="product-sync-init mb-20">
                             {% if product.media.image1 %}
@@ -199,8 +199,8 @@
                                 {{product.gem_type}}, {{product.origin}}, {{product.shape}}, {{product.color}}
                             </h2>
                         </div>
-
                         <div class="product-body mb-40">
+                            {% if user_login %}
                             <div class="d-flex align-items-center mb-30">
                                 {% if user.Businesstype == "Customer" %}
                                 <span class="product-price mr-20">
@@ -218,6 +218,7 @@
                                 <!-- Certificate type  -->
 
                             </div>
+                            {% endif %}
                             <p>
                                 {{product.media.description | safe | truncatewords:100}}
                             </p>
