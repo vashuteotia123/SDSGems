@@ -63,6 +63,14 @@ if deploy_color_stone:
         list_display = [entry.name for entry in ColorStone_media._meta.fields]
         search_fields = [f.name for f in ColorStone_media._meta.fields]
 
+    @admin.register(currencies)
+    class curradmin(ImportExportModelAdmin):
+        search_fields = [f.name for f in currencies._meta.fields]
+
+    @admin.register(gemtype)
+    class gemtypeadmin(ImportExportModelAdmin):
+        search_fields_ = [f.name for f in gemtype._meta.fields]    
+
     @admin.register(Salesofcolorstones)
     class salesofcsadmin(admin.ModelAdmin):
 
@@ -83,13 +91,6 @@ if deploy_color_stone:
         def has_delete_permission(self, request, obj=None):
             return False
 
-    @admin.register(currencies)
-    class curradmin(ImportExportModelAdmin):
-        search_fields = [f.name for f in currencies._meta.fields]
-
-    @admin.register(gemtype)
-    class gemtypeadmin(ImportExportModelAdmin):
-        search_fields_ = [f.name for f in gemtype._meta.fields]
 
 
 # Jewellery models here
@@ -154,92 +155,52 @@ if deploy_jewellery:
 
     @ admin.register(Jewel_media)
     class mediaJ(admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
+        list_display = [entry.name for entry in Jewel_media._meta.fields]
+        search_fields = [f.name for f in Jewel_media._meta.fields]
 
 if deploy_diamond:
     @ admin.register(Diamond_media)
     class diamondMediaAdmin(admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
+        list_display = [entry.name for entry in Diamond_media._meta.fields]
+        search_fields = [f.name for f in Diamond_media._meta.fields]
 
     @ admin.register(shape_d)
     class shapedadmin(ImportExportModelAdmin, admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
+       search_fields = [f.name for f in shape_d._meta.fields]
 
     @ admin.register(clarity)
     class clarityadmin(ImportExportModelAdmin, admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
+        search_fields = [f.name for f in clarity._meta.fields]
 
     @ admin.register(color_origin)
     class color_originadmin(ImportExportModelAdmin, admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
+        search_fields = [f.name for f in color_origin._meta.fields]
 
     @ admin.register(white_color_grade)
     class white_color_gradeadmin(ImportExportModelAdmin, admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
+        search_fields = [f.name for f in white_color_grade._meta.fields]
 
     # @admin.register(fancy_color_intensity)
     # class fancy_color_intensityadmin(ImportExportModelAdmin,admin.ModelAdmin):
     #     def HomePage(LocAdmin, request, queryset):
     #         return redirect('/index')
 
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
-
     # @admin.register(fancycolor_grade)
     # class fancycolor_gradeadmin(ImportExportModelAdmin,admin.ModelAdmin):
     #     def HomePage(LocAdmin, request, queryset):
     #         return redirect('/index')
 
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
-
     @ admin.register(fluorescence_intensity)
     class fluoroscence_intensityadmin(ImportExportModelAdmin, admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
+        search_fields = [f.name for f in fluorescence_intensity._meta.fields]
 
     @ admin.register(fluorescence_color)
     class fluorescence_intensityadmin(ImportExportModelAdmin, admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
+        search_fields = [f.name for f in fluorescence_color._meta.fields]
 
     @ admin.register(certificate_d)
     class certificate_dadmin(ImportExportModelAdmin, admin.ModelAdmin):
-        def HomePage(LocAdmin, request, queryset):
-            return redirect('/index')
-
-        HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-        changelist_actions = ('HomePage',)
+        search_fields = [f.name for f in certificate_d._meta.fields]
 
     @ admin.register(Salesofdiamond)
     class salesofdiaadmin(admin.ModelAdmin):
@@ -267,35 +228,19 @@ if deploy_diamond:
 
         @ admin.register(location)
         class LocAdmin(ImportExportModelAdmin):
-            def HomePage(LocAdmin, request, queryset):
-                return redirect('/index')
-
-            HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-            changelist_actions = ('HomePage',)
+            search_fields = [f.name for f in location._meta.fields]
 
         @ admin.register(cut)
         class cutadmin(admin.ModelAdmin):
-            def HomePage(cutadmin, request, queryset):
-                return redirect('/index')
-
-            HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-            changelist_actions = ('HomePage',)
+            search_fields = [f.name for f in cut._meta.fields]
 
         @ admin.register(polish)
         class polishadmin(admin.ModelAdmin):
-            def HomePage(polishadmin, request, queryset):
-                return redirect('/index')
-
-            HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-            changelist_actions = ('HomePage',)
+            search_fields = [f.name for f in polish._meta.fields]
 
         @ admin.register(symmetry)
         class symmetryadmin(admin.ModelAdmin):
-            def HomePage(symmetryadmin, request, queryset):
-                return redirect('/index')
-
-            HomePage.attrs = {'class': 'btn btn-outline-success float-right', }
-            changelist_actions = ('HomePage',)
+            search_fields = [f.name for f in symmetry._meta.fields]
 
 
 if development_mode:
