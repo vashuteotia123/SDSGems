@@ -43,8 +43,8 @@ class User_table(models.Model):
     permit_user = models.BooleanField(default=False)
     activate_hash = models.CharField(max_length=100, null=True, blank=True)
 
-    def ___str__(self):
-        return self.first_name + self.last_name
+    def __str__(self):
+        return self.first_name + str(" ")+self.last_name+str(" -> ")+str(self.Businesstype)
 
 
 class Blog(models.Model):
@@ -59,6 +59,8 @@ class Blog(models.Model):
 
 
 class Subscribed_users(models.Model):
+    class Meta:
+        verbose_name_plural="Subscribed Users"
     email = models.EmailField(max_length=90)
 
     def __str__(self):

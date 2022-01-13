@@ -7,7 +7,6 @@ import random
 import re
 
 
-@myuser_login_required
 def showDiamond(request, product_id):
     product = get_object_or_404(
         Inventoryofdiamond, pk=product_id, frontend=True)

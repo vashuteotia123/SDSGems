@@ -388,8 +388,8 @@
                 <div class="media static-media ml-4 d-flex align-items-center">
                   <div class="media-body">
                     <div class="phone">
-                      <a href="tel:(+123)4567890" class="text-white"><i class="icon-call-out mr-1"></i>
-                        (+123)4567890</a>
+                      <a href="tel:918097328109" class="text-white"><i class="icon-call-out mr-1"></i>
+                        +(91) 8097328109</a>
                     </div>
                   </div>
                 </div>
@@ -446,7 +446,6 @@
             <div class="col-xl-8 col-lg-7 d-none d-lg-block">
               <ul class="main-menu d-flex justify-content-center">
 
-                {% if user_login %}
                 {% if only_cs%}
                 <li class="position-static">
                   <a href="{%url 'diamondFilter' %}">Diamonds<i class="ion-ios-arrow-down"></i></a>
@@ -491,8 +490,6 @@
                   </ul>
                 </li>
                 {% endif %}
-                {% endif %}
-                {% if user_login %}
                 {% if only_cs%}
                 <li class="position-static">
                   <a href="{% url 'jewelleryFilter' %}">Jewellery<i class="ion-ios-arrow-down"></i></a>
@@ -545,8 +542,6 @@
                   </ul>
                 </li>
                 {% endif %}
-                {% endif %}
-                {% if user_login %}
                 <li class="position-static">
                   <a href='{% url "colorStoneFilter" %}'>Colour Stones<i class="ion-ios-arrow-down"></i></a>
                   <ul class="mega-menu row">
@@ -597,8 +592,6 @@
                     </li>
                   </ul>
                 </li>
-                {% endif %}
-
                 <li>
                   <a href="/allBlogs">Blogs</a>
                 </li>

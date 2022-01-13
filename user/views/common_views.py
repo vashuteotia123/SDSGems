@@ -299,7 +299,6 @@ def get_colorstone_with_keyword(keyword):
     return product
 
 
-@myuser_login_required
 def SearchForUser(request):
     search_keyword = request.GET.get("search_keyword")
     search_keyword = search_keyword.lower()

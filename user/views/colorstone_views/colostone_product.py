@@ -7,7 +7,6 @@ import random
 import re
 
 
-@myuser_login_required
 def showColorStone(request, product_id):
     product = get_object_or_404(
         Inventoryofcolorstones, pk=product_id, frontend=True)

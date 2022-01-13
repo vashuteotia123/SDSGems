@@ -12,31 +12,23 @@ from .models import *
 
 @admin.register(User_table)
 class User(admin.ModelAdmin):
-    pass
+    search_fields = ['first_name', 'last_name', 'email_id', 'Businesstype']
 
 
 @admin.register(countries)
 class CountryAdmin(ImportExportModelAdmin):
-    pass
+    search_fields = ['country']
 
 
 @admin.register(Blog)
-class blogadmin(DjangoObjectActions, admin.ModelAdmin):
+class blogadmin(admin.ModelAdmin):
 
     search_fields = ['title', 'subject']
 
-    def response_change(self, request, obj):
-        messages.success(request, "Blog changed successfully!")
-        return redirect('/index')
-
-    def response_add(self, request, obj, post_url_continue=None):
-        messages.success(request, "Blog added successfully!")
-        return redirect('/index')
-
 
 @admin.register(Subscribed_users)
-class SubscribedAdmin(ImportExportModelAdmin):
-    pass
+class SubscribedAdmin(admin.ModelAdmin):
+    search_fields = ['email']
 
 
 @admin.register(ConversionRate)
@@ -46,4 +38,4 @@ class ConversionAdmin(admin.ModelAdmin):
 
 @admin.register(BirthStones)
 class BirthStoneAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ['name', 'month']

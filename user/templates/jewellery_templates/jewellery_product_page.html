@@ -196,10 +196,7 @@
                     <div class="single-product-info">
                         <div class="single-product-head">
                             <h2 class="title mb-20">
-                                {{product.jewellery_type}},
-                                {{product.center_stone}}, {{product.color_of_center_stone}},
-                                {{product.shape}},
-                                {{product.metal}}
+                                {{product.media.jewellery_info}}
                             </h2>
                         </div>
 
@@ -218,8 +215,6 @@
                                     <span class="onsale" id="tag_price">${% wholesaler_price product.tag_price %}
                                     </span></span>
                                 {% endif %}
-                                <!-- Certificate type  -->
-
                             </div>
                             <p>
                                 {{product.media.description | safe | truncatewords:100}}
@@ -237,14 +232,15 @@
                                     No Certificate
                                     {% endif %}
                                 </button>
+                                <a
+                                        href="https://wa.me/918097328109?text={{ request.build_absolute_uri }} Hey there, I want to buy this." target="_blank">
+                                        <span class="mr-2">
                                 <button class="btn btn-dark btn--xl mt-5 mt-sm-0">
                                     <span class="mr-2"><i class="ion-social-whatsapp"></i></span>
-                                    <a
-                                        href="https://api.whatsapp.com/send?text={{ request.build_absolute_uri }} Hey there, I want to but this.">
-                                        <span class="mr-2"><i class="ion-android"></i></span>
+                                    <i class="ion-android"></i></span>
                                         CONTACT TO BUY
-                                    </a>
-                                </button>
+                                    </button>
+                                </a>
                             </div>
                         </div>
                         <div class="product-footer">

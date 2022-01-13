@@ -111,6 +111,7 @@
   var formCnt = "{{itemcount}}";
   var k = "$('#id_form-0-company_name').on('change keyup blur',function(){var a = document.getElementById('id_form-0-company_name').value;document.getElementById('id_form-0-company_name').value = a;"
   var k1 = ";});";
+  var s1 = " ";
 
   var discount_str = " ";
   var total_amount = "$(document).on('keyup', function(){ var total_amount_value = 0";
@@ -122,15 +123,18 @@
     k += "document.getElementById('id_form-" + i + "-company_name').value = a; ";
     discount_str += "$('#id_form-" + i + "-DIS_cs').on('change keyup blur', function(){var discount = document.getElementById('id_form-" + i + "-DIS_cs').value; var amount = document.getElementById('id_form-" + i + "-amount_cs').value; document.getElementById('id_form-" + i + "-DIS_amount_cs').value = ((amount * discount)/100).toFixed(2); document.getElementById('id_form-" + i + "-total_value_cs').value = (amount - ((amount * discount)/100)).toFixed(2);  });   ";
     total_amount += "+parseFloat(document.getElementById('id_form-" + i + "-total_value_cs').value)"
+
+    s1 += "$('#id_form-'+i+'-DIS_amount_cs').on('change keyup blur', function(){var amount = document.getElementById('id_form-"+ i +"-amount_cs').value; var discount_amount = document.getElementById('id_form-"+ i +"-DIS_amount_cs').value; document.getElementById('id_form-"+i+"-DIS_cs').value = ((discount_amount/amount)*100).toFixed(2);});";
     eval(s);
     eval(k + k1);
     eval(discount_str);
     eval(total_amount + total_amount1);
+    eval(s1);
   }
   eval(s);
   eval(k + k1);
   eval(discount_str);
   eval(total_amount + total_amount1);
-  console.log(total_amount + total_amount1);
+  eval(s1);
 </script>
 {% endblock %}

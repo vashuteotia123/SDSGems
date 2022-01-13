@@ -7,7 +7,6 @@ import random
 import re
 
 
-@myuser_login_required
 def showJewellery(request, product_id):
     product = get_object_or_404(
         Inventoryofjewellery, pk=product_id, frontend=True)
@@ -28,4 +27,7 @@ def showJewellery(request, product_id):
     except:
         youtube_video_id = None
 
-    return render(request, 'jewellery_templates/jewellery_product_page.html', {'product': product, 'user': User_table.objects.get(pk=request.session['user_email']), 'related_products': related_products, 'youtube_video_id': youtube_video_id})
+   if 'is_logedin' in request.session
+   
+
+    return render(request, 'jewellery_templates/jewellery_product_page.html', {'product': product, 'user': user, 'related_products': related_products, 'youtube_video_id': youtube_video_id})

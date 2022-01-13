@@ -61,7 +61,8 @@ if deploy_color_stone:
     @admin.register(ColorStone_media)
     class ColorStone_media_admin(admin.ModelAdmin):
         list_display = [entry.name for entry in ColorStone_media._meta.fields]
-        search_fields = [f.name for f in ColorStone_media._meta.fields]
+        search_fields = ['stockid__stockid']
+
 
     @admin.register(currencies)
     class curradmin(ImportExportModelAdmin):
@@ -69,7 +70,7 @@ if deploy_color_stone:
 
     @admin.register(gemtype)
     class gemtypeadmin(ImportExportModelAdmin):
-        search_fields_ = [f.name for f in gemtype._meta.fields]    
+        search_fields = [f.name for f in gemtype._meta.fields]    
 
     @admin.register(Salesofcolorstones)
     class salesofcsadmin(admin.ModelAdmin):
@@ -156,13 +157,13 @@ if deploy_jewellery:
     @ admin.register(Jewel_media)
     class mediaJ(admin.ModelAdmin):
         list_display = [entry.name for entry in Jewel_media._meta.fields]
-        search_fields = [f.name for f in Jewel_media._meta.fields]
+        search_fields = ['stockid__stockid']
 
 if deploy_diamond:
     @ admin.register(Diamond_media)
     class diamondMediaAdmin(admin.ModelAdmin):
         list_display = [entry.name for entry in Diamond_media._meta.fields]
-        search_fields = [f.name for f in Diamond_media._meta.fields]
+        search_fields = ['stockid__stockid']
 
     @ admin.register(shape_d)
     class shapedadmin(ImportExportModelAdmin, admin.ModelAdmin):

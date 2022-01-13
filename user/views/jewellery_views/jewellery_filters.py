@@ -18,11 +18,6 @@ class jewelleryFilter(ListView):
     paginate_by = 12
     model = Inventoryofjewellery
 
-    def dispatch(self, *args, **kwargs):
-        if 'is_logedin' not in self.request.session.keys():
-            return redirect('/user_login')
-        return super().dispatch(*args, **kwargs)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         all_jewobjects = self.get_queryset()
@@ -152,8 +147,10 @@ class jewelleryFilter(ListView):
         return super().get_queryset().filter(frontend=True).all()
 
     def get_user(self):
-        user = User_table.objects.get(
-            email_id=self.request.session['user_email'])
+        try:
+            user = User_table.objects.get(email_id=self.request.session['user_email'])
+        except:
+            user = None 
         return user
 
     def get_shape_filtered(self, all_jewobjects):
