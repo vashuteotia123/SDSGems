@@ -233,17 +233,17 @@ class POJ(models.Model):
     company_name = models.ForeignKey(
         'CompanyInfo', on_delete=PROTECT, blank=True)
     location = models.ForeignKey(
-        'location', on_delete=models.PROTECT, null=True, blank=True)
+        'location', on_delete=models.PROTECT)
     jewellery = models.ForeignKey(
-        'jewell', on_delete=models.PROTECT, null=True, blank=True)
+        'jewell', on_delete=models.PROTECT)
     center_stone = models.ForeignKey(
-        'centerstone', on_delete=models.PROTECT, null=True, blank=True)
+        'centerstone', on_delete=models.PROTECT)
     color_of_center_stone = models.ForeignKey(
-        'colorofcstone', on_delete=models.PROTECT, null=True, blank=True)
+        'colorofcstone', on_delete=models.PROTECT)
     shape = models.ForeignKey(
-        'shape1', on_delete=models.PROTECT, null=True, blank=True)
+        'shape1', on_delete=models.PROTECT)
     metal = models.ForeignKey(
-        'metal1', on_delete=models.PROTECT, null=True, blank=True)
+        'metal1', on_delete=models.PROTECT)
     center_stone_weight = models.DecimalField(decimal_places=2, max_digits=9)
     center_stone_pieces = models.BigIntegerField()
     grosswt = models.DecimalField(decimal_places=2, max_digits=9)
