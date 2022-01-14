@@ -2600,7 +2600,7 @@ def ExportSalesReturnCS(request):
     writer.writerows(output)
     return response
 
-
+@login_required
 def ExportPOJ(request):
     objects = POJ.objects.all()
     output = []
@@ -2624,7 +2624,7 @@ def ExportPOJ(request):
     writer.writerows(output)
     return response
 
-
+@login_required
 def ExportInventoryofjewellery(request):
     objects = Inventoryofjewellery.objects.filter(appvreturnstatus=False)
     output = []
@@ -2644,7 +2644,7 @@ def ExportInventoryofjewellery(request):
     writer.writerows(output)
     return response
 
-
+@login_required
 def ExportSalesofjewellery(request):
     objects = Salesofjewellery.objects.all()
     output = []
@@ -2669,7 +2669,7 @@ def ExportSalesofjewellery(request):
     writer.writerows(output)
     return response
 
-
+@login_required
 def ExportSalesReturn(request):
     objects = Salesreturn.objects.all()
     output = []
@@ -2689,7 +2689,7 @@ def ExportSalesReturn(request):
     writer.writerows(output)
     return response
 
-
+@login_required
 def ExportPOD(request):
     objects = POD.objects.all()
     output = []
@@ -2719,7 +2719,7 @@ def ExportPOD(request):
 
     return response
 
-
+@login_required
 def ExportInventoryofdiamond(request):
     objects = Inventoryofdiamond.objects.filter(appvreturnstatus_d=False)
     output = []
@@ -2744,7 +2744,7 @@ def ExportInventoryofdiamond(request):
     writer.writerows(output)
     return response
 
-
+@login_required
 def ExportSalesofdiamond(request):
     objects = Salesofdiamond.objects.all()
     output = []
@@ -2799,7 +2799,7 @@ def get_certificate_of_diamond(request):
         data = {}
     return JsonResponse({'certificate': '0'}, status=200)
 
-
+@login_required
 def ExportSalesReturnDiamonds(request):
     objects = Salesreturn_d.objects.all()
     output = []
