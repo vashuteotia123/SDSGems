@@ -216,6 +216,11 @@
                                     <span class="onsale" id="tag_price">${% wholesaler_price product.tag_price %}
                                     </span></span>
                                 {% endif %}
+                                 {% else %}
+                                <span class="product-price mr-20">
+                                    You must <span class="onsale" id="tag_price">Login</strong></span> to view
+                                    price
+                                </span>
                             </div>
                             {% endif %}
                             <p>
@@ -234,7 +239,7 @@
                                     No Certificate
                                     {% endif %}
                                 </button>
-                                <a href="https://wa.me/918097328109?text={{ request.build_absolute_uri }} Hey there, I want to buy this."
+                                <a href="https://wa.me/919004112685?text={{ request.build_absolute_uri }} Hey there, I want to buy this."
                                     target="_blank">
                                     <span class="mr-2">
                                         <button class="btn btn-dark btn--xl mt-5 mt-sm-0">

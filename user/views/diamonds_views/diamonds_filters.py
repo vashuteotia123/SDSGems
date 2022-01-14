@@ -20,7 +20,7 @@ from django.utils.decorators import method_decorator
 class diamondFilter(ListView):
     template_name = "diamond_templates/diamonds_shop_list.html"
 
-    paginate_by = 12
+    paginate_by = 24
     model = Inventoryofdiamond
 
     def get_context_data(self, **kwargs):

@@ -101,7 +101,7 @@ def updateJ(request, pk):
                 request, "Stock ID->{} is Modified  Successfully".format(str("J-")+str(pk)))
             return redirect('/showj')
 
-    context = {'form3': form3, "b_s_c": change_css, "update_type": "POJ"}
+    context = {'form3': form3, "b_s_c": change_css, "update_type": "Jewellery"+str(" Stock ID  J-")+str(pk),}
     return render(request, 'update_jewellery.html', context)
 
 
@@ -406,7 +406,7 @@ def sell_jewel(request):
                 shape=object.shape,
                 metal=object.metal,
                 center_stone_weight=object.center_stone_weight,
-                center_stone_pieces=object.center_stone_weight,
+                center_stone_pieces=object.center_stone_pieces,
                 gross_wt=object.gross_wt,
                 certificate=object.certificate,
                 PCS=object.PCS,
@@ -641,7 +641,7 @@ def update_cs(request, ck):
             return redirect('/showcs')
 
     context = {'form5': form5, "b_s_c": change_css,
-               "update_type": "Purchase of Colour Stones"}
+               "update_type": "Colourstone Stock ID C-"+str(ck)}
     return render(request, 'update_cs.html', context)
 
 
@@ -1049,7 +1049,7 @@ def update_d(request, dk):
             return redirect('/showd')
 
     context = {'form4': form4, "b_s_c": change_css,
-               "update_type": "Purchase of Diamonds"}
+               "update_type": "Diamonds Stock ID D-"+str(dk)}
     return render(request, 'update_diamond.html', context)
 
 

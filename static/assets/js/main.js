@@ -158,8 +158,9 @@
   $mainSlider
     .slick({
       autoplay: true,
-      autoplaySpeed: 6000,
+      autoplaySpeed: 4000,
       speed: 800,
+      infinite: true,
       slidesToShow: 1,
       slidesToScroll: 1,
       dots: true,
@@ -472,10 +473,10 @@
 
   var $brandInit = $(".brand-init");
   $brandInit.slick({
-    autoplay: false,
-    autoplaySpeed: 10000,
+    autoplay: true,
+    autoplaySpeed: 2000,
     dots: false,
-    infinite: false,
+    infinite: true,
     arrows: true,
     speed: 1000,
     slidesToShow: 6,

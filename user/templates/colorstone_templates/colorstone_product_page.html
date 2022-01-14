@@ -9,7 +9,7 @@
                 <div class="col-lg-6 mb-5 mb-lg-0">
                     <div>
                         <div class="position-relative">
-                            <span class="badge badge-danger top-right">{{product.gem_type}}</span>
+                            <span class="badge badge-danger top-right">{{product.lab}}</span>
                         </div>
                         <div class="product-sync-init mb-20">
                             {% if product.media.image1 %}
@@ -196,7 +196,8 @@
                     <div class="single-product-info">
                         <div class="single-product-head">
                             <h2 class="title mb-20">
-                                {{product.gem_type}}, {{product.origin}}, {{product.shape}}, {{product.color}}
+                                {{product.gem_type}}, {{product.origin}}, {{product.shape}}, {{product.color}},
+                                {{product.Weight}} Carats
                             </h2>
                         </div>
                         <div class="product-body mb-40">
@@ -215,8 +216,12 @@
                                     <span class="onsale" id="tag_price">${% wholesaler_price product.tag_price %}
                                     </span></span>
                                 {% endif %}
+                                {% else %}
+                                <span class="product-price mr-20">
+                                    You must <span class="onsale" id="tag_price">Login</strong></span> to view
+                                    price
+                                </span>
                                 <!-- Certificate type  -->
-
                             </div>
                             {% endif %}
                             <p>
@@ -237,7 +242,7 @@
                                     No Certificate
                                 </button>
                                 {% endif %}
-                                <a href="https://wa.me/918097328109?text={{ request.build_absolute_uri }} Hey there, I want to buy this."
+                                <a href="https://wa.me/919004112685?text={{ request.build_absolute_uri }} Hey there, I want to buy this."
                                     target="_blank">
                                     <button class="btn btn-dark btn--xl mt-5 mt-sm-0">
                                         <span class="mr-2"><i class="ion-social-whatsapp"></i></span>
@@ -372,7 +377,8 @@
                                                 <h3 class="title">
                                                     <a href="{% url 'showColorStone' product_id=product.id %}">
                                                         {{product.gem_type}},
-                                                        {{product.origin}}, {{product.shape}}, {{product.color}}
+                                                        {{product.origin}}, {{product.shape}}, {{product.color}},
+                                                        {{product.Weight}} Carats
                                                     </a>
                                                 </h3>
                                                 {% if user_login %}

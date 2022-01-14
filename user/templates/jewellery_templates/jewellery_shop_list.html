@@ -1,5 +1,6 @@
 {% extends 'user_base.html' %}
 {% block content %}
+{% load price_tags %}
 
 <div class="product-tab bg-white pt-80 pb-80">
     <div class="container">
@@ -132,7 +133,7 @@
                         aria-labelledby="pills-home-tab">
                         <div class="row grid-view theme1">
                             {% for object in all_jewobjects %}
-                            <div class="col-sm-6 col-lg-4 col-xl-3 mb-30">
+                            <div class="col-6 col-lg-4 col-xl-3 mb-30">
                                 <div class="card product-card">
                                     <div class="card-body">
 
@@ -154,10 +155,23 @@
                                                 <a href="{% url 'showJewellery' product_id=object.id %}">{{object.media.jewellery_info}}
                                                 </a>
                                             </h3>
-                                            {% if user_login %}
+                                            {% if user %}
                                             <div class="d-flex align-items-center justify-content-between">
-                                                <span class="product-price" id="tag_price">${{object.tag_price}}</span>
+                                                {% if user.Businesstype == "Customer" %}
+                                                <span class="product-price" id="tag_price">
+                                                    $ {% customer_price object.tag_price %}</span>
+                                                {% elif user.Businesstype == "Broker"%}
+                                                <span class="product-price" id="tag_price">
+                                                    $ {% broker_price object.tag_price %}</span>
+                                                {% else %}
+                                                <span class="product-price" id="tag_price">
+                                                    $ {% wholesaler_price object.tag_price %}</span>
+                                                {% endif %}
                                             </div>
+                                            {% else %}
+
+                                            You must <strong>Login</strong> to view
+                                            price
                                             {% endif %}
                                         </div>
                                     </div>

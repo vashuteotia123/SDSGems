@@ -477,3 +477,41 @@ def birthstone_single(request, birthstone_id):
         "birthstone": birthstone,
     }
     return render(request, 'birthstone_templates/birthstone_single.html', context=context)
+
+
+def aboutus(request):
+    return render(request, 'aboutus.html')
+
+
+def privacy_policy(request):
+    return render(request, 'privacy-policy.html')
+
+
+def return_and_exchange(request):
+    return render(request, 'return-and-exchange.html')
+
+
+def terms_and_conditions(request):
+    return render(request, 'terms-and-conditions.html')
+
+
+def instant_quote(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        dealer_type = request.POST.get("dealer_type")
+        message = request.POST.get("message")
+
+        ctx = {
+            "name": name,
+            "email": email,
+            "dealer_type": dealer_type,
+            "message": message,
+        }
+        subject = "Instant Quote Request"
+        message = render_to_string(
+            'instant_quote_mail.html', ctx)
+        send_mail(subject, message, 'sdsgems@gmail.com',
+                  ["sdsgems9@gmail.com"], fail_silently=False, html_message=message)
+        return render(request, 'thanks_for_subscribing.html', {'message': 'Your request has been sent successfully'})
+    return render(request, 'instant_quote.html')

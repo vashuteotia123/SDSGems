@@ -11,7 +11,7 @@ from .models import *
 
 
 @admin.register(User_table)
-class User(admin.ModelAdmin):
+class User(ImportExportModelAdmin):
     search_fields = ['first_name', 'last_name', 'email_id', 'Businesstype']
 
 
@@ -27,7 +27,7 @@ class blogadmin(admin.ModelAdmin):
 
 
 @admin.register(Subscribed_users)
-class SubscribedAdmin(admin.ModelAdmin):
+class SubscribedAdmin(ImportExportModelAdmin):
     search_fields = ['email']
 
 

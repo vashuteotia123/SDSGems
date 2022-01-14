@@ -166,7 +166,7 @@
                         aria-labelledby="pills-home-tab">
                         <div class="row grid-view theme1">
                             {% for object in all_diaobjects %}
-                            <div class="col-sm-6 col-lg-4 col-xl-3 mb-30">
+                            <div class="col-6 col-lg-4 col-xl-3 mb-30">
                                 <div class="card product-card">
                                     <div class="card-body">
                                         <a href="{% url 'showDiamond' product_id=object.id %}">
@@ -203,6 +203,10 @@
                                                     $ {% wholesaler_price object.tag_price_d %}</span>
                                                 {% endif %}
                                             </div>
+                                            {% else %}
+
+                                            You must <strong>Login</strong> to view
+                                            price
                                             {% endif %}
                                         </div>
                                     </div>

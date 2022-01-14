@@ -1,186 +1,230 @@
 {% extends 'base.html' %}
 {% block style %}
-  <style>
-  .update_title{
+<style>
+  .update_title {
     font-size: 30px;
     font-weight: bolder;
     text-align: center;
     padding-top: 10px;
   }
-  select{
-    width:160px;
+
+  select {
+    width: 160px;
   }
-  input,textarea{
+
+  input,
+  textarea {
     width: 162px;
   }
-  label{
+
+  label {
     font-size: 14px;
   }
-  
+
   #form-container {
-  margin: 0 10%;
-}
-  .bird-form{
-  display: grid;
-  grid-template-rows: 10% 10% 10% 10% 10%;
-  grid-template-columns: 18% 18% 18% 18% 20%;
-  grid-column-gap: 2%;
-} 
-@media only screen and (orientation:landscape){
-  .bird-form{
-    height:85vh;
+    margin: 0 10%;
   }
-}
+
+  .bird-form {
+    display: grid;
+    grid-template-rows: 10% 10% 10% 10% 10%;
+    grid-template-columns: 18% 18% 18% 18% 20%;
+    grid-column-gap: 2%;
+  }
+
+  @media only screen and (orientation:landscape) {
+    .bird-form {
+      height: 85vh;
+    }
+  }
+
   /*  Style for Responsive  */
-    @media only screen and (min-width:720px) and (max-width:900px) {
-    .update_title{
-    font-size: 27px;
+  @media only screen and (min-width:720px) and (max-width:900px) {
+    .update_title {
+      font-size: 27px;
+    }
   }
-}
-    @media only screen and (min-width:400px) and (max-width:720px) {
-    .update_title{
-    font-size: 18px;
+
+  @media only screen and (min-width:400px) and (max-width:720px) {
+    .update_title {
+      font-size: 18px;
+    }
   }
-}
-    @media only screen and (max-width:400px){
-    .update_title{
-    font-size: 15px;
+
+  @media only screen and (max-width:400px) {
+    .update_title {
+      font-size: 15px;
+    }
   }
-}
-@media only screen and (min-width:1263px){
-      #form-container { 
-        font-size: 19px;
-       }
-       select{
-        width:300px;
-       }
-      input,textarea{
-        width: 300px;
-       }
-      label{
-       font-size: 19px;
-       }
-       #id_date{
-         margin-top: 3px;
-         height:25px;
-       }
-}
-    @media only screen and (min-width:1071px) and (max-width:1263px){
-       #form-container { 
-         font-size: 18px;
-   }
-}
-    @media only screen and (min-width:841px) and (max-width:1071px){
-      #form-container { 
-        font-size: 14px;
-       }
-       select{
-        width:130px;
-       }
-      input,textarea{
-        width: 131px;
-       }
-      label{
-       font-size: 11px;
-       }
-}
-    @media only screen and (min-width:723px) and (max-width:841px){
-       #form-container { 
-       font-size: 12px;
-       }
-       select{
-        width:110px;
-       }
-       input,textarea{
-        width: 111px;
-       }
-       label{
-         font-size: 9px;
-       }
-}
-    @media only screen and (min-width:591px) and (max-width:723px){
-   .bird-form{
-     grid-template-rows: 10% 10% 10% 10% 10% 10%;
-     grid-template-columns: 21% 22% 21% 21%;
-     grid-column-gap: 5%;
-   }
-   #form-container { 
-     font-size: 11px;
-   }
-   select{
-     width:110px;
-   }
-   input,textarea{
+
+  @media only screen and (min-width:1263px) {
+    #form-container {
+      font-size: 19px;
+    }
+
+    select {
+      width: 300px;
+    }
+
+    input,
+    textarea {
+      width: 300px;
+    }
+
+    label {
+      font-size: 19px;
+    }
+
+    #id_date {
+      margin-top: 3px;
+      height: 25px;
+    }
+  }
+
+  @media only screen and (min-width:1071px) and (max-width:1263px) {
+    #form-container {
+      font-size: 18px;
+    }
+  }
+
+  @media only screen and (min-width:841px) and (max-width:1071px) {
+    #form-container {
+      font-size: 14px;
+    }
+
+    select {
+      width: 130px;
+    }
+
+    input,
+    textarea {
+      width: 131px;
+    }
+
+    label {
+      font-size: 11px;
+    }
+  }
+
+  @media only screen and (min-width:723px) and (max-width:841px) {
+    #form-container {
+      font-size: 12px;
+    }
+
+    select {
+      width: 110px;
+    }
+
+    input,
+    textarea {
       width: 111px;
-   }
-   label{
+    }
+
+    label {
       font-size: 9px;
-   }
-}
-@media only screen and (min-width:436px) and (max-width:591px){
-   .bird-form{
-    grid-template-rows: 10% 10% 10% 10% 10% 10% 10%;
-    grid-template-columns: 28% 28% 30%;
-    grid-column-gap: 7%;
-   }
-   #form-container { 
-     font-size: 11px;
-   }
-   select{
-     width:118px;
-   }
-   input,textarea{
-      width: 118px;
-   }
-   label{
-      font-size: 9px;
-   }
-}
-    @media only screen and (max-width:436px){
-  .bird-form{
-    grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10%;
-    grid-template-columns: 40% 40%;
-    grid-column-gap: 20%;
+    }
   }
-   #form-container { 
-     font-size: 11px;
-   }
-   select{
-     width:118px;
-   }
-   input,textarea{
+
+  @media only screen and (min-width:591px) and (max-width:723px) {
+    .bird-form {
+      grid-template-rows: 10% 10% 10% 10% 10% 10%;
+      grid-template-columns: 21% 22% 21% 21%;
+      grid-column-gap: 5%;
+    }
+
+    #form-container {
+      font-size: 11px;
+    }
+
+    select {
+      width: 110px;
+    }
+
+    input,
+    textarea {
+      width: 111px;
+    }
+
+    label {
+      font-size: 9px;
+    }
+  }
+
+  @media only screen and (min-width:436px) and (max-width:591px) {
+    .bird-form {
+      grid-template-rows: 10% 10% 10% 10% 10% 10% 10%;
+      grid-template-columns: 28% 28% 30%;
+      grid-column-gap: 7%;
+    }
+
+    #form-container {
+      font-size: 11px;
+    }
+
+    select {
+      width: 118px;
+    }
+
+    input,
+    textarea {
+      width: 118px;
+    }
+
+    label {
+      font-size: 9px;
+    }
+  }
+
+  @media only screen and (max-width:436px) {
+    .bird-form {
+      grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10%;
+      grid-template-columns: 40% 40%;
+      grid-column-gap: 20%;
+    }
+
+    #form-container {
+      font-size: 11px;
+    }
+
+    select {
+      width: 118px;
+    }
+
+    input,
+    textarea {
       width: 122px;
-   }
-   label{
+    }
+
+    label {
       font-size: 8px;
-   }
-}
-</style> 
+    }
+  }
+</style>
 <!--  For Chrome & Edge & Brave  -->
 {% if b_s_c %}
 <style>
-  @media only screen and (min-width:438px){
-    .bird-form p{
-    margin-bottom: 6rem;
-}
-}
+  @media only screen and (min-width:438px) {
+    .bird-form p {
+      margin-bottom: 6rem;
+    }
+  }
 </style>
-{% endif  %}
+{% endif %}
 <!-- Customized CSS for different update form -->
-{% block different %}{% endblock  %}
-{% endblock  %}
+{% block different %}{% endblock %}
+{% endblock %}
 <!-- Layout Common For all Updating Operation -->
 {% block container %}
-<div class="update_title">{{update_type}} Item Update</div>
+<div class="update_title">{{update_type}} Edit</div>
 <form id="form-container" method="POST">
-    {% csrf_token %}
-    <div class="bird-form">
-        {% block update_form %}{% endblock  %}
-    </div>
-    <div  style="  justify-content: center;width:77%;  display: flex;
+  {% csrf_token %}
+  <div class="bird-form">
+    {% block update_form %}{% endblock %}
+  </div>
+  <div style="  justify-content: center;width:77%;  display: flex;
     ;position: absolute;
     top: 87vh;">
-    <button type="submit" class="btn btn-lg btn-success" >Submit</button>
-    </div>
+    <button type="submit" class="btn btn-lg btn-success">Submit</button>
+  </div>
 </form>
-{% endblock  %}
+{% endblock %}

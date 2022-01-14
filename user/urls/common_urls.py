@@ -13,6 +13,14 @@ urlpatterns = [
     path('', common_views.home, name="home"),
     path('contact_us', ContactUs.as_view(), name="contact_us"),
     path('myaccount', MyAccount.as_view(), name="myaccount"),
+    path('about_us', aboutus, name="about_us"),
+    path('privacy_policy', privacy_policy, name="privacy_policy"),
+    path('terms_and_conditions', terms_and_conditions,
+         name="terms_and_conditions"),
+    path('return_and_exchange', return_and_exchange, name="return_and_exchange"),
+
+    # Instant Quote
+    path('instant_quote', instant_quote, name="instant_quote"),
 
     # Subscribed_users
     path('subscribe_newsletter', subscribe_newsletter,

@@ -15,7 +15,7 @@ from django.utils.safestring import SafeString
 
 class jewelleryFilter(ListView):
     template_name = "jewellery_templates/jewellery_shop_list.html"
-    paginate_by = 12
+    paginate_by = 24
     model = Inventoryofjewellery
 
     def get_context_data(self, **kwargs):
