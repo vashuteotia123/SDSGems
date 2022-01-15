@@ -4,6 +4,8 @@
 <table class="table table-responsive">
     <tr class="bg-primary bg-opacity-50" id="table-heading">
         <th class="bg-primary">STOCK ID</th>
+        <th class="bg-primary">SOLD DATE</th>
+        <th class="bg-primary">COMPANY NAME</th>
         <th class="bg-primary">LOCATION</th>
         <th class="bg-primary" style="text-align:center;">SHAPE</th>
         <th class="bg-primary" style="text-align:center;">GEM TYPE</th>
@@ -32,6 +34,8 @@
     {% for obj in sold_items %}
     <tr>
         <td style="text-align:center;">{{obj.stockid}}</td>
+        <td>{{obj.date}}</td>
+        <td>{{obj.company_name}}</td>
         <td>{{obj.location.place.capitalize}}</td>
         <td>{{obj.shape.shape.capitalize}}</td>
         <td>{{obj.gem_type.gem.capitalize}}</td>
@@ -45,7 +49,7 @@
         <td>{{obj.PCS}}</td>
         <td>{{obj.Weight_cs}}</td>
         <td>{{obj.price}}</td>
-        <td>{{obj.units_cs}}</td>
+        <td>{{obj.units_cs.upper}}</td>
         <td>{{obj.amount_cs}}</td>
         <td>{{obj.DIS_cs}}</td>
         <td>{{obj.DIS_amount_cs}}</td>

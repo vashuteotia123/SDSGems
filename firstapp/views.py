@@ -122,7 +122,7 @@ def showjewell(request):
         "invobjects_jewellery": invobjects_jewellery,
         "showjewellery": objjewell,
         "css_adjust": change,
-        "table_type": "Edit Purchased Items of Jewellery",
+        "table_type": "Purchase Records of Jewellery",
     }
     return render(request, "showj.html", context=context)
 
@@ -607,7 +607,7 @@ def showcs(request):
         "show_cs": cs_obj,
         "invobjectscs": invobjectscs,
         "css_adjust": change,
-        "table_type": "Edit Purchased Items of Colourstone",
+        "table_type": "Purchase Records of Colourstone",
     }
     return render(request, "showcs.html", context=context)
 
