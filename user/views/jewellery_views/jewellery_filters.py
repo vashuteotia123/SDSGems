@@ -122,6 +122,10 @@ class jewelleryFilter(ListView):
             all_jewobjects)
         all_jewobjects, hightolow = self.get_high_to_low(all_jewobjects)
         all_jewobjects, lowtohigh = self.get_low_to_high(all_jewobjects)
+        all_jewobjects, hightolow_weight = self.get_high_to_low_weight(
+            all_jewobjects)
+        all_jewobjects, lowtohigh_weight = self.get_low_to_high_weight(
+            all_jewobjects)
         context['total_count'] = self.get_object_count(all_jewobjects)
         paginator = Paginator(all_jewobjects, self.paginate_by)
         page = self.request.GET.get('page')
@@ -134,6 +138,12 @@ class jewelleryFilter(ListView):
 
         if hightolow == 1:
             context['HighToLow'] = 1
+
+        if hightolow_weight == 1:
+            context['HighToLowWeight'] = 1
+
+        if lowtohigh_weight == 1:
+            context['LowToHighWeight'] = 1
 
         context['all_jewobjects'] = all_jewobjects
         context['shapes'] = SafeString(str(shapes))
@@ -148,9 +158,10 @@ class jewelleryFilter(ListView):
 
     def get_user(self):
         try:
-            user = User_table.objects.get(email_id=self.request.session['user_email'])
+            user = User_table.objects.get(
+                email_id=self.request.session['user_email'])
         except:
-            user = None 
+            user = None
         return user
 
     def get_shape_filtered(self, all_jewobjects):
@@ -220,4 +231,16 @@ class jewelleryFilter(ListView):
         LowToHigh = self.request.GET.getlist('LowToHigh[]')
         if len(LowToHigh) > 0:
             return all_jewobjects.order_by('tag_price'), 1
+        return all_jewobjects, 0
+
+    def get_low_to_high_weight(self, all_jewobjects):
+        LowToHigh = self.request.GET.getlist('LowToHighWeight[]')
+        if len(LowToHigh) > 0:
+            return all_jewobjects.order_by('grosswt'), 1
+        return all_jewobjects, 0
+
+    def get_high_to_low_weight(self, all_jewobjects):
+        HighToLow = self.request.GET.getlist('HighToLowWeight[]')
+        if len(HighToLow) > 0:
+            return all_jewobjects.order_by('-grosswt'), 1
         return all_jewobjects, 0

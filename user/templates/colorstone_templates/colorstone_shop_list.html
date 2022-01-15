@@ -91,6 +91,36 @@
                   {% endfor %}
                 </ul>
               </li>
+              <li>
+                <a href="javascript:void(0)">Price</a>
+                <ul class="category-sub-menu">
+                  <div class="widget-check-box color-grey">
+                    <input type="checkbox" name="LowToHigh[]" onclick="uncheckHighToLow()" class="submenu-toggle"
+                      value="LowToHigh" id="LowToHigh">
+                    <label for="LowToHigh">Low To High</label>
+                  </div>
+                  <div class="widget-check-box color-grey">
+                    <input type="checkbox" name="HighToLow[]" onclick="uncheckLowToHigh()" class="submenu-toggle"
+                      value="HighToLow" id="HighToLow">
+                    <label for="HighToLow">High To Low</label>
+                  </div>
+                </ul>
+              </li>
+              <li>
+                <a href="javascript:void(0)">Weight</a>
+                <ul class="category-sub-menu">
+                  <div class="widget-check-box color-grey">
+                    <input type="checkbox" name="LowToHighWeight[]" onclick="uncheckHighToLowWeight()"
+                      class="submenu-toggle" value="LowToHighWeight" id="LowToHighWeight">
+                    <label for="LowToHighWeight">Low To High</label>
+                  </div>
+                  <div class="widget-check-box color-grey">
+                    <input type="checkbox" name="HighToLowWeight[]" onclick="uncheckLowToHighWeight()"
+                      class="submenu-toggle" value="HighToLowWeight" id="HighToLowWeight">
+                    <label for="HighToLowWeight">High To Low</label>
+                  </div>
+                </ul>
+              </li>
               <button type="submit" class="btn btn-primary">Apply</button>
           </form>
 
@@ -210,6 +240,44 @@
   </div>
 </div>
 <script>
+
+
+
+  function uncheckLowToHigh() {
+    document.getElementById("LowToHigh").checked = false;
+  }
+
+  function uncheckHighToLow() {
+    document.getElementById("HighToLow").checked = false;
+  }
+
+  var high_to_low = "{{hightolow}}";
+  if (high_to_low) {
+    document.getElementById("HighToLow").checked = true;
+  }
+
+  var low_to_high = "{{lowtohigh}}";
+  if (low_to_high) {
+    document.getElementById("LowToHigh").checked = true;
+  }
+
+  var high_to_low_weight = "{{hightolow_weight}}";
+  if (high_to_low_weight) {
+    document.getElementById("HighToLowWeight").checked = true;
+  }
+
+  var low_to_high_weight = "{{lowtohigh_weight}}";
+  if (low_to_high_weight) {
+    document.getElementById("LowToHighWeight").checked = true;
+  }
+
+  function uncheckHighToLowWeight() {
+    document.getElementById("HighToLowWeight").checked = false;
+  }
+
+  function uncheckLowToHighWeight() {
+    document.getElementById("LowToHighWeight").checked = false;
+  }
 
 
   var colors = "{{colors | safe}}";

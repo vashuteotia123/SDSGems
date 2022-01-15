@@ -201,8 +201,8 @@
                             </h2>
                         </div>
                         <div class="product-body mb-40">
-                            {% if user_login %}
                             <div class="d-flex align-items-center mb-30">
+                                {% if user_login %}
                                 {% if user.Businesstype == "Customer" %}
                                 <span class="product-price mr-20">
                                     <span class="onsale" id="tag_price">${% customer_price product.tag_price %}
@@ -222,14 +222,15 @@
                                     price
                                 </span>
                                 <!-- Certificate type  -->
+                                {% endif %}
                             </div>
-                            {% endif %}
-                            <p>
+
+                            <p class="mb-20">
                                 {{product.media.description | safe | truncatewords:100}}
                             </p>
                             <br>
-                            {% if product.media.certificate %}
                             <div>
+                                {% if product.media.certificate %}
                                 <button class="btn btn-dark btn--xl mt-5 mt-sm-0">
                                     <a href="/media/{{product.media.certificate}}">
                                         <span class="mr-2"><i class="ion-android"></i></span>

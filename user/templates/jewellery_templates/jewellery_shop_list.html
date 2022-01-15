@@ -112,6 +112,23 @@
                                     </div>
                                 </ul>
                             </li>
+                            <li>
+                                <a href="javascript:void(0)">Weight</a>
+                                <ul class="category-sub-menu">
+                                    <div class="widget-check-box color-grey">
+                                        <input type="checkbox" name="LowToHighWeight[]"
+                                            onclick="uncheckHighToLowWeight()" class="submenu-toggle"
+                                            value="LowToHighWeight" id="LowToHighWeight">
+                                        <label for="LowToHighWeight">Low To High</label>
+                                    </div>
+                                    <div class="widget-check-box color-grey">
+                                        <input type="checkbox" name="HighToLowWeight[]"
+                                            onclick="uncheckLowToHighWeight()" class="submenu-toggle"
+                                            value="HighToLowWeight" id="HighToLowWeight">
+                                        <label for="HighToLowWeight">High To Low</label>
+                                    </div>
+                                </ul>
+                            </li>
 
                             <button type="submit" class="btn btn-primary">Apply</button>
                     </form>
@@ -242,6 +259,26 @@
     if (low_to_high) {
         document.getElementById("LowToHigh").checked = true;
     }
+
+    var high_to_low_weight = "{{HighToLowWeight}}";
+    if (high_to_low_weight) {
+        document.getElementById("HighToLowWeight").checked = true;
+    }
+
+    var low_to_high_weight = "{{LowToHighWeight}}";
+    if (low_to_high_weight) {
+        document.getElementById("LowToHighWeight").checked = true;
+    }
+
+    function uncheckHighToLowWeight() {
+        document.getElementById("HighToLowWeight").checked = false;
+    }
+
+    function uncheckLowToHighWeight() {
+        document.getElementById("LowToHighWeight").checked = false;
+    }
+
+
 
     var shapes = "{{shapes | safe}}";
     var types = "{{types | safe}}";

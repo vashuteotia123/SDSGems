@@ -36,4 +36,4 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name="login.html"), name="login"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.STATIC_ROOT, document_root=settings.STATIC_ROOT)

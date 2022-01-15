@@ -106,6 +106,12 @@ class colorStoneFilter(ListView):
         all_objects, colors = self.get_color_filtered(all_objects)
         all_objects, origins = self.get_origin_filtered(all_objects)
         all_objects, gemtypes = self.get_gemtype_filtered(all_objects)
+        all_objects, hightolow = self.get_high_to_low(all_objects)
+        all_objects, lowtohigh = self.get_low_to_high(all_objects)
+        all_objects, hightolow_weight = self.get_high_to_low_weight(
+            all_objects)
+        all_objects, lowtohigh_weight = self.get_low_to_high_weight(
+            all_objects)
         context['total_count'] = self.get_object_count(all_objects)
         paginator = Paginator(all_objects, self.paginate_by)
         page = self.request.GET.get('page')
@@ -113,6 +119,18 @@ class colorStoneFilter(ListView):
             all_objects = paginator.get_page(page)
         else:
             all_objects = paginator.get_page(1)
+
+        if hightolow == 1:
+            context['hightolow'] = 1
+
+        if lowtohigh == 1:
+            context['lowtohigh'] = 1
+
+        if hightolow_weight == 1:
+            context['hightolow_weight'] = 1
+
+        if lowtohigh_weight == 1:
+            context['lowtohigh_weight'] = 1
 
         context['all_objects'] = all_objects
         context['shapes'] = SafeString(str(shapes))
@@ -175,3 +193,27 @@ class colorStoneFilter(ListView):
 
     def get_object_count(self, all_objects):
         return all_objects.count()
+
+    def get_high_to_low(self, all_jewobjects):
+        HighToLow = self.request.GET.getlist('HighToLow[]')
+        if len(HighToLow) > 0:
+            return all_jewobjects.order_by('-tag_price'), 1
+        return all_jewobjects, 0
+
+    def get_low_to_high(self, all_jewobjects):
+        LowToHigh = self.request.GET.getlist('LowToHigh[]')
+        if len(LowToHigh) > 0:
+            return all_jewobjects.order_by('tag_price'), 1
+        return all_jewobjects, 0
+
+    def get_low_to_high_weight(self, all_jewobjects):
+        LowToHigh = self.request.GET.getlist('LowToHighWeight[]')
+        if len(LowToHigh) > 0:
+            return all_jewobjects.order_by('Weight'), 1
+        return all_jewobjects, 0
+
+    def get_high_to_low_weight(self, all_jewobjects):
+        HighToLow = self.request.GET.getlist('HighToLowWeight[]')
+        if len(HighToLow) > 0:
+            return all_jewobjects.order_by('-Weight'), 1
+        return all_jewobjects, 0

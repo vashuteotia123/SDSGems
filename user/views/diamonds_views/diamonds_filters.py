@@ -165,6 +165,10 @@ class diamondFilter(ListView):
             all_diaobjects)
         all_diaobjects, hightolow = self.get_high_to_low(all_diaobjects)
         all_diaobjects, lowtohigh = self.get_low_to_high(all_diaobjects)
+        all_diaobjects, hightolow_weight = self.get_high_to_low_weight(
+            all_diaobjects)
+        all_diaobjects, lowtohigh_weight = self.get_low_to_high_weight(
+            all_diaobjects)
         context['total_count'] = self.get_object_count(all_diaobjects)
         paginator = Paginator(all_diaobjects, self.paginate_by)
         page = self.request.GET.get('page')
@@ -178,6 +182,12 @@ class diamondFilter(ListView):
 
         if hightolow == 1:
             context['HighToLow'] = 1
+
+        if (lowtohigh_weight == 1):
+            context['LowToHighWeight'] = 1
+
+        if hightolow_weight == 1:
+            context['HighToLowWeight'] = 1
 
         context['all_diaobjects'] = all_diaobjects
         context['shapes'] = SafeString(str(shapes))
@@ -289,4 +299,16 @@ class diamondFilter(ListView):
         LowToHigh = self.request.GET.getlist('LowToHigh[]')
         if len(LowToHigh) > 0:
             return all_diaobjects.order_by('tag_price_d'), 1
+        return all_diaobjects, 0
+
+    def get_low_to_high_weight(self, all_diaobjects):
+        LowToHigh = self.request.GET.getlist('LowToHighWeight[]')
+        if len(LowToHigh) > 0:
+            return all_diaobjects.order_by('weight_d'), 1
+        return all_diaobjects, 0
+
+    def get_high_to_low_weight(self, all_diaobjects):
+        HighToLow = self.request.GET.getlist('HighToLowWeight[]')
+        if len(HighToLow) > 0:
+            return all_diaobjects.order_by('-weight_d'), 1
         return all_diaobjects, 0

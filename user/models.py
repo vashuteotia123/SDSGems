@@ -50,7 +50,7 @@ class User_table(models.Model):
 class Blog(models.Model):
     date = models.DateField(auto_now_add=True)
     image = models.ImageField(upload_to="blog_images/", blank=True, null=True)
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=300)
     subject = HTMLField(blank=True, null=True)
     tags = TaggableManager(blank=True)
 
@@ -60,7 +60,7 @@ class Blog(models.Model):
 
 class Subscribed_users(models.Model):
     class Meta:
-        verbose_name_plural="Subscribed Users"
+        verbose_name_plural = "Subscribed Users"
     email = models.EmailField(max_length=90)
 
     def __str__(self):

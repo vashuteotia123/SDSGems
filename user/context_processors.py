@@ -18,7 +18,7 @@ def diamond_common_context(request):
         'diamond_origins': diamond_origins,
         'diamond_polishes': diamond_polishes,
         'user_login': user_login,
-        'open_all': False,
+        'open_all': True,
     }
 
 
