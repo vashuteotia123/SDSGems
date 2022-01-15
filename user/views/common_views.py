@@ -321,7 +321,7 @@ def SearchForUser(request):
                 },
             )
         else:
-            return render(request, "404.html")
+            return render(request, "404.html", {"message": "Product not found!"})
     if search_keyword.startswith("d-"):
         product = get_diamond_with_stockid(search_keyword.capitalize())
         if product:
@@ -335,7 +335,7 @@ def SearchForUser(request):
                 },
             )
         else:
-            return render(request, "404.html")
+            return render(request, "404.html", {"message": "Product not found!"})
     if search_keyword.startswith("c-"):
         product = get_colorstone_with_stockid(search_keyword.capitalize())
         if product:
@@ -349,7 +349,7 @@ def SearchForUser(request):
                 },
             )
         else:
-            return render(request, "404.html")
+            return render(request, "404.html", {"message": "Product not found!"})
 
     else:
         all_jewellery_with_keyword = get_jewellery_with_keyword(search_keyword)

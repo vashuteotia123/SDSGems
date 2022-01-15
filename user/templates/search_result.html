@@ -199,4 +199,73 @@
 </section>
 {% endif %}
 
+{% if not all_colorstone_with_keyword and not all_diamond_with_keyword and not all_jewellery_with_keyword %}
+
+<head>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Arvo'>
+
+</head>
+<style>
+  .page_404 {
+    padding: 40px 0;
+    background: #fff;
+    font-family: 'Arvo', serif;
+  }
+
+  .page_404 img {
+    width: 100%;
+  }
+
+  .four_zero_four_bg {
+    background-image: url(https://s10.gifyu.com/images/not_found.gif);
+    height: 400px;
+    background-position: center;
+  }
+
+
+  .four_zero_four_bg h1 {
+    font-size: 80px;
+  }
+
+  .four_zero_four_bg h3 {
+    font-size: 80px;
+  }
+
+  .link_404 {
+    color: #fff !important;
+    padding: 10px 20px;
+    background: #39ac31;
+    margin: 20px 0;
+    display: inline-block;
+  }
+
+  .contant_box_404 {
+    margin-top: -50px;
+  }
+</style>
+
+
+<section class="page_404">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 ">
+        <div class="col-sm-10 col-sm-offset-1  text-center">
+          <div class="four_zero_four_bg">
+          </div>
+
+          <div class="contant_box_404">
+            <h3 class="h2">
+              No product with matching keyword found.
+            </h3>
+
+
+            <a href="/" class="link_404">Go to Home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
 {% endblock content %}
