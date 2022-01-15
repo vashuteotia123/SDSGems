@@ -5,4 +5,5 @@
 __pycache__
 db.sqlite3
 .env
-/media/
+/media/*
+!media/csv_formats/
