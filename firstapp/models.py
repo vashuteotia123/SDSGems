@@ -61,7 +61,7 @@ class companyinfo(models.Model):
     address = models.TextField()
     country = models.ForeignKey(countries, on_delete=models.PROTECT)
     mobile_no = models.CharField(max_length=20)
-    tel_no = models.CharField(max_length=20, null=True)
+    tel_no = models.CharField(max_length=20, null=True, blank=True)
     email = models.EmailField(blank=True, null=True)
     website = models.EmailField(max_length=150, blank=True, null=True)
     pan_no = models.CharField(max_length=20, blank=True, null=True)
