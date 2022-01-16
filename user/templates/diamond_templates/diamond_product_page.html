@@ -384,7 +384,7 @@
                                     <div class="media flex-column">
                                         <div class="product-thumbnail position-relative">
                                             <span class="badge badge-danger top-right">{{product.shape}}</span>
-                                            <a href="">
+                                            <a href="{% url 'showDiamond' product_id=product.id %}">
                                                 {% if product.media.image1 %}
                                                 <img class="first-img" src="/media/{{product.media.image1}}"
                                                     alt="thumbnail" />
