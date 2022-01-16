@@ -39,7 +39,7 @@ import datetime
 from django.core.mail import EmailMessage
 from django.contrib import messages
 from django.template.loader import get_template, render_to_string
-
+from django.contrib.messages.views import SuccessMessageMixin
 # Create your views here.
 
 
@@ -54,17 +54,20 @@ def myuser_login_required(f):
     return wrap
 
 
-class SignUpView(CreateView):
+class SignUpView(SuccessMessageMixin, CreateView):
     template_name = "user_templates/user_register.html"
     success_url = reverse_lazy("user_login")
+    success_message = "Thankyou for registering with us, also we have to notify you that your information has been sent to our backend team, once they approve you will be able to login on our website."
     form_class = UserForm
 
 
 def user_login(request):
     message = None
+    storage = messages.get_messages(request)
+    for message in storage:
+        message = message
 
     if "is_logedin" not in request.session and request.method != "POST":
-        message = "You are not logged in. Please login to continue."
         return render(request, "user_templates/user_login.html", {"message": message})
     elif request.method == "POST":
 

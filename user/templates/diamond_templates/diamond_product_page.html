@@ -206,19 +206,20 @@
                         <div class="product-body mb-40">
                             <div class="d-flex align-items-center mb-30">
                                 {% if user_login %}
-                                {% if user.Businesstype == "Customer" %}
-                                <span class="product-price mr-20">
-                                    <span class="onsale" id="tag_price">${% customer_price product.tag_price_d %}
-                                    </span></span>
-                                {% elif user.Businesstype == "Broker"%}
-                                <span class="product-price mr-20">
-                                    <span class="onsale" id="tag_price">${% broker_price product.tag_price_d %}
-                                    </span></span>
-                                {% else %}
-                                <span class="product-price mr-20">
-                                    <span class="onsale" id="tag_price">${% wholesaler_price product.tag_price_d %}
-                                    </span></span>
-                                {% endif %}
+                                <div class="product-price mr-20">
+                                    {% if user.Businesstype == "Customer" %}
+                                    <span class="onsale"><span id="tag_price">
+                                            ${% customer_price product.tag_price_d %}</span> /CT</span>
+                                    {% elif user.Businesstype == "Broker"%}
+
+                                    <span class="onsale"><span id="tag_price">
+                                            ${% broker_price product.tag_price_d %}</span> /CT</span>
+                                    {% else %}
+                                    <span class="onsale"><span id="tag_price">
+                                            ${% wholesaler_price product.tag_price_d %}</span>
+                                        /CT</span>
+                                    {% endif %}
+                                </div>
                                 {% else %}
                                 <span class="product-price mr-20">
                                     You must <span class="onsale" id="tag_price">Login</strong></span> to view
@@ -408,14 +409,16 @@
                                                 {% if user_login %}
                                                 <div class="d-flex align-items-center justify-content-between">
                                                     {% if user.Businesstype == "Customer" %}
-                                                    <span class="product-price" id="tag_price">
-                                                        ${% customer_price product.tag_price_d %}</span>
+                                                    <span class="product-price"><span id="tag_price">
+                                                            ${% customer_price product.tag_price_d %}</span> /CT</span>
                                                     {% elif user.Businesstype == "Broker"%}
-                                                    <span class="product-price" id="tag_price">
-                                                        ${% broker_price product.tag_price_d %}</span>
+
+                                                    <span class="product-price"><span id="tag_price">
+                                                            ${% broker_price product.tag_price_d %}</span> /CT</span>
                                                     {% else %}
-                                                    <span class="product-price" id="tag_price">
-                                                        ${% wholesaler_price product.tag_price_d %}</span>
+                                                    <span class="product-price"><span id="tag_price">
+                                                            ${% wholesaler_price product.tag_price_d %}</span>
+                                                        /CT</span>
                                                     {% endif %}
                                                 </div>
                                                 {% endif %}

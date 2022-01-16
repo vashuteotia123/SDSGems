@@ -90,7 +90,8 @@ class BirthStones(models.Model):
     image = models.ImageField(upload_to="birthstones/", blank=True, null=True)
     name = models.CharField(max_length=30, verbose_name="Stone Name")
     month = models.CharField(max_length=30, verbose_name="Month")
-    tagline = models.CharField(max_length=300, verbose_name="Tagline")
+    tagline = models.CharField(
+        max_length=300, verbose_name="Tagline", blank=True, null=True)
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):

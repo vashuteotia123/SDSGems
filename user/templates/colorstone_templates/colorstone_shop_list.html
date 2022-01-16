@@ -160,14 +160,15 @@
                       {% if user %}
                       <div class="d-flex align-items-center justify-content-between">
                         {% if user.Businesstype == "Customer" %}
-                        <span class="product-price" id="tag_price">
-                          ${% customer_price object.tag_price %}</span>
+                        <span class="product-price"><span id="tag_price">
+                            ${% customer_price object.tag_price %}</span> /CT</span>
                         {% elif user.Businesstype == "Broker"%}
-                        <span class="product-price" id="tag_price">
-                          ${% broker_price object.tag_price %}</span>
+
+                        <span class="product-price"><span id="tag_price">
+                            ${% broker_price object.tag_price %}</span> /CT</span>
                         {% else %}
-                        <span class="product-price" id="tag_price">
-                          ${% wholesaler_price object.tag_price %}</span>
+                        <span class="product-price"><span id="tag_price">
+                            ${% wholesaler_price object.tag_price %}</span> /CT</span>
                         {% endif %}
                       </div>
                       {% else %}
