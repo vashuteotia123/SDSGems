@@ -219,7 +219,7 @@ class clonePOJ(models.Model):
                                  metal=self.metal, center_stone_weight=self.center_stone_weight, center_stone_pieces=self.center_stone_pieces,
                                  grosswt=self.grosswt, cert=self.cert, pcs=self.pcs, tag_price=self.tag_price,
                                  purchase_approval=self.purchase_approval, amount=self.amount, discount=self.discount,
-                                 discount_amount=self.discount_amount, total=self.total, currency=self.currency, rate=self.rate)
+                                 discount_amount=self.discount_amount, total=self.total, currency=self.currency, rate=self.rate,comment=self.comment)
     # salesapproval
 
     def __str__(self):
@@ -692,7 +692,7 @@ class clonePOD(models.Model):
                                   fancycolor_grade=self.fancycolor_grade, cut=self.cut, weight_d=self.weight_d,  polish=self.polish, symmetry=self.symmetry, measurements=self.measurements,
                                   price=self.price, depth=self.depth, table_perc=self.table_perc, fluorescence_intensity=self.fluorescence_intensity, fluorescence_color=self.fluorescence_color, certificate_no_d=self.certificate_no_d,
                                   certificate_d=self.certificate_d, units=self.units, laser_inscription=self.laser_inscription, PCS_d=self.PCS_d, tag_price_d=self.tag_price_d, purchaseapv_d=self.purchaseapv_d, rate_d=self.rate_d,
-                                  amount_d=self.amount_d, DIS_d=self.DIS_d, DIS_Amount_d=self.DIS_Amount_d, total_val_d=self.total_val_d, currency=self.currency,)
+                                  amount_d=self.amount_d, DIS_d=self.DIS_d, DIS_Amount_d=self.DIS_Amount_d, total_val_d=self.total_val_d, currency=self.currency,comment=self.comment)
 
     def __str__(self):
         return str(self.id)

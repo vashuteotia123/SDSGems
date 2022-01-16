@@ -1574,6 +1574,7 @@ def jewellery_upload(request):
                                         currency_id=f.currency.id,
                                         tag_price=float(column[19]),
                                         rate=float(column[20]),
+                                        comment=column[22],
                                         )
     messages.success(request, "Successfully uploaded records")
     return redirect(request.META.get('HTTP_REFERER'))
@@ -2066,6 +2067,7 @@ def diamond_upload(request):
                                         tag_price_d=float(column[29]),
                                         rate_d=float(column[30]),
                                         purchaseapv_d=bools,
+                                        comment=column[32],
                                         )
     messages.success(request, "Successfully uploaded records")
     return redirect(request.META.get('HTTP_REFERER'))
