@@ -56,7 +56,19 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="javascript:void(0)">Cuts</a>
+                                <a href="javascript:void(0)">Clarity</a>
+                                <ul class="category-sub-menu">
+                                    {% for clarity in diamondclarity %}
+                                    <div class="widget-check-box color-grey">
+                                        <input type="checkbox" name="claritys[]" class="submenu-toggle"
+                                            value="{{clarity.clarity}}" id="clarity-{{clarity.clarity}}">
+                                        <label for="clarity-{{clarity.clarity}}">{{clarity}}</label>
+                                    </div>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">Cut</a>
                                 <ul class="category-sub-menu">
                                     {% for cut in diamondcuts %}
                                     <div class="widget-check-box color-grey">
@@ -69,7 +81,7 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="javascript:void(0)">Symmetrys</a>
+                                <a href="javascript:void(0)">Symmetry</a>
                                 <ul class="category-sub-menu">
                                     {% for symmetry in diamondsymmetrys %}
                                     <div class="widget-check-box color-grey">
@@ -82,7 +94,7 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href=" javascript:void(0)">Color Origins</a>
+                                <a href=" javascript:void(0)">Color Origin</a>
                                             <ul class="category-sub-menu">
                                                 {% for color in diamondcolororigin %}
                                                 <div class="widget-check-box color-grey">
@@ -333,7 +345,7 @@
     var symmetrys = "{{symmetrys | safe}}";
     var fluorescenceColors = "{{fluorescencecolors | safe }}"
     var fluorescenceIntensitys = "{{fluorescenceintensitys | safe}}"
-    console.log(polishes, shapes)
+    var claritys = "{{claritys | safe}}"
     //python list string to array of strings
     shapes = shapes.replace(/'/g, '"');
     shapes = JSON.parse(shapes);
@@ -349,6 +361,8 @@
     colororigins = JSON.parse(colororigins);
     cuts = cuts.replace(/'/g, '"');
     cuts = JSON.parse(cuts);
+    claritys = claritys.replace(/'/g, '"');
+    claritys = JSON.parse(claritys);
 
     for (var i = 0; i < shapes.length; i++) {
         document.getElementById(`shapes-${shapes[i]}`).checked = true;
@@ -371,6 +385,10 @@
 
     for (var i = 0; i < fluorescenceIntensitys.length; i++) {
         document.getElementById(`fluorescenceIntensitys-${fluorescenceIntensitys}`).checked = true;
+    }
+
+    for (var i = 0; i < claritys.length; i++) {
+        document.getElementById(`clarity-${claritys[i]}`).checked = true;
     }
 </script>
 {% endblock content %}

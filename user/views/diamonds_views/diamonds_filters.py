@@ -40,6 +40,7 @@ class diamondFilter(ListView):
         context['diamondsymmetrys'] = diamondSymmetrys
         context['diamondfluorescencecolors'] = diamondFluorescenceColors
         context['diamondfluorescenceintensitys'] = diamondFluoresceneIntensitys
+        context['diamondclarity'] = clarity.objects.all()
         context['user'] = self.get_user()
         context['shapes'] = SafeString(str([]))
         context['cuts'] = SafeString(str([]))
@@ -48,6 +49,7 @@ class diamondFilter(ListView):
         context['symmetrys'] = SafeString(str([]))
         context['fluorescencecolors'] = SafeString(str([]))
         context['fluorescenceintensitys'] = SafeString(str([]))
+        context['claritys'] = SafeString(str([]))
         if self.request.GET.get('shape'):
             all_diaobjects, shape = self.get_by_shape(
                 self.request.GET.get('shape'), all_diaobjects)
@@ -169,6 +171,8 @@ class diamondFilter(ListView):
             all_diaobjects)
         all_diaobjects, lowtohigh_weight = self.get_low_to_high_weight(
             all_diaobjects)
+        all_diaobjects, claritys = self.get_clarity_filtered(
+            all_diaobjects)
         context['total_count'] = self.get_object_count(all_diaobjects)
         paginator = Paginator(all_diaobjects, self.paginate_by)
         page = self.request.GET.get('page')
@@ -198,6 +202,7 @@ class diamondFilter(ListView):
         context['fluorescencecolors'] = SafeString(str(fluorescencecolors))
         context['fluorescenceintensitys'] = SafeString(
             str(fluorescenceintensitys))
+        context['claritys'] = SafeString(str(claritys))
         return context
 
     def get_queryset(self):
@@ -312,3 +317,10 @@ class diamondFilter(ListView):
         if len(HighToLow) > 0:
             return all_diaobjects.order_by('-weight_d'), 1
         return all_diaobjects, 0
+
+    def get_clarity_filtered(self, all_diaobjects):
+        claritys = self.request.GET.getlist('claritys[]')
+        if(len(claritys) > 0):
+            all_diaobjects = all_diaobjects.filter(
+                clarity__clarity__in=claritys)
+        return all_diaobjects, claritys

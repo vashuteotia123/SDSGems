@@ -48,7 +48,7 @@ class User_table(models.Model):
 
 
 class Blog(models.Model):
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField()
     image = models.ImageField(upload_to="blog_images/", blank=True, null=True)
     title = models.CharField(max_length=300)
     subject = HTMLField(blank=True, null=True)

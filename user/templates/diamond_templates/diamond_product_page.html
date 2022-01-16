@@ -326,24 +326,6 @@
                                     <ul>
                                         <li><span>Stock ID</span> {{product.stockid}} </li>
                                         <li><span>Weight</span> {{product.weight_d}} carat</li>
-                                        <li><span>Dimensions</span>{{product.measurements}}</li>
-                                        <li><span>Shape</span> {{product.shape}}</li>
-                                        <li><span>Colour Origin</span> {{product.color_origin1}}</li>
-                                        <li><span>Location</span>{{product.location}}</li>
-                                        <li><span>Fluorescence Intensity</span>{{product.fluorescence_intensity}}</li>
-                                        <li><span>Fluorescence Colour </span>{{product.fluorescence_intensity}}</li>
-                                        <li><span>Cut</span>{{product.cut}}</li>
-                                        <li><span>Polish</span>{{product.polish}}</li>
-                                        <li><span>Symmetry</span>{{product.symmetry}}</li>
-                                        <li><span>Units</span>{{product.units}}</li>
-                                        {% if product.laser_inscription %}
-                                        <li><span>Laser Inscription</span>Yes</li>
-                                        {% else %}
-                                        <li><span>Laser Inscription</span>No</li>
-                                        {% endif %}
-                                        <li><span>Depth</span>{{product.depth}}%</li>
-                                        <li><span>Table</span>{{product.table}}%</li>
-                                        <li><span>Certificate Type</span>{{product.certificate_d}}</li>
                                         {% if product.white_color_grade1 %}
                                         {% if product.fancycolor_grade %}
                                         <li><span>Colour
@@ -356,6 +338,26 @@
                                         <li><span>Colour</span>{{product.fancycolor_grade}}</li>
                                         {%endif%}
                                         {% endif %}
+
+                                        <li><span>Shape</span> {{product.shape}}</li>
+                                        <li><span>Clarity</span>{{product.clarity}}</li>
+                                        <li><span>Colour Origin</span> {{product.color_origin1}}</li>
+                                        <li><span>Fluorescence Intensity</span>{{product.fluorescence_intensity}}</li>
+                                        <li><span>Fluorescence Colour </span>{{product.fluorescence_intensity}}</li>
+                                        <li><span>Cut</span>{{product.cut}}</li>
+                                        <li><span>Polish</span>{{product.polish}}</li>
+                                        <li><span>Symmetry</span>{{product.symmetry}}</li>
+                                        <li><span>Dimensions</span>{{product.measurements}}</li>
+                                        {% if product.laser_inscription %}
+                                        <li><span>Laser Inscription</span>Yes</li>
+                                        {% else %}
+                                        <li><span>Laser Inscription</span>No</li>
+                                        {% endif %}
+                                        <li><span>Depth</span>{{product.depth}}%</li>
+                                        <li><span>Table</span>{{product.table}}%</li>
+                                        <li><span>Certificate Type</span>{{product.certificate_d}}</li>
+                                        <li><span>Certificate No</span>{{product.certificate_no_d}}</li>
+
                                     </ul>
                                 </div>
                             </div>

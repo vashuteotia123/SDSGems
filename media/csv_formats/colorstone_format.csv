@@ -1,7 +1,2 @@
-Date,Stock Id ,Company Name,Location,Shape,Gem Type,Origin ,Treament,Clarity,Certificate No,Colour,Measruments,Lab,PCS,Weight,Price,Units,amount,discount_amount,discount,total_val,purchaseapv,currency,tag_price,rate,comment
+Date,Stock Id ,Company Name,Location,Shape,Gem Type,Origin ,Treament,Clarity,Certificate No,Colour,Measruments,Lab,PCS,Weight,Price,Units,amount,discount_amount,discount,total_val,bought,currency,tag_price,rate,comment
 26-01-2021,,k.girdharlal,KOLKATA,OVAL MIXED CUT,RUBY,BURMA,NO,,GEM-18100009-003,PINKISH RED,9.12*7.05*4.17,,1,2.53,32000,CT,82225,20556.25,25,61668.75,Yes,INR,35000,1,"sfhdzxvnkcs,dfhrxgnvgfncm,bkxfcnhfgcf cbvkvhbn"
-26-01-2022,,k.girdharlal,KOLKATA,Shpere,RUBY,INDIA,NO,,GEM-18100009-004,RED,9.12*7.05*4.17,,1,2.53,32000,CT,82225,20556.25,25,61668.75,Yes,INR,35000,1,
-26-01-2023,,k.girdharlal,London,CUBE,CUSHION MIXED CUT,DUBAI,NO,,GEM-18100009-005,Yellow,9.12*7.05*4.17,,1,2.53,32000,CT,82225,20556.25,25,61668.75,Yes,INR,35000,1,
-26-01-2024,,k.girdharlal,Jamshedpur,Cubiod,RUBY,LONDON,NO,,GEM-18100009-006,PINKISH RED,9.12*7.05*4.17,,1,2.53,32000,CT,82225,20556.25,25,61668.75,Yes,INR,35000,1,
-26-01-2025,,k.girdharlal,Mumbai,OVAL MIXED CUT,SHAPIRE,BURMA,NO,,GEM-18100009-007,green,9.12*7.05*4.17,,1,2.53,32000,CT,82225,20556.25,25,61668.75,Yes,INR,35000,1,
-26-01-2026,,k.girdharlal,KOLKATA,OVAL MIXED CUT,RUBY,ARAB,NO,,GEM-18100009-008,blue,9.12*7.05*4.17,,1,2.53,32000,CT,82225,20556.25,25,61668.75,Yes,INR,35000,1,

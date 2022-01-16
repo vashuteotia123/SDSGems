@@ -101,7 +101,8 @@ def updateJ(request, pk):
                 request, "Stock ID->{} is Modified  Successfully".format(str("J-")+str(pk)))
             return redirect('/showj')
 
-    context = {'form3': form3, "b_s_c": change_css, "update_type": "Jewellery"+str(" Stock ID  J-")+str(pk),}
+    context = {'form3': form3, "b_s_c": change_css,
+               "update_type": "Jewellery"+str(" Stock ID  J-")+str(pk), }
     return render(request, 'update_jewellery.html', context)
 
 
@@ -2600,6 +2601,7 @@ def ExportSalesReturnCS(request):
     writer.writerows(output)
     return response
 
+
 @login_required
 def ExportPOJ(request):
     objects = POJ.objects.all()
@@ -2624,6 +2626,7 @@ def ExportPOJ(request):
     writer.writerows(output)
     return response
 
+
 @login_required
 def ExportInventoryofjewellery(request):
     objects = Inventoryofjewellery.objects.filter(appvreturnstatus=False)
@@ -2643,6 +2646,7 @@ def ExportInventoryofjewellery(request):
 
     writer.writerows(output)
     return response
+
 
 @login_required
 def ExportSalesofjewellery(request):
@@ -2669,6 +2673,7 @@ def ExportSalesofjewellery(request):
     writer.writerows(output)
     return response
 
+
 @login_required
 def ExportSalesReturn(request):
     objects = Salesreturn.objects.all()
@@ -2688,6 +2693,7 @@ def ExportSalesReturn(request):
 
     writer.writerows(output)
     return response
+
 
 @login_required
 def ExportPOD(request):
@@ -2719,6 +2725,7 @@ def ExportPOD(request):
 
     return response
 
+
 @login_required
 def ExportInventoryofdiamond(request):
     objects = Inventoryofdiamond.objects.filter(appvreturnstatus_d=False)
@@ -2743,6 +2750,7 @@ def ExportInventoryofdiamond(request):
 
     writer.writerows(output)
     return response
+
 
 @login_required
 def ExportSalesofdiamond(request):
@@ -2798,6 +2806,7 @@ def get_certificate_of_diamond(request):
     except:
         data = {}
     return JsonResponse({'certificate': '0'}, status=200)
+
 
 @login_required
 def ExportSalesReturnDiamonds(request):
