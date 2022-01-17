@@ -3,6 +3,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from tinymce.models import HTMLField
 from taggit.managers import TaggableManager
 from rest_framework import serializers
+from ckeditor.fields import RichTextField
 
 
 class countries(models.Model):
@@ -88,11 +89,11 @@ class BirthStones(models.Model):
         verbose_name_plural = "Birth Stones"
 
     image = models.ImageField(upload_to="birthstones/", blank=True, null=True)
-    name = models.CharField(max_length=30, verbose_name="Stone Name")
+    name = models.CharField(max_length=300, verbose_name="Stone Name")
     month = models.CharField(max_length=30, verbose_name="Month")
     tagline = models.CharField(
         max_length=300, verbose_name="Tagline", blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
+    description = RichTextField(blank=True, null=True)
 
     def __str__(self):
         return self.month + " - " + self.name

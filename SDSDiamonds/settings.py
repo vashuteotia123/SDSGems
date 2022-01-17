@@ -173,6 +173,18 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': '100%',
+        'extraPlugins': 'codesnippet',
+        'codeSnippet_theme': 'monokai_sublime',
+
+    },
+}
+
+
 # Jazzmin settings
 JAZZMIN_SETTINGS = {
     "topmenu_links": [
