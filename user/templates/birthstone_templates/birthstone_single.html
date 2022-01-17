@@ -38,7 +38,9 @@
               </div>
               <div>
                 <h1 class="pt-10 pb-10">{{birthstone.month | capfirst}} - {{birthstone.name | capfirst}}</h1>
+                {% if birthstone.tagline %}
                 <em><strong>{{birthstone.tagline}}</strong></em>
+                {% endif %}
               </div>
               <br>
               <div class="single-post-content">
