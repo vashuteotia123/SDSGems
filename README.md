@@ -1,4 +1,4 @@
-# SDSGems
+# SDSGems [![wakatime](https://wakatime.com/badge/github/vashuteotia123/SDSGems.svg)](https://wakatime.com/badge/github/vashuteotia123/SDSGems)
 Full fledge inventory management system with a ecommerce platform.
 
 
